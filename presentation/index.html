@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>小馬娛樂 | XIAOMA ENT. - SALES PRESENTATION</title>
+    <title>小馬娛樂 | PONY ENT. - CYBER HOME</title>
     <!-- Tailwind CSS for utility styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts: Orbitron for Sci-Fi look -->
@@ -13,7 +13,7 @@
             --primary-neon: #8600FF;
             --secondary-neon: #00F0FF;
             --bg-dark: #050505;
-            --sidebar-width: 240px;
+            --panel-bg: rgba(15, 15, 15, 0.9);
         }
 
         body {
@@ -21,346 +21,358 @@
             color: white;
             font-family: 'Noto+Sans+TC', sans-serif;
             overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
         .cyber-font {
             font-family: 'Orbitron', sans-serif;
         }
 
-        /* 背景掃描線 */
-        body::before {
-            content: " ";
-            display: block;
+        /* 背景特效 */
+        .bg-grid {
             position: fixed;
-            top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
-                        linear-gradient(90deg, rgba(255, 0, 0, 0.05), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.05));
-            z-index: 100;
-            background-size: 100% 2px, 3px 100%;
-            pointer-events: none;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(to right, rgba(134, 0, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(134, 0, 255, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
         }
 
-        /* 側邊導覽列 */
-        .sidebar {
+        /* 超大 LOGO 呼吸光 */
+        .hero-logo {
+            filter: drop-shadow(0 0 15px var(--primary-neon));
+            animation: logo-glow 4s ease-in-out infinite;
+        }
+        @keyframes logo-glow {
+            0%, 100% { filter: drop-shadow(0 0 15px var(--primary-neon)); transform: scale(1); }
+            50% { filter: drop-shadow(0 0 30px var(--secondary-neon)); transform: scale(1.02); }
+        }
+
+        /* 懸浮控制面板選單 */
+        .control-panel {
             position: fixed;
-            left: 0;
-            top: 0;
-            height: 100vh;
-            width: var(--sidebar-width);
-            background: rgba(10, 10, 10, 0.95);
-            border-right: 1px solid rgba(134, 0, 255, 0.3);
-            z-index: 500;
-            padding: 2rem 1rem;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--panel-bg);
+            border: 1px solid rgba(134, 0, 255, 0.5);
+            backdrop-filter: blur(15px);
+            padding: 10px 20px;
+            border-radius: 50px;
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), inset 0 0 10px rgba(134, 0, 255, 0.2);
+            z-index: 1000;
+        }
+
+        .panel-btn {
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            color: #ccc;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .panel-btn:hover {
+            color: white;
+            background: rgba(134, 0, 255, 0.3);
+            text-shadow: 0 0 10px white;
+            transform: translateY(-3px);
+        }
+
+        /* 藝人頭像懸浮列表設計 */
+        .floating-talent-panel {
+            background: rgba(10, 10, 10, 0.6);
+            border: 1px solid rgba(134, 0, 255, 0.3);
             backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            transition: all 0.4s ease;
         }
 
-        .nav-item {
-            margin-bottom: 0.5rem;
-            padding: 0.75rem 1rem;
+        .floating-talent-panel:hover {
+            border-color: var(--primary-neon);
+            background: rgba(134, 0, 255, 0.05);
+            box-shadow: 0 0 30px rgba(134, 0, 255, 0.1);
+        }
+
+        .talent-avatar-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .talent-avatar-grid { 
+                flex-wrap: nowrap; 
+                justify-content: flex-start; 
+                overflow-x: auto; 
+                padding-bottom: 10px;
+            }
+            .floating-talent-panel { border-radius: 0; border-left: none; border-right: none; }
+        }
+
+        .avatar-box {
+            flex: 0 0 auto;
+            text-align: center;
+            transition: transform 0.3s;
             cursor: pointer;
+        }
+        .avatar-box:hover { transform: scale(1.15); }
+        .avatar-circle {
+            width: 50px; height: 50px;
+            border-radius: 50%;
+            margin: 0 auto 6px;
+            border: 1px solid #444;
             transition: all 0.3s;
-            border-left: 2px solid transparent;
-            font-size: 0.9rem;
-            color: #aaa;
+            overflow: hidden;
+            background: #111;
+            position: relative;
         }
-
-        .nav-item:hover {
-            background: rgba(134, 0, 255, 0.1);
-            color: var(--secondary-neon);
-            border-left: 2px solid var(--secondary-neon);
-            padding-left: 1.5rem;
-        }
-
-        /* 內容區塊偏移 */
-        .main-wrapper {
-            margin-left: var(--sidebar-width);
-            transition: margin 0.3s;
-        }
-
-        @media (max-width: 1024px) {
-            .sidebar {
-                position: relative;
-                width: 100%;
-                height: auto;
-                flex-direction: row;
-                overflow-x: auto;
-                padding: 1rem;
-                border-right: none;
-                border-bottom: 1px solid rgba(134, 0, 255, 0.3);
-            }
-            .nav-item {
-                margin-bottom: 0;
-                white-space: nowrap;
-            }
-            .main-wrapper {
-                margin-left: 0;
-            }
-        }
-
-        /* 藝人卡片與霓虹邊框 */
-        .neon-border {
-            border: 1px solid var(--primary-neon);
-            box-shadow: 0 0 10px rgba(134, 0, 255, 0.3);
-            transition: all 0.3s;
-        }
-
-        .neon-border:hover {
-            box-shadow: 0 0 20px var(--secondary-neon);
+        .avatar-box:hover .avatar-circle { 
             border-color: var(--secondary-neon);
+            box-shadow: 0 0 10px var(--secondary-neon);
         }
 
-        .talent-card {
-            background: rgba(20, 20, 20, 0.8);
-            cursor: pointer;
-            padding: 0.75rem !important;
+        /* 輪播區塊 */
+        .gallery-container {
+            width: 100%;
+            overflow: hidden;
+            border: 1px solid #222;
+            position: relative;
         }
-
-        .hashtag {
-            font-size: 0.65rem;
-            color: var(--secondary-neon);
-            border: 1px solid var(--secondary-neon);
-            padding: 1px 4px;
-            margin: 1px;
-            display: inline-block;
+        .gallery-track {
+            display: flex;
+            animation: scroll 40s linear infinite;
+            width: calc(300px * 8);
         }
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-300px * 4)); }
+        }
+        .gallery-item {
+            width: 300px;
+            height: 180px;
+            flex-shrink: 0;
+            padding: 5px;
+        }
+        .gallery-img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            filter: grayscale(0.5);
+            transition: filter 0.3s;
+        }
+        .gallery-img:hover { filter: grayscale(0); }
 
-        /* 刮刮卡 Modal */
+        /* 彈窗設計 */
         #modal-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(0, 0, 0, 0.9);
             z-index: 2000;
-            backdrop-filter: blur(15px);
+            backdrop-filter: blur(10px);
         }
-
-        .scratch-container {
+        .info-container {
             position: relative;
-            width: 320px;
-            height: 480px;
-            background: #111;
+            width: 340px;
+            background: #0a0a0a;
             margin: auto;
             top: 50%;
             transform: translateY(-50%);
-            border: 2px solid var(--primary-neon);
-            overflow: hidden;
+            border: 1px solid var(--primary-neon);
+            box-shadow: 0 0 50px rgba(134, 0, 255, 0.2);
+            padding: 2rem;
+            border-radius: 15px;
         }
-
-        #scratch-canvas {
-            position: absolute;
-            top: 0; left: 0;
-            z-index: 5;
-            cursor: crosshair;
+        .modal-btn {
+            flex: 1;
+            padding: 10px;
+            font-size: 10px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s;
         }
-
-        .close-btn {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10;
-            padding: 8px 20px;
-            background: var(--primary-neon);
-            color: white;
-            font-size: 0.75rem;
-            cursor: pointer;
+        .modal-btn:hover {
+            border-color: var(--secondary-neon);
+            color: var(--secondary-neon);
+            background: rgba(0, 240, 255, 0.05);
         }
-
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-thumb { background: var(--primary-neon); }
+        .btn-close { border-color: #444; color: #888; }
+        .btn-more { border-color: var(--primary-neon); color: var(--primary-neon); }
     </style>
 </head>
 <body>
 
-    <!-- SIDEBAR NAVIGATION -->
-    <aside class="sidebar">
-        <div class="mb-10 px-2">
-            <!-- 放大 Logo 且弱化文字 -->
-            <img src="https://xiaomasales-creator.github.io/sales/presentation/homepage/小馬娛樂_LOGO.png" alt="小馬娛樂 LOGO" class="w-full max-w-[160px] mx-auto h-auto">
-        </div>
-        <nav class="flex flex-col flex-grow">
-            <div class="nav-item cyber-font font-bold" onclick="scrollToSection('about')">ABOUT_US 關於小馬娛樂</div>
-            <div class="nav-item cyber-font font-bold" onclick="scrollToSection('talents')">ARTISTS 網紅經紀</div>
-            <div class="nav-item cyber-font font-bold">GALLERY 活動花絮</div>
-            <div class="nav-item cyber-font font-bold">OTHER_SERVICES 其他服務</div>
-            <div class="nav-item cyber-font font-bold">CONTACT 聯絡我們</div>
+    <div class="bg-grid"></div>
+
+    <!-- MAIN WRAPPER -->
+    <div class="min-h-screen flex flex-col">
+        
+        <!-- 1. HERO SECTION (LOGO & INTRO) -->
+        <section id="home" class="pt-20 pb-12 flex flex-col items-center text-center px-6">
+            <div class="hero-logo mb-8">
+                <img src="https://files.oaiusercontent.com/file-K1F8Kq9Y7zKz6z6z6z6z6z6z" alt="小馬娛樂 LOGO" class="w-64 md:w-96 h-auto">
+            </div>
+            <div class="max-w-2xl">
+                <h1 class="cyber-font text-xl md:text-3xl font-black tracking-tighter mb-4 text-white">
+                    PONY ENTERTAINMENT // <span class="text-purple-500">NEXT-GEN TALENT</span>
+                </h1>
+                <p class="text-gray-400 text-sm md:text-base leading-relaxed font-light">
+                    打破傳統經紀框架，結合科技與創意。我們致力於挖掘最具個人風格的創作者，<br class="hidden md:block">
+                    在數位洪流中為品牌精準導航，創造不可取代的社群影響力。
+                </p>
+            </div>
+        </section>
+
+        <!-- 2. GALLERY SLIDER (花絮照片輪播) -->
+        <section id="gallery" class="py-12 bg-zinc-900/20">
+            <div class="max-w-6xl mx-auto mb-6 px-6">
+                <div class="flex items-center gap-4">
+                    <span class="h-[1px] flex-grow bg-purple-900"></span>
+                    <h2 class="cyber-font text-xs tracking-widest text-purple-400">LATEST_ACTIVITIES // 活動花絮</h2>
+                    <span class="h-[1px] flex-grow bg-purple-900"></span>
+                </div>
+            </div>
+            <div class="gallery-container">
+                <div class="gallery-track">
+                    <div class="gallery-item"><div class="gallery-img bg-zinc-800 flex items-center justify-center text-[10px] cyber-font text-zinc-500">PHOTO_01</div></div>
+                    <div class="gallery-item"><div class="gallery-img bg-zinc-700 flex items-center justify-center text-[10px] cyber-font text-zinc-500">PHOTO_02</div></div>
+                    <div class="gallery-item"><div class="gallery-img bg-zinc-800 flex items-center justify-center text-[10px] cyber-font text-zinc-500">PHOTO_03</div></div>
+                    <div class="gallery-item"><div class="gallery-img bg-zinc-700 flex items-center justify-center text-[10px] cyber-font text-zinc-500">PHOTO_04</div></div>
+                    <div class="gallery-item"><div class="gallery-img bg-zinc-800 flex items-center justify-center text-[10px] cyber-font text-zinc-500">PHOTO_01</div></div>
+                    <div class="gallery-item"><div class="gallery-img bg-zinc-700 flex items-center justify-center text-[10px] cyber-font text-zinc-500">PHOTO_02</div></div>
+                    <div class="gallery-item"><div class="gallery-img bg-zinc-800 flex items-center justify-center text-[10px] cyber-font text-zinc-500">PHOTO_03</div></div>
+                    <div class="gallery-item"><div class="gallery-img bg-zinc-700 flex items-center justify-center text-[10px] cyber-font text-zinc-500">PHOTO_04</div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. TALENT OVERVIEW (懸浮列表設計) -->
+        <section id="talents" class="py-16 max-w-5xl mx-auto px-6 w-full">
+            <div class="text-center mb-8">
+                <h2 class="cyber-font text-sm font-bold text-cyan-400 tracking-[0.4em] mb-1">ARTIST_PULSE</h2>
+                <div class="text-[8px] text-gray-600 tracking-[0.2em]">旗下藝人概覽 // SELECTION_MODE_ACTIVE</div>
+            </div>
             
-            <div class="mt-auto pt-6 border-t border-gray-800">
-                <div class="nav-item bg-cyan-900/30 !text-cyan-400 border border-cyan-400/50 flex items-center justify-center py-3">
-                    <span class="cyber-font font-black tracking-tighter">INQUIRY_FORM 詢價單</span>
+            <!-- 懸浮列表容器 -->
+            <div class="floating-talent-panel">
+                <div id="talent-grid" class="talent-avatar-grid">
+                    <!-- 由 JavaScript 填入 12 位藝人 -->
                 </div>
             </div>
-        </nav>
-    </aside>
+        </section>
 
-    <!-- MAIN CONTENT -->
-    <div class="main-wrapper">
-        <header class="h-20 flex items-center px-8 lg:px-12 opacity-50">
-            <!-- 頂部僅保留極簡導航路徑或狀態 -->
-            <div class="text-[10px] cyber-font tracking-widest text-gray-500">PONY_ENT_SYSTEM_v2.0 // ONLINE</div>
-        </header>
-
-        <main class="max-w-6xl mx-auto px-6 lg:px-12 pb-20">
-            <!-- 理念區塊 -->
-            <section id="about" class="mb-24">
-                <div class="mb-10">
-                    <h2 class="cyber-font text-xl font-black italic text-purple-400 border-l-2 border-purple-600 pl-4 tracking-widest">
-                        CORE_VALUES // 核心理念
-                    </h2>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="p-6 bg-zinc-900/50 border border-zinc-800 hover:border-purple-500 transition-colors">
-                        <div class="cyber-font text-[9px] text-cyan-400 mb-2">[01]</div>
-                        <h3 class="text-md font-bold mb-2">風格領域多元，自由不設限</h3>
-                        <p class="text-gray-500 text-xs leading-relaxed">不侷限領域，勇於挑戰創新；實況主自由發揮，展現獨特魅力。</p>
-                    </div>
-                    <div class="p-6 bg-zinc-900/50 border border-zinc-800 hover:border-purple-500 transition-colors">
-                        <div class="cyber-font text-[9px] text-cyan-400 mb-2">[02]</div>
-                        <h3 class="text-md font-bold mb-2">最低預算，最高品質</h3>
-                        <p class="text-gray-500 text-xs leading-relaxed">精準掌控預算，追求完美成效，致力於讓客戶享高品質服務。</p>
-                    </div>
-                    <div class="p-6 bg-zinc-900/50 border border-zinc-800 hover:border-purple-500 transition-colors">
-                        <div class="cyber-font text-[9px] text-cyan-400 mb-2">[03]</div>
-                        <h3 class="text-md font-bold mb-2">專業與趣味兼顧</h3>
-                        <p class="text-gray-500 text-xs leading-relaxed">以專業而不失趣味的行銷推廣，吸引大量潛在客群。</p>
-                    </div>
-                    <div class="p-6 bg-zinc-900/50 border border-zinc-800 hover:border-purple-500 transition-colors">
-                        <div class="cyber-font text-[9px] text-cyan-400 mb-2">[04]</div>
-                        <h3 class="text-md font-bold mb-2">行事俐落，使命必達</h3>
-                        <p class="text-gray-500 text-xs leading-relaxed">執行迅速確實，絕不拖泥帶水。</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 藝人牆 -->
-            <section id="talents" class="mb-24">
-                <div class="flex justify-between items-end mb-8">
-                    <h2 class="cyber-font text-xl font-black italic border-b-2 border-cyan-400 inline-block tracking-widest">ARTISTS // 網紅經紀</h2>
-                    <span class="cyber-font text-[9px] text-gray-600">LAYOUT_MODE: 4_COLUMNS</span>
-                </div>
-                <div id="talent-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4"></div>
-            </section>
-        </main>
-
-        <footer class="border-t border-zinc-900 py-12 text-center">
-            <div class="cyber-font text-[9px] tracking-widest text-gray-600 mb-4 opacity-50">
-                &copy; 2024 PONY ENTERTAINMENT. SYSTEM_ACCESS_AUTHORIZED.
-            </div>
-            <div class="flex justify-center space-x-2">
-                <div class="w-1 h-1 bg-purple-600 rounded-full animate-ping"></div>
-                <div class="w-1 h-1 bg-cyan-400 rounded-full animate-ping"></div>
-            </div>
+        <!-- 4. FOOTER -->
+        <footer class="mt-auto pt-20 pb-32 text-center opacity-40">
+            <p class="cyber-font text-[9px] tracking-widest">&copy; 2024 PONY ENTERTAINMENT. ALL ACCESS LOGGED.</p>
         </footer>
     </div>
 
-    <!-- SCRATCH MODAL -->
+    <!-- 5. FLOATING CONTROL PANEL (懸浮選單) -->
+    <nav class="control-panel cyber-font">
+        <button class="panel-btn" onclick="scrollToSection('home')">關於小馬</button>
+        <button class="panel-btn" onclick="scrollToSection('talents')">網紅經紀</button>
+        <button class="panel-btn" onclick="scrollToSection('gallery')">活動花絮</button>
+        <button class="panel-btn">其他服務</button>
+        <button class="panel-btn">聯絡我們</button>
+        <div class="w-[1px] h-6 bg-zinc-700 mx-2"></div>
+        <button class="panel-btn !text-cyan-400 group">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 group-hover:animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+            </svg>
+            <span>詢價單</span>
+        </button>
+    </nav>
+
+    <!-- INFO MODAL (取代原有刮刮卡) -->
     <div id="modal-overlay" onclick="closeModal()">
-        <div class="scratch-container" onclick="event.stopPropagation()">
-            <div class="hidden-content flex flex-col items-center justify-start p-8 text-center h-full">
-                <div id="modal-image" class="w-28 h-28 rounded-full border-2 border-cyan-400 mb-4 overflow-hidden"></div>
-                <h3 id="modal-name" class="cyber-font text-xl font-black text-white mb-2"></h3>
-                <p class="text-cyan-400 text-[10px] mb-4 font-bold tracking-widest">DATA_DECRYPTED_SUCCESS</p>
-                <div class="w-full bg-black/50 p-4 text-[10px] text-left border-l-2 border-purple-500">
-                    <p class="mb-1 text-gray-400">> ENGAGEMENT: 98.5%</p>
-                    <p class="mb-1 text-gray-400">> TARGET: GEN-Z (18-24)</p>
-                    <p class="text-gray-400">> RANK: S-CLASS</p>
+        <div class="info-container" onclick="event.stopPropagation()">
+            <div class="flex flex-col items-center justify-start text-center">
+                <div id="modal-image" class="w-24 h-24 rounded-full border border-zinc-800 mb-4 overflow-hidden bg-black"></div>
+                <h3 id="modal-name" class="cyber-font text-lg font-black text-white mb-1"></h3>
+                <p class="text-cyan-400 text-[9px] mb-6 font-bold tracking-[0.3em]">DATA_SOURCE: VERIFIED</p>
+                
+                <div class="w-full bg-zinc-900/50 p-4 text-[10px] text-left border-l-2 border-purple-500 mb-8">
+                    <div class="flex justify-between mb-2">
+                        <span class="text-gray-500">ENGAGEMENT</span>
+                        <span class="text-purple-400 cyber-font">98.5%</span>
+                    </div>
+                    <div class="flex justify-between mb-2">
+                        <span class="text-gray-500">PRIMARY_AUDIENCE</span>
+                        <span class="text-purple-400 cyber-font">GEN-Z</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-500">CONTENT_RANK</span>
+                        <span class="text-cyan-400 cyber-font">S-CLASS</span>
+                    </div>
+                </div>
+
+                <div class="flex w-full gap-3 cyber-font">
+                    <button class="modal-btn btn-close" onclick="closeModal()">CLOSE</button>
+                    <button class="modal-btn btn-more" onclick="alert('連結至詳細頁面')">VIEW MORE</button>
                 </div>
             </div>
-            <button class="close-btn cyber-font font-bold" onclick="closeModal()">CLOSE_SYSTEM</button>
-            <canvas id="scratch-canvas" width="320" height="480"></canvas>
         </div>
     </div>
 
     <script>
         const talents = [
-            { name: "霓虹子 Neon", tags: ["#FPS", "#穿搭"] },
-            { name: "阿龍 Draga", tags: ["#街舞", "#潮流"] },
-            { name: "星火 Spark", tags: ["#音樂", "#歌手"] },
-            { name: "冷翡翡 Jade", tags: ["#模特", "#美妝"] },
-            { name: "大黑 Kuro", tags: ["#美食", "#露營"] },
-            { name: "小愛 Ai-Chan", tags: ["#Cos", "#聲優"] },
-            { name: "雷克斯 Rex", tags: ["#健身", "#重機"] },
-            { name: "薇薇安 Viv", tags: ["#塔羅", "#電台"] },
-            { name: "歐文 Owen", tags: ["#投資", "#商務"] },
-            { name: "米娜 Mina", tags: ["#旅遊", "#潛水"] },
-            { name: "波比 Bobby", tags: ["#寵物", "#法鬥"] },
-            { name: "影 Shadow", tags: ["#攝影", "#美學"] }
+            { name: "Neon", tags: ["#FPS"] },
+            { name: "Draga", tags: ["#Dance"] },
+            { name: "Spark", tags: ["#Music"] },
+            { name: "Jade", tags: ["#Model"] },
+            { name: "Kuro", tags: ["#Food"] },
+            { name: "Ai-Chan", tags: ["#Cos"] },
+            { name: "Rex", tags: ["#Fit"] },
+            { name: "Viv", tags: ["#Radio"] },
+            { name: "Owen", tags: ["#Biz"] },
+            { name: "Mina", tags: ["#Travel"] },
+            { name: "Bobby", tags: ["#Pet"] },
+            { name: "Shadow", tags: ["#Art"] }
         ];
 
         const grid = document.getElementById('talent-grid');
         const overlay = document.getElementById('modal-overlay');
-        const canvas = document.getElementById('scratch-canvas');
-        const ctx = canvas.getContext('2d');
-        let isDrawing = false;
 
         talents.forEach((talent, index) => {
-            const card = document.createElement('div');
-            card.className = "talent-card neon-border relative group overflow-hidden bg-black";
-            card.onclick = () => openScratchCard(talent);
-            card.innerHTML = `
-                <div class="aspect-square bg-zinc-900 mb-3 overflow-hidden">
-                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=${talent.name}" 
-                         class="w-full h-full grayscale group-hover:grayscale-0 transition-all duration-700">
+            const box = document.createElement('div');
+            box.className = "avatar-box group";
+            box.onclick = () => openInfoCard(talent);
+            box.innerHTML = `
+                <div class="avatar-circle">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=${talent.name}" class="w-full h-full object-cover">
                 </div>
-                <div class="relative z-10">
-                    <h3 class="cyber-font text-xs font-black truncate">${talent.name}</h3>
-                    <div class="mt-1">
-                        ${talent.tags.map(tag => `<span class="hashtag">${tag}</span>`).join('')}
-                    </div>
-                </div>
+                <p class="cyber-font text-[8px] text-gray-500 group-hover:text-cyan-400 transition-colors truncate">${talent.name}</p>
             `;
-            grid.appendChild(card);
+            grid.appendChild(box);
         });
 
-        function initCanvas() {
-            ctx.globalCompositeOperation = 'source-over';
-            ctx.fillStyle = '#111';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#8600FF';
-            ctx.font = 'bold 14px Orbitron';
-            ctx.textAlign = 'center';
-            ctx.fillText('ENCRYPTED_FILE', canvas.width/2, canvas.height/2);
-            
-            // 格線背景
-            ctx.strokeStyle = 'rgba(134, 0, 255, 0.1)';
-            for(let i=0; i<canvas.width; i+=25) {
-                ctx.beginPath(); ctx.moveTo(i,0); ctx.lineTo(i, canvas.height); ctx.stroke();
-            }
-        }
-
-        function openScratchCard(talent) {
+        function openInfoCard(talent) {
             document.getElementById('modal-name').innerText = talent.name;
             document.getElementById('modal-image').innerHTML = `<img src="https://api.dicebear.com/7.x/avataaars/svg?seed=${talent.name}" class="w-full h-full bg-black">`;
             overlay.style.display = 'block';
-            initCanvas();
         }
 
         function closeModal() { overlay.style.display = 'none'; }
 
-        function scratch(e) {
-            if (!isDrawing) return;
-            const rect = canvas.getBoundingClientRect();
-            const clientX = e.clientX || (e.touches && e.touches[0].clientX);
-            const clientY = e.clientY || (e.touches && e.touches[0].clientY);
-            const x = clientX - rect.left;
-            const y = clientY - rect.top;
-            ctx.globalCompositeOperation = 'destination-out';
-            ctx.beginPath(); ctx.arc(x, y, 35, 0, Math.PI * 2); ctx.fill();
-        }
-
-        canvas.addEventListener('mousedown', () => isDrawing = true);
-        canvas.addEventListener('touchstart', (e) => { isDrawing = true; e.preventDefault(); }, { passive: false });
-        window.addEventListener('mouseup', () => isDrawing = false);
-        window.addEventListener('touchend', () => isDrawing = false);
-        canvas.addEventListener('mousemove', scratch);
-        canvas.addEventListener('touchmove', (e) => { scratch(e); e.preventDefault(); }, { passive: false });
-
         function scrollToSection(id) {
             const el = document.getElementById(id);
-            if(el) window.scrollTo({ top: el.offsetTop - 40, behavior: 'smooth' });
+            if(el) window.scrollTo({ top: el.offsetTop - 50, behavior: 'smooth' });
         }
+
+        // 監聽 ESC 鍵關閉彈窗
+        window.addEventListener('keydown', (e) => {
+            if(e.key === "Escape") closeModal();
+        });
     </script>
 </body>
 </html>
