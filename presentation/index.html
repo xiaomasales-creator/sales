@@ -93,6 +93,7 @@
         .nav-item {
             position: relative;
             padding: 15px 10px;
+            /* 讓 item 的感應區域向下延伸一點，向上也有空隙 */
         }
 
         .panel-btn {
@@ -105,11 +106,12 @@
             letter-spacing: 0.15em;
             cursor: pointer;
             padding-bottom: 8px;
+            z-index: 2;
         }
 
         .energy-bar {
             position: absolute;
-            bottom: 0;
+            bottom: 8px;
             left: 0;
             width: 0%;
             height: 2px;
@@ -127,50 +129,42 @@
             width: 100%;
         }
 
+        /* 修正子選單：解決空隙導致消失的問題 */
         .submenu {
             position: absolute;
             bottom: 100%;
             left: 50%;
-            transform: translateX(-50%) translateY(0);
+            transform: translateX(-50%) translateY(10px);
             background: rgba(5, 5, 5, 0.98);
             border: 1px solid var(--primary-neon);
             min-width: 180px;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             backdrop-filter: blur(15px);
             padding: 12px;
             box-shadow: 0 0 30px rgba(134, 0, 255, 0.4);
             pointer-events: none;
             z-index: 1001;
-            margin-bottom: 15px;
+            margin-bottom: 12px; /* 視覺上的間距 */
         }
 
+        /* 隱形橋樑：填補子選單與主選單之間的空隙 */
         .submenu::before {
             content: "";
             position: absolute;
-            bottom: -20px;
+            bottom: -30px; /* 向下延伸至主選單 */
             left: 0;
             width: 100%;
-            height: 20px;
+            height: 35px;
             background: transparent;
-        }
-
-        .submenu::after {
-            content: "SECURED_LINK";
-            position: absolute;
-            top: -12px;
-            left: 8px;
-            font-size: 8px;
-            color: var(--primary-neon);
-            background: var(--bg-dark);
-            padding: 0 5px;
+            pointer-events: auto; /* 確保能捕捉滑鼠事件 */
         }
 
         .nav-item:hover .submenu {
             opacity: 1;
             visibility: visible;
-            transform: translateX(-50%) translateY(-5px);
+            transform: translateX(-50%) translateY(0);
             pointer-events: auto;
         }
 
@@ -191,21 +185,32 @@
             padding-left: 20px;
         }
 
+        /* 藝人頭像容器橫向滾動 */
         .floating-talent-panel {
             background: rgba(10, 10, 10, 0.6);
             border: 1px solid rgba(134, 0, 255, 0.3);
             backdrop-filter: blur(10px);
-            padding: 25px;
+            padding: 30px 20px;
             border-radius: 24px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
             width: 100%;
+            overflow-x: auto;
+            cursor: grab;
+            user-select: none;
         }
+
+        .floating-talent-panel::-webkit-scrollbar { display: none; }
+        .floating-talent-panel { -ms-overflow-style: none; scrollbar-width: none; }
+        .floating-talent-panel:active { cursor: grabbing; }
 
         .talent-avatar-grid {
             display: flex;
-            flex-wrap: wrap; 
-            justify-content: center; 
-            gap: 20px;
+            flex-direction: row; 
+            flex-wrap: nowrap; 
+            justify-content: flex-start; 
+            gap: 30px;
+            padding: 10px; 
+            width: max-content; 
         }
 
         .avatar-box {
@@ -213,6 +218,7 @@
             transition: transform 0.3s;
             cursor: pointer;
             width: 100px;
+            flex-shrink: 0; 
         }
 
         .avatar-box:hover { transform: scale(1.1); }
@@ -231,17 +237,15 @@
             box-shadow: 0 0 15px var(--secondary-neon);
         }
 
-        /* 輪播區塊樣式修正 */
+        /* 輪播區塊樣式 */
         .gallery-container {
             width: 100%;
             overflow: hidden;
             position: relative;
             cursor: grab;
-            user-select: none; /* 防止拖曳時選到圖片 */
+            user-select: none;
         }
-        .gallery-container:active {
-            cursor: grabbing;
-        }
+        .gallery-container:active { cursor: grabbing; }
         .gallery-track { 
             display: flex; 
             width: max-content; 
@@ -335,9 +339,10 @@
             </div>
         </section>
 
-        <!-- 3. 藝人清單 -->
-        <section id="talents" class="py-16 max-w-6xl mx-auto px-6 w-full">
-            <div class="floating-talent-panel">
+        <!-- 3. 藝人清單 (改為滑鼠拖曳) -->
+        <section id="talents" class="py-16 max-w-6xl mx-auto px-6 w-full overflow-hidden">
+            <h2 class="cyber-font text-center text-cyan-400 text-[10px] tracking-[0.5em] mb-4">PERSONNEL_REGISTRY // 旗下藝人</h2>
+            <div class="floating-talent-panel" id="talent-scroll-container">
                 <div id="talent-grid" class="talent-avatar-grid"></div>
             </div>
         </section>
@@ -351,57 +356,47 @@
     <nav class="control-panel">
         <div class="panel-container cyber-font">
             <div class="nav-item">
-                <div class="panel-btn" onclick="scrollToSection('home')">
-                    關於小馬
-                    <div class="energy-bar"></div>
-                </div>
+                <div class="panel-btn" onclick="scrollToSection('home')">關於小馬</div>
+                <div class="energy-bar"></div>
                 <div class="submenu">
-                    <a href="#" class="submenu-link">品牌理念</a>
-                    <a href="#" class="submenu-link">合作項目</a>
-                    <a href="#" class="submenu-link">服務流程</a>
+                    <a href="javascript:void(0)" class="submenu-link">品牌理念</a>
+                    <a href="javascript:void(0)" class="submenu-link">合作項目</a>
+                    <a href="javascript:void(0)" class="submenu-link">服務流程</a>
                 </div>
             </div>
             <div class="nav-item">
-                <div class="panel-btn" onclick="scrollToSection('talents')">
-                    網紅經紀
-                    <div class="energy-bar"></div>
-                </div>
+                <div class="panel-btn" onclick="scrollToSection('talents')">網紅經紀</div>
+                <div class="energy-bar"></div>
                 <div class="submenu">
-                    <a href="#" class="submenu-link">經典案例</a>
-                    <a href="#" class="submenu-link">旗下主播</a>
-                    <a href="#" class="submenu-link">經常合作KOL</a>
+                    <a href="javascript:void(0)" class="submenu-link">經典案例</a>
+                    <a href="javascript:void(0)" class="submenu-link">旗下主播</a>
+                    <a href="javascript:void(0)" class="submenu-link">經常合作KOL</a>
                 </div>
             </div>
             <div class="nav-item">
-                <div class="panel-btn" onclick="scrollToSection('gallery')">
-                    活動花絮
-                    <div class="energy-bar"></div>
-                </div>
+                <div class="panel-btn" onclick="scrollToSection('gallery')">活動花絮</div>
+                <div class="energy-bar"></div>
                 <div class="submenu">
-                    <a href="#" class="submenu-link">線下活動花絮</a>
-                    <a href="#" class="submenu-link">商案總覽</a>
+                    <a href="javascript:void(0)" class="submenu-link">線下活動花絮</a>
+                    <a href="javascript:void(0)" class="submenu-link">商案總覽</a>
                 </div>
             </div>
             <div class="nav-item">
-                <div class="panel-btn">
-                    其他服務
-                    <div class="energy-bar"></div>
-                </div>
+                <div class="panel-btn">其他服務</div>
+                <div class="energy-bar"></div>
                 <div class="submenu">
-                    <a href="#" class="submenu-link">影音剪輯</a>
-                    <a href="#" class="submenu-link">網頁製作</a>
-                    <a href="#" class="submenu-link">美術設計</a>
-                    <a href="#" class="submenu-link">社群經營</a>
+                    <a href="javascript:void(0)" class="submenu-link">影音剪輯</a>
+                    <a href="javascript:void(0)" class="submenu-link">網頁製作</a>
+                    <a href="javascript:void(0)" class="submenu-link">美術設計</a>
+                    <a href="javascript:void(0)" class="submenu-link">社群經營</a>
                 </div>
             </div>
             <div class="nav-item">
-                <div class="panel-btn">
-                    聯絡我們
-                    <div class="energy-bar"></div>
-                </div>
+                <div class="panel-btn">聯絡我們</div>
+                <div class="energy-bar"></div>
                 <div class="submenu">
-                    <a href="#" class="submenu-link">商務洽談</a>
-                    <a href="#" class="submenu-link">加入小馬</a>
+                    <a href="javascript:void(0)" class="submenu-link">商務洽談</a>
+                    <a href="javascript:void(0)" class="submenu-link">加入小馬</a>
                 </div>
             </div>
         </div>
@@ -439,7 +434,6 @@
     </div>
 
     <script>
-        // 完整的藝人列表
         const talents = [
             { name: "狂暴小建", img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/01%20狂暴小建.jpg" },
             { name: "UZRA", img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/02%20UZRA.jpg" },
@@ -459,13 +453,37 @@
         talents.forEach(t => {
             const div = document.createElement('div');
             div.className = "avatar-box";
-            div.onclick = () => {
+            div.onclick = (e) => {
+                if (Math.abs(lastMoveX) > 5) return;
                 document.getElementById('modal-name').innerText = t.name;
                 document.getElementById('modal-image').innerHTML = `<img src="${t.img}" class="w-full h-full object-cover">`;
                 document.getElementById('modal-overlay').style.display = 'block';
             };
             div.innerHTML = `<div class="avatar-circle"><img src="${t.img}" class="w-full h-full object-cover" onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=${t.name}'"></div><p class="text-xs text-zinc-400 font-bold">${t.name}</p>`;
             grid.appendChild(div);
+        });
+
+        const scrollContainer = document.getElementById('talent-scroll-container');
+        let isDown = false;
+        let startX_scroll;
+        let scrollLeft;
+        let lastMoveX = 0;
+
+        scrollContainer.addEventListener('mousedown', (e) => {
+            isDown = true;
+            lastMoveX = 0;
+            startX_scroll = e.pageX - scrollContainer.offsetLeft;
+            scrollLeft = scrollContainer.scrollLeft;
+        });
+        scrollContainer.addEventListener('mouseleave', () => isDown = false);
+        scrollContainer.addEventListener('mouseup', () => isDown = false);
+        scrollContainer.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - scrollContainer.offsetLeft;
+            const walk = (x - startX_scroll) * 2;
+            lastMoveX += Math.abs(x - startX_scroll - (scrollLeft - scrollContainer.scrollLeft));
+            scrollContainer.scrollLeft = scrollLeft - walk;
         });
 
         function closeModal() { document.getElementById('modal-overlay').style.display = 'none'; }
@@ -475,7 +493,6 @@
             if(el) window.scrollTo({ top: el.offsetTop - 50, behavior: 'smooth' });
         }
 
-        // --- 修正後的輪播功能：包含自動播放與手動拖曳 ---
         const container = document.getElementById('gallery-container');
         const track = document.getElementById('gallery-track');
         let pos = 0;
@@ -484,12 +501,9 @@
         let currentPos = 0;
         let isAutoPlay = true;
 
-        // 自動輪播
         function autoAnimate() {
             if (isAutoPlay && !isDragging) {
                 pos -= 0.5;
-                // 當跑過一輪（假設四張圖片寬度 800*4=3200，但軌道長度依據內容）
-                // 這裡設定簡單的循環，如果是無縫則需要克隆元素
                 if (pos < -1600) pos = 0;
                 track.style.transform = `translateX(${pos}px)`;
             }
@@ -497,44 +511,33 @@
         }
         autoAnimate();
 
-        // 拖曳邏輯
         const startDrag = (e) => {
             isDragging = true;
-            isAutoPlay = false; // 拖曳時停止自動播放
+            isAutoPlay = false;
             startX = (e.pageX || e.touches[0].pageX) - track.offsetLeft;
             currentPos = pos;
         };
-
         const onDrag = (e) => {
             if (!isDragging) return;
             e.preventDefault();
             const x = (e.pageX || e.touches[0].pageX) - track.offsetLeft;
             const walk = (x - startX);
             pos = currentPos + walk;
-            
-            // 邊界限制（防止拉太遠）
             if (pos > 100) pos = 100;
             if (pos < -2400) pos = -2400;
-
             track.style.transform = `translateX(${pos}px)`;
         };
-
         const stopDrag = () => {
             isDragging = false;
-            // 延遲恢復自動播放，增加使用者體驗
             setTimeout(() => { isAutoPlay = true; }, 1000);
         };
 
-        // 滑鼠事件
         container.addEventListener('mousedown', startDrag);
         window.addEventListener('mousemove', onDrag);
         window.addEventListener('mouseup', stopDrag);
-
-        // 觸控事件
         container.addEventListener('touchstart', startDrag);
         container.addEventListener('touchmove', onDrag);
         container.addEventListener('touchend', stopDrag);
-
     </script>
 </body>
 </html>
