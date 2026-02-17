@@ -12,6 +12,7 @@
         :root {
             --primary-neon: #8600FF;
             --secondary-neon: #00F0FF;
+            --danger-neon: #FF0055;
             --bg-dark: #050505;
             --panel-bg: rgba(10, 10, 10, 0.9);
         }
@@ -22,6 +23,7 @@
             font-family: 'Noto Sans TC', sans-serif;
             overflow-x: hidden;
             scroll-behavior: smooth;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .cyber-font {
@@ -55,10 +57,10 @@
         /* --- 太空船控制面板設計 --- */
         .control-panel {
             position: fixed;
-            bottom: 30px;
+            bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            width: 95%;
+            width: 98%;
             max-width: 1000px;
             z-index: 1000;
         }
@@ -68,8 +70,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 15px;
-            padding: 10px 40px;
+            gap: 10px;
+            padding: 10px 20px;
             background: linear-gradient(180deg, rgba(20, 20, 20, 0.9) 0%, rgba(5, 5, 5, 0.95) 100%);
             backdrop-filter: blur(20px);
             border-top: 1px solid rgba(134, 0, 255, 0.4);
@@ -78,26 +80,33 @@
             border-radius: 4px;
         }
 
-        .panel-container::before, .panel-container::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            width: 20px;
-            height: 100%;
-            background: inherit;
-            z-index: -1;
+        @media (min-width: 768px) {
+            .panel-container { gap: 25px; padding: 10px 40px; border-radius: 4px; }
+            .panel-container::before, .panel-container::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                width: 20px;
+                height: 100%;
+                background: inherit;
+                z-index: -1;
+            }
+            .panel-container::before { left: -10px; transform: skewX(-15deg); border-left: 1px solid rgba(134, 0, 255, 0.4); }
+            .panel-container::after { right: -10px; transform: skewX(15deg); border-right: 1px solid rgba(134, 0, 255, 0.4); }
+            
+            .nav-item { padding: 10px 15px; }
+            .panel-btn { font-size: 0.9rem; }
         }
-        .panel-container::before { left: -10px; transform: skewX(-15deg); border-left: 1px solid rgba(134, 0, 255, 0.4); }
-        .panel-container::after { right: -10px; transform: skewX(15deg); border-right: 1px solid rgba(134, 0, 255, 0.4); }
 
-        .nav-item {
-            position: relative;
-            padding: 15px 10px;
+        @media (max-width: 767px) {
+            .panel-container { gap: 5px; padding: 10px 8px; border-radius: 12px; }
+            .panel-btn { font-size: 0.7rem !important; letter-spacing: 0.05em !important; }
         }
+
+        .nav-item { position: relative; }
 
         .panel-btn {
             position: relative;
-            font-size: 0.9rem;
             font-weight: bold;
             color: #888;
             transition: all 0.3s ease;
@@ -128,34 +137,41 @@
             width: 100%;
         }
 
+        /* 修復子選單空隙問題 */
         .submenu {
             position: absolute;
-            bottom: 100%;
+            bottom: 100%; /* 從按鈕上方開始 */
             left: 50%;
             transform: translateX(-50%) translateY(10px);
             background: rgba(5, 5, 5, 0.98);
             border: 1px solid var(--primary-neon);
-            min-width: 180px;
+            min-width: 160px;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s;
             backdrop-filter: blur(15px);
-            padding: 12px;
+            padding: 10px;
             box-shadow: 0 0 30px rgba(134, 0, 255, 0.4);
             pointer-events: none;
             z-index: 1001;
-            margin-bottom: 12px;
+            margin-bottom: 12px; /* 增加與按鈕的物理距離，方便動畫觀察 */
         }
 
+        /* 關鍵修復：加入透明橋樑連通主選單與子選單 */
         .submenu::before {
             content: "";
             position: absolute;
-            bottom: -30px;
+            bottom: -20px; /* 覆蓋下方的空隙 */
             left: 0;
             width: 100%;
-            height: 35px;
+            height: 25px; /* 足夠的高度來填補空隙 */
             background: transparent;
-            pointer-events: auto;
+        }
+
+        .submenu-inner {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
         }
 
         .nav-item:hover .submenu {
@@ -167,9 +183,9 @@
 
         .submenu-link {
             display: block;
-            padding: 10px 15px;
+            padding: 8px 12px;
             color: #999;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             text-align: left;
             transition: all 0.2s;
             border-left: 2px solid transparent;
@@ -179,7 +195,7 @@
             background: rgba(134, 0, 255, 0.15);
             color: var(--secondary-neon);
             border-left: 2px solid var(--secondary-neon);
-            padding-left: 20px;
+            padding-left: 15px;
         }
 
         /* 藝人頭像容器橫向滾動 */
@@ -188,7 +204,7 @@
             border-top: 1px solid rgba(134, 0, 255, 0.3);
             border-bottom: 1px solid rgba(134, 0, 255, 0.3);
             backdrop-filter: blur(10px);
-            padding: 40px 0;
+            padding: 30px 0;
             width: 100vw;
             position: relative;
             left: 50%;
@@ -203,14 +219,13 @@
 
         .floating-talent-panel::-webkit-scrollbar { display: none; }
         .floating-talent-panel { -ms-overflow-style: none; scrollbar-width: none; }
-        .floating-talent-panel:active { cursor: grabbing; }
 
         .talent-avatar-grid {
             display: flex;
             flex-direction: row; 
             flex-wrap: nowrap; 
             justify-content: flex-start; 
-            gap: 40px;
+            gap: 30px;
             padding: 0 10vw;
             width: max-content; 
         }
@@ -219,15 +234,20 @@
             text-align: center;
             transition: transform 0.3s;
             cursor: pointer;
-            width: 100px;
+            width: 90px;
             flex-shrink: 0; 
         }
 
-        .avatar-box:hover { transform: scale(1.1); }
+        @media (min-width: 768px) {
+            .avatar-box { width: 120px; }
+            .avatar-box:hover { transform: scale(1.1); }
+            .avatar-circle { width: 90px; height: 90px; }
+        }
+
         .avatar-circle {
-            width: 80px; height: 80px;
+            width: 70px; height: 70px;
             border-radius: 50%;
-            margin: 0 auto 10px;
+            margin: 0 auto 8px;
             border: 2px solid #333;
             transition: all 0.3s;
             overflow: hidden;
@@ -247,27 +267,22 @@
             cursor: grab;
             user-select: none;
         }
-        .gallery-container:active { cursor: grabbing; }
         .gallery-track { 
             display: flex; 
             width: max-content; 
             transition: transform 0.1s ease-out;
             will-change: transform;
         }
-        .gallery-item { width: 800px; height: 500px; flex-shrink: 0; padding: 10px; pointer-events: none; }
+        .gallery-item { width: 80vw; max-width: 800px; height: 450px; flex-shrink: 0; padding: 10px; pointer-events: none; }
         
         @media (max-width: 768px) { 
-            .gallery-item { width: 100vw; height: 60vw; } 
-            .panel-container { padding: 10px 15px; flex-wrap: wrap; border-radius: 20px; }
-            .panel-container::before, .panel-container::after { display: none; }
-            .panel-btn { font-size: 0.75rem; }
-            .talent-avatar-grid { padding: 0 5vw; }
+            .gallery-item { width: 90vw; height: 50vw; } 
         }
 
         .gallery-img {
             width: 100%; height: 100%;
             object-fit: cover;
-            border-radius: 15px;
+            border-radius: 12px;
             filter: brightness(0.7);
             transition: filter 0.3s;
         }
@@ -282,19 +297,19 @@
             z-index: 2000;
             backdrop-filter: blur(15px);
             overflow-y: auto;
-            padding: 20px;
+            padding: 10px;
         }
 
         .cyber-panel-container {
             position: relative;
             width: 95%;
             max-width: 1100px;
-            min-height: 80vh;
+            min-height: 90vh;
             background: #080808;
-            margin: 40px auto;
+            margin: 20px auto;
             border: 1px solid rgba(0, 240, 255, 0.3);
-            box-shadow: 0 0 30px rgba(0, 240, 255, 0.1), inset 0 0 20px rgba(134, 0, 255, 0.1);
-            padding: 30px;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.1);
+            padding: 20px;
             display: flex;
             flex-direction: column;
             gap: 20px;
@@ -302,8 +317,7 @@
         }
 
         @keyframes panel-flicker {
-            0% { opacity: 0; transform: scale(0.95); }
-            50% { opacity: 0.5; }
+            0% { opacity: 0; transform: scale(0.98); }
             100% { opacity: 1; transform: scale(1); }
         }
 
@@ -311,47 +325,149 @@
             border-bottom: 2px solid var(--secondary-neon);
             padding-bottom: 15px;
             display: flex;
+            flex-direction: row;
+            align-items: baseline;
             justify-content: space-between;
-            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .cyber-body {
             display: grid;
-            grid-template-columns: 350px 1fr;
-            gap: 30px;
-            height: 100%;
-        }
-
-        @media (max-width: 900px) {
-            .cyber-body { grid-template-columns: 1fr; }
-        }
-
-        /* 藝人頭像與主照片區 */
-        .profile-section {
-            display: flex;
-            flex-direction: column;
+            grid-template-columns: 1fr;
             gap: 20px;
+        }
+
+        @media (min-width: 900px) {
+            .cyber-body { grid-template-columns: 380px 1fr; gap: 40px; }
+            .cyber-panel-container { padding: 40px; }
+            .main-photo-frame { aspect-ratio: 3/4; }
         }
 
         .main-photo-frame {
             position: relative;
             width: 100%;
-            aspect-ratio: 3/4;
             border: 1px solid var(--primary-neon);
             overflow: hidden;
             background: #111;
         }
         .main-photo-frame img { width: 100%; height: 100%; object-fit: cover; }
-        .scan-line {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 5px;
-            background: rgba(0, 240, 255, 0.5);
-            box-shadow: 0 0 10px var(--secondary-neon);
-            animation: scan 3s linear infinite;
-        }
-        @keyframes scan { 0% { top: -5%; } 100% { top: 105%; } }
 
-        /* 資訊區塊卡片 */
+        /* Scanning Beam */
+        .main-photo-frame::after {
+            content: "";
+            position: absolute;
+            top: -100px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--secondary-neon);
+            box-shadow: 0 0 15px var(--secondary-neon), 0 0 5px #fff;
+            opacity: 0.8;
+            animation: scan-beam 2.5s linear infinite;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        @keyframes scan-beam {
+            0% { top: -10%; }
+            100% { top: 110%; }
+        }
+
+        /* --- 賽博控制按鈕組 (右上角佈局) --- */
+        .cyber-action-group {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 100;
+        }
+
+        .social-link-wrapper {
+            display: flex;
+            gap: 8px;
+            margin-right: 25px; 
+            padding-right: 15px;
+            border-right: 1px solid rgba(0, 240, 255, 0.2);
+        }
+
+        .cyber-icon-btn {
+            position: relative;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .btn-frame {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            border: 1px solid var(--secondary-neon);
+            background: rgba(0, 240, 255, 0.05);
+            clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 70% 100%, 0% 100%);
+            transition: all 0.3s;
+        }
+
+        .btn-content {
+            color: var(--secondary-neon);
+            font-size: 16px;
+            z-index: 1;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cyber-icon-btn:hover .btn-frame {
+            background: var(--primary-neon);
+            border-color: #fff;
+            box-shadow: 0 0 20px var(--primary-neon);
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .cyber-icon-btn:hover .btn-content {
+            color: #fff;
+            transform: scale(1.1);
+        }
+
+        .cyber-icon-btn.close {
+            width: 44px;
+            height: 44px;
+        }
+        .cyber-icon-btn.close .btn-frame {
+            border-color: var(--danger-neon);
+            background: rgba(255, 0, 85, 0.1);
+        }
+        .cyber-icon-btn.close .btn-content {
+            color: var(--danger-neon);
+            font-size: 24px;
+        }
+        .cyber-icon-btn.close:hover .btn-frame {
+            background: var(--danger-neon);
+            box-shadow: 0 0 25px var(--danger-neon);
+            transform: scale(1.1);
+        }
+        .cyber-icon-btn.close:hover .btn-content {
+            transform: rotate(90deg);
+            color: #fff;
+        }
+
+        .btn-dot {
+            position: absolute;
+            bottom: 4px; right: 4px;
+            width: 3px; height: 3px;
+            background: var(--secondary-neon);
+            box-shadow: 0 0 5px var(--secondary-neon);
+        }
+        .close .btn-dot {
+            background: var(--danger-neon);
+        }
+
         .info-block {
             background: rgba(255, 255, 255, 0.03);
             border-left: 3px solid var(--primary-neon);
@@ -364,11 +480,10 @@
             color: var(--secondary-neon);
             text-transform: uppercase;
             letter-spacing: 2px;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
             display: block;
         }
 
-        /* Hashtag 標籤樣式 */
         .tag-cloud {
             display: flex;
             flex-wrap: wrap;
@@ -381,56 +496,6 @@
             padding: 4px 10px;
             font-size: 11px;
             border-radius: 2px;
-            transition: all 0.3s;
-        }
-        .cyber-tag:hover {
-            border-color: var(--secondary-neon);
-            color: var(--secondary-neon);
-            background: rgba(0, 240, 255, 0.1);
-        }
-
-        /* 社群連結按鈕 */
-        .social-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-        }
-        .social-link-btn {
-            background: #111;
-            border: 1px solid #333;
-            padding: 10px;
-            text-align: center;
-            font-size: 10px;
-            color: #888;
-            transition: all 0.3s;
-        }
-        .social-link-btn:hover {
-            border-color: var(--secondary-neon);
-            color: white;
-            box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
-        }
-
-        .close-corner {
-            position: absolute;
-            top: 0; right: 0;
-            width: 40px; height: 40px;
-            background: var(--primary-neon);
-            clip-path: polygon(100% 0, 0 0, 100% 100%);
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        .close-corner:hover { background: #ff0055; }
-        .close-icon {
-            position: absolute;
-            top: 5px; right: 5px;
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
         }
     </style>
 </head>
@@ -438,184 +503,155 @@
 
     <div class="bg-grid"></div>
 
-    <div class="min-h-screen flex flex-col">
+    <div class="min-h-screen flex flex-col pb-32">
         
-        <!-- 1. 首頁 -->
-        <section id="home" class="pt-20 pb-12 flex flex-col items-center text-center px-6">
-            <div class="hero-logo mb-10">
-                <img src="https://xiaomasales-creator.github.io/sales/presentation/homepage/LOGO_cut.png" alt="小馬娛樂 LOGO" class="max-w-[800px] w-full h-auto">
+        <section id="home" class="pt-12 md:pt-24 pb-8 flex flex-col items-center text-center px-6">
+            <div class="hero-logo mb-6 md:mb-10">
+                <img src="https://xiaomasales-creator.github.io/sales/presentation/homepage/LOGO_cut.png" alt="小馬娛樂 LOGO" class="max-w-[90%] md:max-w-[800px] h-auto">
             </div>
-            <div class="max-w-2xl">
-                <h1 class="cyber-font text-2xl md:text-4xl font-black mb-4">XIAOMA ENT. // <span class="text-purple-500">NEXT-GEN</span></h1>
-                <p class="text-gray-400 text-sm md:text-base leading-relaxed">
+            <div class="max-w-3xl px-4">
+                <h1 class="cyber-font text-xl md:text-4xl font-black mb-4">XIAOMA ENT. // <span class="text-purple-500">NEXT-GEN</span></h1>
+                <p class="text-gray-400 text-xs md:text-base leading-relaxed">
                     致力於挖掘最具個人風格的創作者，在數位洪流中為品牌精準導航。
                 </p>
             </div>
         </section>
 
-        <!-- 2. 活動花絮 -->
         <section id="gallery" class="py-12">
-            <h2 class="cyber-font text-center text-purple-400 text-sm tracking-widest mb-8">LATEST_ACTIVITIES // 活動花絮</h2>
+            <h2 class="cyber-font text-center text-purple-400 text-[10px] md:text-sm tracking-widest mb-8 uppercase">LATEST_ACTIVITIES // 活動花絮</h2>
             <div class="gallery-container" id="gallery-container">
                 <div class="gallery-track" id="gallery-track">
-                    <div class="gallery-item"><div class="gallery-img bg-zinc-800 flex items-center justify-center cyber-font">EVENT_01</div></div>
-                    <div class="gallery-item"><div class="gallery-img bg-zinc-700 flex items-center justify-center cyber-font">EVENT_02</div></div>
-                    <div class="gallery-item"><div class="gallery-img bg-zinc-800 flex items-center justify-center cyber-font">EVENT_03</div></div>
-                    <div class="gallery-item"><div class="gallery-img bg-zinc-700 flex items-center justify-center cyber-font">EVENT_04</div></div>
+                    <div class="gallery-item"><div class="gallery-img bg-zinc-800 flex items-center justify-center cyber-font text-2xl text-zinc-600">EVENT_01</div></div>
+                    <div class="gallery-item"><div class="gallery-img bg-zinc-700 flex items-center justify-center cyber-font text-2xl text-zinc-500">EVENT_02</div></div>
+                    <div class="gallery-item"><div class="gallery-img bg-zinc-800 flex items-center justify-center cyber-font text-2xl text-zinc-600">EVENT_03</div></div>
+                    <div class="gallery-item"><div class="gallery-img bg-zinc-700 flex items-center justify-center cyber-font text-2xl text-zinc-500">EVENT_04</div></div>
                 </div>
             </div>
         </section>
 
-        <!-- 3. 藝人清單 -->
         <section id="talents" class="py-16 w-full overflow-hidden">
-            <h2 class="cyber-font text-center text-cyan-400 text-[10px] tracking-[0.5em] mb-12">PERSONNEL_REGISTRY // 旗下藝人</h2>
+            <h2 class="cyber-font text-center text-cyan-400 text-[10px] md:text-sm tracking-[0.5em] mb-12 uppercase">PERSONNEL_REGISTRY // 旗下藝人</h2>
             <div class="floating-talent-panel" id="talent-scroll-container">
                 <div id="talent-grid" class="talent-avatar-grid"></div>
             </div>
         </section>
 
-        <footer class="mt-auto pb-44 text-center opacity-30">
-            <p class="cyber-font text-[10px]">&copy; 2024 XIAOMA ENT. ALL SYSTEMS OPERATIONAL.</p>
+        <footer class="mt-auto py-8 text-center opacity-30">
+            <p class="cyber-font text-[9px] md:text-[11px] tracking-widest">&copy; 2024 XIAOMA ENT. ALL SYSTEMS OPERATIONAL.</p>
         </footer>
     </div>
 
-    <!-- 太空船控制面板 -->
     <nav class="control-panel">
         <div class="panel-container cyber-font">
             <div class="nav-item">
                 <div class="panel-btn" onclick="scrollToSection('home')">關於小馬</div>
                 <div class="energy-bar"></div>
                 <div class="submenu">
-                    <a href="javascript:void(0)" class="submenu-link">品牌理念</a>
-                    <a href="javascript:void(0)" class="submenu-link">合作項目</a>
-                    <a href="javascript:void(0)" class="submenu-link">服務流程</a>
+                    <div class="submenu-inner">
+                        <a href="javascript:void(0)" class="submenu-link">品牌理念</a>
+                        <a href="javascript:void(0)" class="submenu-link">合作項目</a>
+                        <a href="javascript:void(0)" class="submenu-link">服務流程</a>
+                    </div>
                 </div>
             </div>
             <div class="nav-item">
                 <div class="panel-btn" onclick="scrollToSection('talents')">網紅經紀</div>
                 <div class="energy-bar"></div>
                 <div class="submenu">
-                    <a href="javascript:void(0)" class="submenu-link">經典案例</a>
-                    <a href="javascript:void(0)" class="submenu-link">旗下主播</a>
-                    <a href="javascript:void(0)" class="submenu-link">經常合作KOL</a>
+                    <div class="submenu-inner">
+                        <a href="javascript:void(0)" class="submenu-link">旗下主播</a>
+                        <a href="javascript:void(0)" class="submenu-link">經常合作KOL</a>
+                        <a href="javascript:void(0)" class="submenu-link">經典案例</a>
+                    </div>
                 </div>
             </div>
             <div class="nav-item">
                 <div class="panel-btn" onclick="scrollToSection('gallery')">活動花絮</div>
                 <div class="energy-bar"></div>
                 <div class="submenu">
-                    <a href="javascript:void(0)" class="submenu-link">線下活動花絮</a>
-                    <a href="javascript:void(0)" class="submenu-link">商案總覽</a>
+                    <div class="submenu-inner">
+                        <a href="javascript:void(0)" class="submenu-link">商案總覽</a>
+                        <a href="javascript:void(0)" class="submenu-link">線下活動花絮</a>
+                    </div>
                 </div>
             </div>
             <div class="nav-item">
                 <div class="panel-btn">其他服務</div>
                 <div class="energy-bar"></div>
                 <div class="submenu">
-                    <a href="javascript:void(0)" class="submenu-link">影音剪輯</a>
-                    <a href="javascript:void(0)" class="submenu-link">網頁製作</a>
-                    <a href="javascript:void(0)" class="submenu-link">美術設計</a>
-                    <a href="javascript:void(0)" class="submenu-link">社群經營</a>
+                    <div class="submenu-inner">
+                        <a href="javascript:void(0)" class="submenu-link">影音剪輯</a>
+                        <a href="javascript:void(0)" class="submenu-link">網頁製作</a>
+                        <a href="javascript:void(0)" class="submenu-link">美術設計</a>
+                    </div>
                 </div>
             </div>
-            <div class="nav-item">
+            <div class="nav-item hidden md:block">
                 <div class="panel-btn">聯絡我們</div>
                 <div class="energy-bar"></div>
-                <div class="submenu">
-                    <a href="javascript:void(0)" class="submenu-link">商務洽談</a>
-                    <a href="javascript:void(0)" class="submenu-link">加入小馬</a>
-                </div>
             </div>
         </div>
     </nav>
 
-    <!-- 彈窗：賽博電子面板詳情頁 -->
+    <!-- 彈窗：詳情頁 -->
     <div id="modal-overlay" onclick="closeModal()">
         <div class="cyber-panel-container" onclick="event.stopPropagation()">
-            <!-- 關閉按鈕 -->
-            <div class="close-corner" onclick="closeModal()">
-                <span class="close-icon">&times;</span>
+            
+            <div class="cyber-action-group">
+                <div class="social-link-wrapper">
+                    <div class="cyber-icon-btn" title="Facebook"><div class="btn-frame"></div><div class="btn-content">FB</div><div class="btn-dot"></div></div>
+                    <div class="cyber-icon-btn" title="Instagram"><div class="btn-frame"></div><div class="btn-content">IG</div><div class="btn-dot"></div></div>
+                    <div class="cyber-icon-btn" title="YouTube"><div class="btn-frame"></div><div class="btn-content">YT</div><div class="btn-dot"></div></div>
+                    <div class="cyber-icon-btn" title="Twitch"><div class="btn-frame"></div><div class="btn-content">TW</div><div class="btn-dot"></div></div>
+                </div>
+                <div class="cyber-icon-btn close" onclick="closeModal()" title="CLOSE_TERMINAL">
+                    <div class="btn-frame"></div><div class="btn-content italic">&times;</div><div class="btn-dot"></div>
+                </div>
             </div>
 
-            <!-- Header -->
             <div class="cyber-header">
-                <div>
-                    <h2 id="modal-name" class="cyber-font text-3xl font-black text-white italic">TALENT_ID</h2>
-                    <p id="modal-en-name" class="text-cyan-400 cyber-font text-[11px] tracking-[0.4em] mt-1">CREATOR_PROFILE</p>
-                </div>
-                <div class="text-right">
-                    <!-- ACCESS_TIME 已移除 -->
+                <div class="flex flex-col">
+                    <h2 id="modal-name" class="cyber-font text-2xl md:text-4xl font-black text-white italic">TALENT_ID</h2>
+                    <p id="modal-en-name" class="text-cyan-400 cyber-font text-[10px] md:text-[12px] tracking-[0.4em] mt-1">CREATOR_PROFILE</p>
                 </div>
             </div>
 
-            <!-- Body -->
             <div class="cyber-body">
-                <!-- 左側：照片與基礎狀態 -->
-                <div class="profile-section">
+                <div class="flex flex-col gap-6">
                     <div class="main-photo-frame" id="modal-image-frame">
-                        <div class="scan-line"></div>
-                        <!-- JS 注入圖片 -->
-                    </div>
-
-                    <div class="info-block">
-                        <span class="info-label">Career Start // 直播資歷</span>
-                        <p class="text-xl cyber-font text-white" id="modal-career-start">SINCE 2016</p>
-                    </div>
-
-                    <div class="social-grid cyber-font">
-                        <a href="#" class="social-link-btn" id="link-twitch">TWITCH</a>
-                        <a href="#" class="social-link-btn" id="link-youtube">YT</a>
-                        <a href="#" class="social-link-btn" id="link-ig">IG</a>
-                        <a href="#" class="social-link-btn" id="link-fb">FB</a>
+                        <img src="" alt="Talent Image">
                     </div>
                 </div>
 
-                <!-- 右側：詳細數據區 -->
-                <div class="details-section flex flex-col gap-6">
-                    <!-- 藝人簡介 -->
-                    <div class="info-block min-h-[100px]">
+                <div class="flex flex-col gap-6">
+                    <div class="info-block">
                         <span class="info-label">Bio // 藝人簡介</span>
-                        <p class="text-sm text-gray-300 leading-relaxed" id="modal-bio">加載中...</p>
+                        <p class="text-xs md:text-base text-gray-300 leading-relaxed" id="modal-bio">加載中...</p>
                     </div>
 
-                    <!-- 數據區 -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="info-block">
                             <span class="info-label">Stream Type // 直播與遊戲類型</span>
-                            <p class="text-white text-sm font-bold mb-1" id="modal-stream-type">生活休閒 / 競技遊戲</p>
-                            <p class="text-gray-500 text-[11px]" id="modal-game-type">LOL, Valorant, Elden Ring</p>
+                            <p class="text-white text-xs md:text-sm font-bold" id="modal-stream-type">-</p>
+                            <p class="text-gray-500 text-[10px] md:text-[11px]" id="modal-game-type">-</p>
                         </div>
                         <div class="info-block">
-                            <span class="info-label">Audience // 受眾分析</span>
-                            <div class="stats-grid mt-2">
-                                <div>
-                                    <p class="text-[9px] text-gray-500">MALE</p>
-                                    <div class="w-full h-1 bg-zinc-800 mt-1"><div class="h-full bg-cyan-400" style="width: 75%"></div></div>
-                                </div>
-                                <div>
-                                    <p class="text-[9px] text-gray-500">FEMALE</p>
-                                    <div class="w-full h-1 bg-zinc-800 mt-1"><div class="h-full bg-purple-500" style="width: 25%"></div></div>
-                                </div>
-                            </div>
+                            <span class="info-label">Career Start // 直播資歷</span>
+                            <p class="text-sm md:text-xl cyber-font text-white" id="modal-career-start">SINCE -</p>
                         </div>
                     </div>
 
-                    <!-- Hashtag 特色區 -->
                     <div class="info-block">
                         <span class="info-label">Special Traits // 特色 Hashtag</span>
-                        <div class="tag-cloud mt-2" id="modal-hashtags">
-                            <!-- JS 注入標籤 -->
-                        </div>
+                        <div class="tag-cloud mt-2" id="modal-hashtags"></div>
                     </div>
 
-                    <!-- 底部技術裝飾 -->
-                    <div class="mt-auto pt-4 flex items-center justify-between border-t border-zinc-800">
-                        <div class="flex gap-4 opacity-40">
-                            <div class="w-10 h-1 bg-cyan-400"></div>
-                            <div class="w-4 h-1 bg-purple-500"></div>
-                            <div class="w-2 h-1 bg-white"></div>
+                    <div class="mt-auto pt-6 flex items-center justify-between border-t border-zinc-800 opacity-40">
+                        <div class="flex gap-4">
+                            <div class="w-16 h-1 bg-cyan-400"></div>
+                            <div class="w-6 h-1 bg-purple-500"></div>
+                            <div class="w-3 h-1 bg-white"></div>
                         </div>
-                        <!-- ENCRYPTION_KEY 已移除 -->
                     </div>
                 </div>
             </div>
@@ -632,8 +668,7 @@
                 career: "Since 2014",
                 streamType: "硬核遊戲 / 互動聊天",
                 gameType: "FPS, 各類 3A 大作",
-                hashtags: ["硬核遊戲", "吐槽系", "社群紅人", "資深實況主"],
-                links: { twitch: "#", youtube: "#", ig: "#", fb: "#" }
+                hashtags: ["硬核遊戲", "吐槽系", "社群紅人", "資深實況主"]
             },
             { 
                 name: "UZRA", 
@@ -643,8 +678,7 @@
                 career: "Since 2015",
                 streamType: "策略遊戲 / 公會經營",
                 gameType: "爐石戰記, 戰略模擬",
-                hashtags: ["公會經營", "硬核遊戲", "專業分析", "競技玩家"],
-                links: { twitch: "#", youtube: "#", ig: "#", fb: "#" }
+                hashtags: ["公會經營", "硬核遊戲", "專業分析", "競技玩家"]
             },
             { 
                 name: "豆豆", 
@@ -654,8 +688,7 @@
                 career: "Since 2018",
                 streamType: "生活實況 / 多樣化遊戲",
                 gameType: "Switch 遊戲, 模擬經營",
-                hashtags: ["呆萌感", "短影音", "生活風格", "親和力"],
-                links: { twitch: "#", youtube: "#", ig: "#", fb: "#" }
+                hashtags: ["呆萌感", "短影音", "生活風格", "親和力"]
             },
             { 
                 name: "牛牛妹", 
@@ -665,45 +698,115 @@
                 career: "Since 2017",
                 streamType: "戶外實況 / 綜藝活動",
                 gameType: "派對遊戲, 節奏遊戲",
-                hashtags: ["主持站台", "社群紅人", "動漫愛好者", "活力派"],
-                links: { twitch: "#", youtube: "#", ig: "#", fb: "#" }
+                hashtags: ["主持站台", "社群紅人", "動漫愛好者", "活力派"]
+            },
+            { 
+                name: "Abby純純", 
+                enName: "ABBY_PURE",
+                img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/05 Abby純純.jpg",
+                bio: "具備極高親和力的生活風格創作人。擅長分享日常穿搭與質感生活，在社群上擁有極高的黏著度與導購力。",
+                career: "Since 2019",
+                streamType: "質感生活 / 時尚分享",
+                gameType: "模擬人生, 社交遊戲",
+                hashtags: ["氣質女神", "穿搭風格", "高互動率", "質感生活"]
+            },
+            { 
+                name: "萌萌吃吃", 
+                enName: "MO_MO_EATS",
+                img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/06 萌萌吃吃.jpg",
+                bio: "以美食開箱與療癒吃播為核心。直播風格溫馨愉快，是許多觀眾晚餐時段的最佳良伴，品牌餐飲推廣首選。",
+                career: "Since 2020",
+                streamType: "美食開箱 / 療癒吃播",
+                gameType: "烹飪模擬, 經營遊戲",
+                hashtags: ["美食領袖", "療癒系", "親切鄰家", "味蕾探險"]
+            },
+            { 
+                name: "小舞", 
+                enName: "DANCE_WAVE",
+                img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/07 小舞.png",
+                bio: "靈動的舞者與動態創作者。擅長快節奏的短影音內容，總能將音樂與視覺完美結合，引領社群趨勢。",
+                career: "Since 2021",
+                streamType: "動態舞蹈 / 運動生活",
+                gameType: "音樂節奏, 體感遊戲",
+                hashtags: ["舞蹈精靈", "節奏大師", "短影音達人", "自信魅力"]
+            },
+            { 
+                name: "小鹽", 
+                enName: "SALT_GIRL",
+                img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/08 小鹽.png",
+                bio: "擁有獨特鹽系風格的知性創作者。偏好極簡美學與深度閱讀分享，內容紮實且具備獨到的觀點與藝術氣息。",
+                career: "Since 2020",
+                streamType: "深度雜談 / 藝術分享",
+                gameType: "解謎益智, 敘事冒險",
+                hashtags: ["鹽系風格", "知性內涵", "藝術品味", "獨特視角"]
+            },
+            { 
+                name: "妖乖", 
+                enName: "YAO_GUAI",
+                img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/09 妖乖.jpg",
+                bio: "搞怪可愛、不按牌理出牌的創意奇才。直播充滿驚喜與笑聲，是社群中的快樂泉源與點子王。",
+                career: "Since 2022",
+                streamType: "創意惡搞 / 綜藝互動",
+                gameType: "派對遊戲, 搞笑競技",
+                hashtags: ["創意無限", "幽默風趣", "社群寵兒", "古靈精怪"]
+            },
+            { 
+                name: "丫布丁丁", 
+                enName: "PUDDING_GIRL",
+                img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/10 丫布丁丁.png",
+                bio: "甜美可人的元氣系偶像。擁有卓越的歌唱實力與迷人嗓音，常透過直播與觀眾進行溫暖的心靈交流。",
+                career: "Since 2018",
+                streamType: "音樂演唱 / 甜蜜互動",
+                gameType: "角色扮演, 養成遊戲",
+                hashtags: ["甜美歌聲", "元氣少女", "心靈治癒", "偶像氣質"]
+            },
+            { 
+                name: "奶茶蜜", 
+                enName: "MILK_TEA_BEE",
+                img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/11 奶茶蜜.jpg",
+                bio: "溫柔如奶茶般甜潤的創作者。擅長手作、DIY 與慢生活分享，為焦慮的數位時代帶來一片寧靜。",
+                career: "Since 2021",
+                streamType: "手作創意 / 慢活日常",
+                gameType: "動物森友會, 休閒模擬",
+                hashtags: ["溫柔力量", "手作達人", "生活美學", "療癒空間"]
+            },
+            { 
+                name: "妮塔", 
+                enName: "NITA_GLOW",
+                img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/12 妮塔.jpg",
+                bio: "具備強大專業背景的數位領域專家。不僅是實況主，更是科技潮流的先鋒者，提供最權威的產品解析。",
+                career: "Since 2017",
+                streamType: "科技評論 / 硬體開箱",
+                gameType: "3A 全效能測試, 賽車",
+                hashtags: ["科技先鋒", "專業解析", "意見領袖", "硬派評測"]
             }
         ];
-
-        const defaultData = {
-            bio: "專業創作者，致力於提供高品質的數位內容。在遊戲、生活與社群互動領域均有卓越表現。",
-            career: "Since 2019",
-            streamType: "綜合型實況 / 社群互動",
-            gameType: "多平台熱門遊戲",
-            hashtags: ["社群紅人", "短影音", "跨界合作"]
-        };
 
         const grid = document.getElementById('talent-grid');
         talents.forEach(t => {
             const div = document.createElement('div');
             div.className = "avatar-box";
-            div.onclick = (e) => {
-                if (Math.abs(lastMoveX) > 5) return;
-                openTalentModal(t);
-            };
-            div.innerHTML = `<div class="avatar-circle"><img src="${t.img}" class="w-full h-full object-cover" onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=${t.name}'"></div><p class="text-xs text-zinc-400 font-bold">${t.name}</p>`;
+            div.onclick = () => openTalentModal(t);
+            div.innerHTML = `
+                <div class="avatar-circle">
+                    <img src="${t.img}" class="w-full h-full object-cover" onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=${t.name}'">
+                </div>
+                <p class="text-[10px] md:text-xs text-zinc-400 font-bold uppercase">${t.name}</p>`;
             grid.appendChild(div);
         });
 
         function openTalentModal(t) {
             document.getElementById('modal-name').innerText = t.name;
-            document.getElementById('modal-en-name').innerText = t.enName || "CREATOR_UNNAMED";
-            document.getElementById('modal-image-frame').innerHTML = `<div class="scan-line"></div><img src="${t.img}" class="w-full h-full object-cover">`;
-            
-            document.getElementById('modal-bio').innerText = t.bio || defaultData.bio;
-            document.getElementById('modal-career-start').innerText = t.career || defaultData.career;
-            document.getElementById('modal-stream-type').innerText = t.streamType || defaultData.streamType;
-            document.getElementById('modal-game-type').innerText = t.gameType || defaultData.gameType;
+            document.getElementById('modal-en-name').innerText = t.enName;
+            document.getElementById('modal-image-frame').innerHTML = `<img src="${t.img}" class="w-full h-full object-cover" onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=${t.name}'">`;
+            document.getElementById('modal-bio').innerText = t.bio;
+            document.getElementById('modal-career-start').innerText = `SINCE ${t.career.replace('Since ', '')}`;
+            document.getElementById('modal-stream-type').innerText = t.streamType;
+            document.getElementById('modal-game-type').innerText = t.gameType;
 
             const tagContainer = document.getElementById('modal-hashtags');
             tagContainer.innerHTML = '';
-            const tags = t.hashtags || defaultData.hashtags;
-            tags.forEach(tag => {
+            t.hashtags.forEach(tag => {
                 const span = document.createElement('span');
                 span.className = 'cyber-tag';
                 span.innerText = `#${tag}`;
@@ -714,15 +817,23 @@
             document.body.style.overflow = 'hidden';
         }
 
+        function closeModal() { 
+            document.getElementById('modal-overlay').style.display = 'none'; 
+            document.body.style.overflow = 'auto';
+        }
+        
+        function scrollToSection(id) {
+            const el = document.getElementById(id);
+            if(el) window.scrollTo({ top: el.offsetTop - 50, behavior: 'smooth' });
+        }
+
         const scrollContainer = document.getElementById('talent-scroll-container');
         let isDown = false;
         let startX_scroll;
         let scrollLeft;
-        let lastMoveX = 0;
 
         scrollContainer.addEventListener('mousedown', (e) => {
             isDown = true;
-            lastMoveX = 0;
             startX_scroll = e.pageX - scrollContainer.offsetLeft;
             scrollLeft = scrollContainer.scrollLeft;
         });
@@ -733,19 +844,8 @@
             e.preventDefault();
             const x = e.pageX - scrollContainer.offsetLeft;
             const walk = (x - startX_scroll) * 2;
-            lastMoveX += Math.abs(x - startX_scroll - (scrollLeft - scrollContainer.scrollLeft));
             scrollContainer.scrollLeft = scrollLeft - walk;
         });
-
-        function closeModal() { 
-            document.getElementById('modal-overlay').style.display = 'none'; 
-            document.body.style.overflow = 'auto';
-        }
-        
-        function scrollToSection(id) {
-            const el = document.getElementById(id);
-            if(el) window.scrollTo({ top: el.offsetTop - 50, behavior: 'smooth' });
-        }
 
         const container = document.getElementById('gallery-container');
         const track = document.getElementById('gallery-track');
@@ -773,12 +873,8 @@
         };
         const onDrag = (e) => {
             if (!isDragging) return;
-            e.preventDefault();
             const x = (e.pageX || e.touches[0].pageX) - track.offsetLeft;
-            const walk = (x - startX);
-            pos = currentPos + walk;
-            if (pos > 100) pos = 100;
-            if (pos < -2400) pos = -2400;
+            pos = currentPos + (x - startX);
             track.style.transform = `translateX(${pos}px)`;
         };
         const stopDrag = () => {
@@ -789,8 +885,8 @@
         container.addEventListener('mousedown', startDrag);
         window.addEventListener('mousemove', onDrag);
         window.addEventListener('mouseup', stopDrag);
-        container.addEventListener('touchstart', startDrag);
-        container.addEventListener('touchmove', onDrag);
+        container.addEventListener('touchstart', startDrag, {passive: true});
+        container.addEventListener('touchmove', onDrag, {passive: true});
         container.addEventListener('touchend', stopDrag);
     </script>
 </body>
