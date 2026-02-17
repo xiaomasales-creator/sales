@@ -293,7 +293,7 @@
         .cyber-panel-container {
             position: relative;
             width: 95%;
-            max-width: 1200px; /* 增加寬度讓內部更寬鬆 */
+            max-width: 1200px;
             min-height: 90vh;
             background: #080808;
             margin: 20px auto;
@@ -329,7 +329,6 @@
         }
 
         @media (min-width: 1024px) {
-            /* 調整 Grid 比例，照片區與資訊區保持距離 */
             .cyber-body { 
                 grid-template-columns: 1.1fr 0.9fr; 
                 gap: 50px; 
@@ -337,7 +336,7 @@
             .cyber-panel-container { padding: 40px; }
         }
 
-        /* 圓形 3D 照片輪播器修正 */
+        /* 圓形 3D 照片輪播器 */
         .photo-carousel-wrapper {
             position: relative;
             width: 100%;
@@ -346,7 +345,7 @@
             justify-content: center;
             align-items: center;
             perspective: 1000px;
-            overflow: visible; /* 允許 3D 溢出 */
+            overflow: visible;
             margin-bottom: 20px;
         }
 
@@ -419,7 +418,7 @@
             transition: filter 0.3s;
         }
 
-        /* 狀態樣式修正：縮小橫向偏移，防止重疊右側文字 */
+        /* 狀態樣式 */
         .cyber-photo-card.active {
             z-index: 10;
             transform: translate3d(0, 0, 120px) scale(1.1);
@@ -433,12 +432,12 @@
 
         .cyber-photo-card.prev {
             z-index: 5;
-            transform: translate3d(-120px, 0, -80px) scale(0.85); /* 減少位移 */
+            transform: translate3d(-120px, 0, -80px) scale(0.85);
             opacity: 0.5;
         }
         .cyber-photo-card.next {
             z-index: 5;
-            transform: translate3d(120px, 0, -80px) scale(0.85); /* 減少位移 */
+            transform: translate3d(120px, 0, -80px) scale(0.85);
             opacity: 0.5;
         }
 
@@ -563,6 +562,36 @@
             letter-spacing: 2px;
             margin-bottom: 5px;
             display: block;
+        }
+
+        /* 男女比圖表樣式 */
+        .audience-bar-container {
+            width: 100%;
+            height: 12px;
+            background: #222;
+            margin-top: 10px;
+            display: flex;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .male-bar {
+            height: 100%;
+            background: var(--secondary-neon);
+            box-shadow: inset 0 0 10px rgba(0, 240, 255, 0.5);
+            transition: width 1s ease-in-out;
+        }
+        .female-bar {
+            height: 100%;
+            background: var(--danger-neon);
+            box-shadow: inset 0 0 10px rgba(255, 0, 85, 0.5);
+            transition: width 1s ease-in-out;
+        }
+        .audience-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 6px;
+            font-size: 10px;
+            font-family: 'Orbitron', 'Noto Sans TC', sans-serif;
         }
 
         .tag-cloud {
@@ -797,15 +826,35 @@
                             <p class="text-white text-xs md:text-sm font-bold" id="modal-stream-type">-</p>
                             <p class="text-gray-500 text-[10px] md:text-[11px]" id="modal-game-type">-</p>
                         </div>
+                        
+                        <!-- 受眾輪廓更新版 -->
+                        <div class="info-block">
+                            <span class="info-label">Audience Demographic // 受眾輪廓</span>
+                            <div class="audience-bar-container">
+                                <div id="male-bar" class="male-bar"></div>
+                                <div id="female-bar" class="female-bar"></div>
+                            </div>
+                            <div class="audience-labels">
+                                <span class="text-cyan-400">MALE 男性 <span id="male-pct">0%</span></span>
+                                <span class="text-pink-500">FEMALE 女性 <span id="female-pct">0%</span></span>
+                            </div>
+                            <!-- 新增：年齡分佈 -->
+                            <div class="mt-4 border-t border-white/5 pt-2">
+                                <span class="text-[9px] text-gray-500 tracking-wider uppercase">Age Distribution // 年齡分佈</span>
+                                <p id="modal-age-dist" class="text-white text-xs cyber-font mt-1">18-35 歲</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="info-block">
                             <span class="info-label">Career Start // 直播資歷</span>
                             <p class="text-sm md:text-xl cyber-font text-white" id="modal-career-start">SINCE -</p>
                         </div>
-                    </div>
-
-                    <div class="info-block">
-                        <span class="info-label">Special Traits // 特色 Hashtag</span>
-                        <div class="tag-cloud mt-2" id="modal-hashtags"></div>
+                        <div class="info-block">
+                            <span class="info-label">Special Traits // 特色 Hashtag</span>
+                            <div class="tag-cloud mt-2" id="modal-hashtags"></div>
+                        </div>
                     </div>
 
                     <div class="modal-action-footer">
@@ -835,7 +884,10 @@
                 career: "Since 2014",
                 streamType: "硬核遊戲 / 互動聊天",
                 gameType: "FPS, 各類 3A 大作",
-                hashtags: ["硬核遊戲", "吐槽系", "社群紅人", "資深實況主"]
+                hashtags: ["硬核遊戲", "吐槽系", "社群紅人", "資深實況主"],
+                malePct: 85,
+                femalePct: 15,
+                ageDist: "18-34 歲"
             },
             { 
                 name: "UZRA", 
@@ -846,7 +898,10 @@
                 career: "Since 2015",
                 streamType: "策略遊戲 / 公會經營",
                 gameType: "爐石戰記, 戰略模擬",
-                hashtags: ["公會經營", "硬核遊戲", "專業分析", "競技玩家"]
+                hashtags: ["公會經營", "硬核遊戲", "專業分析", "競技玩家"],
+                malePct: 78,
+                femalePct: 22,
+                ageDist: "25-44 歲"
             },
             { 
                 name: "豆豆", 
@@ -857,7 +912,10 @@
                 career: "Since 2018",
                 streamType: "生活實況 / 多樣化遊戲",
                 gameType: "Switch 遊戲, 模擬經營",
-                hashtags: ["呆萌感", "短影音", "生活風格", "親和力"]
+                hashtags: ["呆萌感", "短影音", "生活風格", "親和力"],
+                malePct: 45,
+                femalePct: 55,
+                ageDist: "18-35 歲"
             },
             { 
                 name: "牛牛妹", 
@@ -868,7 +926,10 @@
                 career: "Since 2017",
                 streamType: "戶外實況 / 綜藝活動",
                 gameType: "派對遊戲, 節奏遊戲",
-                hashtags: ["主持站台", "社群紅人", "動漫愛好者", "活力派"]
+                hashtags: ["主持站台", "社群紅人", "動漫愛好者", "活力派"],
+                malePct: 62,
+                femalePct: 38,
+                ageDist: "18-30 歲"
             },
             { 
                 name: "西瓜", 
@@ -879,7 +940,10 @@
                 career: "Since 2022",
                 streamType: "趣味雜談 / 綜合遊戲",
                 gameType: "多人連線, 創意遊戲",
-                hashtags: ["幽默風趣", "高互動", "潛力新星", "開心果"]
+                hashtags: ["幽默風趣", "高互動", "潛力新星", "開心果"],
+                malePct: 50,
+                femalePct: 50,
+                ageDist: "15-28 歲"
             },
             { 
                 name: "Abby純純", 
@@ -890,7 +954,10 @@
                 career: "Since 2019",
                 streamType: "質感生活 / 時尚分享",
                 gameType: "模擬人生, 社交遊戲",
-                hashtags: ["氣質女神", "穿搭風格", "高互動率", "質感生活"]
+                hashtags: ["氣質女神", "穿搭風格", "高互動率", "質感生活"],
+                malePct: 30,
+                femalePct: 70,
+                ageDist: "20-40 歲"
             }
         ];
 
@@ -917,6 +984,15 @@
             document.getElementById('modal-career-start').innerText = `SINCE ${t.career.replace('Since ', '')}`;
             document.getElementById('modal-stream-type').innerText = t.streamType;
             document.getElementById('modal-game-type').innerText = t.gameType;
+
+            // 更新受眾輪廓與比例
+            document.getElementById('male-bar').style.width = t.malePct + '%';
+            document.getElementById('female-bar').style.width = t.femalePct + '%';
+            document.getElementById('male-pct').innerText = t.malePct + '%';
+            document.getElementById('female-pct').innerText = t.femalePct + '%';
+            
+            // 更新年齡分佈
+            document.getElementById('modal-age-dist').innerText = t.ageDist;
 
             const photoList = t.gallery || [t.img, t.img, t.img];
             for(let i=0; i<3; i++) {
