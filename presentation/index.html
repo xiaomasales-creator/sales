@@ -396,14 +396,20 @@
     </div>
 
     <script>
-        // --- 藝人資料與模態框邏輯 ---
+        // --- 藝人資料與照片更新 ---
         const talents = [
-            { name: "Neon", tags: ["#FPS"] }, { name: "Draga", tags: ["#Dance"] },
-            { name: "Spark", tags: ["#Music"] }, { name: "Jade", tags: ["#Model"] },
-            { name: "Kuro", tags: ["#Food"] }, { name: "Ai-Chan", tags: ["#Cos"] },
-            { name: "Rex", tags: ["#Fit"] }, { name: "Viv", tags: ["#Radio"] },
-            { name: "Owen", tags: ["#Biz"] }, { name: "Mina", tags: ["#Travel"] },
-            { name: "Bobby", tags: ["#Pet"] }, { name: "Shadow", tags: ["#Art"] }
+            { name: "狂暴小建", img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/01%20狂暴小建.jpg" },
+            { name: "UZRA", img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/02%20UZRA.jpg" },
+            { name: "豆豆", img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/03%20豆豆.jpg" },
+            { name: "牛牛妹", img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/04%20牛牛妹.jpg" },
+            { name: "Abby純純", img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/05%20Abby純純.jpg" },
+            { name: "萌萌吃吃", img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/06%20萌萌吃吃.jpg" },
+            { name: "小舞", img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/07%20小舞.png" },
+            { name: "小鹽", img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/08%20小鹽.png" },
+            { name: "妖乖", img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/09%20妖乖.jpg" },
+            { name: "丫布丁丁", img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/10%20丫布丁丁.png" },
+            { name: "奶茶蜜", img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/11%20奶茶蜜.jpg" },
+            { name: "妮塔", img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/12%20妮塔.jpg" }
         ];
 
         const grid = document.getElementById('talent-grid');
@@ -415,16 +421,16 @@
             box.onclick = () => openInfoCard(talent);
             box.innerHTML = `
                 <div class="avatar-circle">
-                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=${talent.name}" class="w-full h-full object-cover" alt="${talent.name}">
+                    <img src="${talent.img}" class="w-full h-full object-cover" alt="${talent.name}" onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=${talent.name}'">
                 </div>
-                <p class="cyber-font text-[9px] text-gray-500 group-hover:text-cyan-400 transition-colors truncate font-bold">${talent.name}</p>
+                <p class="cyber-font text-[9px] text-gray-500 group-hover:text-cyan-400 transition-colors truncate font-bold px-1">${talent.name}</p>
             `;
             grid.appendChild(box);
         });
 
         function openInfoCard(talent) {
             document.getElementById('modal-name').innerText = talent.name;
-            document.getElementById('modal-image').innerHTML = `<img src="https://api.dicebear.com/7.x/avataaars/svg?seed=${talent.name}" class="w-full h-full bg-black" alt="${talent.name}">`;
+            document.getElementById('modal-image').innerHTML = `<img src="${talent.img}" class="w-full h-full object-cover bg-black" alt="${talent.name}" onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=${talent.name}'">`;
             overlay.style.display = 'block';
         }
 
