@@ -52,10 +52,10 @@
             50% { filter: drop-shadow(0 0 30px var(--secondary-neon)); transform: scale(1.01); }
         }
 
-        /* link控制面板 */
+        /* 太空船控制面板設計 (全寬懸浮感) */
         .control-panel {
             position: fixed;
-            bottom: 15px;
+            bottom: 15px; /* 稍微留空隙增加懸浮感 */
             left: 0;
             width: 100%;
             padding: 0 15px;
@@ -67,12 +67,14 @@
             backdrop-filter: blur(25px);
             border-top: 2px solid var(--primary-neon);
             border-bottom: 2px solid rgba(0, 240, 255, 0.3);
+            /* 模擬太空船護盾外型 */
             clip-path: polygon(2% 0%, 98% 0%, 100% 100%, 0% 100%);
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px;
-            padding: 12px 20px;
+            flex-wrap: wrap; /* 修正手機版：允許自動換行 */
+            gap: 5px; /* 手機版間距縮小 */
+            padding: 10px 15px;
             box-shadow: 0 -15px 40px rgba(0, 0, 0, 0.9), inset 0 0 20px rgba(134, 0, 255, 0.2);
             position: relative;
             overflow: hidden;
@@ -89,13 +91,13 @@
 
         .panel-btn {
             position: relative;
-            padding: 10px 18px;
-            font-size: 0.9rem;
+            padding: 8px 12px; /* 手機版縮小點擊區域 */
+            font-size: 0.75rem; /* 手機版字體縮小 */
             font-weight: bold;
             color: #aaa;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             white-space: nowrap;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
         }
 
@@ -127,9 +129,12 @@
             .panel-content {
                 gap: 40px;
                 padding: 18px 0;
+                flex-wrap: nowrap; /* 電腦版不換行 */
             }
             .panel-btn {
                 font-size: 1.1rem;
+                padding: 10px 18px;
+                letter-spacing: 0.15em;
             }
         }
 
@@ -300,7 +305,7 @@
             </div>
             <div class="max-w-2xl px-6">
                 <h1 class="cyber-font text-xl md:text-3xl font-black tracking-tighter mb-4 text-white">
-                    小馬娛樂 <span class="text-purple-500">XIAOMA ENT.</span>
+                    XIAOMA ENT. // <span class="text-purple-500">NEXT-GEN TALENT</span>
                 </h1>
                 <p class="text-gray-400 text-sm md:text-base leading-relaxed font-light">
                     打破傳統經紀框架，結合科技與創意。我們致力於挖掘最具個人風格的創作者，<br class="hidden md:block">
@@ -314,7 +319,7 @@
             <div class="max-w-6xl mx-auto mb-6 px-6">
                 <div class="flex items-center gap-4">
                     <span class="h-[1px] flex-grow bg-purple-900"></span>
-                    <h2 class="cyber-font text-xs tracking-widest text-purple-400">GALLERY // 活動花絮</h2>
+                    <h2 class="cyber-font text-xs tracking-widest text-purple-400">LATEST_ACTIVITIES // 活動花絮</h2>
                     <span class="h-[1px] flex-grow bg-purple-900"></span>
                 </div>
             </div>
@@ -349,7 +354,7 @@
         </footer>
     </div>
 
-    <!-- 5. FLOATING CONTROL PANEL -->
+    <!-- 5. FLOATING CONTROL PANEL (太空船控制面板風格) -->
     <nav class="control-panel">
         <div class="panel-content cyber-font">
             <button class="panel-btn" onclick="scrollToSection('home')">關於小馬</button>
