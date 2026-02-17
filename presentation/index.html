@@ -49,7 +49,7 @@
             50% { filter: drop-shadow(0 0 30px var(--secondary-neon)); transform: scale(1.02); }
         }
 
-        /* 懸浮控制面板選單 - 優化行動版顯示 */
+        /* 懸浮控制面板選單 */
         .control-panel {
             position: fixed;
             bottom: 20px;
@@ -61,13 +61,13 @@
             padding: 8px 15px;
             border-radius: 25px;
             display: flex;
-            flex-wrap: wrap; /* 允許手機版換行 */
+            flex-wrap: wrap; 
             justify-content: center;
             align-items: center;
             gap: 5px;
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), inset 0 0 10px rgba(134, 0, 255, 0.2);
             z-index: 1000;
-            width: 90%; /* 限制寬度不超出螢幕 */
+            width: 90%;
             max-width: 600px;
         }
 
@@ -105,15 +105,16 @@
             transform: translateY(-3px);
         }
 
-        /* 藝人頭像懸浮列表設計 */
+        /* 藝人頭像懸浮列表 */
         .floating-talent-panel {
             background: rgba(10, 10, 10, 0.6);
             border: 1px solid rgba(134, 0, 255, 0.3);
             backdrop-filter: blur(10px);
-            padding: 30px 20px;
+            padding: 20px;
             border-radius: 20px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
             transition: all 0.4s ease;
+            width: 100%;
         }
 
         .floating-talent-panel:hover {
@@ -124,19 +125,27 @@
 
         .talent-avatar-grid {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
+            flex-wrap: wrap; /* 自動換行 */
+            justify-content: center; /* 中心對齊 */
+            gap: 15px; /* 響應式間距基礎值 */
+        }
+
+        @media (min-width: 768px) {
+            .floating-talent-panel {
+                padding: 30px 40px;
+            }
+            .talent-avatar-grid {
+                gap: 25px; /* 電腦版間距放大 */
+            }
         }
 
         @media (max-width: 768px) {
-            .talent-avatar-grid { 
-                flex-wrap: nowrap; 
-                justify-content: flex-start; 
-                overflow-x: auto; 
-                padding-bottom: 10px;
+            .floating-talent-panel { 
+                border-radius: 0; 
+                border-left: none; 
+                border-right: none;
+                background: rgba(10, 10, 10, 0.8);
             }
-            .floating-talent-panel { border-radius: 0; border-left: none; border-right: none; }
         }
 
         .avatar-box {
@@ -144,7 +153,15 @@
             text-align: center;
             transition: transform 0.3s;
             cursor: pointer;
+            width: 70px; /* 手機版統一寬度 */
         }
+        
+        @media (min-width: 768px) {
+            .avatar-box {
+                width: 80px;
+            }
+        }
+
         .avatar-box:hover { transform: scale(1.15); }
         .avatar-circle {
             width: 50px; height: 50px;
@@ -275,7 +292,7 @@
             </div>
         </section>
 
-        <!-- 3. TALENT OVERVIEW (純懸浮列表) -->
+        <!-- 3. TALENT OVERVIEW (純懸浮列表 - 已優化) -->
         <section id="talents" class="py-16 max-w-5xl mx-auto px-6 w-full">
             <div class="floating-talent-panel">
                 <div id="talent-grid" class="talent-avatar-grid">
@@ -290,19 +307,12 @@
         </footer>
     </div>
 
-    <!-- 5. FLOATING CONTROL PANEL (懸浮選單) -->
+    <!-- 5. FLOATING CONTROL PANEL -->
     <nav class="control-panel cyber-font">
         <button class="panel-btn" onclick="scrollToSection('home')">關於小馬</button>
         <button class="panel-btn" onclick="scrollToSection('talents')">網紅經紀</button>
         <button class="panel-btn" onclick="scrollToSection('gallery')">活動花絮</button>
         <button class="panel-btn">聯絡我們</button>
-        <div class="hidden md:block w-[1px] h-4 bg-zinc-700 mx-1"></div>
-        <button class="panel-btn !text-cyan-400 group">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 md:h-4 md:w-4 group-hover:animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-            </svg>
-            <span>詢價單</span>
-        </button>
     </nav>
 
     <!-- INFO MODAL (彈出視窗) -->
