@@ -871,13 +871,17 @@
     </div>
 
     <script>
-        // 藝人資料數據 (新增至 13 位)
+        // 藝人資料數據
         const talents = [
             { 
                 name: "狂暴小建", 
                 enName: "CRAZY_JIAN",
                 img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/01%20狂暴小建.jpg",
-                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/01%20狂暴小建.jpg", "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=800", "https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=800"],
+                gallery: [
+                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/JIAN/正方1.jpg", 
+                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/JIAN/正方2.jpg", 
+                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/JIAN/正方3.jpg"
+                ],
                 bio: "台灣資深實況主，以幽默犀利的吐槽與高超的遊戲操作聞名。擅長在激烈的對戰中與觀眾互動，創造無數經典迷因。",
                 career: "Since 2014",
                 streamType: "硬核遊戲 / 互動聊天",
@@ -1062,7 +1066,7 @@
         // 生成藝人列表
         function renderTalentGrid() {
             const grid = document.getElementById('talent-grid');
-            grid.innerHTML = ''; // 清空原有內容重新生成
+            grid.innerHTML = ''; 
             talents.forEach(t => {
                 const div = document.createElement('div');
                 div.className = "avatar-box";
