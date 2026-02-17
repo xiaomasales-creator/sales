@@ -74,12 +74,10 @@
             backdrop-filter: blur(20px);
             border-top: 1px solid rgba(134, 0, 255, 0.4);
             border-bottom: 2px solid rgba(134, 0, 255, 0.2);
-            /* 注意：如果子選單不見，通常是因為 clip-path 裁切了溢出內容 */
             box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.8);
-            border-radius: 4px; /* 代替 clip-path 以確保子選單可見 */
+            border-radius: 4px;
         }
 
-        /* 模擬原本的切角視覺但不使用 clip-path 避免裁切子選單 */
         .panel-container::before, .panel-container::after {
             content: "";
             position: absolute;
@@ -109,7 +107,6 @@
             padding-bottom: 8px;
         }
 
-        /* 能量條設計 */
         .energy-bar {
             position: absolute;
             bottom: 0;
@@ -130,10 +127,9 @@
             width: 100%;
         }
 
-        /* 子選單樣式 */
         .submenu {
             position: absolute;
-            bottom: 100%; /* 直接貼齊上方 */
+            bottom: 100%;
             left: 50%;
             transform: translateX(-50%) translateY(0);
             background: rgba(5, 5, 5, 0.98);
@@ -147,10 +143,9 @@
             box-shadow: 0 0 30px rgba(134, 0, 255, 0.4);
             pointer-events: none;
             z-index: 1001;
-            margin-bottom: 15px; /* 與按鈕保持距離 */
+            margin-bottom: 15px;
         }
 
-        /* 透明感應墊片：填補按鈕與選單之間的空隙 */
         .submenu::before {
             content: "";
             position: absolute;
@@ -196,7 +191,6 @@
             padding-left: 20px;
         }
 
-        /* 藝人頭像清單樣式 */
         .floating-talent-panel {
             background: rgba(10, 10, 10, 0.6);
             border: 1px solid rgba(134, 0, 255, 0.3);
@@ -237,15 +231,24 @@
             box-shadow: 0 0 15px var(--secondary-neon);
         }
 
-        /* 輪播區塊 */
+        /* 輪播區塊樣式修正 */
         .gallery-container {
             width: 100%;
             overflow: hidden;
             position: relative;
             cursor: grab;
+            user-select: none; /* 防止拖曳時選到圖片 */
         }
-        .gallery-track { display: flex; width: max-content; transition: transform 0.1s linear; }
-        .gallery-item { width: 800px; height: 500px; flex-shrink: 0; padding: 10px; }
+        .gallery-container:active {
+            cursor: grabbing;
+        }
+        .gallery-track { 
+            display: flex; 
+            width: max-content; 
+            transition: transform 0.1s ease-out;
+            will-change: transform;
+        }
+        .gallery-item { width: 800px; height: 500px; flex-shrink: 0; padding: 10px; pointer-events: none; }
         
         @media (max-width: 768px) { 
             .gallery-item { width: 100vw; height: 60vw; } 
@@ -263,7 +266,6 @@
         }
         .gallery-img:hover { filter: brightness(1); }
 
-        /* 彈窗設計 */
         #modal-overlay {
             display: none;
             position: fixed;
@@ -473,16 +475,66 @@
             if(el) window.scrollTo({ top: el.offsetTop - 50, behavior: 'smooth' });
         }
 
-        // 簡易自動輪播
+        // --- 修正後的輪播功能：包含自動播放與手動拖曳 ---
+        const container = document.getElementById('gallery-container');
         const track = document.getElementById('gallery-track');
         let pos = 0;
-        function animate() {
-            pos -= 0.5;
-            if (pos < -1600) pos = 0;
-            track.style.transform = `translateX(${pos}px)`;
-            requestAnimationFrame(animate);
+        let isDragging = false;
+        let startX;
+        let currentPos = 0;
+        let isAutoPlay = true;
+
+        // 自動輪播
+        function autoAnimate() {
+            if (isAutoPlay && !isDragging) {
+                pos -= 0.5;
+                // 當跑過一輪（假設四張圖片寬度 800*4=3200，但軌道長度依據內容）
+                // 這裡設定簡單的循環，如果是無縫則需要克隆元素
+                if (pos < -1600) pos = 0;
+                track.style.transform = `translateX(${pos}px)`;
+            }
+            requestAnimationFrame(autoAnimate);
         }
-        animate();
+        autoAnimate();
+
+        // 拖曳邏輯
+        const startDrag = (e) => {
+            isDragging = true;
+            isAutoPlay = false; // 拖曳時停止自動播放
+            startX = (e.pageX || e.touches[0].pageX) - track.offsetLeft;
+            currentPos = pos;
+        };
+
+        const onDrag = (e) => {
+            if (!isDragging) return;
+            e.preventDefault();
+            const x = (e.pageX || e.touches[0].pageX) - track.offsetLeft;
+            const walk = (x - startX);
+            pos = currentPos + walk;
+            
+            // 邊界限制（防止拉太遠）
+            if (pos > 100) pos = 100;
+            if (pos < -2400) pos = -2400;
+
+            track.style.transform = `translateX(${pos}px)`;
+        };
+
+        const stopDrag = () => {
+            isDragging = false;
+            // 延遲恢復自動播放，增加使用者體驗
+            setTimeout(() => { isAutoPlay = true; }, 1000);
+        };
+
+        // 滑鼠事件
+        container.addEventListener('mousedown', startDrag);
+        window.addEventListener('mousemove', onDrag);
+        window.addEventListener('mouseup', stopDrag);
+
+        // 觸控事件
+        container.addEventListener('touchstart', startDrag);
+        container.addEventListener('touchmove', onDrag);
+        container.addEventListener('touchend', stopDrag);
+
     </script>
 </body>
 </html>
