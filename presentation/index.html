@@ -13,7 +13,7 @@
             --primary-neon: #8600FF;
             --secondary-neon: #00F0FF;
             --bg-dark: #050505;
-            --panel-bg: rgba(15, 15, 15, 0.9);
+            --panel-bg: rgba(10, 10, 10, 0.85);
         }
 
         body {
@@ -52,60 +52,85 @@
             50% { filter: drop-shadow(0 0 30px var(--secondary-neon)); transform: scale(1.01); }
         }
 
-        /* 懸浮控制面板選單 */
+        /* link控制面板 */
         .control-panel {
             position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
+            bottom: 15px;
+            left: 0;
+            width: 100%;
+            padding: 0 15px;
+            z-index: 1000;
+        }
+
+        .panel-content {
             background: var(--panel-bg);
-            border: 1px solid rgba(134, 0, 255, 0.5);
-            backdrop-filter: blur(15px);
-            padding: 8px 15px;
-            border-radius: 25px;
+            backdrop-filter: blur(25px);
+            border-top: 2px solid var(--primary-neon);
+            border-bottom: 2px solid rgba(0, 240, 255, 0.3);
+            clip-path: polygon(2% 0%, 98% 0%, 100% 100%, 0% 100%);
             display: flex;
-            flex-wrap: wrap; 
             justify-content: center;
             align-items: center;
-            gap: 5px;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), inset 0 0 10px rgba(134, 0, 255, 0.2);
-            z-index: 1000;
-            width: 90%;
-            max-width: 600px;
+            gap: 10px;
+            padding: 12px 20px;
+            box-shadow: 0 -15px 40px rgba(0, 0, 0, 0.9), inset 0 0 20px rgba(134, 0, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 模擬顯示器掃描線 */
+        .panel-content::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0px, transparent 2px);
+            pointer-events: none;
         }
 
         .panel-btn {
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.7rem;
+            position: relative;
+            padding: 10px 18px;
+            font-size: 0.9rem;
             font-weight: bold;
-            color: #ccc;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            color: #aaa;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             white-space: nowrap;
-            display: flex;
-            align-items: center;
-            gap: 4px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
         }
 
-        @media (min-width: 768px) {
-            .control-panel {
-                bottom: 30px;
-                padding: 10px 20px;
-                border-radius: 50px;
-                width: auto;
-                gap: 10px;
-            }
-            .panel-btn {
-                padding: 8px 16px;
-                font-size: 0.75rem;
-            }
+        /* 按鈕下方能量條設計 */
+        .panel-btn::before {
+            content: "";
+            position: absolute;
+            bottom: 0; left: 50%; width: 0; height: 2px;
+            background: var(--secondary-neon);
+            transition: all 0.4s ease;
+            transform: translateX(-50%);
+            box-shadow: 0 0 10px var(--secondary-neon);
         }
 
         .panel-btn:hover {
             color: white;
-            background: rgba(134, 0, 255, 0.3);
-            text-shadow: 0 0 10px white;
-            transform: translateY(-3px);
+            text-shadow: 0 0 10px var(--secondary-neon);
+            transform: translateY(-2px);
+        }
+
+        .panel-btn:hover::before {
+            width: 80%;
+        }
+
+        @media (min-width: 768px) {
+            .control-panel {
+                bottom: 25px;
+            }
+            .panel-content {
+                gap: 40px;
+                padding: 18px 0;
+            }
+            .panel-btn {
+                font-size: 1.1rem;
+            }
         }
 
         /* 藝人頭像懸浮列表設計 */
@@ -113,8 +138,8 @@
             background: rgba(10, 10, 10, 0.6);
             border: 1px solid rgba(134, 0, 255, 0.3);
             backdrop-filter: blur(10px);
-            padding: 20px;
-            border-radius: 20px;
+            padding: 15px;
+            border-radius: 24px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
             transition: all 0.4s ease;
             width: 100%;
@@ -130,15 +155,15 @@
             display: flex;
             flex-wrap: wrap; 
             justify-content: center; 
-            gap: 15px; 
+            gap: 12px;
         }
 
         @media (min-width: 768px) {
             .floating-talent-panel {
-                padding: 30px 40px;
+                padding: 25px 35px;
             }
             .talent-avatar-grid {
-                gap: 25px; 
+                gap: 18px;
             }
         }
 
@@ -147,32 +172,39 @@
             text-align: center;
             transition: transform 0.3s;
             cursor: pointer;
-            width: 70px; 
+            width: 85px;
         }
         
         @media (min-width: 768px) {
             .avatar-box {
-                width: 80px;
+                width: 100px;
             }
         }
 
-        .avatar-box:hover { transform: scale(1.15); }
+        .avatar-box:hover { transform: scale(1.1); }
         .avatar-circle {
-            width: 50px; height: 50px;
+            width: 70px; height: 70px;
             border-radius: 50%;
-            margin: 0 auto 6px;
+            margin: 0 auto 8px;
             border: 1px solid #444;
             transition: all 0.3s;
             overflow: hidden;
             background: #111;
             position: relative;
         }
-        .avatar-box:hover .avatar-circle { 
-            border-color: var(--secondary-neon);
-            box-shadow: 0 0 10px var(--secondary-neon);
+
+        @media (min-width: 768px) {
+            .avatar-circle {
+                width: 85px; height: 85px;
+            }
         }
 
-        /* 輪播區塊 - 調整照片寬度為 900px，高度 675px，增加手動滑動功能 */
+        .avatar-box:hover .avatar-circle { 
+            border-color: var(--secondary-neon);
+            box-shadow: 0 0 15px var(--secondary-neon);
+        }
+
+        /* 輪播區塊 */
         .gallery-container {
             width: 100%;
             overflow: hidden;
@@ -186,7 +218,6 @@
         .gallery-track {
             display: flex;
             width: max-content;
-            /* 自動輪播動畫由 JS 控制，以支援手動切換後的恢復 */
             transition: transform 0.1s linear;
         }
         
@@ -213,7 +244,7 @@
             transition: filter 0.3s;
             border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            pointer-events: none; /* 防止圖片拖動干擾 */
+            pointer-events: none;
         }
         .gallery-img:hover { filter: grayscale(0); }
 
@@ -269,7 +300,7 @@
             </div>
             <div class="max-w-2xl px-6">
                 <h1 class="cyber-font text-xl md:text-3xl font-black tracking-tighter mb-4 text-white">
-                    XIAOMA ENT. // <span class="text-purple-500">NEXT-GEN TALENT</span>
+                    小馬娛樂 <span class="text-purple-500">XIAOMA ENT.</span>
                 </h1>
                 <p class="text-gray-400 text-sm md:text-base leading-relaxed font-light">
                     打破傳統經紀框架，結合科技與創意。我們致力於挖掘最具個人風格的創作者，<br class="hidden md:block">
@@ -283,7 +314,7 @@
             <div class="max-w-6xl mx-auto mb-6 px-6">
                 <div class="flex items-center gap-4">
                     <span class="h-[1px] flex-grow bg-purple-900"></span>
-                    <h2 class="cyber-font text-xs tracking-widest text-purple-400">LATEST_ACTIVITIES // 活動花絮</h2>
+                    <h2 class="cyber-font text-xs tracking-widest text-purple-400">GALLERY // 活動花絮</h2>
                     <span class="h-[1px] flex-grow bg-purple-900"></span>
                 </div>
             </div>
@@ -304,7 +335,7 @@
         </section>
 
         <!-- 3. TALENT OVERVIEW -->
-        <section id="talents" class="py-16 max-w-5xl mx-auto px-6 w-full">
+        <section id="talents" class="py-16 max-w-6xl mx-auto px-6 w-full">
             <div class="floating-talent-panel">
                 <div id="talent-grid" class="talent-avatar-grid">
                     <!-- 由 JavaScript 填入藝人資料 -->
@@ -313,17 +344,19 @@
         </section>
 
         <!-- 4. FOOTER -->
-        <footer class="mt-auto pt-20 pb-32 text-center opacity-40">
+        <footer class="mt-auto pt-20 pb-48 text-center opacity-40">
             <p class="cyber-font text-[9px] tracking-widest">&copy; 2024 XIAOMA ENT. ALL ACCESS LOGGED.</p>
         </footer>
     </div>
 
     <!-- 5. FLOATING CONTROL PANEL -->
-    <nav class="control-panel cyber-font">
-        <button class="panel-btn" onclick="scrollToSection('home')">關於小馬</button>
-        <button class="panel-btn" onclick="scrollToSection('talents')">網紅經紀</button>
-        <button class="panel-btn" onclick="scrollToSection('gallery')">活動花絮</button>
-        <button class="panel-btn">聯絡我們</button>
+    <nav class="control-panel">
+        <div class="panel-content cyber-font">
+            <button class="panel-btn" onclick="scrollToSection('home')">關於小馬</button>
+            <button class="panel-btn" onclick="scrollToSection('talents')">網紅經紀</button>
+            <button class="panel-btn" onclick="scrollToSection('gallery')">活動花絮</button>
+            <button class="panel-btn">聯絡我們</button>
+        </div>
     </nav>
 
     <!-- INFO MODAL -->
@@ -379,7 +412,7 @@
                 <div class="avatar-circle">
                     <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=${talent.name}" class="w-full h-full object-cover" alt="${talent.name}">
                 </div>
-                <p class="cyber-font text-[8px] text-gray-500 group-hover:text-cyan-400 transition-colors truncate">${talent.name}</p>
+                <p class="cyber-font text-[9px] text-gray-500 group-hover:text-cyan-400 transition-colors truncate font-bold">${talent.name}</p>
             `;
             grid.appendChild(box);
         });
@@ -403,34 +436,27 @@
         let isDragging = false;
         let startX, scrollLeft;
         let currentPos = 0;
-        let autoPlaySpeed = 1; // 自動輪播速度
+        let autoPlaySpeed = 1; 
         let animationFrame;
 
-        // 初始化軌道位置與重複邏輯
         function updateCarousel() {
             if (!isDragging) {
                 currentPos -= autoPlaySpeed;
-                
-                // 取得單組內容的寬度 (4張圖)
                 const itemWidth = window.innerWidth <= 900 ? window.innerWidth : 900;
                 const totalSetWidth = itemWidth * 4;
-
-                // 循環重置
                 if (Math.abs(currentPos) >= totalSetWidth) {
                     currentPos = 0;
                 }
-                
                 track.style.transform = `translateX(${currentPos}px)`;
             }
             animationFrame = requestAnimationFrame(updateCarousel);
         }
 
-        // 手動拖拽事件
         container.addEventListener('mousedown', (e) => {
             isDragging = true;
             startX = e.pageX - track.offsetLeft;
             scrollLeft = currentPos;
-            cancelAnimationFrame(animationFrame); // 拖拽時停止自動輪播
+            cancelAnimationFrame(animationFrame);
         });
 
         container.addEventListener('mousemove', (e) => {
@@ -439,27 +465,23 @@
             const x = e.pageX - track.offsetLeft;
             const walk = x - startX;
             currentPos = scrollLeft + walk;
-            
-            // 邊界循環檢查 (手動)
             const itemWidth = window.innerWidth <= 900 ? window.innerWidth : 900;
             const totalSetWidth = itemWidth * 4;
             if (currentPos > 0) currentPos = -totalSetWidth;
             if (currentPos < -totalSetWidth) currentPos = 0;
-
             track.style.transform = `translateX(${currentPos}px)`;
         });
 
         const stopDragging = () => {
             if (isDragging) {
                 isDragging = false;
-                updateCarousel(); // 放開後恢復自動輪播
+                updateCarousel();
             }
         };
 
         container.addEventListener('mouseup', stopDragging);
         container.addEventListener('mouseleave', stopDragging);
 
-        // 觸控支援
         container.addEventListener('touchstart', (e) => {
             isDragging = true;
             startX = e.touches[0].pageX - track.offsetLeft;
@@ -477,7 +499,6 @@
 
         container.addEventListener('touchend', stopDragging);
 
-        // 啟動輪播
         window.onload = () => {
             updateCarousel();
         };
