@@ -137,7 +137,7 @@
             width: 100%;
         }
 
-        /* 修復子選單空隙問題 */
+        /* 子選單樣式 */
         .submenu {
             position: absolute;
             bottom: 100%;
@@ -324,7 +324,7 @@
             border-bottom: 2px solid var(--secondary-neon);
             padding-bottom: 20px;
             display: flex;
-            flex-direction: column; /* 設為垂直，讓按鈕放在名字下方 */
+            flex-direction: column;
             align-items: flex-start;
             justify-content: flex-start;
             gap: 15px;
@@ -352,14 +352,10 @@
         }
         .main-photo-frame img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Scanning Beam */
         .main-photo-frame::after {
             content: "";
             position: absolute;
-            top: -100px;
-            left: 0;
-            width: 100%;
-            height: 4px;
+            top: -100px; left: 0; width: 100%; height: 4px;
             background: var(--secondary-neon);
             box-shadow: 0 0 15px var(--secondary-neon), 0 0 5px #fff;
             opacity: 0.8;
@@ -373,7 +369,6 @@
             100% { top: 110%; }
         }
 
-        /* --- 修正關閉按鈕：絕對定位 (右上角) --- */
         .close-btn-fixed {
             position: absolute !important;
             top: 15px;
@@ -381,14 +376,13 @@
             z-index: 200;
         }
 
-        /* --- 修正社群按鈕群組：相對定位，放置於標題下方 --- */
         .cyber-action-group {
-            position: relative; /* 相對定位 */
+            position: relative;
             display: flex;
             align-items: center;
             gap: 12px;
             z-index: 100;
-            margin-top: 5px; /* 與上方名字保持間距 */
+            margin-top: 5px;
         }
 
         .social-link-wrapper {
@@ -442,26 +436,11 @@
         }
 
         .cyber-icon-btn.close {
-            width: 44px;
-            height: 44px;
+            width: 44px; height: 44px;
         }
-        .cyber-icon-btn.close .btn-frame {
-            border-color: var(--danger-neon);
-            background: rgba(255, 0, 85, 0.1);
-        }
-        .cyber-icon-btn.close .btn-content {
-            color: var(--danger-neon);
-            font-size: 24px;
-        }
-        .cyber-icon-btn.close:hover .btn-frame {
-            background: var(--danger-neon);
-            box-shadow: 0 0 25px var(--danger-neon);
-            transform: scale(1.1);
-        }
-        .cyber-icon-btn.close:hover .btn-content {
-            transform: rotate(90deg);
-            color: #fff;
-        }
+        .cyber-icon-btn.close .btn-frame { border-color: var(--danger-neon); background: rgba(255, 0, 85, 0.1); }
+        .cyber-icon-btn.close .btn-content { color: var(--danger-neon); font-size: 24px; }
+        .cyber-icon-btn.close:hover .btn-frame { background: var(--danger-neon); box-shadow: 0 0 25px var(--danger-neon); }
 
         .btn-dot {
             position: absolute;
@@ -469,9 +448,6 @@
             width: 3px; height: 3px;
             background: var(--secondary-neon);
             box-shadow: 0 0 5px var(--secondary-neon);
-        }
-        .close .btn-dot {
-            background: var(--danger-neon);
         }
 
         .info-block {
@@ -502,6 +478,67 @@
             padding: 4px 10px;
             font-size: 11px;
             border-radius: 2px;
+        }
+
+        /* 彈窗底部按鈕區域 */
+        .modal-action-footer {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px; /* 增加與上方區塊的間距 */
+            width: 100%;
+        }
+
+        .cyber-long-btn {
+            position: relative;
+            padding: 12px 20px;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .long-btn-frame {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            border: 1px solid var(--primary-neon);
+            clip-path: polygon(0% 0%, 95% 0%, 100% 30%, 100% 100%, 5% 100%, 0% 70%);
+            background: rgba(134, 0, 255, 0.05);
+            z-index: 1;
+            transition: all 0.3s;
+        }
+
+        .cyber-long-btn:hover .long-btn-frame {
+            background: rgba(134, 0, 255, 0.2);
+            box-shadow: inset 0 0 15px var(--primary-neon);
+            border-color: #fff;
+            transform: scale(1.02);
+        }
+
+        .cyber-long-btn.cyan-variant .long-btn-frame {
+            border-color: var(--secondary-neon);
+            background: rgba(0, 240, 255, 0.05);
+        }
+
+        .cyber-long-btn.cyan-variant:hover .long-btn-frame {
+            background: rgba(0, 240, 255, 0.15);
+            box-shadow: inset 0 0 15px var(--secondary-neon);
+        }
+
+        .long-btn-text {
+            position: relative;
+            z-index: 2;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #fff;
+            text-transform: uppercase;
+        }
+        
+        @media (min-width: 768px) {
+            .long-btn-text { font-size: 13px; }
         }
     </style>
 </head>
@@ -547,6 +584,7 @@
         </footer>
     </div>
 
+    <!-- 控制面板 -->
     <nav class="control-panel">
         <div class="panel-container cyber-font">
             <div class="nav-item">
@@ -603,7 +641,6 @@
     <div id="modal-overlay" onclick="closeModal()">
         <div class="cyber-panel-container" onclick="event.stopPropagation()">
             
-            <!-- 關閉按鈕：絕對定位 (右上角) -->
             <div class="cyber-icon-btn close close-btn-fixed" onclick="closeModal()" title="CLOSE_TERMINAL">
                 <div class="btn-frame"></div><div class="btn-content italic">&times;</div><div class="btn-dot"></div>
             </div>
@@ -614,7 +651,6 @@
                     <p id="modal-en-name" class="text-cyan-400 cyber-font text-[10px] md:text-[12px] tracking-[0.4em] mt-1">CREATOR_PROFILE</p>
                 </div>
                 
-                <!-- 社群連結群組：相對定位，放置在標題下方 -->
                 <div class="cyber-action-group">
                     <div class="social-link-wrapper">
                         <div class="cyber-icon-btn" title="Facebook"><div class="btn-frame"></div><div class="btn-content">FB</div><div class="btn-dot"></div></div>
@@ -653,6 +689,18 @@
                     <div class="info-block">
                         <span class="info-label">Special Traits // 特色 Hashtag</span>
                         <div class="tag-cloud mt-2" id="modal-hashtags"></div>
+                    </div>
+
+                    <!-- 移出 info-block 的獨立按鈕區塊 -->
+                    <div class="modal-action-footer">
+                        <div class="cyber-long-btn" onclick="scrollToTalentsSection()">
+                            <div class="long-btn-frame"></div>
+                            <span class="long-btn-text cyber-font">小馬全陣容 // All Talents</span>
+                        </div>
+                        <div class="cyber-long-btn cyan-variant">
+                            <div class="long-btn-frame"></div>
+                            <span class="long-btn-text cyber-font">更多資訊 // View More</span>
+                        </div>
                     </div>
 
                     <div class="mt-auto pt-6 flex items-center justify-between border-t border-zinc-800 opacity-40">
@@ -834,6 +882,12 @@
         function scrollToSection(id) {
             const el = document.getElementById(id);
             if(el) window.scrollTo({ top: el.offsetTop - 50, behavior: 'smooth' });
+        }
+
+        // 滾動至藝人列表並關閉彈窗
+        function scrollToTalentsSection() {
+            closeModal();
+            scrollToSection('talents');
         }
 
         const scrollContainer = document.getElementById('talent-scroll-container');
