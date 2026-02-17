@@ -93,7 +93,6 @@
         .nav-item {
             position: relative;
             padding: 15px 10px;
-            /* 讓 item 的感應區域向下延伸一點，向上也有空隙 */
         }
 
         .panel-btn {
@@ -129,7 +128,6 @@
             width: 100%;
         }
 
-        /* 修正子選單：解決空隙導致消失的問題 */
         .submenu {
             position: absolute;
             bottom: 100%;
@@ -146,19 +144,18 @@
             box-shadow: 0 0 30px rgba(134, 0, 255, 0.4);
             pointer-events: none;
             z-index: 1001;
-            margin-bottom: 12px; /* 視覺上的間距 */
+            margin-bottom: 12px;
         }
 
-        /* 隱形橋樑：填補子選單與主選單之間的空隙 */
         .submenu::before {
             content: "";
             position: absolute;
-            bottom: -30px; /* 向下延伸至主選單 */
+            bottom: -30px;
             left: 0;
             width: 100%;
             height: 35px;
             background: transparent;
-            pointer-events: auto; /* 確保能捕捉滑鼠事件 */
+            pointer-events: auto;
         }
 
         .nav-item:hover .submenu {
@@ -185,18 +182,23 @@
             padding-left: 20px;
         }
 
-        /* 藝人頭像容器橫向滾動 */
+        /* 藝人頭像容器橫向滾動 - 調整為全寬度 */
         .floating-talent-panel {
             background: rgba(10, 10, 10, 0.6);
-            border: 1px solid rgba(134, 0, 255, 0.3);
+            border-top: 1px solid rgba(134, 0, 255, 0.3);
+            border-bottom: 1px solid rgba(134, 0, 255, 0.3);
             backdrop-filter: blur(10px);
-            padding: 30px 20px;
-            border-radius: 24px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-            width: 100%;
+            padding: 40px 0;
+            width: 100vw; /* 改為與頁面一樣寬 */
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
             overflow-x: auto;
             cursor: grab;
             user-select: none;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
         }
 
         .floating-talent-panel::-webkit-scrollbar { display: none; }
@@ -208,8 +210,8 @@
             flex-direction: row; 
             flex-wrap: nowrap; 
             justify-content: flex-start; 
-            gap: 30px;
-            padding: 10px; 
+            gap: 40px;
+            padding: 0 10vw; /* 讓內容兩側有間距 */
             width: max-content; 
         }
 
@@ -259,6 +261,7 @@
             .panel-container { padding: 10px 15px; flex-wrap: wrap; border-radius: 20px; }
             .panel-container::before, .panel-container::after { display: none; }
             .panel-btn { font-size: 0.75rem; }
+            .talent-avatar-grid { padding: 0 5vw; }
         }
 
         .gallery-img {
@@ -339,9 +342,9 @@
             </div>
         </section>
 
-        <!-- 3. 藝人清單 (改為滑鼠拖曳) -->
-        <section id="talents" class="py-16 max-w-6xl mx-auto px-6 w-full overflow-hidden">
-            <h2 class="cyber-font text-center text-cyan-400 text-[10px] tracking-[0.5em] mb-4">PERSONNEL_REGISTRY // 旗下藝人</h2>
+        <!-- 3. 藝人清單 (全寬橫向滾動) -->
+        <section id="talents" class="py-16 w-full overflow-hidden">
+            <h2 class="cyber-font text-center text-cyan-400 text-[10px] tracking-[0.5em] mb-12">PERSONNEL_REGISTRY // 旗下藝人</h2>
             <div class="floating-talent-panel" id="talent-scroll-container">
                 <div id="talent-grid" class="talent-avatar-grid"></div>
             </div>
