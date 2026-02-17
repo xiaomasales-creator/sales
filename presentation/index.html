@@ -157,7 +157,7 @@
             margin-bottom: 12px; /* 增加與按鈕的物理距離，方便動畫觀察 */
         }
 
-        /* 關鍵修復：加入透明橋樑連通主選單與子選單 */
+        /* 加入透明橋樑連通主選單與子選單 */
         .submenu::before {
             content: "";
             position: absolute;
@@ -329,7 +329,7 @@
             align-items: baseline;
             justify-content: space-between;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 15px;
         }
 
         .cyber-body {
@@ -374,21 +374,46 @@
             100% { top: 110%; }
         }
 
-        /* --- 賽博控制按鈕組 (右上角佈局) --- */
+        /* --- 賽博控制按鈕組 (優化手機排版) --- */
         .cyber-action-group {
-            position: absolute;
-            top: 15px;
-            right: 15px;
             display: flex;
             align-items: center;
             gap: 12px;
             z-index: 100;
         }
 
+        /* 桌機版維持右上角懸浮 */
+        @media (min-width: 1024px) {
+            .cyber-action-group {
+                position: absolute;
+                top: 15px;
+                right: 15px;
+            }
+        }
+        
+        /* 手機版排版優化：按鈕群組在標題下方 */
+        @media (max-width: 1023px) {
+            .cyber-action-group {
+                position: relative;
+                top: 0;
+                right: 0;
+                width: 100%;
+                justify-content: flex-start;
+                margin-top: 10px;
+            }
+            .cyber-header {
+                padding-top: 30px; /* 留出關閉按鈕空間 */
+            }
+            .close-btn-fixed {
+                position: absolute !important;
+                top: 10px;
+                right: 10px;
+            }
+        }
+
         .social-link-wrapper {
             display: flex;
             gap: 8px;
-            margin-right: 25px; 
             padding-right: 15px;
             border-right: 1px solid rgba(0, 240, 255, 0.2);
         }
@@ -415,12 +440,13 @@
 
         .btn-content {
             color: var(--secondary-neon);
-            font-size: 16px;
+            font-size: 14px;
             z-index: 1;
             transition: all 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-weight: bold;
         }
 
         .cyber-icon-btn:hover .btn-frame {
@@ -597,22 +623,25 @@
     <div id="modal-overlay" onclick="closeModal()">
         <div class="cyber-panel-container" onclick="event.stopPropagation()">
             
-            <div class="cyber-action-group">
-                <div class="social-link-wrapper">
-                    <div class="cyber-icon-btn" title="Facebook"><div class="btn-frame"></div><div class="btn-content">FB</div><div class="btn-dot"></div></div>
-                    <div class="cyber-icon-btn" title="Instagram"><div class="btn-frame"></div><div class="btn-content">IG</div><div class="btn-dot"></div></div>
-                    <div class="cyber-icon-btn" title="YouTube"><div class="btn-frame"></div><div class="btn-content">YT</div><div class="btn-dot"></div></div>
-                    <div class="cyber-icon-btn" title="Twitch"><div class="btn-frame"></div><div class="btn-content">TW</div><div class="btn-dot"></div></div>
-                </div>
-                <div class="cyber-icon-btn close" onclick="closeModal()" title="CLOSE_TERMINAL">
-                    <div class="btn-frame"></div><div class="btn-content italic">&times;</div><div class="btn-dot"></div>
-                </div>
+            <!-- 獨立的關閉按鈕，確保各裝置一致性 -->
+            <div class="cyber-icon-btn close close-btn-fixed" onclick="closeModal()" title="CLOSE_TERMINAL">
+                <div class="btn-frame"></div><div class="btn-content italic">&times;</div><div class="btn-dot"></div>
             </div>
 
             <div class="cyber-header">
                 <div class="flex flex-col">
                     <h2 id="modal-name" class="cyber-font text-2xl md:text-4xl font-black text-white italic">TALENT_ID</h2>
                     <p id="modal-en-name" class="text-cyan-400 cyber-font text-[10px] md:text-[12px] tracking-[0.4em] mt-1">CREATOR_PROFILE</p>
+                </div>
+                
+                <!-- 社群連結群組：在手機版會因為 flex-wrap 自然掉到下方，或透過 CSS 調整佈局 -->
+                <div class="cyber-action-group">
+                    <div class="social-link-wrapper">
+                        <div class="cyber-icon-btn" title="Facebook"><div class="btn-frame"></div><div class="btn-content">FB</div><div class="btn-dot"></div></div>
+                        <div class="cyber-icon-btn" title="Instagram"><div class="btn-frame"></div><div class="btn-content">IG</div><div class="btn-dot"></div></div>
+                        <div class="cyber-icon-btn" title="YouTube"><div class="btn-frame"></div><div class="btn-content">YT</div><div class="btn-dot"></div></div>
+                        <div class="cyber-icon-btn" title="Twitch"><div class="btn-frame"></div><div class="btn-content">TW</div><div class="btn-dot"></div></div>
+                    </div>
                 </div>
             </div>
 
