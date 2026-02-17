@@ -43,13 +43,16 @@
         .hero-logo {
             filter: drop-shadow(0 0 15px var(--primary-neon));
             animation: logo-glow 4s ease-in-out infinite;
+            width: 100%;
+            display: flex;
+            justify-content: center;
         }
         @keyframes logo-glow {
             0%, 100% { filter: drop-shadow(0 0 15px var(--primary-neon)); transform: scale(1); }
-            50% { filter: drop-shadow(0 0 30px var(--secondary-neon)); transform: scale(1.02); }
+            50% { filter: drop-shadow(0 0 30px var(--secondary-neon)); transform: scale(1.01); }
         }
 
-        /* 懸浮控制面板選單 */
+        /* 懸浮控制面板選單 - 移除詢價單，優化顯示 */
         .control-panel {
             position: fixed;
             bottom: 20px;
@@ -105,7 +108,7 @@
             transform: translateY(-3px);
         }
 
-        /* 藝人頭像懸浮列表 */
+        /* 藝人頭像懸浮列表設計 - 新增自動換行、中心對齊與響應式間距 */
         .floating-talent-panel {
             background: rgba(10, 10, 10, 0.6);
             border: 1px solid rgba(134, 0, 255, 0.3);
@@ -253,12 +256,12 @@
     <!-- MAIN WRAPPER -->
     <div class="min-h-screen flex flex-col">
         
-        <!-- 1. HERO SECTION (LOGO & INTRO) -->
-        <section id="home" class="pt-20 pb-12 flex flex-col items-center text-center px-6">
-            <div class="hero-logo mb-8">
-                <img src="https://xiaomasales-creator.github.io/sales/presentation/homepage/LOGO_cut.png" alt="小馬娛樂 LOGO" class="w-64 md:w-96 h-auto">
+        <!-- 1. HERO SECTION (LOGO 放大至頁面寬度) -->
+        <section id="home" class="pt-10 pb-12 flex flex-col items-center text-center px-0">
+            <div class="hero-logo mb-12">
+                <img src="https://xiaomasales-creator.github.io/sales/presentation/homepage/LOGO_cut.png" alt="小馬娛樂 LOGO" class="w-full max-w-[1200px] h-auto object-contain">
             </div>
-            <div class="max-w-2xl">
+            <div class="max-w-2xl px-6">
                 <h1 class="cyber-font text-xl md:text-3xl font-black tracking-tighter mb-4 text-white">
                     XIAOMA ENT. // <span class="text-purple-500">NEXT-GEN TALENT</span>
                 </h1>
@@ -307,7 +310,7 @@
         </footer>
     </div>
 
-    <!-- 5. FLOATING CONTROL PANEL -->
+    <!-- 5. FLOATING CONTROL PANEL (移除詢價單) -->
     <nav class="control-panel cyber-font">
         <button class="panel-btn" onclick="scrollToSection('home')">關於小馬</button>
         <button class="panel-btn" onclick="scrollToSection('talents')">網紅經紀</button>
