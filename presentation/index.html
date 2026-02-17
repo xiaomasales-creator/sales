@@ -52,7 +52,7 @@
             50% { filter: drop-shadow(0 0 30px var(--secondary-neon)); transform: scale(1.01); }
         }
 
-        /* 懸浮控制面板選單 - 移除詢價單，優化顯示 */
+        /* 懸浮控制面板選單 */
         .control-panel {
             position: fixed;
             bottom: 20px;
@@ -108,7 +108,7 @@
             transform: translateY(-3px);
         }
 
-        /* 藝人頭像懸浮列表設計 - 新增自動換行、中心對齊與響應式間距 */
+        /* 藝人頭像懸浮列表設計 */
         .floating-talent-panel {
             background: rgba(10, 10, 10, 0.6);
             border: 1px solid rgba(134, 0, 255, 0.3);
@@ -128,9 +128,9 @@
 
         .talent-avatar-grid {
             display: flex;
-            flex-wrap: wrap; /* 自動換行 */
-            justify-content: center; /* 中心對齊 */
-            gap: 15px; /* 響應式間距基礎值 */
+            flex-wrap: wrap; 
+            justify-content: center; 
+            gap: 15px; 
         }
 
         @media (min-width: 768px) {
@@ -138,16 +138,7 @@
                 padding: 30px 40px;
             }
             .talent-avatar-grid {
-                gap: 25px; /* 電腦版間距放大 */
-            }
-        }
-
-        @media (max-width: 768px) {
-            .floating-talent-panel { 
-                border-radius: 0; 
-                border-left: none; 
-                border-right: none;
-                background: rgba(10, 10, 10, 0.8);
+                gap: 25px; 
             }
         }
 
@@ -156,7 +147,7 @@
             text-align: center;
             transition: transform 0.3s;
             cursor: pointer;
-            width: 70px; /* 手機版統一寬度 */
+            width: 70px; 
         }
         
         @media (min-width: 768px) {
@@ -181,7 +172,7 @@
             box-shadow: 0 0 10px var(--secondary-neon);
         }
 
-        /* 輪播區塊 */
+        /* 輪播區塊 - 調整照片寬度為 900px，高度 675px */
         .gallery-container {
             width: 100%;
             overflow: hidden;
@@ -190,24 +181,46 @@
         }
         .gallery-track {
             display: flex;
-            animation: scroll 40s linear infinite;
-            width: calc(300px * 8);
+            /* 軌道寬度為 8 張圖的寬度 (每張 900px) */
+            animation: scroll 60s linear infinite;
+            width: calc(900px * 8);
         }
         @keyframes scroll {
             0% { transform: translateX(0); }
-            100% { transform: translateX(calc(-300px * 4)); }
+            /* 捲動過一半的數量 (4張) 以實現無限銜接 */
+            100% { transform: translateX(calc(-900px * 4)); }
         }
         .gallery-item {
-            width: 300px;
-            height: 180px;
+            width: 900px;
+            height: 675px;
             flex-shrink: 0;
-            padding: 5px;
+            padding: 15px;
         }
+        
+        @media (max-width: 900px) {
+            /* 在小螢幕上保持比例但縮小寬度 */
+            .gallery-track {
+                width: calc(100vw * 8);
+                animation: scroll-mobile 60s linear infinite;
+            }
+            @keyframes scroll-mobile {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(calc(-100vw * 4)); }
+            }
+            .gallery-item {
+                width: 100vw;
+                height: 75vw; /* 保持 4:3 比例 */
+                padding: 10px;
+            }
+        }
+
         .gallery-img {
             width: 100%; height: 100%;
             object-fit: cover;
             filter: grayscale(0.5);
             transition: filter 0.3s;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
         .gallery-img:hover { filter: grayscale(0); }
 
@@ -256,7 +269,7 @@
     <!-- MAIN WRAPPER -->
     <div class="min-h-screen flex flex-col">
         
-        <!-- 1. HERO SECTION (LOGO 放大至頁面寬度) -->
+        <!-- 1. HERO SECTION -->
         <section id="home" class="pt-10 pb-12 flex flex-col items-center text-center px-0">
             <div class="hero-logo mb-12">
                 <img src="https://xiaomasales-creator.github.io/sales/presentation/homepage/LOGO_cut.png" alt="小馬娛樂 LOGO" class="w-full max-w-[1200px] h-auto object-contain">
@@ -272,7 +285,7 @@
             </div>
         </section>
 
-        <!-- 2. GALLERY SLIDER (花絮照片輪播) -->
+        <!-- 2. GALLERY SLIDER (900px x 675px) -->
         <section id="gallery" class="py-12 bg-zinc-900/20">
             <div class="max-w-6xl mx-auto mb-6 px-6">
                 <div class="flex items-center gap-4">
@@ -283,23 +296,24 @@
             </div>
             <div class="gallery-container">
                 <div class="gallery-track">
-                    <div class="gallery-item"><div class="gallery-img bg-zinc-800 flex items-center justify-center text-[10px] cyber-font text-zinc-500">PHOTO_01</div></div>
-                    <div class="gallery-item"><div class="gallery-img bg-zinc-700 flex items-center justify-center text-[10px] cyber-font text-zinc-500">PHOTO_02</div></div>
-                    <div class="gallery-item"><div class="gallery-img bg-zinc-800 flex items-center justify-center text-[10px] cyber-font text-zinc-500">PHOTO_03</div></div>
-                    <div class="gallery-item"><div class="gallery-img bg-zinc-700 flex items-center justify-center text-[10px] cyber-font text-zinc-500">PHOTO_04</div></div>
-                    <div class="gallery-item"><div class="gallery-img bg-zinc-800 flex items-center justify-center text-[10px] cyber-font text-zinc-500">PHOTO_01</div></div>
-                    <div class="gallery-item"><div class="gallery-img bg-zinc-700 flex items-center justify-center text-[10px] cyber-font text-zinc-500">PHOTO_02</div></div>
-                    <div class="gallery-item"><div class="gallery-img bg-zinc-800 flex items-center justify-center text-[10px] cyber-font text-zinc-500">PHOTO_03</div></div>
-                    <div class="gallery-item"><div class="gallery-img bg-zinc-700 flex items-center justify-center text-[10px] cyber-font text-zinc-500">PHOTO_04</div></div>
+                    <div class="gallery-item"><div class="gallery-img bg-zinc-800 flex items-center justify-center text-lg cyber-font text-zinc-500">EVENT_CLIP_01</div></div>
+                    <div class="gallery-item"><div class="gallery-img bg-zinc-700 flex items-center justify-center text-lg cyber-font text-zinc-500">EVENT_CLIP_02</div></div>
+                    <div class="gallery-item"><div class="gallery-img bg-zinc-800 flex items-center justify-center text-lg cyber-font text-zinc-500">EVENT_CLIP_03</div></div>
+                    <div class="gallery-item"><div class="gallery-img bg-zinc-700 flex items-center justify-center text-lg cyber-font text-zinc-500">EVENT_CLIP_04</div></div>
+                    <!-- 無限滾動克隆節點 -->
+                    <div class="gallery-item"><div class="gallery-img bg-zinc-800 flex items-center justify-center text-lg cyber-font text-zinc-500">EVENT_CLIP_01</div></div>
+                    <div class="gallery-item"><div class="gallery-img bg-zinc-700 flex items-center justify-center text-lg cyber-font text-zinc-500">EVENT_CLIP_02</div></div>
+                    <div class="gallery-item"><div class="gallery-img bg-zinc-800 flex items-center justify-center text-lg cyber-font text-zinc-500">EVENT_CLIP_03</div></div>
+                    <div class="gallery-item"><div class="gallery-img bg-zinc-700 flex items-center justify-center text-lg cyber-font text-zinc-500">EVENT_CLIP_04</div></div>
                 </div>
             </div>
         </section>
 
-        <!-- 3. TALENT OVERVIEW (純懸浮列表 - 已優化) -->
+        <!-- 3. TALENT OVERVIEW -->
         <section id="talents" class="py-16 max-w-5xl mx-auto px-6 w-full">
             <div class="floating-talent-panel">
                 <div id="talent-grid" class="talent-avatar-grid">
-                    <!-- 由 JavaScript 填入 12 位藝人 -->
+                    <!-- 由 JavaScript 填入藝人資料 -->
                 </div>
             </div>
         </section>
@@ -310,7 +324,7 @@
         </footer>
     </div>
 
-    <!-- 5. FLOATING CONTROL PANEL (移除詢價單) -->
+    <!-- 5. FLOATING CONTROL PANEL -->
     <nav class="control-panel cyber-font">
         <button class="panel-btn" onclick="scrollToSection('home')">關於小馬</button>
         <button class="panel-btn" onclick="scrollToSection('talents')">網紅經紀</button>
@@ -318,7 +332,7 @@
         <button class="panel-btn">聯絡我們</button>
     </nav>
 
-    <!-- INFO MODAL (彈出視窗) -->
+    <!-- INFO MODAL -->
     <div id="modal-overlay" onclick="closeModal()">
         <div class="info-container" onclick="event.stopPropagation()">
             <div class="flex flex-col items-center justify-start text-center">
@@ -368,7 +382,7 @@
         const grid = document.getElementById('talent-grid');
         const overlay = document.getElementById('modal-overlay');
 
-        talents.forEach((talent, index) => {
+        talents.forEach((talent) => {
             const box = document.createElement('div');
             box.className = "avatar-box group";
             box.onclick = () => openInfoCard(talent);
@@ -394,7 +408,6 @@
             if(el) window.scrollTo({ top: el.offsetTop - 50, behavior: 'smooth' });
         }
 
-        // 監聽 ESC 鍵關閉彈窗
         window.addEventListener('keydown', (e) => {
             if(e.key === "Escape") closeModal();
         });
