@@ -168,7 +168,7 @@
                 padding: 25px 35px;
             }
             .talent-avatar-grid {
-                gap: 18px;
+                gap: 24px;
             }
         }
 
@@ -182,7 +182,7 @@
         
         @media (min-width: 768px) {
             .avatar-box {
-                width: 100px;
+                width: 110px;
             }
         }
 
@@ -190,7 +190,7 @@
         .avatar-circle {
             width: 70px; height: 70px;
             border-radius: 50%;
-            margin: 0 auto 8px;
+            margin: 0 auto 10px;
             border: 1px solid #444;
             transition: all 0.3s;
             overflow: hidden;
@@ -200,7 +200,7 @@
 
         @media (min-width: 768px) {
             .avatar-circle {
-                width: 85px; height: 85px;
+                width: 90px; height: 90px;
             }
         }
 
@@ -423,7 +423,7 @@
                 <div class="avatar-circle">
                     <img src="${talent.img}" class="w-full h-full object-cover" alt="${talent.name}" onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=${talent.name}'">
                 </div>
-                <p class="cyber-font text-[9px] text-gray-500 group-hover:text-cyan-400 transition-colors truncate font-bold px-1">${talent.name}</p>
+                <p class="cyber-font text-[13px] text-gray-400 group-hover:text-cyan-400 transition-colors truncate font-bold px-1 tracking-tight">${talent.name}</p>
             `;
             grid.appendChild(box);
         });
