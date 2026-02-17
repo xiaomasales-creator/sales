@@ -340,17 +340,75 @@
         @media (min-width: 900px) {
             .cyber-body { grid-template-columns: 380px 1fr; gap: 40px; }
             .cyber-panel-container { padding: 40px; }
-            .main-photo-frame { aspect-ratio: 3/4; }
         }
 
+        /* 照片輪播器樣式 */
         .main-photo-frame {
             position: relative;
             width: 100%;
             border: 1px solid var(--primary-neon);
             overflow: hidden;
             background: #111;
+            aspect-ratio: 3/4;
         }
-        .main-photo-frame img { width: 100%; height: 100%; object-fit: cover; }
+
+        .photo-slider-track {
+            display: flex;
+            height: 100%;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform;
+        }
+        .photo-slide { min-width: 100%; height: 100%; flex-shrink: 0; }
+        .photo-slide img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* 導覽箭頭 */
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 60px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 20;
+            transition: all 0.3s;
+            color: var(--secondary-neon);
+        }
+        .slider-arrow:hover {
+            background: var(--secondary-neon);
+            color: #000;
+            box-shadow: 0 0 15px var(--secondary-neon);
+        }
+        .arrow-left { left: 0; clip-path: polygon(100% 0, 0 50%, 100% 100%); }
+        .arrow-right { right: 0; clip-path: polygon(0 0, 100% 50%, 0 100%); }
+
+        .photo-nav-dots {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+        .photo-dot {
+            width: 6px; height: 6px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .photo-dot.active {
+            background: var(--secondary-neon);
+            box-shadow: 0 0 10px var(--secondary-neon);
+            width: 15px;
+            border-radius: 3px;
+        }
 
         .main-photo-frame::after {
             content: "";
@@ -484,7 +542,7 @@
         .modal-action-footer {
             display: flex;
             gap: 15px;
-            margin-top: 10px; /* 增加與上方區塊的間距 */
+            margin-top: 10px;
             width: 100%;
         }
 
@@ -663,8 +721,24 @@
 
             <div class="cyber-body">
                 <div class="flex flex-col gap-6">
-                    <div class="main-photo-frame" id="modal-image-frame">
-                        <img src="" alt="Talent Image">
+                    <div class="main-photo-frame" id="photo-slider-container">
+                        <!-- 導覽箭頭 -->
+                        <div class="slider-arrow arrow-left" onclick="moveSlider(-1)"></div>
+                        <div class="slider-arrow arrow-right" onclick="moveSlider(1)"></div>
+                        
+                        <!-- 圖片軌道 (預設顯示 3 張圖) -->
+                        <div class="photo-slider-track" id="modal-slider-track">
+                            <div class="photo-slide"><img src="" id="slide-0" alt="P1"></div>
+                            <div class="photo-slide"><img src="" id="slide-1" alt="P2"></div>
+                            <div class="photo-slide"><img src="" id="slide-2" alt="P3"></div>
+                        </div>
+
+                        <!-- 進度點 -->
+                        <div class="photo-nav-dots" id="modal-dots">
+                            <div class="photo-dot active" onclick="jumpToSlide(0)"></div>
+                            <div class="photo-dot" onclick="jumpToSlide(1)"></div>
+                            <div class="photo-dot" onclick="jumpToSlide(2)"></div>
+                        </div>
                     </div>
                 </div>
 
@@ -721,6 +795,7 @@
                 name: "狂暴小建", 
                 enName: "CRAZY_JIAN",
                 img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/01%20狂暴小建.jpg",
+                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/01%20狂暴小建.jpg", "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=800", "https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=800"],
                 bio: "台灣資深實況主，以幽默犀利的吐槽與高超的遊戲操作聞名。擅長在激烈的對戰中與觀眾互動，創造無數經典迷因。",
                 career: "Since 2014",
                 streamType: "硬核遊戲 / 互動聊天",
@@ -731,6 +806,7 @@
                 name: "UZRA", 
                 enName: "UZRA_STRAT",
                 img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/02%20UZRA.jpg",
+                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/02%20UZRA.jpg", "https://images.unsplash.com/photo-1542751110-97427bbecf20?q=80&w=800", "https://images.unsplash.com/photo-1560419015-7c427e8ae5ba?q=80&w=800"],
                 bio: "爐石戰記傳奇人物，轉戰多種策略與競技遊戲。具備強大的社群號召力，目前致力於公會經營與大型賽事解說。",
                 career: "Since 2015",
                 streamType: "策略遊戲 / 公會經營",
@@ -741,6 +817,7 @@
                 name: "豆豆", 
                 enName: "DOU_DOU_VIBE",
                 img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/03%20豆豆.jpg",
+                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/03%20豆豆.jpg", "https://images.unsplash.com/photo-1520333789090-1afc82db536a?q=80&w=800", "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=800"],
                 bio: "以清新呆萌的形象吸引廣大粉絲。內容多樣化，從日常 VLOG 到各類遊戲實況，是品牌代言的首選紅人。",
                 career: "Since 2018",
                 streamType: "生活實況 / 多樣化遊戲",
@@ -751,6 +828,7 @@
                 name: "牛牛妹", 
                 enName: "NIU_NIU_GIRL",
                 img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/04%20牛牛妹.jpg",
+                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/04%20牛牛妹.jpg", "https://images.unsplash.com/photo-1542751110-97427bbecf20?q=80&w=800", "https://images.unsplash.com/photo-1560419015-7c427e8ae5ba?q=80&w=800"],
                 bio: "活力四射的互動型實況主，擁有極強的現場主持能力。經常在各大電玩展與品牌活動中擔任主持人。",
                 career: "Since 2017",
                 streamType: "戶外實況 / 綜藝活動",
@@ -758,9 +836,21 @@
                 hashtags: ["主持站台", "社群紅人", "動漫愛好者", "活力派"]
             },
             { 
+                name: "西瓜", 
+                enName: "WATERMELON",
+                img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/13 西瓜.png",
+                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/13 西瓜.png", "https://images.unsplash.com/photo-1520333789090-1afc82db536a?q=80&w=800", "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=800"],
+                bio: "擁有獨特的幽默感與極高的互動熱情，深受觀眾喜愛。擅長營造輕鬆愉快的直播氛圍，是社群中的開心果。",
+                career: "Since 2022",
+                streamType: "趣味雜談 / 綜合遊戲",
+                gameType: "多人連線, 創意遊戲",
+                hashtags: ["幽默風趣", "高互動", "潛力新星", "開心果"]
+            },
+            { 
                 name: "Abby純純", 
                 enName: "ABBY_PURE",
                 img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/05 Abby純純.jpg",
+                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/05 Abby純純.jpg", "https://images.unsplash.com/photo-1520333789090-1afc82db536a?q=80&w=800", "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=800"],
                 bio: "具備極高親和力的生活風格創作人。擅長分享日常穿搭與質感生活，在社群上擁有極高的黏著度與導購力。",
                 career: "Since 2019",
                 streamType: "質感生活 / 時尚分享",
@@ -771,6 +861,7 @@
                 name: "萌萌吃吃", 
                 enName: "MO_MO_EATS",
                 img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/06 萌萌吃吃.jpg",
+                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/06 萌萌吃吃.jpg", "https://images.unsplash.com/photo-1520333789090-1afc82db536a?q=80&w=800", "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=800"],
                 bio: "以美食開箱與療癒吃播為核心。直播風格溫馨愉快，是許多觀眾晚餐時段的最佳良伴，品牌餐飲推廣首選。",
                 career: "Since 2020",
                 streamType: "美食開箱 / 療癒吃播",
@@ -781,6 +872,7 @@
                 name: "小舞", 
                 enName: "DANCE_WAVE",
                 img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/07 小舞.png",
+                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/07 小舞.png", "https://images.unsplash.com/photo-1520333789090-1afc82db536a?q=80&w=800", "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=800"],
                 bio: "靈動的舞者與動態創作者。擅長快節奏的短影音內容，總能將音樂與視覺完美結合，引領社群趨勢。",
                 career: "Since 2021",
                 streamType: "動態舞蹈 / 運動生活",
@@ -791,6 +883,7 @@
                 name: "小鹽", 
                 enName: "SALT_GIRL",
                 img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/08 小鹽.png",
+                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/08 小鹽.png", "https://images.unsplash.com/photo-1520333789090-1afc82db536a?q=80&w=800", "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=800"],
                 bio: "擁有獨特鹽系風格的知性創作者。偏好極簡美學與深度閱讀分享，內容紮實且具備獨到的觀點與藝術氣息。",
                 career: "Since 2020",
                 streamType: "深度雜談 / 藝術分享",
@@ -801,6 +894,7 @@
                 name: "妖乖", 
                 enName: "YAO_GUAI",
                 img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/09 妖乖.jpg",
+                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/09 妖乖.jpg", "https://images.unsplash.com/photo-1542751110-97427bbecf20?q=80&w=800", "https://images.unsplash.com/photo-1560419015-7c427e8ae5ba?q=80&w=800"],
                 bio: "搞怪可愛、不按牌理出牌的創意奇才。直播充滿驚喜與笑聲，是社群中的快樂泉源與點子王。",
                 career: "Since 2022",
                 streamType: "創意惡搞 / 綜藝互動",
@@ -811,6 +905,7 @@
                 name: "丫布丁丁", 
                 enName: "PUDDING_GIRL",
                 img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/10 丫布丁丁.png",
+                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/10 丫布丁丁.png", "https://images.unsplash.com/photo-1520333789090-1afc82db536a?q=80&w=800", "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=800"],
                 bio: "甜美可人的元氣系偶像。擁有卓越的歌唱實力與迷人嗓音，常透過直播與觀眾進行溫暖的心靈交流。",
                 career: "Since 2018",
                 streamType: "音樂演唱 / 甜蜜互動",
@@ -821,6 +916,7 @@
                 name: "奶茶蜜", 
                 enName: "MILK_TEA_BEE",
                 img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/11 奶茶蜜.jpg",
+                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/11 奶茶蜜.jpg", "https://images.unsplash.com/photo-1520333789090-1afc82db536a?q=80&w=800", "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=800"],
                 bio: "溫柔如奶茶般甜潤的創作者。擅長手作、DIY 與慢生活分享，為焦慮的數位時代帶來一片寧靜。",
                 career: "Since 2021",
                 streamType: "手作創意 / 慢活日常",
@@ -831,6 +927,7 @@
                 name: "妮塔", 
                 enName: "NITA_GLOW",
                 img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/12 妮塔.jpg",
+                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/12 妮塔.jpg", "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=800", "https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=800"],
                 bio: "具備強大專業背景的數位領域專家。不僅是實況主，更是科技潮流的先鋒者，提供最權威的產品解析。",
                 career: "Since 2017",
                 streamType: "科技評論 / 硬體開箱",
@@ -838,6 +935,8 @@
                 hashtags: ["科技先鋒", "專業解析", "意見領袖", "硬派評測"]
             }
         ];
+
+        let currentSlideIndex = 0;
 
         const grid = document.getElementById('talent-grid');
         talents.forEach(t => {
@@ -855,11 +954,17 @@
         function openTalentModal(t) {
             document.getElementById('modal-name').innerText = t.name;
             document.getElementById('modal-en-name').innerText = t.enName;
-            document.getElementById('modal-image-frame').innerHTML = `<img src="${t.img}" class="w-full h-full object-cover" onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=${t.name}'">`;
             document.getElementById('modal-bio').innerText = t.bio;
             document.getElementById('modal-career-start').innerText = `SINCE ${t.career.replace('Since ', '')}`;
             document.getElementById('modal-stream-type').innerText = t.streamType;
             document.getElementById('modal-game-type').innerText = t.gameType;
+
+            // 設置輪播圖片 (gallery)
+            const photoList = t.gallery || [t.img, t.img, t.img];
+            for(let i=0; i<3; i++) {
+                const imgEl = document.getElementById(`slide-${i}`);
+                if(imgEl) imgEl.src = photoList[i] || photoList[0];
+            }
 
             const tagContainer = document.getElementById('modal-hashtags');
             tagContainer.innerHTML = '';
@@ -870,8 +975,32 @@
                 tagContainer.appendChild(span);
             });
 
+            currentSlideIndex = 0;
+            updateSliderUI();
+
             document.getElementById('modal-overlay').style.display = 'block';
             document.body.style.overflow = 'hidden';
+        }
+
+        function moveSlider(dir) {
+            currentSlideIndex += dir;
+            if (currentSlideIndex < 0) currentSlideIndex = 2;
+            if (currentSlideIndex > 2) currentSlideIndex = 0;
+            updateSliderUI();
+        }
+
+        function jumpToSlide(idx) {
+            currentSlideIndex = idx;
+            updateSliderUI();
+        }
+
+        function updateSliderUI() {
+            const track = document.getElementById('modal-slider-track');
+            const dots = document.querySelectorAll('.photo-dot');
+            if (track) track.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentSlideIndex);
+            });
         }
 
         function closeModal() { 
@@ -884,12 +1013,12 @@
             if(el) window.scrollTo({ top: el.offsetTop - 50, behavior: 'smooth' });
         }
 
-        // 滾動至藝人列表並關閉彈窗
         function scrollToTalentsSection() {
             closeModal();
             scrollToSection('talents');
         }
 
+        // 旗下藝人水平滾動 (Mouse & Touch)
         const scrollContainer = document.getElementById('talent-scroll-container');
         let isDown = false;
         let startX_scroll;
@@ -910,11 +1039,12 @@
             scrollContainer.scrollLeft = scrollLeft - walk;
         });
 
+        // 活動花絮自動播放
         const container = document.getElementById('gallery-container');
         const track = document.getElementById('gallery-track');
         let pos = 0;
         let isDragging = false;
-        let startX;
+        let startX_gal;
         let currentPos = 0;
         let isAutoPlay = true;
 
@@ -931,13 +1061,13 @@
         const startDrag = (e) => {
             isDragging = true;
             isAutoPlay = false;
-            startX = (e.pageX || e.touches[0].pageX) - track.offsetLeft;
+            startX_gal = (e.pageX || e.touches[0].pageX) - track.offsetLeft;
             currentPos = pos;
         };
         const onDrag = (e) => {
             if (!isDragging) return;
             const x = (e.pageX || e.touches[0].pageX) - track.offsetLeft;
-            pos = currentPos + (x - startX);
+            pos = currentPos + (x - startX_gal);
             track.style.transform = `translateX(${pos}px)`;
         };
         const stopDrag = () => {
@@ -951,6 +1081,15 @@
         container.addEventListener('touchstart', startDrag, {passive: true});
         container.addEventListener('touchmove', onDrag, {passive: true});
         container.addEventListener('touchend', stopDrag);
+
+        // 彈窗內的照片拖曳 (Slider)
+        const sliderContainer = document.getElementById('photo-slider-container');
+        let startX_slide = 0;
+        sliderContainer.addEventListener('touchstart', e => startX_slide = e.touches[0].pageX);
+        sliderContainer.addEventListener('touchend', e => {
+            let diff = startX_slide - e.changedTouches[0].pageX;
+            if (Math.abs(diff) > 50) moveSlider(diff > 0 ? 1 : -1);
+        });
     </script>
 </body>
 </html>
