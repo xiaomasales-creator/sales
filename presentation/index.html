@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>小馬娛樂 | XIAOMA ENT.</title>
+    <title>小馬娛樂 | XIAOMA ENT. - CYBER HOME</title>
     <!-- Tailwind CSS for utility styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts: Orbitron for Sci-Fi look -->
@@ -172,44 +172,36 @@
             box-shadow: 0 0 10px var(--secondary-neon);
         }
 
-        /* 輪播區塊 - 調整照片寬度為 900px，高度 675px */
+        /* 輪播區塊 - 調整照片寬度為 900px，高度 675px，增加手動滑動功能 */
         .gallery-container {
             width: 100%;
             overflow: hidden;
             border: 1px solid #222;
             position: relative;
+            cursor: grab;
+        }
+        .gallery-container:active {
+            cursor: grabbing;
         }
         .gallery-track {
             display: flex;
-            /* 軌道寬度為 8 張圖的寬度 (每張 900px) */
-            animation: scroll 60s linear infinite;
-            width: calc(900px * 8);
+            width: max-content;
+            /* 自動輪播動畫由 JS 控制，以支援手動切換後的恢復 */
+            transition: transform 0.1s linear;
         }
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            /* 捲動過一半的數量 (4張) 以實現無限銜接 */
-            100% { transform: translateX(calc(-900px * 4)); }
-        }
+        
         .gallery-item {
             width: 900px;
             height: 675px;
             flex-shrink: 0;
             padding: 15px;
+            user-select: none;
         }
         
         @media (max-width: 900px) {
-            /* 在小螢幕上保持比例但縮小寬度 */
-            .gallery-track {
-                width: calc(100vw * 8);
-                animation: scroll-mobile 60s linear infinite;
-            }
-            @keyframes scroll-mobile {
-                0% { transform: translateX(0); }
-                100% { transform: translateX(calc(-100vw * 4)); }
-            }
             .gallery-item {
                 width: 100vw;
-                height: 75vw; /* 保持 4:3 比例 */
+                height: 75vw;
                 padding: 10px;
             }
         }
@@ -221,6 +213,7 @@
             transition: filter 0.3s;
             border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            pointer-events: none; /* 防止圖片拖動干擾 */
         }
         .gallery-img:hover { filter: grayscale(0); }
 
@@ -285,7 +278,7 @@
             </div>
         </section>
 
-        <!-- 2. GALLERY SLIDER (900px x 675px) -->
+        <!-- 2. GALLERY SLIDER (手動 + 自動輪播) -->
         <section id="gallery" class="py-12 bg-zinc-900/20">
             <div class="max-w-6xl mx-auto mb-6 px-6">
                 <div class="flex items-center gap-4">
@@ -294,19 +287,20 @@
                     <span class="h-[1px] flex-grow bg-purple-900"></span>
                 </div>
             </div>
-            <div class="gallery-container">
-                <div class="gallery-track">
+            <div class="gallery-container" id="gallery-container">
+                <div class="gallery-track" id="gallery-track">
                     <div class="gallery-item"><div class="gallery-img bg-zinc-800 flex items-center justify-center text-lg cyber-font text-zinc-500">EVENT_CLIP_01</div></div>
                     <div class="gallery-item"><div class="gallery-img bg-zinc-700 flex items-center justify-center text-lg cyber-font text-zinc-500">EVENT_CLIP_02</div></div>
                     <div class="gallery-item"><div class="gallery-img bg-zinc-800 flex items-center justify-center text-lg cyber-font text-zinc-500">EVENT_CLIP_03</div></div>
                     <div class="gallery-item"><div class="gallery-img bg-zinc-700 flex items-center justify-center text-lg cyber-font text-zinc-500">EVENT_CLIP_04</div></div>
-                    <!-- 無限滾動克隆節點 -->
+                    <!-- 複製節點以實現循環 -->
                     <div class="gallery-item"><div class="gallery-img bg-zinc-800 flex items-center justify-center text-lg cyber-font text-zinc-500">EVENT_CLIP_01</div></div>
                     <div class="gallery-item"><div class="gallery-img bg-zinc-700 flex items-center justify-center text-lg cyber-font text-zinc-500">EVENT_CLIP_02</div></div>
                     <div class="gallery-item"><div class="gallery-img bg-zinc-800 flex items-center justify-center text-lg cyber-font text-zinc-500">EVENT_CLIP_03</div></div>
                     <div class="gallery-item"><div class="gallery-img bg-zinc-700 flex items-center justify-center text-lg cyber-font text-zinc-500">EVENT_CLIP_04</div></div>
                 </div>
             </div>
+            <div class="text-center mt-4 opacity-30 cyber-font text-[10px] tracking-widest">DRAG_TO_NAVIGATE // 拖曳導航</div>
         </section>
 
         <!-- 3. TALENT OVERVIEW -->
@@ -364,19 +358,14 @@
     </div>
 
     <script>
+        // --- 藝人資料與模態框邏輯 ---
         const talents = [
-            { name: "Neon", tags: ["#FPS"] },
-            { name: "Draga", tags: ["#Dance"] },
-            { name: "Spark", tags: ["#Music"] },
-            { name: "Jade", tags: ["#Model"] },
-            { name: "Kuro", tags: ["#Food"] },
-            { name: "Ai-Chan", tags: ["#Cos"] },
-            { name: "Rex", tags: ["#Fit"] },
-            { name: "Viv", tags: ["#Radio"] },
-            { name: "Owen", tags: ["#Biz"] },
-            { name: "Mina", tags: ["#Travel"] },
-            { name: "Bobby", tags: ["#Pet"] },
-            { name: "Shadow", tags: ["#Art"] }
+            { name: "Neon", tags: ["#FPS"] }, { name: "Draga", tags: ["#Dance"] },
+            { name: "Spark", tags: ["#Music"] }, { name: "Jade", tags: ["#Model"] },
+            { name: "Kuro", tags: ["#Food"] }, { name: "Ai-Chan", tags: ["#Cos"] },
+            { name: "Rex", tags: ["#Fit"] }, { name: "Viv", tags: ["#Radio"] },
+            { name: "Owen", tags: ["#Biz"] }, { name: "Mina", tags: ["#Travel"] },
+            { name: "Bobby", tags: ["#Pet"] }, { name: "Shadow", tags: ["#Art"] }
         ];
 
         const grid = document.getElementById('talent-grid');
@@ -407,6 +396,91 @@
             const el = document.getElementById(id);
             if(el) window.scrollTo({ top: el.offsetTop - 50, behavior: 'smooth' });
         }
+
+        // --- 輪播手動滑動 + 自動輪播邏輯 ---
+        const container = document.getElementById('gallery-container');
+        const track = document.getElementById('gallery-track');
+        let isDragging = false;
+        let startX, scrollLeft;
+        let currentPos = 0;
+        let autoPlaySpeed = 1; // 自動輪播速度
+        let animationFrame;
+
+        // 初始化軌道位置與重複邏輯
+        function updateCarousel() {
+            if (!isDragging) {
+                currentPos -= autoPlaySpeed;
+                
+                // 取得單組內容的寬度 (4張圖)
+                const itemWidth = window.innerWidth <= 900 ? window.innerWidth : 900;
+                const totalSetWidth = itemWidth * 4;
+
+                // 循環重置
+                if (Math.abs(currentPos) >= totalSetWidth) {
+                    currentPos = 0;
+                }
+                
+                track.style.transform = `translateX(${currentPos}px)`;
+            }
+            animationFrame = requestAnimationFrame(updateCarousel);
+        }
+
+        // 手動拖拽事件
+        container.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.pageX - track.offsetLeft;
+            scrollLeft = currentPos;
+            cancelAnimationFrame(animationFrame); // 拖拽時停止自動輪播
+        });
+
+        container.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            e.preventDefault();
+            const x = e.pageX - track.offsetLeft;
+            const walk = x - startX;
+            currentPos = scrollLeft + walk;
+            
+            // 邊界循環檢查 (手動)
+            const itemWidth = window.innerWidth <= 900 ? window.innerWidth : 900;
+            const totalSetWidth = itemWidth * 4;
+            if (currentPos > 0) currentPos = -totalSetWidth;
+            if (currentPos < -totalSetWidth) currentPos = 0;
+
+            track.style.transform = `translateX(${currentPos}px)`;
+        });
+
+        const stopDragging = () => {
+            if (isDragging) {
+                isDragging = false;
+                updateCarousel(); // 放開後恢復自動輪播
+            }
+        };
+
+        container.addEventListener('mouseup', stopDragging);
+        container.addEventListener('mouseleave', stopDragging);
+
+        // 觸控支援
+        container.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            startX = e.touches[0].pageX - track.offsetLeft;
+            scrollLeft = currentPos;
+            cancelAnimationFrame(animationFrame);
+        });
+
+        container.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            const x = e.touches[0].pageX - track.offsetLeft;
+            const walk = x - startX;
+            currentPos = scrollLeft + walk;
+            track.style.transform = `translateX(${currentPos}px)`;
+        });
+
+        container.addEventListener('touchend', stopDragging);
+
+        // 啟動輪播
+        window.onload = () => {
+            updateCarousel();
+        };
 
         window.addEventListener('keydown', (e) => {
             if(e.key === "Escape") closeModal();
