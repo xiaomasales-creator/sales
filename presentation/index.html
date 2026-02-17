@@ -1,1 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小馬娛樂 | PONY ENT. - CYBER PRESENTATION</title>
+    <!-- Tailwind CSS for utility styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Orbitron for Sci-Fi look -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+TC:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-neon: #8600FF;
+            --secondary-neon: #00F0FF;
+            --bg-dark: #050505;
+            --text-glow: 0 0 10px rgba(134, 0, 255, 0.8);
+        }
 
+        body {
+            background-color: var(--bg-dark);
+            color: white;
+            font-family: 'Noto+Sans+TC', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .cyber-font {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        /* 背景掃描線特效 */
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 100;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+
+        /* 霓虹邊框 */
+        .neon-border {
+            border: 2px solid var(--primary-neon);
+            box-shadow: 0 0 15px var(--primary-neon), inset 0 0 5px var(--primary-neon);
+            transition: all 0.3s ease;
+        }
+
+        .neon-border:hover {
+            box-shadow: 0 0 25px var(--secondary-neon), inset 0 0 10px var(--secondary-neon);
+            border-color: var(--secondary-neon);
+        }
+
+        /* 選單懸停效果 */
+        .nav-item {
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+            background: rgba(134, 0, 255, 0.1);
+        }
+
+        .nav-item:hover {
+            transform: scale(1.15) skewX(-10deg);
+            background: var(--primary-neon);
+            color: white;
+            box-shadow: 0 0 30px var(--primary-neon);
+        }
+
+        /* 藝人卡片 */
+        .talent-card {
+            background: rgba(20, 20, 20, 0.8);
+            border-left: 4px solid var(--primary-neon);
+            transition: transform 0.3s ease;
+        }
+
+        .talent-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .hashtag {
+            font-size: 0.75rem;
+            color: var(--secondary-neon);
+            border: 1px solid var(--secondary-neon);
+            padding: 2px 6px;
+            margin: 2px;
+            display: inline-block;
+        }
+
+        /* 頁首 LOGO 動畫 */
+        .logo-container {
+            position: relative;
+            filter: drop-shadow(0 0 8px var(--primary-neon));
+            transition: filter 0.3s ease;
+        }
+        
+        .logo-container:hover {
+            filter: drop-shadow(0 0 15px var(--secondary-neon));
+        }
+
+        .logo-img {
+            height: 60px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        /* 隱藏捲動條 */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #111; }
+        ::-webkit-scrollbar-thumb { background: var(--primary-neon); }
+
+        /* 理念區塊裝飾 */
+        .concept-card {
+            background: linear-gradient(135deg, rgba(134, 0, 255, 0.1) 0%, rgba(0, 0, 0, 0.8) 100%);
+            border: 1px solid rgba(134, 0, 255, 0.3);
+            transition: all 0.3s;
+        }
+        .concept-card:hover {
+            border-color: var(--secondary-neon);
+            background: rgba(134, 0, 255, 0.2);
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <!-- HEADER -->
+    <header class="flex flex-col md:flex-row justify-between items-center mb-12 border-b-2 border-purple-900 pb-6">
+        <div class="flex items-center space-x-6 mb-6 md:mb-0">
+            <!-- 品牌 LOGO -->
+            <div class="logo-container">
+                <img src="https://files.oaiusercontent.com/file-K1F8Kq9Y7zKz6z6z6z6z6z6z" alt="小馬娛樂 LOGO" class="logo-img">
+            </div>
+            <div class="hidden sm:block">
+                <p class="cyber-font text-xs text-purple-400">PONY ENT. // DIGITAL TALENT AGENCY</p>
+                <div class="h-1 w-full bg-gradient-to-r from-purple-600 to-transparent mt-1"></div>
+            </div>
+        </div>
+
+        <!-- NAVIGATION MENU -->
+        <nav class="flex flex-wrap justify-center gap-4">
+            <div class="nav-item group" onclick="scrollToSection('about')">
+                <span class="cyber-font font-bold">關於小馬娛樂</span>
+            </div>
+            <div class="nav-item" onclick="scrollToSection('talents')">
+                <span class="cyber-font font-bold">網紅經紀</span>
+            </div>
+            <div class="nav-item">
+                <span class="cyber-font font-bold">活動花絮</span>
+            </div>
+            <div class="nav-item">
+                <span class="cyber-font font-bold">其他服務</span>
+            </div>
+            <div class="nav-item">
+                <span class="cyber-font font-bold">聯絡我們</span>
+            </div>
+            <div class="nav-item bg-cyan-900 !text-cyan-400 border border-cyan-400 flex items-center px-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                </svg>
+                <span class="cyber-font font-black">詢價單</span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- HERO SECTION -->
+    <main class="max-w-7xl mx-auto">
+        <section id="about" class="mb-20">
+            <div class="mb-8">
+                <h2 class="cyber-font text-3xl font-black italic text-purple-400 border-l-4 border-purple-600 pl-4">
+                    核心理念_CORE_VALUES
+                </h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- 理念 1 -->
+                <div class="concept-card p-6">
+                    <div class="cyber-font text-xs text-cyan-400 mb-2">[01_STYLE]</div>
+                    <h3 class="text-xl font-bold mb-3 text-white">風格領域多元，自由不設限</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        不侷限領域，勇於挑戰創新；實況主自由發揮，展現獨特魅力。
+                    </p>
+                </div>
+
+                <!-- 理念 2 -->
+                <div class="concept-card p-6">
+                    <div class="cyber-font text-xs text-cyan-400 mb-2">[02_QUALITY]</div>
+                    <h3 class="text-xl font-bold mb-3 text-white">最低的預算，最高的品質</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        精準掌控預算，追求完美成效，致力於讓客戶花小錢也能享有高品質。
+                    </p>
+                </div>
+
+                <!-- 理念 3 -->
+                <div class="concept-card p-6">
+                    <div class="cyber-font text-xs text-cyan-400 mb-2">[03_PROFESSIONAL]</div>
+                    <h3 class="text-xl font-bold mb-3 text-white">專業與趣味兼顧</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        以專業而不失趣味的行銷推廣，吸引大量潛在客群。
+                    </p>
+                </div>
+
+                <!-- 理念 4 -->
+                <div class="concept-card p-6">
+                    <div class="cyber-font text-xs text-cyan-400 mb-2">[04_EFFICIENCY]</div>
+                    <h3 class="text-xl font-bold mb-3 text-white">行事俐落，使命必達</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        執行迅速確實，絕不拖泥帶水，確保專案完美落地。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TALENTS GRID -->
+        <section id="talents" class="mb-20">
+            <div class="flex justify-between items-end mb-8">
+                <h2 class="cyber-font text-3xl font-black italic border-b-4 border-cyan-400 inline-block text-white">網紅經紀 / ARTISTS</h2>
+                <span class="cyber-font text-xs text-gray-500">TOTAL_12_RECORDS_FOUND</span>
+            </div>
+
+            <div id="talent-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Talent cards will be generated here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-purple-900 pt-10 pb-10 mt-20 text-center">
+        <div class="cyber-font text-xs tracking-widest text-gray-500 mb-2">
+            &copy; 2024 PONY ENTERTAINMENT. ALL RIGHTS RESERVED.
+        </div>
+        <div class="flex justify-center space-x-4 opacity-50">
+            <div class="w-2 h-2 bg-purple-600 rounded-full animate-pulse"></div>
+            <div class="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
+            <div class="w-2 h-2 bg-purple-600 rounded-full animate-pulse"></div>
+        </div>
+    </footer>
+
+    <script>
+        const talents = [
+            { name: "霓虹子 Neon", tags: ["#電玩少女", "#科技穿搭", "#FPS玩家"] },
+            { name: "阿龍 Draga", tags: ["#街舞靈魂", "#極限運動", "#潮流開箱"] },
+            { name: "星火 Spark", tags: ["#音樂製作", "#虛擬歌手", "#氛圍感"] },
+            { name: "冷翡翡 Jade", tags: ["#時尚名模", "#高冷系", "#美妝測評"] },
+            { name: "大黑 Kuro", tags: ["#美食獵人", "#大份量", "#露營職人"] },
+            { name: "小愛 Ai-Chan", tags: ["#二次元", "#Cosplayer", "#萌系聲優"] },
+            { name: "雷克斯 Rex", tags: ["#健身硬核", "#生活教練", "#重機愛好"] },
+            { name: "薇薇安 Viv", tags: ["#塔羅占卜", "#身心靈", "#午夜電台"] },
+            { name: "歐文 Owen", tags: ["#商務穿搭", "#理財投資", "#知識型"] },
+            { name: "米娜 Mina", tags: ["#旅遊Vlog", "#冒險者", "#潛水愛好"] },
+            { name: "波比 Bobby", tags: ["#寵物博主", "#法鬥家長", "#療癒系"] },
+            { name: "影 Shadow", tags: ["#街拍大師", "#攝影藝術", "#黑白美學"] }
+        ];
+
+        const grid = document.getElementById('talent-grid');
+
+        talents.forEach((talent, index) => {
+            const card = document.createElement('div');
+            card.className = "talent-card p-4 neon-border relative group overflow-hidden";
+            card.innerHTML = `
+                <div class="aspect-square bg-gray-800 mb-4 overflow-hidden">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=${talent.name}" 
+                         alt="${talent.name}" 
+                         class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-110 group-hover:scale-100">
+                </div>
+                <div class="relative z-10">
+                    <h3 class="cyber-font text-xl font-black mb-2">${talent.name}</h3>
+                    <div class="flex flex-wrap">
+                        ${talent.tags.map(tag => `<span class="hashtag">${tag}</span>`).join('')}
+                    </div>
+                </div>
+                <div class="absolute top-0 right-0 p-2 cyber-font text-[10px] text-purple-900 opacity-20">0${index+1}</div>
+            `;
+            grid.appendChild(card);
+        });
+
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
