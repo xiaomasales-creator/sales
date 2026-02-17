@@ -140,7 +140,7 @@
         /* 修復子選單空隙問題 */
         .submenu {
             position: absolute;
-            bottom: 100%; /* 從按鈕上方開始 */
+            bottom: 100%;
             left: 50%;
             transform: translateX(-50%) translateY(10px);
             background: rgba(5, 5, 5, 0.98);
@@ -154,17 +154,16 @@
             box-shadow: 0 0 30px rgba(134, 0, 255, 0.4);
             pointer-events: none;
             z-index: 1001;
-            margin-bottom: 12px; /* 增加與按鈕的物理距離，方便動畫觀察 */
+            margin-bottom: 12px;
         }
 
-        /* 加入透明橋樑連通主選單與子選單 */
         .submenu::before {
             content: "";
             position: absolute;
-            bottom: -20px; /* 覆蓋下方的空隙 */
+            bottom: -20px;
             left: 0;
             width: 100%;
-            height: 25px; /* 足夠的高度來填補空隙 */
+            height: 25px;
             background: transparent;
         }
 
@@ -323,13 +322,13 @@
 
         .cyber-header {
             border-bottom: 2px solid var(--secondary-neon);
-            padding-bottom: 15px;
+            padding-bottom: 20px;
             display: flex;
-            flex-direction: row;
-            align-items: baseline;
-            justify-content: space-between;
-            flex-wrap: wrap;
+            flex-direction: column; /* 設為垂直，讓按鈕放在名字下方 */
+            align-items: flex-start;
+            justify-content: flex-start;
             gap: 15px;
+            position: relative;
         }
 
         .cyber-body {
@@ -374,41 +373,22 @@
             100% { top: 110%; }
         }
 
-        /* --- 賽博控制按鈕組 (優化手機排版) --- */
+        /* --- 修正關閉按鈕：絕對定位 (右上角) --- */
+        .close-btn-fixed {
+            position: absolute !important;
+            top: 15px;
+            right: 15px;
+            z-index: 200;
+        }
+
+        /* --- 修正社群按鈕群組：相對定位，放置於標題下方 --- */
         .cyber-action-group {
+            position: relative; /* 相對定位 */
             display: flex;
             align-items: center;
             gap: 12px;
             z-index: 100;
-        }
-
-        /* 桌機版維持右上角懸浮 */
-        @media (min-width: 1024px) {
-            .cyber-action-group {
-                position: absolute;
-                top: 15px;
-                right: 15px;
-            }
-        }
-        
-        /* 手機版排版優化：按鈕群組在標題下方 */
-        @media (max-width: 1023px) {
-            .cyber-action-group {
-                position: relative;
-                top: 0;
-                right: 0;
-                width: 100%;
-                justify-content: flex-start;
-                margin-top: 10px;
-            }
-            .cyber-header {
-                padding-top: 30px; /* 留出關閉按鈕空間 */
-            }
-            .close-btn-fixed {
-                position: absolute !important;
-                top: 10px;
-                right: 10px;
-            }
+            margin-top: 5px; /* 與上方名字保持間距 */
         }
 
         .social-link-wrapper {
@@ -420,8 +400,8 @@
 
         .cyber-icon-btn {
             position: relative;
-            width: 40px;
-            height: 40px;
+            width: 38px;
+            height: 38px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -440,7 +420,7 @@
 
         .btn-content {
             color: var(--secondary-neon);
-            font-size: 14px;
+            font-size: 13px;
             z-index: 1;
             transition: all 0.3s;
             display: flex;
@@ -453,7 +433,7 @@
             background: var(--primary-neon);
             border-color: #fff;
             box-shadow: 0 0 20px var(--primary-neon);
-            transform: scale(1.1) rotate(5deg);
+            transform: scale(1.1);
         }
 
         .cyber-icon-btn:hover .btn-content {
@@ -623,7 +603,7 @@
     <div id="modal-overlay" onclick="closeModal()">
         <div class="cyber-panel-container" onclick="event.stopPropagation()">
             
-            <!-- 獨立的關閉按鈕，確保各裝置一致性 -->
+            <!-- 關閉按鈕：絕對定位 (右上角) -->
             <div class="cyber-icon-btn close close-btn-fixed" onclick="closeModal()" title="CLOSE_TERMINAL">
                 <div class="btn-frame"></div><div class="btn-content italic">&times;</div><div class="btn-dot"></div>
             </div>
@@ -634,7 +614,7 @@
                     <p id="modal-en-name" class="text-cyan-400 cyber-font text-[10px] md:text-[12px] tracking-[0.4em] mt-1">CREATOR_PROFILE</p>
                 </div>
                 
-                <!-- 社群連結群組：在手機版會因為 flex-wrap 自然掉到下方，或透過 CSS 調整佈局 -->
+                <!-- 社群連結群組：相對定位，放置在標題下方 -->
                 <div class="cyber-action-group">
                     <div class="social-link-wrapper">
                         <div class="cyber-icon-btn" title="Facebook"><div class="btn-frame"></div><div class="btn-content">FB</div><div class="btn-dot"></div></div>
