@@ -827,7 +827,6 @@
                             <p class="text-gray-500 text-[10px] md:text-[11px]" id="modal-game-type">-</p>
                         </div>
                         
-                        <!-- 受眾輪廓更新版 -->
                         <div class="info-block">
                             <span class="info-label">Audience Demographic // 受眾輪廓</span>
                             <div class="audience-bar-container">
@@ -838,7 +837,6 @@
                                 <span class="text-cyan-400">MALE 男性 <span id="male-pct">0%</span></span>
                                 <span class="text-pink-500">FEMALE 女性 <span id="female-pct">0%</span></span>
                             </div>
-                            <!-- 新增：年齡分佈 -->
                             <div class="mt-4 border-t border-white/5 pt-2">
                                 <span class="text-[9px] text-gray-500 tracking-wider uppercase">Age Distribution // 年齡分佈</span>
                                 <p id="modal-age-dist" class="text-white text-xs cyber-font mt-1">18-35 歲</p>
@@ -873,7 +871,7 @@
     </div>
 
     <script>
-        // 藝人資料數據
+        // 藝人資料數據 (新增至 13 位)
         const talents = [
             { 
                 name: "狂暴小建", 
@@ -935,7 +933,7 @@
                 name: "西瓜", 
                 enName: "WATERMELON",
                 img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/13 西瓜.png",
-                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/13 西瓜.png", "https://images.unsplash.com/photo-1520333789090-1afc82db536a?q=80&w=800", "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=800"],
+                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/13 西瓜.png", "https://api.dicebear.com/7.x/avataaars/svg?seed=watermelon1", "https://api.dicebear.com/7.x/avataaars/svg?seed=watermelon2"],
                 bio: "擁有獨特的幽默感與極高的互動熱情，深受觀眾喜愛。擅長營造輕鬆愉快的直播氛圍。",
                 career: "Since 2022",
                 streamType: "趣味雜談 / 綜合遊戲",
@@ -949,7 +947,7 @@
                 name: "Abby純純", 
                 enName: "ABBY_PURE",
                 img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/05 Abby純純.jpg",
-                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/05 Abby純純.jpg", "https://images.unsplash.com/photo-1520333789090-1afc82db536a?q=80&w=800", "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=800"],
+                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/05 Abby純純.jpg", "https://api.dicebear.com/7.x/avataaars/svg?seed=abby1", "https://api.dicebear.com/7.x/avataaars/svg?seed=abby2"],
                 bio: "具備極高親和力的生活風格創作人。擅長分享日常穿搭與質感生活，在社群上擁有極高的黏著度。",
                 career: "Since 2019",
                 streamType: "質感生活 / 時尚分享",
@@ -958,24 +956,126 @@
                 malePct: 30,
                 femalePct: 70,
                 ageDist: "20-40 歲"
+            },
+            { 
+                name: "萌萌吃吃", 
+                enName: "MO_MO_EAT",
+                img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/06 萌萌吃吃.jpg",
+                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/06 萌萌吃吃.jpg", "https://api.dicebear.com/7.x/avataaars/svg?seed=momo1", "https://api.dicebear.com/7.x/avataaars/svg?seed=momo2"],
+                bio: "美食評論與大胃王挑戰者。以療癒的吃相與真實的口感描述著稱，是餐飲品牌與生活用品的最佳合作夥伴。",
+                career: "Since 2020",
+                streamType: "美食開箱 / 療癒雜談",
+                gameType: "烹飪模擬, 社交遊戲",
+                hashtags: ["美食達人", "吃播", "真實開箱", "療癒系"],
+                malePct: 40,
+                femalePct: 60,
+                ageDist: "22-38 歲"
+            },
+            { 
+                name: "小舞", 
+                enName: "DANCE_XIAO_WU",
+                img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/07 小舞.png",
+                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/07 小舞.png", "https://api.dicebear.com/7.x/avataaars/svg?seed=dance1", "https://api.dicebear.com/7.x/avataaars/svg?seed=dance2"],
+                bio: "專業舞者出身，將舞蹈藝術融入實況內容。高超的舞技與開朗的個性，使她在年輕族群中擁有強大的影響力。",
+                career: "Since 2021",
+                streamType: "舞蹈表演 / 運動健身",
+                gameType: "Just Dance, 音樂節奏",
+                hashtags: ["舞蹈精靈", "時尚指標", "正能量", "專業舞者"],
+                malePct: 55,
+                femalePct: 45,
+                ageDist: "18-32 歲"
+            },
+            { 
+                name: "小鹽", 
+                enName: "SALT_XIAO_YAN",
+                img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/08 小鹽.png",
+                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/08 小鹽.png", "https://api.dicebear.com/7.x/avataaars/svg?seed=salt1", "https://api.dicebear.com/7.x/avataaars/svg?seed=salt2"],
+                bio: "知性冷靜的策略型玩家。擅長各類解謎與卡牌對戰遊戲，以精湛的邏輯分析吸引了一批死忠的硬核觀眾。",
+                career: "Since 2021",
+                streamType: "硬核解謎 / 邏輯分析",
+                gameType: "策略卡牌, 密室解謎",
+                hashtags: ["智慧型", "低調高冷", "硬核玩家", "深度內容"],
+                malePct: 70,
+                femalePct: 30,
+                ageDist: "25-40 歲"
+            },
+            { 
+                name: "妖乖", 
+                enName: "YAO_GUAI_DEMON",
+                img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/09 妖乖.jpg",
+                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/09 妖乖.jpg", "https://api.dicebear.com/7.x/avataaars/svg?seed=yao1", "https://api.dicebear.com/7.x/avataaars/svg?seed=yao2"],
+                bio: "充滿神秘感的 Cosplayer 與二次元文化推廣者。擅長高質量的角色扮演，在動漫圈與遊戲圈極具號召力。",
+                career: "Since 2019",
+                streamType: "Cosplay 展示 / 遊戲互動",
+                gameType: "RPG 大作, 二次元手遊",
+                hashtags: ["Cosplay", "動漫狂熱", "百變風格", "視覺享受"],
+                malePct: 65,
+                femalePct: 35,
+                ageDist: "15-30 歲"
+            },
+            { 
+                name: "丫布丁丁", 
+                enName: "YABU_PUDDING",
+                img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/10 丫布丁丁.png",
+                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/10 丫布丁丁.png", "https://api.dicebear.com/7.x/avataaars/svg?seed=pudding1", "https://api.dicebear.com/7.x/avataaars/svg?seed=pudding2"],
+                bio: "溫柔治癒系的療癒師。以溫暖的嗓音與觀眾進行深度對談，是許多人下班後的心靈港灣，擅長經營長期關係。",
+                career: "Since 2022",
+                streamType: "ASMR / 心靈諮商",
+                gameType: "動物森友會, 療癒遊戲",
+                hashtags: ["溫柔治癒", "深度對談", "高品質互動", "鄰家感"],
+                malePct: 48,
+                femalePct: 52,
+                ageDist: "20-45 歲"
+            },
+            { 
+                name: "奶茶蜜", 
+                enName: "MILK_TEA_MI",
+                img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/11 奶茶蜜.jpg",
+                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/11 奶茶蜜.jpg", "https://api.dicebear.com/7.x/avataaars/svg?seed=tea1", "https://api.dicebear.com/7.x/avataaars/svg?seed=tea2"],
+                bio: "甜美活潑的甜點系創作者。專精於美妝教學與流行話題，深受女性受眾喜愛，是美妝護膚品牌的強力推手。",
+                career: "Since 2023",
+                streamType: "美妝保養 / 流行快訊",
+                gameType: "流行音樂遊戲, 養成類",
+                hashtags: ["美妝達人", "甜美教主", "小紅書風格", "精緻生活"],
+                malePct: 20,
+                femalePct: 80,
+                ageDist: "18-35 歲"
+            },
+            { 
+                name: "妮塔", 
+                enName: "NITA_CYBER",
+                img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/12 妮塔.jpg",
+                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/12 妮塔.jpg", "https://api.dicebear.com/7.x/avataaars/svg?seed=nita1", "https://api.dicebear.com/7.x/avataaars/svg?seed=nita2"],
+                bio: "酷颯風格的科技愛好者與評測家。對硬體設備、3C 產品有獨到見解，其專業形象在科技圈具有高度可信度。",
+                career: "Since 2021",
+                streamType: "3C 評測 / 硬體組裝",
+                gameType: "電子競技, 競速遊戲",
+                hashtags: ["酷颯風格", "科技評測", "專業形象", "數位遊牧"],
+                malePct: 75,
+                femalePct: 25,
+                ageDist: "25-45 歲"
             }
         ];
 
         let carouselIndex = 1;
 
-        // 生成旗下藝人列表
-        const grid = document.getElementById('talent-grid');
-        talents.forEach(t => {
-            const div = document.createElement('div');
-            div.className = "avatar-box";
-            div.onclick = () => openTalentModal(t);
-            div.innerHTML = `
-                <div class="avatar-circle">
-                    <img src="${t.img}" class="w-full h-full object-cover" onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=${t.name}'">
-                </div>
-                <p class="text-[10px] md:text-xs text-zinc-400 font-bold uppercase">${t.name}</p>`;
-            grid.appendChild(div);
-        });
+        // 生成藝人列表
+        function renderTalentGrid() {
+            const grid = document.getElementById('talent-grid');
+            grid.innerHTML = ''; // 清空原有內容重新生成
+            talents.forEach(t => {
+                const div = document.createElement('div');
+                div.className = "avatar-box";
+                div.onclick = () => openTalentModal(t);
+                div.innerHTML = `
+                    <div class="avatar-circle">
+                        <img src="${t.img}" class="w-full h-full object-cover" onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=${t.name}'">
+                    </div>
+                    <p class="text-[10px] md:text-xs text-zinc-400 font-bold uppercase">${t.name}</p>`;
+                grid.appendChild(div);
+            });
+        }
+        renderTalentGrid();
 
         function openTalentModal(t) {
             document.getElementById('modal-name').innerText = t.name;
@@ -985,13 +1085,13 @@
             document.getElementById('modal-stream-type').innerText = t.streamType;
             document.getElementById('modal-game-type').innerText = t.gameType;
 
-            // 更新受眾輪廓與比例
+            // 受眾比例與標籤更新
             document.getElementById('male-bar').style.width = t.malePct + '%';
             document.getElementById('female-bar').style.width = t.femalePct + '%';
             document.getElementById('male-pct').innerText = t.malePct + '%';
             document.getElementById('female-pct').innerText = t.femalePct + '%';
             
-            // 更新年齡分佈
+            // 年齡分佈更新
             document.getElementById('modal-age-dist').innerText = t.ageDist;
 
             const photoList = t.gallery || [t.img, t.img, t.img];
@@ -1120,14 +1220,6 @@
         container.addEventListener('touchstart', startDrag, {passive: true});
         container.addEventListener('touchmove', onDrag, {passive: true});
         container.addEventListener('touchend', stopDrag);
-
-        const carouselWrapper = document.querySelector('.photo-carousel-wrapper');
-        let startX_swipe = 0;
-        carouselWrapper.addEventListener('touchstart', e => startX_swipe = e.touches[0].pageX);
-        carouselWrapper.addEventListener('touchend', e => {
-            let diff = startX_swipe - e.changedTouches[0].pageX;
-            if (Math.abs(diff) > 50) moveCarousel(diff > 0 ? 1 : -1);
-        });
     </script>
 </body>
 </html>
