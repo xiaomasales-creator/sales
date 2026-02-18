@@ -782,21 +782,18 @@
 
     <div class="min-h-screen flex flex-col pb-32">
         
-        <section id="home" class="pt-12 md:pt-24 pb-8 flex flex-col items-center text-center px-6">
-            <div class="hero-logo mb-6 md:mb-10">
-                <!-- 【預設網址】主頁 LOGO -->
+        <!-- 首頁標題區塊 -->
+        <section id="home" class="pt-8 md:pt-16 pb-2 flex flex-col items-center text-center px-6">
+            <div class="hero-logo mb-4 md:mb-6">
                 <img src="https://xiaomasales-creator.github.io/sales/presentation/homepage/LOGO_cut.png" alt="小馬娛樂 LOGO" class="max-w-[90%] md:max-w-[800px] h-auto">
             </div>
             <div class="max-w-3xl px-4">
-                <h1 class="cyber-font text-xl md:text-4xl font-black mb-4">XIAOMA ENT. // <span class="text-purple-500">NEXT-GEN</span></h1>
-                <p class="text-gray-400 text-xs md:text-base leading-relaxed">
-                    致力於挖掘最具個人風格的創作者，在數位洪流中為品牌精準導航。
-                </p>
+                <h1 class="cyber-font text-xl md:text-4xl font-black mb-0">XIAOMA ENT. // <span class="text-purple-500">NEXT-GEN</span></h1>
             </div>
         </section>
 
         <!-- 主輪播區塊 (活動花絮) -->
-        <section id="gallery" class="py-12">
+        <section id="gallery" class="py-8 md:py-12">
             <h2 class="cyber-font text-center text-purple-400 text-[10px] md:text-sm tracking-widest mb-8 uppercase">LATEST_ACTIVITIES // 活動花絮</h2>
             <div class="gallery-wrapper">
                 <div class="gallery-nav-btn nav-btn-prev" onclick="manualGalleryNav(-1)" title="PREVIOUS_EVENT">&lsaquo;</div>
@@ -894,7 +891,6 @@
                 </div>
                 <div class="cyber-action-group">
                     <div class="social-link-wrapper">
-                        <!-- 【預設連結】藝人社交媒體連結將由 JavaScript 動態填入 -->
                         <a id="link-fb" href="#" target="_blank" class="cyber-icon-btn" title="Facebook">
                             <div class="btn-frame"></div><div class="btn-content">FB</div><div class="btn-dot"></div>
                         </a>
@@ -915,7 +911,6 @@
                     <div class="slider-arrow-v2 arrow-v2-left" onclick="moveCarousel(-1)">&lsaquo;</div>
                     <div class="slider-arrow-v2 arrow-v2-right" onclick="moveCarousel(1)">&rsaquo;</div>
                     <div class="card-container" id="carousel-cards">
-                        <!-- 【預設網址】藝人詳情彈窗內的三張照片將由 JavaScript 動態填入 -->
                         <div class="cyber-photo-card" onclick="setCarouselIndex(0)">
                             <div class="card-inner"><div class="tech-ring"></div><div class="photo-mask"><img src="" id="photo-0"></div></div>
                         </div>
@@ -980,72 +975,37 @@
     </div>
 
     <script>
-        /**
-         * --- 【預設網址區】主頁「活動花絮」照片網址 ---
-         * 您可以在此陣列中替換成您的活動照片網址。
-         */
-        const galleryImages = [
-            "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1200",
-            "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1200",
-            "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=1200",
-            "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=1200",
-            "https://images.unsplash.com/photo-1514525253348-8d9ad0e02256?q=80&w=1200",
-            "https://images.unsplash.com/photo-1459749411177-042180ce673c?q=80&w=1200",
-            "https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?q=80&w=1200",
-            "https://images.unsplash.com/photo-1496337589254-7e19d01ced44?q=80&w=1200",
-            "https://images.unsplash.com/photo-1505236858219-8359eb29e329?q=80&w=1200",
-            "https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1200",
-            "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?q=80&w=1200",
-            "https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?q=80&w=1200",
-            "https://images.unsplash.com/photo-1506157786151-b8491531f063?q=80&w=1200",
-            "https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?q=80&w=1200",
-            "https://images.unsplash.com/photo-1520242739010-44e95bde329e?q=80&w=1200",
-            "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=1200",
-            "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1200",
-            "https://images.unsplash.com/photo-1563841930606-67e2b64a8a2e?q=80&w=1200",
-            "https://images.unsplash.com/photo-1481162854517-d9e353af153d?q=80&w=1200",
-            "https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?q=80&w=1200"
+        const galleryData = [
+            { img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1200", title: "2024 電玩展線下見面會", date: "2024.01.25" },
+            { img: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1200", title: "品牌週年慶現場直播", date: "2024.02.14" },
+            { img: "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=1200", title: "小馬娛樂年度尾牙盛會", date: "2024.03.10" },
+            { img: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=1200", title: "創作者交流沙龍", date: "2024.04.05" },
+            { img: "https://images.unsplash.com/photo-1514525253348-8d9ad0e02256?q=80&w=1200", title: "遊戲大作封測體驗會", date: "2024.05.20" },
+            { img: "https://images.unsplash.com/photo-1459749411177-042180ce673c?q=80&w=1200", title: "戶外直播馬拉松", date: "2024.06.15" },
+            { img: "https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?q=80&w=1200", title: "年度頒獎典禮", date: "2024.07.01" },
+            { img: "https://images.unsplash.com/photo-1496337589254-7e19d01ced44?q=80&w=1200", title: "新進藝人培訓課程", date: "2024.07.22" },
+            { img: "https://images.unsplash.com/photo-1505236858219-8359eb29e329?q=80&w=1200", title: "手遊推廣線下快閃", date: "2024.08.10" },
+            { img: "https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1200", title: "粉絲感恩祭活動", date: "2024.09.12" }
         ];
 
-        const eventTitles = [
-            "2024 電玩展線下見面會", "品牌週年慶現場直播", "小馬娛樂年度尾牙盛會", "創作者交流沙龍",
-            "遊戲大作封測體驗會", "戶外直播馬拉松", "年度頒獎典禮", "新進藝人培訓課程",
-            "手遊推廣線下快閃", "粉絲感恩祭活動", "電競聯賽現場播報", "品牌跨界聯名發表",
-            "春季實況主大賽", "科技產品首發體驗", "小馬週年限定派對", "暑期遊戲嘉年華",
-            "創意短影音製作大賽", "直播電商現場特賣", "藝人慈善義賣活動", "年末粉絲線下小聚"
-        ];
-
-        /**
-         * --- 【預設網址區】「旗下藝人」清單資料 ---
-         * 1. img: 藝人圓形頭像網址。
-         * 2. gallery: 彈窗內三張正方形照片網址。
-         * 3. socialLinks: 社群平台跳轉連結。
-         */
+        // 修改後的順序：狂暴小建, UZRA, 豆豆, 牛牛妹, 西瓜, Abby純純 ...
         const talents = [
             { 
                 name: "狂暴小建", enName: "JIAN",
                 img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/01%20狂暴小建.jpg",
-                gallery: [
-                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/JIAN/正方1.jpg", 
-                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/JIAN/正方2.jpg", 
-                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/JIAN/正方3.jpg"
-                ],
+                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/01%20狂暴小建.jpg", "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=800", "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=800"],
                 bio: "擁有風趣的口才及高度的表演能力，吸引眾多死忠粉絲，社群影響力不容小覷！曾以《GTAV RP(角色扮演) 》登榜Twitch台灣人氣前五名，遊戲種類相當多元。",
                 career: "Since 2016",
                 streamType: "遊戲",
-                gameType: "《英雄聯盟》《絕地求生》《楓之谷》《黑色沙漠》",
+                gameType: "《英雄聯盟》《絕地求生》《楓地谷》《黑色沙漠》",
                 hashtags: ["RP", "FPS", "塔防類", "MMORPG"],
                 malePct: 95, femalePct: 5, ageDist: "18-34 歲",
-                socialLinks: { fb: "https://facebook.com", ig: "https://instagram.com", yt: "https://youtube.com", tw: "https://twitch.tv" }
+                socialLinks: { fb: "#", ig: "#", yt: "#", tw: "#" }
             },
             { 
                 name: "UZRA", enName: "UZRA_STRAT",
                 img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/02%20UZRA.jpg",
-                gallery: [
-                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/UZRA/正方1.jpg",
-                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/UZRA/正方2.jpg",
-                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/UZRA/正方3.jpg"
-                ],
+                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/02%20UZRA.jpg", "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=800", "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=800"],
                 bio: "爐石戰記傳奇人物，轉戰多種策略與競技遊戲。具備強大的社群號召力，目前致力於公會經營與大型賽事解說。",
                 career: "Since 2015",
                 streamType: "策略遊戲 / 公會經營",
@@ -1089,17 +1049,101 @@
                 hashtags: ["幽默風趣", "高互動", "潛力新星", "開心果"],
                 malePct: 50, femalePct: 50, ageDist: "15-28 歲",
                 socialLinks: { fb: "#", ig: "#", yt: "#", tw: "#" }
-            }
+            },
             { 
-                name: "西瓜", enName: "WATERMELON",
-                img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/13 西瓜.png",
-                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/13 西瓜.png", "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800", "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=800"],
-                bio: "擁有獨特的幽默感與極高的互動熱情，深受觀眾喜愛。擅長營造輕鬆愉快的直播氛圍。",
-                career: "Since 2022",
-                streamType: "趣味雜談 / 綜合遊戲",
-                gameType: "多人連線, 創意遊戲",
-                hashtags: ["幽默風趣", "高互動", "潛力新星", "開心果"],
-                malePct: 50, femalePct: 50, ageDist: "15-28 歲",
+                name: "Abby純純", enName: "ABBY_PURE",
+                img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/05 Abby純純.jpg",
+                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/05 Abby純純.jpg", "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=800", "https://images.unsplash.com/photo-1531746020798-e795c5399c97?q=80&w=800"],
+                bio: "氣質優雅且多才多藝，擅長透過直播與觀眾分享美妝、穿搭與生活點滴，是女性受眾高度信任的指標創作者。",
+                career: "Since 2019",
+                streamType: "時尚生活 / 互動雜談",
+                gameType: "養成類, 休閒拼圖",
+                hashtags: ["氣質女神", "時尚教主", "親切互動", "美妝分享"],
+                malePct: 35, femalePct: 65, ageDist: "20-40 歲",
+                socialLinks: { fb: "#", ig: "#", yt: "#", tw: "#" }
+            },
+            { 
+                name: "萌萌吃吃", enName: "MENG_MENG_EAT",
+                img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/06 萌萌吃吃.jpg",
+                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/06 萌萌吃吃.jpg", "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=800", "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=800"],
+                bio: "專業吃播主，以療癒的進食畫面與真實的口感點評聞名。深受各大連鎖餐飲品牌喜愛，帶貨能力極強。",
+                career: "Since 2020",
+                streamType: "美食吃播 / 廚藝分享",
+                gameType: "料理模擬器, 經營養成",
+                hashtags: ["美食家", "吃貨必看", "療癒系", "真實評論"],
+                malePct: 48, femalePct: 52, ageDist: "18-45 歲",
+                socialLinks: { fb: "#", ig: "#", yt: "#", tw: "#" }
+            },
+            { 
+                name: "小舞", enName: "MAI_DANCE",
+                img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/07 小舞.png",
+                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/07 小舞.png", "https://images.unsplash.com/photo-1554151228-14d9def656e4?q=80&w=800", "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=800"],
+                bio: "擅長各類流行舞蹈，在短影音平台上擁有數十萬粉絲。直播風格動感十足，是炒熱氣氛的高手。",
+                career: "Since 2021",
+                streamType: "舞蹈表演 / 運動健身",
+                gameType: "Just Dance, 節奏大師",
+                hashtags: ["舞蹈擔當", "活力四射", "短影音達人", "動感女神"],
+                malePct: 55, femalePct: 45, ageDist: "15-30 歲",
+                socialLinks: { fb: "#", ig: "#", yt: "#", tw: "#" }
+            },
+            { 
+                name: "小鹽", enName: "SALT_LITTLE",
+                img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/08 小鹽.png",
+                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/08 小鹽.png", "https://images.unsplash.com/photo-1509248961158-e54f6934749c?q=80&w=800", "https://images.unsplash.com/photo-1531123897727-8f129e16fd3c?q=80&w=800"],
+                bio: "以清新自然的鄰家女孩形象出道，擅長歌唱與自彈自唱。聲線細膩，深受文青風格品牌青睞。",
+                career: "Since 2020",
+                streamType: "音樂歌唱 / 療癒雜談",
+                gameType: "動物森友會, 敘事遊戲",
+                hashtags: ["清新系", "自彈自唱", "療癒嗓音", "鄰家女孩"],
+                malePct: 40, femalePct: 60, ageDist: "18-35 歲",
+                socialLinks: { fb: "#", ig: "#", yt: "#", tw: "#" }
+            },
+            { 
+                name: "妖乖", enName: "YAO_GUAI",
+                img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/09 妖乖.jpg",
+                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/09 妖乖.jpg", "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?q=80&w=800", "https://images.unsplash.com/photo-1512413316925-fd47914c9c11?q=80&w=800"],
+                bio: "獨特的冷艷外型下藏著極佳的遊戲操作，是少見的高技術流女性玩家。擅長 FPS 與動作類硬核遊戲。",
+                career: "Since 2018",
+                streamType: "競技遊戲 / 恐怖遊戲",
+                gameType: "Apex Legends, 惡靈古堡",
+                hashtags: ["高冷御姐", "技術台", "膽大心細", "硬核玩家"],
+                malePct: 82, femalePct: 18, ageDist: "20-35 歲",
+                socialLinks: { fb: "#", ig: "#", yt: "#", tw: "#" }
+            },
+            { 
+                name: "丫布丁丁", enName: "PUDDING_YA",
+                img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/10 丫布丁丁.png",
+                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/10 丫布丁丁.png", "https://images.unsplash.com/photo-1529626458524-e10503f23c05?q=80&w=800", "https://images.unsplash.com/photo-1485462226593-0bc6407d053d?q=80&w=800"],
+                bio: "充滿童心且反應靈敏，擅長營造充滿歡笑的直播環境。是許多玩具開箱與親子類產品的首選對象。",
+                career: "Since 2021",
+                streamType: "創意開箱 / 趣味實驗",
+                gameType: "Roblox, Minecraft",
+                hashtags: ["活潑幽默", "開箱達人", "歡樂氛圍", "反應王"],
+                malePct: 45, femalePct: 55, ageDist: "10-25 歲",
+                socialLinks: { fb: "#", ig: "#", yt: "#", tw: "#" }
+            },
+            { 
+                name: "奶茶蜜", enName: "MILK_TEA_MEE",
+                img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/11 奶茶蜜.jpg",
+                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/11 奶茶蜜.jpg", "https://images.unsplash.com/photo-1520333789090-1afc82db536a?q=80&w=800", "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=800"],
+                bio: "性格溫柔且樂於傾聽，直播間如同深夜咖啡廳般溫馨。深受需要情感連接與深度互動的忠實粉絲喜愛。",
+                career: "Since 2017",
+                streamType: "ASMR / 深度訪談",
+                gameType: "敘事冒險, 拼圖遊戲",
+                hashtags: ["溫柔療癒", "ASMR", "傾聽者", "深夜電台"],
+                malePct: 52, femalePct: 48, ageDist: "25-45 歲",
+                socialLinks: { fb: "#", ig: "#", yt: "#", tw: "#" }
+            },
+            { 
+                name: "妮塔", enName: "NITA_GLOW",
+                img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/12 妮塔.jpg",
+                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/12 妮塔.jpg", "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=800", "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800"],
+                bio: "專業 Cosplayer 與遊戲愛好者，擅長還原經典動漫角色。對 ACG 文化有深厚造詣，是相關展覽的熟面孔。",
+                career: "Since 2016",
+                streamType: "Cosplay 展示 / 動漫評論",
+                gameType: "二次元手遊, RPG",
+                hashtags: ["Coser", "ACG專家", "細節控", "百變風格"],
+                malePct: 75, femalePct: 25, ageDist: "18-40 歲",
                 socialLinks: { fb: "#", ig: "#", yt: "#", tw: "#" }
             }
         ];
@@ -1109,19 +1153,16 @@
             const track = document.getElementById('gallery-track');
             track.innerHTML = '';
             
-            galleryImages.forEach((imgUrl, index) => {
+            galleryData.forEach((data) => {
                 const item = document.createElement('div');
                 item.className = "gallery-item group";
-                const title = eventTitles[index] || `活動項目 ${index + 1}`;
-                const randomDate = `2024.${Math.floor(Math.random()*12)+1}.${Math.floor(Math.random()*28)+1}`;
-
                 item.innerHTML = `
                     <div class="gallery-img-box">
-                        <img src="${imgUrl}" class="gallery-img" alt="${title}" onerror="this.src='https://via.placeholder.com/800x450/111111/444444?text=IMAGE_NOT_FOUND'">
+                        <img src="${data.img}" class="gallery-img" alt="${data.title}" onerror="this.src='https://via.placeholder.com/800x450/111111/444444?text=IMAGE_NOT_FOUND'">
                         <div class="gallery-caption">
                             <div class="caption-line"></div>
-                            <span class="caption-title">${title}</span>
-                            <span class="caption-date">ENTRY_LOG: ${randomDate}</span>
+                            <span class="caption-title">${data.title}</span>
+                            <span class="caption-date">${data.date}</span>
                         </div>
                     </div>`;
                 track.appendChild(item);
@@ -1146,9 +1187,6 @@
         }
         renderTalentGrid();
 
-        /**
-         * --- 活動花絮輪播邏輯：點擊箭頭照片置中 ---
-         */
         const galleryContainer = document.getElementById('gallery-container');
         const galleryTrack = document.getElementById('gallery-track');
         let scrollPos = 0;
@@ -1171,7 +1209,6 @@
             const itemWidth = targetItem.offsetWidth;
             const itemOffset = targetItem.offsetLeft;
 
-            // 計算位移量使其中心對齊
             scrollPos = -(itemOffset - (containerWidth / 2 - itemWidth / 2));
 
             const trackWidth = galleryTrack.scrollWidth;
@@ -1197,43 +1234,22 @@
             if (isAutoPlay) {
                 galleryTrack.style.transition = 'none'; 
                 scrollPos -= 0.04 * deltaTime; 
-                
                 const trackWidth = galleryTrack.scrollWidth;
                 const containerWidth = galleryContainer.offsetWidth;
-                
-                if (Math.abs(scrollPos) >= (trackWidth - containerWidth)) {
-                    scrollPos = 0;
-                }
+                if (Math.abs(scrollPos) >= (trackWidth - containerWidth)) scrollPos = 0;
                 galleryTrack.style.transform = `translateX(${scrollPos}px)`;
-
-                const items = document.querySelectorAll('.gallery-item');
-                if(items.length > 0) {
-                    const centerPos = Math.abs(scrollPos) + (containerWidth / 2);
-                    let closestIdx = 0;
-                    let minDiff = Infinity;
-                    items.forEach((item, idx) => {
-                        const itemCenter = item.offsetLeft + (item.offsetWidth / 2);
-                        const diff = Math.abs(centerPos - itemCenter);
-                        if (diff < minDiff) {
-                            minDiff = diff;
-                            closestIdx = idx;
-                        }
-                    });
-                    currentGalleryIdx = closestIdx;
-                }
             }
             requestAnimationFrame(autoAnimate);
         }
         requestAnimationFrame(autoAnimate);
 
-        // --- 彈窗詳情頁邏輯 ---
         let modalCarouselIndex = 1;
 
         function openTalentModal(t) {
             document.getElementById('modal-name').innerText = t.name;
             document.getElementById('modal-en-name').innerText = t.enName;
             document.getElementById('modal-bio').innerText = t.bio;
-            document.getElementById('modal-career-start').innerText = `SINCE ${t.career.replace('Since ', '')}`;
+            document.getElementById('modal-career-start').innerText = t.career.toUpperCase();
             document.getElementById('modal-stream-type').innerText = t.streamType;
             document.getElementById('modal-game-type').innerText = t.gameType;
 
@@ -1266,15 +1282,12 @@
 
             modalCarouselIndex = 1;
             updateModalCarouselUI();
-
             document.getElementById('modal-overlay').style.display = 'block';
             document.body.style.overflow = 'hidden';
         }
 
         function moveCarousel(dir) {
-            modalCarouselIndex += dir;
-            if (modalCarouselIndex < 0) modalCarouselIndex = 2;
-            if (modalCarouselIndex > 2) modalCarouselIndex = 0;
+            modalCarouselIndex = (modalCarouselIndex + dir + 3) % 3;
             updateModalCarouselUI();
         }
 
@@ -1287,13 +1300,9 @@
             const cards = document.querySelectorAll('.cyber-photo-card');
             cards.forEach((card, i) => {
                 card.classList.remove('active', 'prev', 'next');
-                if (i === modalCarouselIndex) {
-                    card.classList.add('active');
-                } else if (i === (modalCarouselIndex - 1 + 3) % 3) {
-                    card.classList.add('prev');
-                } else {
-                    card.classList.add('next');
-                }
+                if (i === modalCarouselIndex) card.classList.add('active');
+                else if (i === (modalCarouselIndex - 1 + 3) % 3) card.classList.add('prev');
+                else card.classList.add('next');
             });
         }
 
@@ -1308,10 +1317,7 @@
         }
 
         const talentScrollContainer = document.getElementById('talent-scroll-container');
-        let tIsDown = false;
-        let tStartX;
-        let tScrollLeft;
-
+        let tIsDown = false, tStartX, tScrollLeft;
         talentScrollContainer.addEventListener('mousedown', (e) => {
             tIsDown = true;
             tStartX = e.pageX - talentScrollContainer.offsetLeft;
