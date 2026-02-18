@@ -81,24 +81,24 @@
         }
 
         @media (min-width: 768px) {
-            .panel-container { gap: 25px; padding: 10px 40px; border-radius: 4px; }
+            .panel-container { gap: 30px; padding: 15px 50px; border-radius: 4px; }
             .panel-container::before, .panel-container::after {
                 content: "";
                 position: absolute;
                 top: 0;
-                width: 20px;
+                width: 25px;
                 height: 100%;
                 background: inherit;
                 z-index: -1;
             }
-            .panel-container::before { left: -10px; transform: skewX(-15deg); border-left: 1px solid rgba(134, 0, 255, 0.4); }
-            .panel-container::after { right: -10px; transform: skewX(15deg); border-right: 1px solid rgba(134, 0, 255, 0.4); }
-            .panel-btn { font-size: 0.9rem; }
+            .panel-container::before { left: -12px; transform: skewX(-15deg); border-left: 1px solid rgba(134, 0, 255, 0.4); }
+            .panel-container::after { right: -12px; transform: skewX(15deg); border-right: 1px solid rgba(134, 0, 255, 0.4); }
+            .panel-btn { font-size: 1.15rem; }
         }
 
         @media (max-width: 767px) {
-            .panel-container { gap: 5px; padding: 10px 8px; border-radius: 12px; }
-            .panel-btn { font-size: 0.7rem !important; letter-spacing: 0.05em !important; }
+            .panel-container { gap: 6px; padding: 12px 10px; border-radius: 12px; }
+            .panel-btn { font-size: 0.85rem !important; letter-spacing: 0.05em !important; }
         }
 
         .nav-item { position: relative; }
@@ -117,7 +117,7 @@
 
         .energy-bar {
             position: absolute;
-            bottom: 8px;
+            bottom: 4px;
             left: 0;
             width: 0%;
             height: 2px;
@@ -143,16 +143,16 @@
             transform: translateX(-50%) translateY(10px);
             background: rgba(5, 5, 5, 0.98);
             border: 1px solid var(--primary-neon);
-            min-width: 160px;
+            min-width: 180px;
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s;
             backdrop-filter: blur(15px);
-            padding: 10px;
+            padding: 12px;
             box-shadow: 0 0 30px rgba(134, 0, 255, 0.4);
             pointer-events: none;
             z-index: 1001;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
 
         .submenu::before {
@@ -174,9 +174,9 @@
 
         .submenu-link {
             display: block;
-            padding: 8px 12px;
+            padding: 10px 14px;
             color: #999;
-            font-size: 0.75rem;
+            font-size: 0.95rem;
             text-align: left;
             transition: all 0.2s;
             border-left: 2px solid transparent;
@@ -186,7 +186,7 @@
             background: rgba(134, 0, 255, 0.15);
             color: var(--secondary-neon);
             border-left: 2px solid var(--secondary-neon);
-            padding-left: 15px;
+            padding-left: 18px;
         }
 
         /* 藝人頭像容器橫向滾動 */
