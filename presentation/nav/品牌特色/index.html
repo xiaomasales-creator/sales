@@ -41,8 +41,8 @@
 
         /* 回到主頁按鈕樣式 */
         .home-btn {
-            position: fixed;
-            top: 20px;
+            position: absolute;
+            top: 40px;
             left: 20px;
             z-index: 1000;
             padding: 8px 16px;
@@ -59,6 +59,15 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            text-decoration: none;
+        }
+
+        @media (min-width: 1024px) {
+            .home-btn {
+                position: fixed;
+                top: 20px;
+                left: 20px;
+            }
         }
 
         .home-btn:hover {
@@ -160,7 +169,6 @@
         @keyframes rotateCW { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         @keyframes rotateCCW { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
 
-        /* 旋轉容器 */
         .ring-wrapper {
             position: absolute;
             width: 100%;
@@ -195,7 +203,7 @@
             box-shadow: 0 0 25px rgba(0, 210, 255, 0.3);
         }
 
-        /* 核心反應爐 */
+        /* 核心反應爐 - 更新呼吸燈效果 */
         .core-trigger {
             position: relative;
             width: 150px;
@@ -209,54 +217,70 @@
             justify-content: center;
             align-items: center;
             border: 2px solid var(--neon-blue);
-            box-shadow: 0 0 25px var(--neon-blue), inset 0 0 20px var(--neon-blue);
+            animation: coreBreath 4s infinite ease-in-out;
             transition: transform 0.2s ease;
         }
 
+        .core-trigger .core-text {
+            animation: textGlow 4s infinite ease-in-out;
+        }
+
+        @keyframes coreBreath {
+            0%, 100% { 
+                border-color: var(--neon-blue); 
+                box-shadow: 0 0 20px var(--neon-blue), inset 0 0 15px var(--neon-blue);
+                transform: scale(1);
+            }
+            50% { 
+                border-color: var(--neon-purple); 
+                box-shadow: 0 0 40px var(--neon-purple), inset 0 0 25px var(--neon-purple);
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes textGlow {
+            0%, 100% { color: var(--neon-blue); text-shadow: 0 0 10px var(--neon-blue); }
+            50% { color: var(--neon-purple); text-shadow: 0 0 15px var(--neon-purple); }
+        }
+
         .core-trigger.impact {
-            animation: coreImpact 0.5s ease-out;
+            animation: coreImpact 0.5s ease-out !important;
         }
 
         @keyframes coreImpact {
             0% { transform: scale(1); }
-            50% { transform: scale(1.15); box-shadow: 0 0 50px var(--neon-blue); }
+            50% { transform: scale(1.2); box-shadow: 0 0 60px #fff; }
             100% { transform: scale(1); }
         }
 
         .core-glow {
             position: absolute;
-            width: 180%;
-            height: 180%;
-            background: radial-gradient(circle, rgba(0, 210, 255, 0.15) 0%, transparent 70%);
-            animation: pulse 2s infinite ease-in-out;
+            width: 220%;
+            height: 220%;
+            background: radial-gradient(circle, rgba(0, 210, 255, 0.2) 0%, transparent 70%);
+            animation: pulseGlow 4s infinite ease-in-out;
             pointer-events: none;
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.1); opacity: 0.8; }
+        @keyframes pulseGlow {
+            0%, 100% { transform: scale(1); opacity: 0.3; background: radial-gradient(circle, rgba(0, 210, 255, 0.2) 0%, transparent 70%); }
+            50% { transform: scale(1.15); opacity: 0.6; background: radial-gradient(circle, rgba(188, 19, 254, 0.2) 0%, transparent 70%); }
+        }
+
+        /* 手機端響應式調整 */
+        @media (max-width: 1024px) {
+            body { padding-top: 100px; }
+            .ring-container-outer { height: auto; min-height: auto; flex-direction: column; padding: 2rem 0; }
+            .mech-orbit, .ticks { display: none; }
+            .core-trigger { margin-bottom: 3rem; width: 120px; height: 120px; }
+            .ring-wrapper { position: relative; width: 100%; height: auto; display: grid; grid-template-columns: 1fr; gap: 1.5rem; padding: 0 1rem; }
+            .service-circle { position: relative !important; left: auto !important; top: auto !important; transform: none !important; width: 100%; height: auto; min-height: 140px; padding: 2rem; background: rgba(255, 255, 255, 0.03); }
+            .ring-wrapper.rotating { transform: none; }
         }
 
         @media (max-width: 768px) {
-            .mech-orbit, .ticks { display: none; }
-            .ring-container-outer { height: auto; padding: 40px 0; }
-            .ring-wrapper {
-                position: relative;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 40px;
-                transform: none !important;
-            }
-            .service-circle {
-                position: relative !important;
-                left: 0 !important; top: 0 !important;
-                transform: none !important;
-                width: 300px;
-                height: auto;
-                min-height: 160px;
-            }
-            .home-btn { top: 10px; left: 10px; }
+            body { padding-left: 1.5rem; padding-right: 1.5rem; }
+            .home-btn { top: 20px; left: 1.5rem; padding: 6px 12px; font-size: 10px; }
         }
     </style>
 </head>
@@ -356,9 +380,10 @@
                 <div class="mech-orbit orbit-2"></div>
                 <div class="ticks"></div>
                 
+                <!-- 呼吸燈 CORE 按鈕 -->
                 <div class="core-trigger" id="global-trigger" onclick="triggerGlobalSwitch()">
                     <div class="core-glow"></div>
-                    <span class="cyber-font text-[24px] text-blue-400 font-black tracking-widest">CORE</span>
+                    <span class="core-text cyber-font text-[24px] font-black tracking-widest">CORE</span>
                 </div>
 
                 <div class="ring-wrapper" id="ring-container">
@@ -410,48 +435,17 @@
     </div>
 
     <script>
-        // 資料映射庫
         const dataMap = {
-            'f1': { 
-                CH: { title: '風格領域多元，自由不設限', desc: '不侷限領域，勇於挑戰創新；實況主自由發揮，展現獨特魅力。' }, 
-                EN: { title: 'Without Limitation', desc: 'Keep challenging ourselves and being creative.' } 
-            },
-            'f2': { 
-                CH: { title: '專業與趣味兼顧', desc: '以專業而不失趣味的行銷推廣，吸引大量潛在客群。' }, 
-                EN: { title: 'Professional & Interesting', desc: 'Use professional and interesting performance to attract audience.' } 
-            },
-            'f3': { 
-                CH: { title: '最低的預算，最高的品質', desc: '精準掌控預算，追求完美成效，致力於讓客戶花小錢也能享高品質。' }, 
-                EN: { title: 'Lowest Cost But Highest Quality', desc: 'Control the budget accurately and provide the best service.' } 
-            },
-            'f4': { 
-                CH: { title: '行事俐落，使命必達', desc: '執行迅速確實，絕不拖泥帶水。' }, 
-                EN: { title: 'Execute Quickly & Accurately', desc: 'Complete every mission with speed and precision.' } 
-            },
-            's1': { 
-                CH: { title: '網紅媒合', desc: '分析特性、受眾與趨勢，媒合最佳KOL。' }, 
-                EN: { title: 'Contacting Talents', desc: 'Analyze product features, TA audiences, platform trends, matching with the best talent.' } 
-            },
-            's2': { 
-                CH: { title: '實況直播', desc: 'Live產品體驗，直接與觀眾互動講解。' }, 
-                EN: { title: 'Live Streaming', desc: 'Interact directly with the audience.' } 
-            },
-            's3': { 
-                CH: { title: '社群貼文', desc: '推廣文案、實拍照片與抽獎曝光。' }, 
-                EN: { title: 'FB/IG Posts', desc: 'Including the text and pictures, and lottery can be release with the post.' } 
-            },
-            's4': { 
-                CH: { title: '活動站台', desc: '線下主持與宣傳，吸引粉絲同樂。' }, 
-                EN: { title: 'Offline Activities', desc: 'Attend the offline activities to promote products or to be the host.' } 
-            },
-            's5': { 
-                CH: { title: '異業合作', desc: '跨界心得分享，美食與活動推廣。' }, 
-                EN: { title: 'Cooperation with Other Industry', desc: 'Promote movie, foods, 3C, etc.' } 
-            },
-            's6': { 
-                CH: { title: '影片剪輯', desc: '實況精華剪輯，提供高品質廣告素材。' }, 
-                EN: { title: 'Video Editing', desc: 'Edit the clips of stream for advertising.' } 
-            }
+            'f1': { CH: { title: '風格領域多元，自由不設限', desc: '不侷限領域，勇於挑戰創新；實況主自由發揮，展現獨特魅力。' }, EN: { title: 'Without Limitation', desc: 'Keep challenging ourselves and being creative.' } },
+            'f2': { CH: { title: '專業與趣味兼顧', desc: '以專業而不失趣味的行銷推廣，吸引大量潛在客群。' }, EN: { title: 'Professional & Interesting', desc: 'Use professional and interesting performance to attract audience.' } },
+            'f3': { CH: { title: '最低的預算，最高的品質', desc: '精準掌控預算，追求完美成效，致力於讓客戶花小錢也能享高品質。' }, EN: { title: 'Lowest Cost But Highest Quality', desc: 'Control the budget accurately and provide the best service.' } },
+            'f4': { CH: { title: '行事俐落，使命必達', desc: '執行迅速確實，絕不拖泥帶水。' }, EN: { title: 'Execute Quickly & Accurately', desc: 'Complete every mission with speed and precision.' } },
+            's1': { CH: { title: '網紅媒合', desc: '分析特性、受眾與趨勢，媒合最佳KOL。' }, EN: { title: 'Contacting Talents', desc: 'Analyze product features, TA audiences, platform trends, matching with the best talent.' } },
+            's2': { CH: { title: '實況直播', desc: 'Live產品體驗，直接與觀眾互動講解。' }, EN: { title: 'Live Streaming', desc: 'Interact directly with the audience.' } },
+            's3': { CH: { title: '社群貼文', desc: '推廣文案、實拍照片與抽獎曝光。' }, EN: { title: 'FB/IG Posts', desc: 'Including the text and pictures, and lottery can be release with the post.' } },
+            's4': { CH: { title: '活動站台', desc: '線下主持與宣傳，吸引粉絲同樂。' }, EN: { title: 'Offline Activities', desc: 'Attend the offline activities to promote products or to be the host.' } },
+            's5': { CH: { title: '異業合作', desc: '跨界心得分享，美食與活動推廣。' }, EN: { title: 'Cooperation with Other Industry', desc: 'Promote movie, foods, 3C, etc.' } },
+            's6': { CH: { title: '影片剪輯', desc: '實況精華剪輯，提供高品質廣告素材。' }, EN: { title: 'Video Editing', desc: 'Edit the clips of stream for advertising.' } }
         };
 
         const state = { currentLang: 'CH', isSwitching: false };
@@ -474,10 +468,9 @@
         function updateContent(element, id, lang) {
             const title = element.querySelector('[data-field="title"]');
             const desc = element.querySelector('[data-field="desc"]');
+            if (!title || !desc) return;
             title.innerText = dataMap[id][lang].title;
             desc.innerText = dataMap[id][lang].desc;
-            
-            // 處理英文字型與間距
             if (lang === 'EN') {
                 title.classList.add('cyber-font');
                 title.style.fontSize = id.startsWith('s') ? '1.1rem' : ''; 
@@ -492,35 +485,27 @@
         function triggerGlobalSwitch() {
             if (state.isSwitching) return;
             state.isSwitching = true;
-
             const container = document.getElementById('ring-container');
             const coreTrigger = document.getElementById('global-trigger');
             const targetLang = state.currentLang === 'CH' ? 'EN' : 'CH';
             state.currentLang = targetLang;
-
             coreTrigger.classList.add('impact');
             setTimeout(() => coreTrigger.classList.remove('impact'), 500);
-
-            container.classList.add('rotating');
-
-            setTimeout(() => {
-                Object.keys(dataMap).forEach(id => {
-                    const el = document.getElementById(id) || document.querySelector(`[onclick*="'${id}'"]`);
-                    if (!el) return;
-                    
+            if (window.innerWidth > 1024) container.classList.add('rotating');
+            Object.keys(dataMap).forEach(id => {
+                const el = document.getElementById(id) || document.querySelector(`[onclick*="'${id}'"]`);
+                if (el) {
                     el.classList.add('switching');
-                    setTimeout(() => {
-                        updateContent(el, id, targetLang);
-                        el.classList.remove('switching');
-                    }, 300);
-                });
-            }, 100);
-
+                    setTimeout(() => { updateContent(el, id, targetLang); el.classList.remove('switching'); }, 300);
+                }
+            });
             setTimeout(() => {
-                container.style.transition = 'none';
-                container.classList.remove('rotating');
-                container.offsetHeight; 
-                container.style.transition = '';
+                if (window.innerWidth > 1024) {
+                    container.style.transition = 'none';
+                    container.classList.remove('rotating');
+                    container.offsetHeight; 
+                    container.style.transition = '';
+                }
                 state.isSwitching = false;
             }, 850);
         }
