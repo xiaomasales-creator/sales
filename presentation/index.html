@@ -180,6 +180,7 @@
             text-align: left;
             transition: all 0.2s;
             border-left: 2px solid transparent;
+            text-decoration: none;
         }
 
         .submenu-link:hover {
@@ -189,7 +190,7 @@
             padding-left: 18px;
         }
 
-/* 藝人頭像容器橫向滾動 */
+        /* 藝人列表樣式 */
         .floating-talent-panel {
             background: rgba(10, 10, 10, 0.6);
             border-top: 1px solid rgba(134, 0, 255, 0.3);
@@ -216,7 +217,7 @@
             flex-direction: row; 
             flex-wrap: nowrap; 
             justify-content: flex-start; 
-            gap: 40px; /* 增加間距 */
+            gap: 30px;
             padding: 0 10vw;
             width: max-content; 
         }
@@ -225,20 +226,33 @@
             text-align: center;
             transition: transform 0.3s;
             cursor: pointer;
-            width: 110px; /* 增加容器寬度 */
+            width: 90px;
             flex-shrink: 0; 
         }
 
+        .talent-name-label {
+            font-size: 0.95rem;
+            color: #efefef;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            margin-top: 10px;
+            transition: color 0.3s;
+        }
+
         @media (min-width: 768px) {
-            .avatar-box { width: 140px; }
+            .avatar-box { width: 130px; }
             .avatar-box:hover { transform: scale(1.1); }
             .avatar-circle { width: 100px; height: 100px; }
+            .talent-name-label {
+                font-size: 1.2rem;
+                margin-top: 12px;
+            }
         }
 
         .avatar-circle {
-            width: 80px; height: 80px;
+            width: 75px; height: 75px;
             border-radius: 50%;
-            margin: 0 auto 12px; /* 增加與文字的距離 */
+            margin: 0 auto;
             border: 2px solid #333;
             transition: all 0.3s;
             overflow: hidden;
@@ -249,42 +263,31 @@
             border-color: var(--secondary-neon);
             box-shadow: 0 0 15px var(--secondary-neon);
         }
-
-        /* 藝人名字樣式修正：調大字體 */
-        .talent-name-label {
-            font-size: 1rem; /* 手機端字體 */
-            color: #efefef;
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            transition: color 0.3s;
-        }
-
-        @media (min-width: 768px) {
-            .talent-name-label {
-                font-size: 1.75rem; /* 桌機端字體 */
-            }
-        }
-
+        
         .avatar-box:hover .talent-name-label {
             color: var(--secondary-neon);
         }
 
-/* 輪播區塊樣式 */
+        /* 輪播區塊樣式 - 活動花絮 */
+        .gallery-wrapper {
+            position: relative;
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+
         .gallery-container {
             width: 100%;
             overflow: hidden;
             position: relative;
-            cursor: grab;
             user-select: none;
-            touch-action: pan-y; 
         }
-        .gallery-container:active {
-            cursor: grabbing;
-        }
+
         .gallery-track { 
             display: flex; 
             width: max-content; 
             will-change: transform;
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
         }
         .gallery-item { 
             width: 80vw; 
@@ -301,34 +304,71 @@
             .gallery-item { width: 90vw; height: 50vw; } 
         }
 
+        .gallery-img-box {
+            width: 100%; height: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #111;
+            position: relative;
+        }
+
         .gallery-img {
             width: 100%; height: 100%;
             object-fit: cover;
-            border-radius: 12px;
-            filter: brightness(0.6); /* 預設調暗一點讓常駐文字更清晰 */
+            filter: brightness(0.6); 
             transition: filter 0.3s, transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
-        /* 懸浮文字註解樣式 - 改為常駐顯示 */
+        /* 輪播箭頭控制項 */
+        .gallery-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 60px;
+            height: 60px;
+            background: rgba(134, 0, 255, 0.1);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(134, 0, 255, 0.4);
+            color: var(--secondary-neon);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 50;
+            transition: all 0.3s;
+            font-size: 24px;
+        }
+        .gallery-nav-btn:hover {
+            background: var(--primary-neon);
+            color: white;
+            box-shadow: 0 0 20px var(--primary-neon);
+            border-color: white;
+        }
+        .nav-btn-prev { left: 10px; }
+        .nav-btn-next { right: 10px; }
+
+        @media (max-width: 768px) {
+            .gallery-nav-btn { width: 40px; height: 40px; font-size: 18px; }
+        }
+
+        /* 懸浮文字註解樣式 - 常駐顯示 */
         .gallery-caption {
             position: absolute;
-            bottom: 10px;
-            left: 10px;
-            right: 10px;
-            background: linear-gradient(0deg, rgba(20, 0, 40, 0.95) 0%, rgba(20, 0, 40, 0) 100%);
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(0deg, rgba(20, 0, 40, 0.95) 0%, rgba(20, 0, 40, 0.5) 50%, rgba(20, 0, 40, 0) 100%);
             padding: 60px 20px 20px 20px;
-            border-radius: 0 0 12px 12px;
-            opacity: 1; /* 改為常駐 */
-            transform: translateY(0); /* 改為常駐 */
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
             pointer-events: none;
             display: flex;
             flex-direction: column;
             gap: 4px;
+            z-index: 2;
         }
 
         .gallery-item:hover .gallery-img {
-            filter: brightness(0.8) scale(1.03);
+            filter: brightness(0.8) scale(1.05);
         }
 
         .caption-title {
@@ -353,7 +393,7 @@
             margin-bottom: 8px;
         }
 
-        /* 賽博龐克電子面板詳情彈窗 */
+        /* 詳情彈窗樣式 */
         #modal-overlay {
             display: none;
             position: fixed;
@@ -411,7 +451,7 @@
             .cyber-panel-container { padding: 40px; }
         }
 
-        /* 圓形 3D 照片輪播器 */
+        /* 照片輪播器 彈窗內 */
         .photo-carousel-wrapper {
             position: relative;
             width: 100%;
@@ -493,7 +533,6 @@
             transition: filter 0.3s;
         }
 
-        /* 狀態樣式 */
         .cyber-photo-card.active {
             z-index: 10;
             transform: translate3d(0, 0, 120px) scale(1.1);
@@ -516,7 +555,6 @@
             opacity: 0.5;
         }
 
-        /* 箭頭微調 */
         .slider-arrow-v2 {
             position: absolute;
             top: 50%;
@@ -579,6 +617,7 @@
             justify-content: center;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-decoration: none !important;
         }
 
         .btn-frame {
@@ -592,13 +631,14 @@
 
         .btn-content {
             color: var(--secondary-neon);
-            font-size: 13px;
+            font-size: 11px;
             z-index: 1;
             transition: all 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
+            font-family: 'Orbitron', sans-serif;
         }
 
         .cyber-icon-btn:hover .btn-frame {
@@ -623,7 +663,6 @@
             box-shadow: 0 0 5px var(--secondary-neon);
         }
 
-        /* 彈窗內部的資訊區塊文字調大 */
         .info-block {
             background: rgba(255, 255, 255, 0.03);
             border-left: 3px solid var(--primary-neon);
@@ -632,7 +671,7 @@
         }
 
         .info-label {
-            font-size: 13px; /* 調大標籤字體 */
+            font-size: 13px;
             color: var(--secondary-neon);
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -640,27 +679,9 @@
             display: block;
         }
 
-        #modal-bio {
-            font-size: 1.1rem; /* 調大簡介字體 */
-            line-height: 1.7;
-        }
-
-        #modal-stream-type {
-            font-size: 1.15rem; /* 調大直播類型字體 */
-        }
-
-        #modal-game-type {
-            font-size: 1rem; /* 調大副標字體 */
-        }
-
-        #modal-career-start {
-            font-size: 1.5rem; /* 調大資歷年份 */
-        }
-
-        /* 男女比圖表樣式 */
         .audience-bar-container {
             width: 100%;
-            height: 16px; /* 稍微加高 */
+            height: 16px;
             background: #222;
             margin-top: 12px;
             display: flex;
@@ -683,7 +704,7 @@
             display: flex;
             justify-content: space-between;
             margin-top: 8px;
-            font-size: 13px; /* 調大數據標籤 */
+            font-size: 13px;
             font-family: 'Orbitron', 'Noto Sans TC', sans-serif;
             font-weight: 700;
         }
@@ -698,7 +719,7 @@
             border: 1px solid rgba(134, 0, 255, 0.4);
             color: #fff;
             padding: 6px 14px;
-            font-size: 13px; /* 調大標籤 */
+            font-size: 13px;
             border-radius: 2px;
         }
 
@@ -711,7 +732,7 @@
 
         .cyber-long-btn {
             position: relative;
-            padding: 16px 20px; /* 加大按鈕內距 */
+            padding: 16px 20px;
             flex: 1;
             display: flex;
             align-items: center;
@@ -719,6 +740,7 @@
             cursor: pointer;
             overflow: hidden;
             transition: all 0.3s;
+            text-decoration: none !important;
         }
 
         .long-btn-frame {
@@ -746,15 +768,11 @@
         .long-btn-text {
             position: relative;
             z-index: 2;
-            font-size: 14px; /* 調大底部按鈕文字 */
+            font-size: 14px;
             font-weight: 900;
             letter-spacing: 1.5px;
             color: #fff;
             text-transform: uppercase;
-        }
-
-        #modal-age-dist {
-            font-size: 1rem; /* 調大年齡分佈 */
         }
     </style>
 </head>
@@ -766,6 +784,7 @@
         
         <section id="home" class="pt-12 md:pt-24 pb-8 flex flex-col items-center text-center px-6">
             <div class="hero-logo mb-6 md:mb-10">
+                <!-- 【預設網址】主頁 LOGO -->
                 <img src="https://xiaomasales-creator.github.io/sales/presentation/homepage/LOGO_cut.png" alt="小馬娛樂 LOGO" class="max-w-[90%] md:max-w-[800px] h-auto">
             </div>
             <div class="max-w-3xl px-4">
@@ -776,14 +795,17 @@
             </div>
         </section>
 
+        <!-- 主輪播區塊 (活動花絮) -->
         <section id="gallery" class="py-12">
             <h2 class="cyber-font text-center text-purple-400 text-[10px] md:text-sm tracking-widest mb-8 uppercase">LATEST_ACTIVITIES // 活動花絮</h2>
-            <div class="gallery-container" id="gallery-container">
-                <div class="gallery-track" id="gallery-track">
-                    <div class="gallery-item"><div class="gallery-img bg-zinc-800 flex items-center justify-center cyber-font text-2xl text-zinc-600">EVENT_01</div></div>
-                    <div class="gallery-item"><div class="gallery-img bg-zinc-700 flex items-center justify-center cyber-font text-2xl text-zinc-500">EVENT_02</div></div>
-                    <div class="gallery-item"><div class="gallery-img bg-zinc-800 flex items-center justify-center cyber-font text-2xl text-zinc-600">EVENT_03</div></div>
-                    <div class="gallery-item"><div class="gallery-item"><div class="gallery-img bg-zinc-700 flex items-center justify-center cyber-font text-2xl text-zinc-500">EVENT_04</div></div>
+            <div class="gallery-wrapper">
+                <div class="gallery-nav-btn nav-btn-prev" onclick="manualGalleryNav(-1)" title="PREVIOUS_EVENT">&lsaquo;</div>
+                <div class="gallery-nav-btn nav-btn-next" onclick="manualGalleryNav(1)" title="NEXT_EVENT">&rsaquo;</div>
+                
+                <div class="gallery-container" id="gallery-container">
+                    <div class="gallery-track" id="gallery-track">
+                        <!-- 照片區塊由 JS 讀取陣列動態生成 -->
+                    </div>
                 </div>
             </div>
         </section>
@@ -808,9 +830,9 @@
                 <div class="energy-bar"></div>
                 <div class="submenu">
                     <div class="submenu-inner">
-                        <a href="javascript:void(0)" class="submenu-link">品牌理念</a>
-                        <a href="javascript:void(0)" class="submenu-link">合作項目</a>
-                        <a href="javascript:void(0)" class="submenu-link">服務流程</a>
+                        <a href="" target="_blank" class="submenu-link">品牌理念</a>
+                        <a href="" target="_blank" class="submenu-link">合作項目</a>
+                        <a href="" target="_blank" class="submenu-link">服務流程</a>
                     </div>
                 </div>
             </div>
@@ -819,9 +841,9 @@
                 <div class="energy-bar"></div>
                 <div class="submenu">
                     <div class="submenu-inner">
-                        <a href="javascript:void(0)" class="submenu-link">旗下主播</a>
-                        <a href="javascript:void(0)" class="submenu-link">經常合作KOL</a>
-                        <a href="javascript:void(0)" class="submenu-link">經典案例</a>
+                        <a href="" target="_blank" class="submenu-link">旗下主播</a>
+                        <a href="" target="_blank" class="submenu-link">經常合作KOL</a>
+                        <a href="" target="_blank" class="submenu-link">經典案例</a>
                     </div>
                 </div>
             </div>
@@ -830,8 +852,8 @@
                 <div class="energy-bar"></div>
                 <div class="submenu">
                     <div class="submenu-inner">
-                        <a href="javascript:void(0)" class="submenu-link">商案總覽</a>
-                        <a href="javascript:void(0)" class="submenu-link">線下活動花絮</a>
+                        <a href="" target="_blank" class="submenu-link">商案總覽</a>
+                        <a href="" target="_blank" class="submenu-link">線下活動花絮</a>
                     </div>
                 </div>
             </div>
@@ -840,15 +862,21 @@
                 <div class="energy-bar"></div>
                 <div class="submenu">
                     <div class="submenu-inner">
-                        <a href="javascript:void(0)" class="submenu-link">影音剪輯</a>
-                        <a href="javascript:void(0)" class="submenu-link">網頁製作</a>
-                        <a href="javascript:void(0)" class="submenu-link">美術設計</a>
+                        <a href="" target="_blank" class="submenu-link">影音剪輯</a>
+                        <a href="" target="_blank" class="submenu-link">網頁製作</a>
+                        <a href="" target="_blank" class="submenu-link">美術設計</a>
                     </div>
                 </div>
             </div>
-            <div class="nav-item hidden md:block">
+            <div class="nav-item">
                 <div class="panel-btn">聯絡我們</div>
                 <div class="energy-bar"></div>
+                <div class="submenu">
+                    <div class="submenu-inner">
+                        <a href="" target="_blank" class="submenu-link">工商洽談</a>
+                        <a href="" target="_blank" class="submenu-link">加入小馬</a>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
@@ -856,75 +884,60 @@
     <!-- 彈窗：詳情頁 -->
     <div id="modal-overlay" onclick="closeModal()">
         <div class="cyber-panel-container" onclick="event.stopPropagation()">
-            
             <div class="cyber-icon-btn close close-btn-fixed" onclick="closeModal()" title="CLOSE_TERMINAL">
                 <div class="btn-frame"></div><div class="btn-content italic">&times;</div><div class="btn-dot"></div>
             </div>
-
             <div class="cyber-header">
                 <div class="flex flex-col">
                     <h2 id="modal-name" class="cyber-font text-2xl md:text-4xl font-black text-white italic">TALENT_ID</h2>
                     <p id="modal-en-name" class="text-cyan-400 cyber-font text-[10px] md:text-[12px] tracking-[0.4em] mt-1">CREATOR_PROFILE</p>
                 </div>
-                
                 <div class="cyber-action-group">
                     <div class="social-link-wrapper">
-                        <div class="cyber-icon-btn" title="Facebook"><div class="btn-frame"></div><div class="btn-content">FB</div><div class="btn-dot"></div></div>
-                        <div class="cyber-icon-btn" title="Instagram"><div class="btn-frame"></div><div class="btn-content">IG</div><div class="btn-dot"></div></div>
-                        <div class="cyber-icon-btn" title="YouTube"><div class="btn-frame"></div><div class="btn-content">YT</div><div class="btn-dot"></div></div>
-                        <div class="cyber-icon-btn" title="Twitch"><div class="btn-frame"></div><div class="btn-content">TW</div><div class="btn-dot"></div></div>
+                        <!-- 【預設連結】藝人社交媒體連結將由 JavaScript 動態填入 -->
+                        <a id="link-fb" href="#" target="_blank" class="cyber-icon-btn" title="Facebook">
+                            <div class="btn-frame"></div><div class="btn-content">FB</div><div class="btn-dot"></div>
+                        </a>
+                        <a id="link-ig" href="#" target="_blank" class="cyber-icon-btn" title="Instagram">
+                            <div class="btn-frame"></div><div class="btn-content">IG</div><div class="btn-dot"></div>
+                        </a>
+                        <a id="link-yt" href="#" target="_blank" class="cyber-icon-btn" title="YouTube">
+                            <div class="btn-frame"></div><div class="btn-content">YT</div><div class="btn-dot"></div>
+                        </a>
+                        <a id="link-tw" href="#" target="_blank" class="cyber-icon-btn" title="Twitch">
+                            <div class="btn-frame"></div><div class="btn-content">TW</div><div class="btn-dot"></div>
+                        </a>
                     </div>
                 </div>
             </div>
-
             <div class="cyber-body">
-                <!-- 左側：3D 照片輪播器 -->
                 <div class="photo-carousel-wrapper">
                     <div class="slider-arrow-v2 arrow-v2-left" onclick="moveCarousel(-1)">&lsaquo;</div>
                     <div class="slider-arrow-v2 arrow-v2-right" onclick="moveCarousel(1)">&rsaquo;</div>
-                    
                     <div class="card-container" id="carousel-cards">
+                        <!-- 【預設網址】藝人詳情彈窗內的三張照片將由 JavaScript 動態填入 -->
                         <div class="cyber-photo-card" onclick="setCarouselIndex(0)">
-                            <div class="card-inner">
-                                <div class="tech-ring"></div>
-                                <div class="photo-mask">
-                                    <img src="" id="photo-0" alt="P1">
-                                </div>
-                            </div>
+                            <div class="card-inner"><div class="tech-ring"></div><div class="photo-mask"><img src="" id="photo-0"></div></div>
                         </div>
                         <div class="cyber-photo-card" onclick="setCarouselIndex(1)">
-                            <div class="card-inner">
-                                <div class="tech-ring"></div>
-                                <div class="photo-mask">
-                                    <img src="" id="photo-1" alt="P2">
-                                </div>
-                            </div>
+                            <div class="card-inner"><div class="tech-ring"></div><div class="photo-mask"><img src="" id="photo-1"></div></div>
                         </div>
                         <div class="cyber-photo-card" onclick="setCarouselIndex(2)">
-                            <div class="card-inner">
-                                <div class="tech-ring"></div>
-                                <div class="photo-mask">
-                                    <img src="" id="photo-2" alt="P3">
-                                </div>
-                            </div>
+                            <div class="card-inner"><div class="tech-ring"></div><div class="photo-mask"><img src="" id="photo-2"></div></div>
                         </div>
                     </div>
                 </div>
-
-                <!-- 右側：資訊區 -->
                 <div class="flex flex-col gap-6">
                     <div class="info-block">
                         <span class="info-label">Bio // 藝人簡介</span>
-                        <p class="text-gray-300 leading-relaxed font-medium" id="modal-bio">加載中...</p>
+                        <p class="text-gray-300 leading-relaxed font-medium text-lg" id="modal-bio">加載中...</p>
                     </div>
-
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="info-block">
                             <span class="info-label">Stream Type // 直播與遊戲類型</span>
-                            <p class="text-white font-black" id="modal-stream-type">-</p>
+                            <p class="text-white font-black text-xl" id="modal-stream-type">-</p>
                             <p class="text-gray-400 mt-1" id="modal-game-type">-</p>
                         </div>
-                        
                         <div class="info-block">
                             <span class="info-label">Audience Demographic // 受眾輪廓</span>
                             <div class="audience-bar-container">
@@ -937,31 +950,29 @@
                             </div>
                             <div class="mt-4 border-t border-white/5 pt-3">
                                 <span class="text-[11px] text-gray-500 tracking-wider uppercase font-bold">Age Distribution // 年齡分佈</span>
-                                <p id="modal-age-dist" class="text-white cyber-font mt-1 font-bold">18-35 歲</p>
+                                <p id="modal-age-dist" class="text-white cyber-font mt-1 font-bold text-lg">18-35 歲</p>
                             </div>
                         </div>
                     </div>
-
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="info-block">
                             <span class="info-label">Career Start // 直播資歷</span>
-                            <p class="cyber-font text-white font-black" id="modal-career-start">SINCE -</p>
+                            <p class="cyber-font text-white font-black text-2xl" id="modal-career-start">SINCE -</p>
                         </div>
                         <div class="info-block">
                             <span class="info-label">Special Traits // 特色 Hashtag</span>
                             <div class="tag-cloud mt-3" id="modal-hashtags"></div>
                         </div>
                     </div>
-
                     <div class="modal-action-footer">
-                        <div class="cyber-long-btn" onclick="scrollToTalentsSection()">
+                        <a href="https://example.com/talents" target="_blank" class="cyber-long-btn">
                             <div class="long-btn-frame"></div>
                             <span class="long-btn-text cyber-font">小馬全陣容 // All Talents</span>
-                        </div>
-                        <div class="cyber-long-btn cyan-variant">
+                        </a>
+                        <a href="https://example.com/more-info" target="_blank" class="cyber-long-btn cyan-variant">
                             <div class="long-btn-frame"></div>
                             <span class="long-btn-text cyber-font">更多資訊 // View More</span>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -969,11 +980,50 @@
     </div>
 
     <script>
-// 藝人資料數據
+        /**
+         * --- 【預設網址區】主頁「活動花絮」照片網址 ---
+         * 您可以在此陣列中替換成您的活動照片網址。
+         */
+        const galleryImages = [
+            "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1200",
+            "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1200",
+            "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=1200",
+            "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=1200",
+            "https://images.unsplash.com/photo-1514525253348-8d9ad0e02256?q=80&w=1200",
+            "https://images.unsplash.com/photo-1459749411177-042180ce673c?q=80&w=1200",
+            "https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?q=80&w=1200",
+            "https://images.unsplash.com/photo-1496337589254-7e19d01ced44?q=80&w=1200",
+            "https://images.unsplash.com/photo-1505236858219-8359eb29e329?q=80&w=1200",
+            "https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1200",
+            "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?q=80&w=1200",
+            "https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?q=80&w=1200",
+            "https://images.unsplash.com/photo-1506157786151-b8491531f063?q=80&w=1200",
+            "https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?q=80&w=1200",
+            "https://images.unsplash.com/photo-1520242739010-44e95bde329e?q=80&w=1200",
+            "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=1200",
+            "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1200",
+            "https://images.unsplash.com/photo-1563841930606-67e2b64a8a2e?q=80&w=1200",
+            "https://images.unsplash.com/photo-1481162854517-d9e353af153d?q=80&w=1200",
+            "https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?q=80&w=1200"
+        ];
+
+        const eventTitles = [
+            "2024 電玩展線下見面會", "品牌週年慶現場直播", "小馬娛樂年度尾牙盛會", "創作者交流沙龍",
+            "遊戲大作封測體驗會", "戶外直播馬拉松", "年度頒獎典禮", "新進藝人培訓課程",
+            "手遊推廣線下快閃", "粉絲感恩祭活動", "電競聯賽現場播報", "品牌跨界聯名發表",
+            "春季實況主大賽", "科技產品首發體驗", "小馬週年限定派對", "暑期遊戲嘉年華",
+            "創意短影音製作大賽", "直播電商現場特賣", "藝人慈善義賣活動", "年末粉絲線下小聚"
+        ];
+
+        /**
+         * --- 【預設網址區】「旗下藝人」清單資料 ---
+         * 1. img: 藝人圓形頭像網址。
+         * 2. gallery: 彈窗內三張正方形照片網址。
+         * 3. socialLinks: 社群平台跳轉連結。
+         */
         const talents = [
             { 
-                name: "狂暴小建", 
-                enName: "CRAZY_JIAN",
+                name: "狂暴小建", enName: "JIAN",
                 img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/01%20狂暴小建.jpg",
                 gallery: [
                     "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/JIAN/正方1.jpg", 
@@ -981,235 +1031,104 @@
                     "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/JIAN/正方3.jpg"
                 ],
                 bio: "擁有風趣的口才及高度的表演能力，吸引眾多死忠粉絲，社群影響力不容小覷！曾以《GTAV RP(角色扮演) 》登榜Twitch台灣人氣前五名，遊戲種類相當多元。",
-                career: "Since 2014",
+                career: "Since 2016",
                 streamType: "遊戲",
                 gameType: "《英雄聯盟》《絕地求生》《楓之谷》《黑色沙漠》",
                 hashtags: ["RP", "FPS", "塔防類", "MMORPG"],
-                malePct: 95,
-                femalePct: 5,
-                ageDist: "18-34 歲"
+                malePct: 95, femalePct: 5, ageDist: "18-34 歲",
+                socialLinks: { fb: "https://facebook.com", ig: "https://instagram.com", yt: "https://youtube.com", tw: "https://twitch.tv" }
             },
             { 
-                name: "UZRA", 
-                enName: "UZRA_STRAT",
+                name: "UZRA", enName: "UZRA_STRAT",
                 img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/02%20UZRA.jpg",
                 gallery: [
                     "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/UZRA/正方1.jpg",
                     "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/UZRA/正方2.jpg",
                     "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/UZRA/正方3.jpg"
                 ],
-                bio: "台灣知名老牌電競實況主，曾經拿過魔獸爭霸3的世界冠軍。目前主要在Twitch直播，主要實況爐石和狼人殺。平時也喜歡嘗試各種Steam上的獨立創作遊戲，是個守備範圍相當廣泛的Gamer！",
+                bio: "爐石戰記傳奇人物，轉戰多種策略與競技遊戲。具備強大的社群號召力，目前致力於公會經營與大型賽事解說。",
                 career: "Since 2015",
-                streamType: "遊戲",
-                gameType: "《爐石戰紀》《Among Us》《Goose Goose Duck》《暗黑系列》",
-                hashtags: ["邏輯鬼才", "卡牌", "魂類", "MMORPG"],
-                malePct: 78,
-                femalePct: 22,
-                ageDist: "25-44 歲"
+                streamType: "策略遊戲 / 公會經營",
+                gameType: "爐石戰記, 戰略模擬",
+                hashtags: ["公會經營", "硬核遊戲", "專業分析", "競技玩家"],
+                malePct: 78, femalePct: 22, ageDist: "25-44 歲",
+                socialLinks: { fb: "#", ig: "#", yt: "#", tw: "#" }
             },
             { 
-                name: "豆豆", 
-                enName: "DOU_DOU_VIBE",
+                name: "豆豆", enName: "DOU_DOU_VIBE",
                 img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/03%20豆豆.jpg",
-                gallery: [
-                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/DouDou/正方2.jpg",
-                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/DouDou/正方1.jpg",
-                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/DouDou/正方3.jpg"
-                ],
+                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/03%20豆豆.jpg", "https://images.unsplash.com/photo-1520333789090-1afc82db536a?q=80&w=800", "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=800"],
                 bio: "以清新呆萌的形象吸引廣大粉絲。內容多樣化，從日常 VLOG 到各類遊戲實況，是品牌代言的首選紅人。",
                 career: "Since 2018",
                 streamType: "生活實況 / 多樣化遊戲",
                 gameType: "Switch 遊戲, 模擬經營",
                 hashtags: ["呆萌感", "短影音", "生活風格", "親和力"],
-                malePct: 45,
-                femalePct: 55,
-                ageDist: "18-35 歲"
+                malePct: 45, femalePct: 55, ageDist: "18-35 歲",
+                socialLinks: { fb: "#", ig: "#", yt: "#", tw: "#" }
             },
             { 
-                name: "牛牛妹", 
-                enName: "NIU_NIU_GIRL",
+                name: "牛牛妹", enName: "NIU_NIU_GIRL",
                 img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/04%20牛牛妹.jpg",
-                gallery: [
-                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/NiuNiu/正方1.jpg",
-                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/NiuNiu/正方2.jpg",
-                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/NiuNiu/正方3.jpg"
-                ],
-                bio: "目前主要經營Twitch實況、FB及IG粉專。除了遊戲相關商案，也接洽過3C和保養品業配，商案合作經驗相當豐富。用心經營粉絲與社群，具有強大號召力，能吸引粉絲共同參與線下活動。",
+                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/04%20牛牛妹.jpg", "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800", "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=800"],
+                bio: "活力四射的互動型實況主，擁有極強的現場主持能力。經常在各大電玩展與 brand 活動中擔任主持人。",
                 career: "Since 2017",
-                streamType: "遊戲、聊天互動",
-                gameType: "《APEX》《英雄聯盟》《黑色沙漠》",
-                hashtags: ["FPS", "MOBA ", "MMORPG", "短影音", "社群紅人", "線下活動", "主持站台"],
-                malePct: 62,
-                femalePct: 38,
-                ageDist: "18-30 歲"
+                streamType: "戶外實況 / 綜藝活動",
+                gameType: "派對遊戲, 節奏遊戲",
+                hashtags: ["主持站台", "社群紅人", "動漫愛好者", "活力派"],
+                malePct: 62, femalePct: 38, ageDist: "18-30 歲",
+                socialLinks: { fb: "#", ig: "#", yt: "#", tw: "#" }
             },
             { 
-                name: "西瓜", 
-                enName: "WATERMELON",
+                name: "西瓜", enName: "WATERMELON",
                 img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/13 西瓜.png",
-                gallery: [
-                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/西瓜/正方2.jpg",
-                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/西瓜/正方1.jpg",
-                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/西瓜/正方3.jpg"
-                ],
+                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/13 西瓜.png", "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800", "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=800"],
                 bio: "擁有獨特的幽默感與極高的互動熱情，深受觀眾喜愛。擅長營造輕鬆愉快的直播氛圍。",
                 career: "Since 2022",
                 streamType: "趣味雜談 / 綜合遊戲",
                 gameType: "多人連線, 創意遊戲",
                 hashtags: ["幽默風趣", "高互動", "潛力新星", "開心果"],
-                malePct: 50,
-                femalePct: 50,
-                ageDist: "15-28 歲"
-            },
+                malePct: 50, femalePct: 50, ageDist: "15-28 歲",
+                socialLinks: { fb: "#", ig: "#", yt: "#", tw: "#" }
+            }
             { 
-                name: "Abby純純", 
-                enName: "ABBY_PURE",
-                img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/05 Abby純純.jpg",
-                gallery: [
-                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/純純/正方2.jpg",
-                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/純純/正方3.jpg",
-                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/純純/正方1.jpg"
-                ],
-                bio: "具備極高親和力的生活風格創作人。擅長分享日常穿搭與質感生活，在社群上擁有極高的黏著度。",
-                career: "Since 2019",
-                streamType: "質感生活 / 時尚分享",
-                gameType: "模擬人生, 社交遊戲",
-                hashtags: ["氣質女神", "穿搭風格", "高互動率", "質感生活"],
-                malePct: 30,
-                femalePct: 70,
-                ageDist: "20-40 歲"
-            },
-            { 
-                name: "萌萌吃吃", 
-                enName: "MO_MO_EAT",
-                img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/06 萌萌吃吃.jpg",
-                gallery: [
-                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/萌萌吃吃/正方1.jpg",
-                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/萌萌吃吃/正方2.jpg",
-                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/萌萌吃吃/正方3.jpg"
-                ],
-                bio: "美食評論與大胃王挑戰者。以療癒的吃相與真實的口感描述著稱，是餐飲品牌與生活用品的最佳合作夥伴。",
-                career: "Since 2020",
-                streamType: "美食開箱 / 療癒雜談",
-                gameType: "烹飪模擬, 社交遊戲",
-                hashtags: ["美食達人", "吃播", "真實開箱", "療癒系"],
-                malePct: 40,
-                femalePct: 60,
-                ageDist: "22-38 歲"
-            },
-            { 
-                name: "小舞", 
-                enName: "DANCE_XIAO_WU",
-                img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/07 小舞.png",
-                gallery: [
-                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/Nien/正方1.jpg",
-                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/Nien/正方2.jpg",
-                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/Nien/正方3.jpg"
-                ],
-                bio: "專業舞者出身，將舞蹈藝術融入實況內容。高超的舞技與開朗的個性，使她在年輕族群中擁有強大的影響力。",
-                career: "Since 2021",
-                streamType: "舞蹈表演 / 運動健身",
-                gameType: "Just Dance, 音樂節奏",
-                hashtags: ["舞蹈精靈", "時尚指標", "正能量", "專業舞者"],
-                malePct: 55,
-                femalePct: 45,
-                ageDist: "18-32 歲"
-            },
-            { 
-                name: "小鹽", 
-                enName: "SALT_XIAO_YAN",
-                img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/08 小鹽.png",
-                gallery: [
-                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/小鹽/正方3.jpg",
-                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/小鹽/正方1.jpg",
-                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/小鹽/正方2.jpg"
-                ],
-                bio: "知性冷靜的策略型玩家。擅長各類解謎與卡牌對戰遊戲，以精湛的邏輯分析吸引了一批死忠的硬核觀眾。",
-                career: "Since 2021",
-                streamType: "硬核解謎 / 邏輯分析",
-                gameType: "策略卡牌, 密室解謎",
-                hashtags: ["智慧型", "低調高冷", "硬核玩家", "深度內容"],
-                malePct: 70,
-                femalePct: 30,
-                ageDist: "25-40 歲"
-            },
-            { 
-                name: "妖乖", 
-                enName: "YAO_GUAI_DEMON",
-                img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/09 妖乖.jpg",
-                gallery: [
-                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/妖乖/正方1.jpg",
-                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/妖乖/正方2.jpg",
-                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/妖乖/正方3.jpg"
-                ],
-                bio: "充滿神秘感的 Cosplayer 與二次元文化推廣者。擅長高質量的角色扮演，在動漫圈與遊戲圈極具號召力。",
-                career: "Since 2019",
-                streamType: "Cosplay 展示 / 遊戲互動",
-                gameType: "RPG 大作, 二次元手遊",
-                hashtags: ["Cosplay", "動漫狂熱", "百變風格", "視覺享受"],
-                malePct: 65,
-                femalePct: 35,
-                ageDist: "15-30 歲"
-            },
-            { 
-                name: "丫布丁丁", 
-                enName: "YABU_PUDDING",
-                img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/10 丫布丁丁.png",
-                gallery: [
-                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/布丁/正方3.jpg",
-                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/布丁/正方1.jpg",
-                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/布丁/正方2.jpg"
-                ],
-                bio: "溫柔治癒系的療癒師。以溫暖的嗓音與觀眾進行深度對談，是許多人下班後的心靈港灣，擅長經營長期關係。",
+                name: "西瓜", enName: "WATERMELON",
+                img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/13 西瓜.png",
+                gallery: ["https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/13 西瓜.png", "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800", "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=800"],
+                bio: "擁有獨特的幽默感與極高的互動熱情，深受觀眾喜愛。擅長營造輕鬆愉快的直播氛圍。",
                 career: "Since 2022",
-                streamType: "ASMR / 心靈諮商",
-                gameType: "動物森友會, 療癒遊戲",
-                hashtags: ["溫柔治癒", "深度對談", "高品質互動", "鄰家感"],
-                malePct: 48,
-                femalePct: 52,
-                ageDist: "20-45 歲"
-            },
-            { 
-                name: "奶茶蜜", 
-                enName: "MILK_TEA_MI",
-                img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/11 奶茶蜜.jpg",
-                gallery: [
-                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/奶茶蜜/正方1.jpg",
-                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/奶茶蜜/正方2.jpg",
-                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/奶茶蜜/正方3.jpg"
-                ],
-                bio: "甜美活潑的甜點系創作者。專精於美妝教學與流行話題，深受女性受眾喜愛，是美妝護膚品牌的強力推手。",
-                career: "Since 2023",
-                streamType: "美妝保養 / 流行快訊",
-                gameType: "流行音樂遊戲, 養成類",
-                hashtags: ["美妝達人", "甜美教主", "小紅書風格", "精緻生活"],
-                malePct: 20,
-                femalePct: 80,
-                ageDist: "18-35 歲"
-            },
-            { 
-                name: "妮塔", 
-                enName: "NITA_CYBER",
-                img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/12 妮塔.jpg",
-                gallery: [
-                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/妮塔/正方1.jpg",
-                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/妮塔/正方2.jpg",
-                    "https://xiaomasales-creator.github.io/sales/presentation/homepage/藝人彈窗照片/妮塔/正方3.jpg"
-                ],
-                bio: "酷颯風格的科技愛好者與評測家。對硬體設備、3C 產品有獨到見解，其專業形象在科技圈具有高度可信度。",
-                career: "Since 2021",
-                streamType: "3C 評測 / 硬體組裝",
-                gameType: "電子競技, 競速遊戲",
-                hashtags: ["酷颯風格", "科技評測", "專業形象", "數位遊牧"],
-                malePct: 75,
-                femalePct: 25,
-                ageDist: "25-45 歲"
+                streamType: "趣味雜談 / 綜合遊戲",
+                gameType: "多人連線, 創意遊戲",
+                hashtags: ["幽默風趣", "高互動", "潛力新星", "開心果"],
+                malePct: 50, femalePct: 50, ageDist: "15-28 歲",
+                socialLinks: { fb: "#", ig: "#", yt: "#", tw: "#" }
             }
         ];
 
-        let carouselIndex = 1;
+        // 初始化活動花絮
+        function initGalleryTrack() {
+            const track = document.getElementById('gallery-track');
+            track.innerHTML = '';
+            
+            galleryImages.forEach((imgUrl, index) => {
+                const item = document.createElement('div');
+                item.className = "gallery-item group";
+                const title = eventTitles[index] || `活動項目 ${index + 1}`;
+                const randomDate = `2024.${Math.floor(Math.random()*12)+1}.${Math.floor(Math.random()*28)+1}`;
 
-        // 生成藝人列表
+                item.innerHTML = `
+                    <div class="gallery-img-box">
+                        <img src="${imgUrl}" class="gallery-img" alt="${title}" onerror="this.src='https://via.placeholder.com/800x450/111111/444444?text=IMAGE_NOT_FOUND'">
+                        <div class="gallery-caption">
+                            <div class="caption-line"></div>
+                            <span class="caption-title">${title}</span>
+                            <span class="caption-date">ENTRY_LOG: ${randomDate}</span>
+                        </div>
+                    </div>`;
+                track.appendChild(item);
+            });
+        }
+        initGalleryTrack();
+
         function renderTalentGrid() {
             const grid = document.getElementById('talent-grid');
             grid.innerHTML = ''; 
@@ -1221,11 +1140,94 @@
                     <div class="avatar-circle">
                         <img src="${t.img}" class="w-full h-full object-cover" onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=${t.name}'">
                     </div>
-                    <p class="text-[10px] md:text-xs text-zinc-400 font-bold uppercase">${t.name}</p>`;
+                    <p class="talent-name-label">${t.name}</p>`;
                 grid.appendChild(div);
             });
         }
         renderTalentGrid();
+
+        /**
+         * --- 活動花絮輪播邏輯：點擊箭頭照片置中 ---
+         */
+        const galleryContainer = document.getElementById('gallery-container');
+        const galleryTrack = document.getElementById('gallery-track');
+        let scrollPos = 0;
+        let isAutoPlay = true;
+        let lastTime = 0;
+        let autoPlayTimer = null;
+        let currentGalleryIdx = 0; 
+
+        function manualGalleryNav(direction) {
+            isAutoPlay = false;
+            const items = document.querySelectorAll('.gallery-item');
+            if (items.length === 0) return;
+
+            currentGalleryIdx += direction;
+            if (currentGalleryIdx < 0) currentGalleryIdx = items.length - 1;
+            if (currentGalleryIdx >= items.length) currentGalleryIdx = 0;
+
+            const containerWidth = galleryContainer.offsetWidth;
+            const targetItem = items[currentGalleryIdx];
+            const itemWidth = targetItem.offsetWidth;
+            const itemOffset = targetItem.offsetLeft;
+
+            // 計算位移量使其中心對齊
+            scrollPos = -(itemOffset - (containerWidth / 2 - itemWidth / 2));
+
+            const trackWidth = galleryTrack.scrollWidth;
+            const minScroll = -(trackWidth - containerWidth);
+            if (scrollPos < minScroll) scrollPos = minScroll;
+            if (scrollPos > 0) scrollPos = 0;
+
+            galleryTrack.style.transition = 'transform 0.8s cubic-bezier(0.23, 1, 0.32, 1)';
+            galleryTrack.style.transform = `translateX(${scrollPos}px)`;
+            
+            clearTimeout(autoPlayTimer);
+            autoPlayTimer = setTimeout(() => {
+                isAutoPlay = true;
+                galleryTrack.style.transition = 'none'; 
+            }, 6000);
+        }
+
+        function autoAnimate(timestamp) {
+            if (!lastTime) lastTime = timestamp;
+            const deltaTime = timestamp - lastTime;
+            lastTime = timestamp;
+
+            if (isAutoPlay) {
+                galleryTrack.style.transition = 'none'; 
+                scrollPos -= 0.04 * deltaTime; 
+                
+                const trackWidth = galleryTrack.scrollWidth;
+                const containerWidth = galleryContainer.offsetWidth;
+                
+                if (Math.abs(scrollPos) >= (trackWidth - containerWidth)) {
+                    scrollPos = 0;
+                }
+                galleryTrack.style.transform = `translateX(${scrollPos}px)`;
+
+                const items = document.querySelectorAll('.gallery-item');
+                if(items.length > 0) {
+                    const centerPos = Math.abs(scrollPos) + (containerWidth / 2);
+                    let closestIdx = 0;
+                    let minDiff = Infinity;
+                    items.forEach((item, idx) => {
+                        const itemCenter = item.offsetLeft + (item.offsetWidth / 2);
+                        const diff = Math.abs(centerPos - itemCenter);
+                        if (diff < minDiff) {
+                            minDiff = diff;
+                            closestIdx = idx;
+                        }
+                    });
+                    currentGalleryIdx = closestIdx;
+                }
+            }
+            requestAnimationFrame(autoAnimate);
+        }
+        requestAnimationFrame(autoAnimate);
+
+        // --- 彈窗詳情頁邏輯 ---
+        let modalCarouselIndex = 1;
 
         function openTalentModal(t) {
             document.getElementById('modal-name').innerText = t.name;
@@ -1239,8 +1241,13 @@
             document.getElementById('female-bar').style.width = t.femalePct + '%';
             document.getElementById('male-pct').innerText = t.malePct + '%';
             document.getElementById('female-pct').innerText = t.femalePct + '%';
-            
             document.getElementById('modal-age-dist').innerText = t.ageDist;
+
+            const links = t.socialLinks || { fb: "#", ig: "#", yt: "#", tw: "#" };
+            document.getElementById('link-fb').href = links.fb || "#";
+            document.getElementById('link-ig').href = links.ig || "#";
+            document.getElementById('link-yt').href = links.yt || "#";
+            document.getElementById('link-tw').href = links.tw || "#";
 
             const photoList = t.gallery || [t.img, t.img, t.img];
             for(let i=0; i<3; i++) {
@@ -1257,32 +1264,32 @@
                 tagContainer.appendChild(span);
             });
 
-            carouselIndex = 1;
-            updateCarouselUI();
+            modalCarouselIndex = 1;
+            updateModalCarouselUI();
 
             document.getElementById('modal-overlay').style.display = 'block';
             document.body.style.overflow = 'hidden';
         }
 
         function moveCarousel(dir) {
-            carouselIndex += dir;
-            if (carouselIndex < 0) carouselIndex = 2;
-            if (carouselIndex > 2) carouselIndex = 0;
-            updateCarouselUI();
+            modalCarouselIndex += dir;
+            if (modalCarouselIndex < 0) modalCarouselIndex = 2;
+            if (modalCarouselIndex > 2) modalCarouselIndex = 0;
+            updateModalCarouselUI();
         }
 
         function setCarouselIndex(idx) {
-            carouselIndex = idx;
-            updateCarouselUI();
+            modalCarouselIndex = idx;
+            updateModalCarouselUI();
         }
 
-        function updateCarouselUI() {
+        function updateModalCarouselUI() {
             const cards = document.querySelectorAll('.cyber-photo-card');
             cards.forEach((card, i) => {
                 card.classList.remove('active', 'prev', 'next');
-                if (i === carouselIndex) {
+                if (i === modalCarouselIndex) {
                     card.classList.add('active');
-                } else if (i === (carouselIndex - 1 + 3) % 3) {
+                } else if (i === (modalCarouselIndex - 1 + 3) % 3) {
                     card.classList.add('prev');
                 } else {
                     card.classList.add('next');
@@ -1300,74 +1307,25 @@
             if(el) window.scrollTo({ top: el.offsetTop - 50, behavior: 'smooth' });
         }
 
-        function scrollToTalentsSection() {
-            closeModal();
-            scrollToSection('talents');
-        }
+        const talentScrollContainer = document.getElementById('talent-scroll-container');
+        let tIsDown = false;
+        let tStartX;
+        let tScrollLeft;
 
-        // 水平滾動邏輯
-        const scrollContainer = document.getElementById('talent-scroll-container');
-        let isDown = false;
-        let startX_scroll;
-        let scrollLeft;
-
-        scrollContainer.addEventListener('mousedown', (e) => {
-            isDown = true;
-            startX_scroll = e.pageX - scrollContainer.offsetLeft;
-            scrollLeft = scrollContainer.scrollLeft;
+        talentScrollContainer.addEventListener('mousedown', (e) => {
+            tIsDown = true;
+            tStartX = e.pageX - talentScrollContainer.offsetLeft;
+            tScrollLeft = talentScrollContainer.scrollLeft;
         });
-        scrollContainer.addEventListener('mouseleave', () => isDown = false);
-        scrollContainer.addEventListener('mouseup', () => isDown = false);
-        scrollContainer.addEventListener('mousemove', (e) => {
-            if (!isDown) return;
+        talentScrollContainer.addEventListener('mouseleave', () => tIsDown = false);
+        talentScrollContainer.addEventListener('mouseup', () => tIsDown = false);
+        talentScrollContainer.addEventListener('mousemove', (e) => {
+            if (!tIsDown) return;
             e.preventDefault();
-            const x = e.pageX - scrollContainer.offsetLeft;
-            const walk = (x - startX_scroll) * 2;
-            scrollContainer.scrollLeft = scrollLeft - walk;
+            const x = e.pageX - talentScrollContainer.offsetLeft;
+            const walk = (x - tStartX) * 2;
+            talentScrollContainer.scrollLeft = tScrollLeft - walk;
         });
-
-        // 活動花絮自動播放
-        const container = document.getElementById('gallery-container');
-        const track = document.getElementById('gallery-track');
-        let pos = 0;
-        let isDragging = false;
-        let startX_gal;
-        let currentPos = 0;
-        let isAutoPlay = true;
-
-        function autoAnimate() {
-            if (isAutoPlay && !isDragging) {
-                pos -= 0.5;
-                if (pos < -1600) pos = 0;
-                track.style.transform = `translateX(${pos}px)`;
-            }
-            requestAnimationFrame(autoAnimate);
-        }
-        autoAnimate();
-
-        const startDrag = (e) => {
-            isDragging = true;
-            isAutoPlay = false;
-            startX_gal = (e.pageX || e.touches[0].pageX) - track.offsetLeft;
-            currentPos = pos;
-        };
-        const onDrag = (e) => {
-            if (!isDragging) return;
-            const x = (e.pageX || e.touches[0].pageX) - track.offsetLeft;
-            pos = currentPos + (x - startX_gal);
-            track.style.transform = `translateX(${pos}px)`;
-        };
-        const stopDrag = () => {
-            isDragging = false;
-            setTimeout(() => { isAutoPlay = true; }, 1000);
-        };
-
-        container.addEventListener('mousedown', startDrag);
-        window.addEventListener('mousemove', onDrag);
-        window.addEventListener('mouseup', stopDrag);
-        container.addEventListener('touchstart', startDrag, {passive: true});
-        container.addEventListener('touchmove', onDrag, {passive: true});
-        container.addEventListener('touchend', stopDrag);
     </script>
 </body>
 </html>
