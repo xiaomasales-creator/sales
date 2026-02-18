@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小馬娛樂 | BRAND_IMAGE_MODULE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-purple: #bc13fe;
+            --neon-blue: #00d2ff;
+            --deep-dark: #050505;
+            --border-gray: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            background-color: var(--deep-dark);
+            color: #ffffff;
+            font-family: 'Noto Sans TC', sans-serif;
+            overflow-x: hidden;
+            letter-spacing: 0.1em;
+        }
+
+        .cyber-font {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(188, 19, 254, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(188, 19, 254, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+        }
+
+        .cyber-panel {
+            position: relative;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-gray);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0% 100%);
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .cyber-panel:hover {
+            border-color: var(--neon-purple);
+            background: rgba(188, 19, 254, 0.05);
+            transform: translateY(-5px);
+        }
+
+        .inner-scan {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(188, 19, 254, 0.4), 
+                var(--neon-purple), 
+                transparent);
+            z-index: 10;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        .scanning .inner-scan {
+            animation: scan-inner 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes scan-inner {
+            0% { left: -100%; opacity: 0; }
+            50% { opacity: 1; }
+            100% { left: 100%; opacity: 0; }
+        }
+
+        .content-inner {
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .switching .content-inner {
+            opacity: 0;
+            transform: scale(0.98);
+        }
+
+        .title-bar {
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--neon-purple), var(--neon-blue));
+            box-shadow: 0 0 15px var(--neon-purple);
+        }
+
+        .deco-block {
+            width: 10px;
+            height: 10px;
+            background: var(--neon-purple);
+        }
+
+        /* 新增：科技感圖形裝飾 */
+        .cyber-footer-deco {
+            display: flex;
+            align-items: flex-end;
+            gap: 2px;
+        }
+        .deco-bar {
+            width: 4px;
+            background: var(--neon-purple);
+            opacity: 0.5;
+        }
+        .deco-bar.active {
+            animation: pulse 1.5s infinite ease-in-out;
+            opacity: 1;
+            box-shadow: 0 0 8px var(--neon-purple);
+        }
+        @keyframes pulse {
+            0%, 100% { height: 4px; }
+            50% { height: 16px; }
+        }
+    </style>
+</head>
+<body class="p-8 md:p-20">
+    <div class="bg-grid"></div>
+
+    <div class="max-w-5xl mx-auto">
+        <!-- 標題區域 -->
+        <header class="mb-16 flex flex-col items-start">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="deco-block"></div>
+                <span class="cyber-font text-[10px] tracking-[0.6em] text-white/40 uppercase">XIAOMA ENT.</span>
+            </div>
+            
+            <div class="flex items-baseline gap-4 mb-4 whitespace-nowrap overflow-hidden">
+                <h1 class="text-5xl md:text-7xl font-black italic tracking-tighter leading-none shrink-0">品牌特色</h1>
+                <span class="cyber-font text-xl md:text-3xl font-black text-white/10 uppercase italic tracking-widest shrink">BRAND_IMAGE</span>
+            </div>
+            
+            <div class="title-bar mb-4"></div>
+            <p class="cyber-font text-[10px] text-white/30 tracking-widest uppercase italic">Click to View in English</p>
+        </header>
+
+        <!-- 網格系統 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <!-- 特色 01 -->
+            <div class="cyber-panel p-10 group" onclick="toggleCell(this, 1)">
+                <div class="inner-scan"></div>
+                <div class="content-inner">
+                    <div class="flex items-center gap-4 mb-8">
+                        <span class="cyber-font text-xs text-purple-500">01_</span>
+                        <div class="h-px flex-grow bg-white/10"></div>
+                    </div>
+                    <h3 class="text-2xl font-bold italic text-white mb-6 group-hover:text-purple-400 transition-colors" data-field="title">風格領域多元，自由不設限</h3>
+                    <p class="text-white/50 text-sm leading-relaxed font-light" data-field="desc">不侷限領域，勇於挑戰創新；實況主自由發揮，展現獨特魅力。</p>
+                </div>
+            </div>
+
+            <!-- 特色 02 -->
+            <div class="cyber-panel p-10 group" onclick="toggleCell(this, 2)">
+                <div class="inner-scan"></div>
+                <div class="content-inner">
+                    <div class="flex items-center gap-4 mb-8">
+                        <span class="cyber-font text-xs text-blue-500">02_</span>
+                        <div class="h-px flex-grow bg-white/10"></div>
+                    </div>
+                    <h3 class="text-2xl font-bold italic text-white mb-6 group-hover:text-blue-400 transition-colors" data-field="title">專業與趣味兼顧</h3>
+                    <p class="text-white/50 text-sm leading-relaxed font-light" data-field="desc">以專業而不失趣味的行銷推廣，吸引大量潛在客群。</p>
+                </div>
+            </div>
+
+            <!-- 特色 03 -->
+            <div class="cyber-panel p-10 group" onclick="toggleCell(this, 3)">
+                <div class="inner-scan"></div>
+                <div class="content-inner">
+                    <div class="flex items-center gap-4 mb-8">
+                        <span class="cyber-font text-xs text-purple-500">03_</span>
+                        <div class="h-px flex-grow bg-white/10"></div>
+                    </div>
+                    <h3 class="text-2xl font-bold italic text-white mb-6 group-hover:text-purple-400 transition-colors" data-field="title">最低的預算，最高的品質</h3>
+                    <p class="text-white/50 text-sm leading-relaxed font-light" data-field="desc">精準掌控預算，追求完美成效，致力於讓客戶花小錢也能享高品質。</p>
+                </div>
+            </div>
+
+            <!-- 特色 04 -->
+            <div class="cyber-panel p-10 group" onclick="toggleCell(this, 4)">
+                <div class="inner-scan"></div>
+                <div class="content-inner">
+                    <div class="flex items-center gap-4 mb-8">
+                        <span class="cyber-font text-xs text-blue-500">04_</span>
+                        <div class="h-px flex-grow bg-white/10"></div>
+                    </div>
+                    <h3 class="text-2xl font-bold italic text-white mb-6 group-hover:text-blue-400 transition-colors" data-field="title">行事俐落，使命必達</h3>
+                    <p class="text-white/50 text-sm leading-relaxed font-light" data-field="desc">執行迅速確實，絕不拖泥帶水。</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 頁尾裝飾：替換原本文字 -->
+        <div class="mt-24 flex items-center justify-between opacity-30">
+            <div class="flex gap-1 items-center">
+                <div class="w-8 h-[2px] bg-white"></div>
+                <div class="w-2 h-2 border border-white rotate-45"></div>
+                <div class="w-32 h-[1px] bg-gradient-to-r from-white to-transparent"></div>
+            </div>
+            
+            <!-- 賽博幾何裝飾圖 -->
+            <div class="cyber-footer-deco">
+                <div class="deco-bar active" style="animation-delay: 0s"></div>
+                <div class="deco-bar" style="height: 8px"></div>
+                <div class="deco-bar active" style="animation-delay: 0.2s"></div>
+                <div class="deco-bar" style="height: 12px"></div>
+                <div class="deco-bar active" style="animation-delay: 0.4s"></div>
+                <div class="deco-bar" style="height: 6px"></div>
+                <div class="deco-bar active" style="animation-delay: 0.1s"></div>
+                <div class="ml-4 flex flex-col gap-1">
+                    <div class="w-16 h-1 bg-white/40"></div>
+                    <div class="w-8 h-1 bg-white/20"></div>
+                </div>
+            </div>
+
+            <div class="flex gap-1 items-center rotate-180">
+                <div class="w-8 h-[2px] bg-white"></div>
+                <div class="w-2 h-2 border border-white rotate-45"></div>
+                <div class="w-32 h-[1px] bg-gradient-to-r from-white to-transparent"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const cellData = {
+            1: {
+                CH: { title: '風格領域多元，自由不設限', desc: '不侷限領域，勇於挑戰創新；實況主自由發揮，展現獨特魅力。' },
+                EN: { title: 'Without Limitation', desc: 'Keep challenging ourselves and being creative.' }
+            },
+            2: {
+                CH: { title: '專業與趣味兼顧', desc: '以專業而不失趣味的行銷推廣，吸引大量潛在客群。' },
+                EN: { title: 'Professional & Interesting', desc: 'Use professional and interesting performance to attract audience.' }
+            },
+            3: {
+                CH: { title: '最低的預算，最高的品質', desc: '精準掌控預算，追求完美成效，致力於讓客戶花小錢也能享高品質。' },
+                EN: { title: 'Lowest Cost But Highest Quality', desc: 'Control the budget accurately and provide the best service.' }
+            },
+            4: {
+                CH: { title: '行事俐落，使命必達', desc: '執行迅速確實，絕不拖泥帶水。' },
+                EN: { title: 'Execute Quickly & Accurately', desc: 'Complete every mission with speed and precision.' }
+            }
+        };
+
+        const cellStatus = { 1: 'CH', 2: 'CH', 3: 'CH', 4: 'CH' };
+
+        function toggleCell(element, id) {
+            if (element.classList.contains('scanning')) return;
+
+            element.classList.add('scanning');
+
+            setTimeout(() => {
+                element.classList.add('switching');
+                
+                setTimeout(() => {
+                    const nextLang = (cellStatus[id] === 'CH') ? 'EN' : 'CH';
+                    cellStatus[id] = nextLang;
+                    
+                    const titleEl = element.querySelector('[data-field="title"]');
+                    const descEl = element.querySelector('[data-field="desc"]');
+                    
+                    titleEl.innerText = cellData[id][nextLang].title;
+                    descEl.innerText = cellData[id][nextLang].desc;
+
+                    if (nextLang === 'EN') {
+                        titleEl.classList.add('cyber-font', 'text-xl');
+                    } else {
+                        titleEl.classList.remove('cyber-font', 'text-xl');
+                    }
+
+                    element.classList.remove('switching');
+                }, 200);
+            }, 100);
+
+            setTimeout(() => {
+                element.classList.remove('scanning');
+            }, 600);
+        }
+    </script>
+</body>
+</html>
