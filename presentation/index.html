@@ -93,12 +93,12 @@
             }
             .panel-container::before { left: -12px; transform: skewX(-15deg); border-left: 1px solid rgba(134, 0, 255, 0.4); }
             .panel-container::after { right: -12px; transform: skewX(15deg); border-right: 1px solid rgba(134, 0, 255, 0.4); }
-            .panel-btn { font-size: 1.15rem; }
+            .panel-btn { font-size: 1.15rem; } 
         }
 
         @media (max-width: 767px) {
             .panel-container { gap: 6px; padding: 12px 10px; border-radius: 12px; }
-            .panel-btn { font-size: 0.85rem !important; letter-spacing: 0.05em !important; }
+            .panel-btn { font-size: 0.85rem !important; letter-spacing: 0.05em !important; } 
         }
 
         .nav-item { position: relative; }
@@ -106,7 +106,7 @@
         .panel-btn {
             position: relative;
             font-weight: bold;
-            color: #888;
+            color: #ccc;
             transition: all 0.3s ease;
             white-space: nowrap;
             letter-spacing: 0.15em;
@@ -175,8 +175,8 @@
         .submenu-link {
             display: block;
             padding: 10px 14px;
-            color: #999;
-            font-size: 0.95rem;
+            color: #bbb;
+            font-size: 0.95rem; 
             text-align: left;
             transition: all 0.2s;
             border-left: 2px solid transparent;
@@ -548,28 +548,46 @@
             box-shadow: 0 0 5px var(--secondary-neon);
         }
 
+        /* 彈窗內部的資訊區塊文字調大 */
         .info-block {
             background: rgba(255, 255, 255, 0.03);
             border-left: 3px solid var(--primary-neon);
-            padding: 15px;
+            padding: 20px;
             position: relative;
         }
 
         .info-label {
-            font-size: 10px;
+            font-size: 13px; /* 調大標籤字體 */
             color: var(--secondary-neon);
             text-transform: uppercase;
             letter-spacing: 2px;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             display: block;
+        }
+
+        #modal-bio {
+            font-size: 1.1rem; /* 調大簡介字體 */
+            line-height: 1.7;
+        }
+
+        #modal-stream-type {
+            font-size: 1.15rem; /* 調大直播類型字體 */
+        }
+
+        #modal-game-type {
+            font-size: 1rem; /* 調大副標字體 */
+        }
+
+        #modal-career-start {
+            font-size: 1.5rem; /* 調大資歷年份 */
         }
 
         /* 男女比圖表樣式 */
         .audience-bar-container {
             width: 100%;
-            height: 12px;
+            height: 16px; /* 稍微加高 */
             background: #222;
-            margin-top: 10px;
+            margin-top: 12px;
             display: flex;
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -589,22 +607,23 @@
         .audience-labels {
             display: flex;
             justify-content: space-between;
-            margin-top: 6px;
-            font-size: 10px;
+            margin-top: 8px;
+            font-size: 13px; /* 調大數據標籤 */
             font-family: 'Orbitron', 'Noto Sans TC', sans-serif;
+            font-weight: 700;
         }
 
         .tag-cloud {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 10px;
         }
         .cyber-tag {
             background: rgba(134, 0, 255, 0.1);
             border: 1px solid rgba(134, 0, 255, 0.4);
-            color: #ddd;
-            padding: 4px 10px;
-            font-size: 11px;
+            color: #fff;
+            padding: 6px 14px;
+            font-size: 13px; /* 調大標籤 */
             border-radius: 2px;
         }
 
@@ -617,7 +636,7 @@
 
         .cyber-long-btn {
             position: relative;
-            padding: 12px 20px;
+            padding: 16px 20px; /* 加大按鈕內距 */
             flex: 1;
             display: flex;
             align-items: center;
@@ -652,11 +671,15 @@
         .long-btn-text {
             position: relative;
             z-index: 2;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 1px;
+            font-size: 14px; /* 調大底部按鈕文字 */
+            font-weight: 900;
+            letter-spacing: 1.5px;
             color: #fff;
             text-transform: uppercase;
+        }
+
+        #modal-age-dist {
+            font-size: 1rem; /* 調大年齡分佈 */
         }
     </style>
 </head>
@@ -672,7 +695,9 @@
             </div>
             <div class="max-w-3xl px-4">
                 <h1 class="cyber-font text-xl md:text-4xl font-black mb-4">XIAOMA ENT. // <span class="text-purple-500">NEXT-GEN</span></h1>
-                <p class="text-gray-400 text-xs md:text-base leading-relaxed">2026</p>
+                <p class="text-gray-400 text-xs md:text-base leading-relaxed">
+                    致力於挖掘最具個人風格的創作者，在數位洪流中為品牌精準導航。
+                </p>
             </div>
         </section>
 
@@ -683,20 +708,20 @@
                     <div class="gallery-item"><div class="gallery-img bg-zinc-800 flex items-center justify-center cyber-font text-2xl text-zinc-600">EVENT_01</div></div>
                     <div class="gallery-item"><div class="gallery-img bg-zinc-700 flex items-center justify-center cyber-font text-2xl text-zinc-500">EVENT_02</div></div>
                     <div class="gallery-item"><div class="gallery-img bg-zinc-800 flex items-center justify-center cyber-font text-2xl text-zinc-600">EVENT_03</div></div>
-                    <div class="gallery-item"><div class="gallery-img bg-zinc-700 flex items-center justify-center cyber-font text-2xl text-zinc-500">EVENT_04</div></div>
+                    <div class="gallery-item"><div class="gallery-item"><div class="gallery-img bg-zinc-700 flex items-center justify-center cyber-font text-2xl text-zinc-500">EVENT_04</div></div>
                 </div>
             </div>
         </section>
 
         <section id="talents" class="py-16 w-full overflow-hidden">
-            <h2 class="cyber-font text-center text-cyan-400 text-[10px] md:text-sm tracking-[0.5em] mb-12 uppercase">Talents // 旗下藝人</h2>
+            <h2 class="cyber-font text-center text-cyan-400 text-[10px] md:text-sm tracking-[0.5em] mb-12 uppercase">PERSONNEL_REGISTRY // 旗下藝人</h2>
             <div class="floating-talent-panel" id="talent-scroll-container">
                 <div id="talent-grid" class="talent-avatar-grid"></div>
             </div>
         </section>
 
         <footer class="mt-auto py-8 text-center opacity-30">
-            <p class="cyber-font text-[9px] md:text-[11px] tracking-widest">&copy; 2024 XIAOMA ENT.</p>
+            <p class="cyber-font text-[9px] md:text-[11px] tracking-widest">&copy; 2024 XIAOMA ENT. ALL SYSTEMS OPERATIONAL.</p>
         </footer>
     </div>
 
@@ -708,7 +733,7 @@
                 <div class="energy-bar"></div>
                 <div class="submenu">
                     <div class="submenu-inner">
-                        <a href="javascript:void(0)" class="submenu-link">品牌特色</a>
+                        <a href="javascript:void(0)" class="submenu-link">品牌理念</a>
                         <a href="javascript:void(0)" class="submenu-link">合作項目</a>
                         <a href="javascript:void(0)" class="submenu-link">服務流程</a>
                     </div>
@@ -719,9 +744,9 @@
                 <div class="energy-bar"></div>
                 <div class="submenu">
                     <div class="submenu-inner">
-                        <a href="javascript:void(0)" class="submenu-link">小馬主播陣容</a>
-                        <a href="javascript:void(0)" class="submenu-link">經典案例</a>
+                        <a href="javascript:void(0)" class="submenu-link">旗下主播</a>
                         <a href="javascript:void(0)" class="submenu-link">經常合作KOL</a>
+                        <a href="javascript:void(0)" class="submenu-link">經典案例</a>
                     </div>
                 </div>
             </div>
@@ -749,12 +774,6 @@
             <div class="nav-item hidden md:block">
                 <div class="panel-btn">聯絡我們</div>
                 <div class="energy-bar"></div>
-                                <div class="submenu">
-                    <div class="submenu-inner">
-                        <a href="javascript:void(0)" class="submenu-link">工商洽談</a>
-                        <a href="javascript:void(0)" class="submenu-link">加入小馬</a>
-                    </div>
-                </div>
             </div>
         </div>
     </nav>
@@ -820,19 +839,19 @@
                 <!-- 右側：資訊區 -->
                 <div class="flex flex-col gap-6">
                     <div class="info-block">
-                        <span class="info-label">Bio // 主播簡介</span>
-                        <p class="text-xs md:text-base text-gray-300 leading-relaxed" id="modal-bio">加載中...</p>
+                        <span class="info-label">Bio // 藝人簡介</span>
+                        <p class="text-gray-300 leading-relaxed font-medium" id="modal-bio">加載中...</p>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="info-block">
-                            <span class="info-label">Stream Type // 直播&遊戲類型</span>
-                            <p class="text-white text-xs md:text-sm font-bold" id="modal-stream-type">-</p>
-                            <p class="text-gray-500 text-[10px] md:text-[11px]" id="modal-game-type">-</p>
+                            <span class="info-label">Stream Type // 直播與遊戲類型</span>
+                            <p class="text-white font-black" id="modal-stream-type">-</p>
+                            <p class="text-gray-400 mt-1" id="modal-game-type">-</p>
                         </div>
                         
                         <div class="info-block">
-                            <span class="info-label">Audience // 受眾輪廓</span>
+                            <span class="info-label">Audience Demographic // 受眾輪廓</span>
                             <div class="audience-bar-container">
                                 <div id="male-bar" class="male-bar"></div>
                                 <div id="female-bar" class="female-bar"></div>
@@ -841,9 +860,9 @@
                                 <span class="text-cyan-400">MALE 男性 <span id="male-pct">0%</span></span>
                                 <span class="text-pink-500">FEMALE 女性 <span id="female-pct">0%</span></span>
                             </div>
-                            <div class="mt-4 border-t border-white/5 pt-2">
-                                <span class="text-[9px] text-gray-500 tracking-wider uppercase">Age Distribution // 年齡分佈</span>
-                                <p id="modal-age-dist" class="text-white text-xs cyber-font mt-1">18-35 歲</p>
+                            <div class="mt-4 border-t border-white/5 pt-3">
+                                <span class="text-[11px] text-gray-500 tracking-wider uppercase font-bold">Age Distribution // 年齡分佈</span>
+                                <p id="modal-age-dist" class="text-white cyber-font mt-1 font-bold">18-35 歲</p>
                             </div>
                         </div>
                     </div>
@@ -851,11 +870,11 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="info-block">
                             <span class="info-label">Career Start // 直播資歷</span>
-                            <p class="text-sm md:text-xl cyber-font text-white" id="modal-career-start">SINCE -</p>
+                            <p class="cyber-font text-white font-black" id="modal-career-start">SINCE -</p>
                         </div>
                         <div class="info-block">
-                            <span class="info-label">Special Traits // 特色標籤</span>
-                            <div class="tag-cloud mt-2" id="modal-hashtags"></div>
+                            <span class="info-label">Special Traits // 特色 Hashtag</span>
+                            <div class="tag-cloud mt-3" id="modal-hashtags"></div>
                         </div>
                     </div>
 
@@ -875,7 +894,7 @@
     </div>
 
     <script>
-        // 藝人資料數據
+// 藝人資料數據
         const talents = [
             { 
                 name: "狂暴小建", 
@@ -1141,13 +1160,11 @@
             document.getElementById('modal-stream-type').innerText = t.streamType;
             document.getElementById('modal-game-type').innerText = t.gameType;
 
-            // 受眾比例與標籤更新
             document.getElementById('male-bar').style.width = t.malePct + '%';
             document.getElementById('female-bar').style.width = t.femalePct + '%';
             document.getElementById('male-pct').innerText = t.malePct + '%';
             document.getElementById('female-pct').innerText = t.femalePct + '%';
             
-            // 年齡分佈更新
             document.getElementById('modal-age-dist').innerText = t.ageDist;
 
             const photoList = t.gallery || [t.img, t.img, t.img];
