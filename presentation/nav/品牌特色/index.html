@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>小馬娛樂 | 品牌特色與合作項目</title>
+    <title>小馬娛樂 | BRAND_IMAGE_MODULE</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
@@ -37,6 +37,40 @@
                 linear-gradient(90deg, rgba(188, 19, 254, 0.03) 1px, transparent 1px);
             background-size: 50px 50px;
             z-index: -1;
+        }
+
+        /* 回到主頁按鈕樣式 */
+        .home-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            padding: 8px 16px;
+            background: rgba(188, 19, 254, 0.1);
+            border: 1px solid var(--neon-purple);
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .home-btn:hover {
+            background: var(--neon-purple);
+            box-shadow: 0 0 15px var(--neon-purple);
+            transform: translateX(5px);
+        }
+
+        .home-btn svg {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
         }
 
         /* 品牌特色卡片樣式 */
@@ -222,11 +256,18 @@
                 height: auto;
                 min-height: 160px;
             }
+            .home-btn { top: 10px; left: 10px; }
         }
     </style>
 </head>
 <body class="p-8 md:p-20">
     <div class="bg-grid"></div>
+
+    <!-- 回到主頁按鈕 -->
+    <a href="https://xiaomasales-creator.github.io/sales/presentation/index.html" class="home-btn cyber-font">
+        <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        Home
+    </a>
 
     <div class="max-w-6xl mx-auto">
         <!-- 品牌特色標頭 -->
