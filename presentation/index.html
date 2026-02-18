@@ -269,21 +269,33 @@
             color: var(--secondary-neon);
         }
 
-        /* 輪播區塊樣式 */
+/* 輪播區塊樣式 */
         .gallery-container {
             width: 100%;
             overflow: hidden;
             position: relative;
             cursor: grab;
             user-select: none;
+            touch-action: pan-y; 
+        }
+        .gallery-container:active {
+            cursor: grabbing;
         }
         .gallery-track { 
             display: flex; 
             width: max-content; 
-            transition: transform 0.1s ease-out;
             will-change: transform;
         }
-        .gallery-item { width: 80vw; max-width: 800px; height: 450px; flex-shrink: 0; padding: 10px; pointer-events: none; }
+        .gallery-item { 
+            width: 80vw; 
+            max-width: 800px; 
+            height: 450px; 
+            flex-shrink: 0; 
+            padding: 10px; 
+            position: relative;
+            overflow: hidden;
+            pointer-events: auto;
+        }
         
         @media (max-width: 768px) { 
             .gallery-item { width: 90vw; height: 50vw; } 
@@ -293,8 +305,52 @@
             width: 100%; height: 100%;
             object-fit: cover;
             border-radius: 12px;
-            filter: brightness(0.7);
-            transition: filter 0.3s;
+            filter: brightness(0.6); /* 預設調暗一點讓常駐文字更清晰 */
+            transition: filter 0.3s, transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        /* 懸浮文字註解樣式 - 改為常駐顯示 */
+        .gallery-caption {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            background: linear-gradient(0deg, rgba(20, 0, 40, 0.95) 0%, rgba(20, 0, 40, 0) 100%);
+            padding: 60px 20px 20px 20px;
+            border-radius: 0 0 12px 12px;
+            opacity: 1; /* 改為常駐 */
+            transform: translateY(0); /* 改為常駐 */
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .gallery-item:hover .gallery-img {
+            filter: brightness(0.8) scale(1.03);
+        }
+
+        .caption-title {
+            color: var(--secondary-neon);
+            font-weight: 900;
+            font-size: 1.25rem;
+            letter-spacing: 0.1em;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+        }
+
+        .caption-date {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.8rem;
+            letter-spacing: 0.2em;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .caption-line {
+            width: 40px;
+            height: 2px;
+            background: var(--primary-neon);
+            margin-bottom: 8px;
         }
 
         /* 賽博龐克電子面板詳情彈窗 */
@@ -929,8 +985,8 @@
                 streamType: "遊戲",
                 gameType: "《英雄聯盟》《絕地求生》《楓之谷》《黑色沙漠》",
                 hashtags: ["RP", "FPS", "塔防類", "MMORPG"],
-                malePct: 85,
-                femalePct: 15,
+                malePct: 95,
+                femalePct: 5,
                 ageDist: "18-34 歲"
             },
             { 
