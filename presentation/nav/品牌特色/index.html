@@ -39,6 +39,7 @@
             z-index: -1;
         }
 
+        /* 品牌特色卡片樣式 */
         .cyber-panel {
             position: relative;
             background: rgba(255, 255, 255, 0.02);
@@ -50,120 +51,215 @@
         }
 
         .cyber-panel:hover {
-            border-color: var(--neon-purple);
-            background: rgba(188, 19, 254, 0.05);
+            border-color: var(--neon-blue);
+            background: rgba(0, 210, 255, 0.05);
             transform: translateY(-5px);
         }
 
-        .inner-scan {
+        .laser-beam {
             position: absolute;
-            top: 0;
-            left: -100%;
+            left: 0;
+            top: -10px;
             width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, 
-                transparent, 
-                rgba(188, 19, 254, 0.4), 
-                var(--neon-purple), 
-                transparent);
-            z-index: 10;
-            pointer-events: none;
+            height: 2px;
+            background: var(--neon-blue);
+            box-shadow: 0 0 10px var(--neon-blue);
             opacity: 0;
+            z-index: 20;
         }
 
-        .scanning .inner-scan {
-            animation: scan-inner 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        .scanning .laser-beam {
+            animation: laserScan 1.2s ease-in-out forwards;
         }
 
-        @keyframes scan-inner {
-            0% { left: -100%; opacity: 0; }
-            50% { opacity: 1; }
-            100% { left: 100%; opacity: 0; }
-        }
-
-        .content-inner {
-            transition: opacity 0.2s ease, transform 0.2s ease;
+        @keyframes laserScan {
+            0% { top: -10%; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 110%; opacity: 0; }
         }
 
         .switching .content-inner {
             opacity: 0;
-            transform: scale(0.98);
+            transform: scale(0.9);
         }
 
-        .title-bar {
-            width: 60px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--neon-purple), var(--neon-blue));
-            box-shadow: 0 0 15px var(--neon-purple);
+        .content-inner {
+            transition: all 0.3s ease;
         }
 
-        .deco-block {
-            width: 10px;
-            height: 10px;
-            background: var(--neon-purple);
-        }
-
-        /* 新增：科技感圖形裝飾 */
-        .cyber-footer-deco {
+        /* 合作項目佈局 */
+        .ring-container-outer {
+            position: relative;
+            width: 100%;
+            max-width: 850px;
+            height: 850px;
+            margin: 0 auto;
             display: flex;
-            align-items: flex-end;
-            gap: 2px;
+            justify-content: center;
+            align-items: center;
         }
-        .deco-bar {
-            width: 4px;
-            background: var(--neon-purple);
-            opacity: 0.5;
+
+        .mech-orbit {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(188, 19, 254, 0.1);
+            pointer-events: none;
         }
-        .deco-bar.active {
-            animation: pulse 1.5s infinite ease-in-out;
-            opacity: 1;
-            box-shadow: 0 0 8px var(--neon-purple);
+
+        .orbit-1 { width: 95%; height: 95%; border-style: dashed; animation: rotateCW 60s linear infinite; }
+        .orbit-2 { width: 78%; height: 78%; border: 2px solid rgba(0, 210, 255, 0.1); animation: rotateCCW 40s linear infinite; }
+        
+        .ticks {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: repeating-conic-gradient(
+                from 0deg,
+                rgba(0, 210, 255, 0.2) 0deg 1deg,
+                transparent 1deg 10deg
+            );
+            mask-image: radial-gradient(circle, transparent 44%, black 45%, black 46%, transparent 47%);
+            -webkit-mask-image: radial-gradient(circle, transparent 44%, black 45%, black 46%, transparent 47%);
         }
+
+        @keyframes rotateCW { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes rotateCCW { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+
+        /* 旋轉容器 */
+        .ring-wrapper {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .ring-wrapper.rotating {
+            transform: rotate(360deg);
+        }
+
+        .service-circle {
+            position: absolute;
+            width: 195px;
+            height: 195px;
+            background: rgba(5, 5, 5, 0.95);
+            border: 1px solid var(--border-gray);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 24px;
+            transform: translate(-50%, -50%);
+            clip-path: polygon(15% 0%, 85% 0%, 100% 15%, 100% 85%, 85% 100%, 15% 100%, 0% 85%, 0% 15%);
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .service-circle:hover {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 25px rgba(0, 210, 255, 0.3);
+        }
+
+        /* 核心反應爐 */
+        .core-trigger {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            background: #000;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid var(--neon-blue);
+            box-shadow: 0 0 25px var(--neon-blue), inset 0 0 20px var(--neon-blue);
+            transition: transform 0.2s ease;
+        }
+
+        .core-trigger.impact {
+            animation: coreImpact 0.5s ease-out;
+        }
+
+        @keyframes coreImpact {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); box-shadow: 0 0 50px var(--neon-blue); }
+            100% { transform: scale(1); }
+        }
+
+        .core-glow {
+            position: absolute;
+            width: 180%;
+            height: 180%;
+            background: radial-gradient(circle, rgba(0, 210, 255, 0.15) 0%, transparent 70%);
+            animation: pulse 2s infinite ease-in-out;
+            pointer-events: none;
+        }
+
         @keyframes pulse {
-            0%, 100% { height: 4px; }
-            50% { height: 16px; }
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        @media (max-width: 768px) {
+            .mech-orbit, .ticks { display: none; }
+            .ring-container-outer { height: auto; padding: 40px 0; }
+            .ring-wrapper {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 40px;
+                transform: none !important;
+            }
+            .service-circle {
+                position: relative !important;
+                left: 0 !important; top: 0 !important;
+                transform: none !important;
+                width: 300px;
+                height: auto;
+                min-height: 160px;
+            }
         }
     </style>
 </head>
 <body class="p-8 md:p-20">
     <div class="bg-grid"></div>
 
-    <div class="max-w-5xl mx-auto">
-        <!-- 標題區域 -->
+    <div class="max-w-6xl mx-auto">
+        <!-- 品牌特色標頭 -->
         <header class="mb-16 flex flex-col items-start">
             <div class="flex items-center gap-3 mb-4">
-                <div class="deco-block"></div>
+                <div class="deco-block w-[10px] h-[10px] bg-[#bc13fe]"></div>
                 <span class="cyber-font text-[10px] tracking-[0.6em] text-white/40 uppercase">XIAOMA ENT.</span>
             </div>
             
-            <div class="flex items-baseline gap-4 mb-4 whitespace-nowrap overflow-hidden">
-                <h1 class="text-5xl md:text-7xl font-black italic tracking-tighter leading-none shrink-0">品牌特色</h1>
-                <span class="cyber-font text-xl md:text-3xl font-black text-white/10 uppercase italic tracking-widest shrink">BRAND_IMAGE</span>
+            <div class="flex flex-col mb-4">
+                <h1 class="text-5xl md:text-7xl font-black italic tracking-tighter leading-none mb-2">品牌特色</h1>
+                <span class="cyber-font text-xl md:text-3xl font-black text-white/10 uppercase italic tracking-widest leading-none">BRAND_IMAGE</span>
             </div>
             
-            <div class="title-bar mb-4"></div>
-            <p class="cyber-font text-[10px] text-white/30 tracking-widest uppercase italic">Click to View in English</p>
+            <div class="w-[60px] h-[4px] bg-gradient-to-r from-[#bc13fe] to-[#00d2ff] mb-4"></div>
+            <span class="cyber-font text-[10px] text-white/30 tracking-[0.2em] uppercase">Click to View in English</span>
         </header>
 
-        <!-- 網格系統 -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            
-            <!-- 特色 01 -->
-            <div class="cyber-panel p-10 group" onclick="toggleCell(this, 1)">
-                <div class="inner-scan"></div>
+        <!-- 品牌特色網格 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-32">
+            <div class="cyber-panel p-10 group" onclick="toggleCell(this, 'f1')">
+                <div class="laser-beam"></div>
                 <div class="content-inner">
                     <div class="flex items-center gap-4 mb-8">
                         <span class="cyber-font text-xs text-purple-500">01_</span>
                         <div class="h-px flex-grow bg-white/10"></div>
                     </div>
-                    <h3 class="text-2xl font-bold italic text-white mb-6 group-hover:text-purple-400 transition-colors" data-field="title">風格領域多元，自由不設限</h3>
+                    <h3 class="text-2xl font-bold italic text-white mb-6 group-hover:text-blue-400 transition-colors" data-field="title">風格領域多元，自由不設限</h3>
                     <p class="text-white/50 text-sm leading-relaxed font-light" data-field="desc">不侷限領域，勇於挑戰創新；實況主自由發揮，展現獨特魅力。</p>
                 </div>
             </div>
-
-            <!-- 特色 02 -->
-            <div class="cyber-panel p-10 group" onclick="toggleCell(this, 2)">
-                <div class="inner-scan"></div>
+            <div class="cyber-panel p-10 group" onclick="toggleCell(this, 'f2')">
+                <div class="laser-beam"></div>
                 <div class="content-inner">
                     <div class="flex items-center gap-4 mb-8">
                         <span class="cyber-font text-xs text-blue-500">02_</span>
@@ -173,23 +269,19 @@
                     <p class="text-white/50 text-sm leading-relaxed font-light" data-field="desc">以專業而不失趣味的行銷推廣，吸引大量潛在客群。</p>
                 </div>
             </div>
-
-            <!-- 特色 03 -->
-            <div class="cyber-panel p-10 group" onclick="toggleCell(this, 3)">
-                <div class="inner-scan"></div>
+            <div class="cyber-panel p-10 group" onclick="toggleCell(this, 'f3')">
+                <div class="laser-beam"></div>
                 <div class="content-inner">
                     <div class="flex items-center gap-4 mb-8">
                         <span class="cyber-font text-xs text-purple-500">03_</span>
                         <div class="h-px flex-grow bg-white/10"></div>
                     </div>
-                    <h3 class="text-2xl font-bold italic text-white mb-6 group-hover:text-purple-400 transition-colors" data-field="title">最低的預算，最高的品質</h3>
+                    <h3 class="text-2xl font-bold italic text-white mb-6 group-hover:text-blue-400 transition-colors" data-field="title">最低的預算，最高的品質</h3>
                     <p class="text-white/50 text-sm leading-relaxed font-light" data-field="desc">精準掌控預算，追求完美成效，致力於讓客戶花小錢也能享高品質。</p>
                 </div>
             </div>
-
-            <!-- 特色 04 -->
-            <div class="cyber-panel p-10 group" onclick="toggleCell(this, 4)">
-                <div class="inner-scan"></div>
+            <div class="cyber-panel p-10 group" onclick="toggleCell(this, 'f4')">
+                <div class="laser-beam"></div>
                 <div class="content-inner">
                     <div class="flex items-center gap-4 mb-8">
                         <span class="cyber-font text-xs text-blue-500">04_</span>
@@ -199,93 +291,197 @@
                     <p class="text-white/50 text-sm leading-relaxed font-light" data-field="desc">執行迅速確實，絕不拖泥帶水。</p>
                 </div>
             </div>
-
         </div>
 
-        <!-- 頁尾裝飾：替換原本文字 -->
-        <div class="mt-24 flex items-center justify-between opacity-30">
-            <div class="flex gap-1 items-center">
-                <div class="w-8 h-[2px] bg-white"></div>
-                <div class="w-2 h-2 border border-white rotate-45"></div>
-                <div class="w-32 h-[1px] bg-gradient-to-r from-white to-transparent"></div>
-            </div>
-            
-            <!-- 賽博幾何裝飾圖 -->
-            <div class="cyber-footer-deco">
-                <div class="deco-bar active" style="animation-delay: 0s"></div>
-                <div class="deco-bar" style="height: 8px"></div>
-                <div class="deco-bar active" style="animation-delay: 0.2s"></div>
-                <div class="deco-bar" style="height: 12px"></div>
-                <div class="deco-bar active" style="animation-delay: 0.4s"></div>
-                <div class="deco-bar" style="height: 6px"></div>
-                <div class="deco-bar active" style="animation-delay: 0.1s"></div>
-                <div class="ml-4 flex flex-col gap-1">
-                    <div class="w-16 h-1 bg-white/40"></div>
-                    <div class="w-8 h-1 bg-white/20"></div>
+        <!-- 合作項目區塊 -->
+        <section class="relative py-20 flex flex-col items-start overflow-hidden">
+            <header class="mb-12 flex flex-col items-start w-full relative z-20">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="deco-block w-[10px] h-[10px] bg-[#00d2ff]"></div>
+                    <span class="cyber-font text-[10px] tracking-[0.6em] text-white/40 uppercase">XIAOMA ENT.</span>
+                </div>
+                
+                <div class="flex flex-col mb-4">
+                    <h2 class="text-5xl md:text-7xl font-black italic tracking-tighter leading-none mb-2">合作項目</h2>
+                    <span class="cyber-font text-xl md:text-3xl font-black text-white/10 uppercase italic tracking-widest leading-none">PROJECT_COMMISSION</span>
+                </div>
+                
+                <div class="w-[60px] h-[4px] bg-gradient-to-r from-[#00d2ff] to-[#bc13fe] mb-4"></div>
+                <span class="cyber-font text-[10px] text-white/30 tracking-[0.2em] uppercase">Touch the Core to Start Global Switch</span>
+            </header>
+
+            <div class="ring-container-outer">
+                <div class="mech-orbit orbit-1"></div>
+                <div class="mech-orbit orbit-2"></div>
+                <div class="ticks"></div>
+                
+                <div class="core-trigger" id="global-trigger" onclick="triggerGlobalSwitch()">
+                    <div class="core-glow"></div>
+                    <span class="cyber-font text-[24px] text-blue-400 font-black tracking-widest">CORE</span>
+                </div>
+
+                <div class="ring-wrapper" id="ring-container">
+                    <div class="service-circle" style="left: 50%; top: 12%;" id="s1">
+                        <div class="content-inner">
+                            <span class="cyber-font text-[10px] text-white/30 block mb-1">01</span>
+                            <h4 class="text-blue-400 font-bold mb-2 text-xl md:text-2xl" data-field="title">網紅媒合</h4>
+                            <p class="text-white/70 text-xs md:text-sm leading-tight px-2" data-field="desc">分析特性、受眾與趨勢，媒合最佳KOL。</p>
+                        </div>
+                    </div>
+                    <div class="service-circle" style="left: 83%; top: 31%;" id="s2">
+                        <div class="content-inner">
+                            <span class="cyber-font text-[10px] text-white/30 block mb-1">02</span>
+                            <h4 class="text-blue-400 font-bold mb-2 text-xl md:text-2xl" data-field="title">實況直播</h4>
+                            <p class="text-white/70 text-xs md:text-sm leading-tight px-2" data-field="desc">Live產品體驗，直接與觀眾互動講解。</p>
+                        </div>
+                    </div>
+                    <div class="service-circle" style="left: 83%; top: 69%;" id="s3">
+                        <div class="content-inner">
+                            <span class="cyber-font text-[10px] text-white/30 block mb-1">03</span>
+                            <h4 class="text-blue-400 font-bold mb-2 text-xl md:text-2xl" data-field="title">社群貼文</h4>
+                            <p class="text-white/70 text-xs md:text-sm leading-tight px-2" data-field="desc">推廣文案、實拍照片與抽獎曝光。</p>
+                        </div>
+                    </div>
+                    <div class="service-circle" style="left: 50%; top: 88%;" id="s4">
+                        <div class="content-inner">
+                            <span class="cyber-font text-[10px] text-white/30 block mb-1">04</span>
+                            <h4 class="text-blue-400 font-bold mb-2 text-xl md:text-2xl" data-field="title">活動站台</h4>
+                            <p class="text-white/70 text-xs md:text-sm leading-tight px-2" data-field="desc">線下主持與宣傳，吸引粉絲同樂。</p>
+                        </div>
+                    </div>
+                    <div class="service-circle" style="left: 17%; top: 69%;" id="s5">
+                        <div class="content-inner">
+                            <span class="cyber-font text-[10px] text-white/30 block mb-1">05</span>
+                            <h4 class="text-blue-400 font-bold mb-2 text-xl md:text-2xl" data-field="title">異業合作</h4>
+                            <p class="text-white/70 text-xs md:text-sm leading-tight px-2" data-field="desc">跨界心得分享，美食與活動推廣。</p>
+                        </div>
+                    </div>
+                    <div class="service-circle" style="left: 17%; top: 31%;" id="s6">
+                        <div class="content-inner">
+                            <span class="cyber-font text-[10px] text-white/30 block mb-1">06</span>
+                            <h4 class="text-blue-400 font-bold mb-2 text-xl md:text-2xl" data-field="title">影片剪輯</h4>
+                            <p class="text-white/70 text-xs md:text-sm leading-tight px-2" data-field="desc">實況精華剪輯，提供高品質廣告素材。</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <div class="flex gap-1 items-center rotate-180">
-                <div class="w-8 h-[2px] bg-white"></div>
-                <div class="w-2 h-2 border border-white rotate-45"></div>
-                <div class="w-32 h-[1px] bg-gradient-to-r from-white to-transparent"></div>
-            </div>
-        </div>
+        </section>
     </div>
 
     <script>
-        const cellData = {
-            1: {
-                CH: { title: '風格領域多元，自由不設限', desc: '不侷限領域，勇於挑戰創新；實況主自由發揮，展現獨特魅力。' },
-                EN: { title: 'Without Limitation', desc: 'Keep challenging ourselves and being creative.' }
+        // 資料映射庫
+        const dataMap = {
+            'f1': { 
+                CH: { title: '風格領域多元，自由不設限', desc: '不侷限領域，勇於挑戰創新；實況主自由發揮，展現獨特魅力。' }, 
+                EN: { title: 'Without Limitation', desc: 'Keep challenging ourselves and being creative.' } 
             },
-            2: {
-                CH: { title: '專業與趣味兼顧', desc: '以專業而不失趣味的行銷推廣，吸引大量潛在客群。' },
-                EN: { title: 'Professional & Interesting', desc: 'Use professional and interesting performance to attract audience.' }
+            'f2': { 
+                CH: { title: '專業與趣味兼顧', desc: '以專業而不失趣味的行銷推廣，吸引大量潛在客群。' }, 
+                EN: { title: 'Professional & Interesting', desc: 'Use professional and interesting performance to attract audience.' } 
             },
-            3: {
-                CH: { title: '最低的預算，最高的品質', desc: '精準掌控預算，追求完美成效，致力於讓客戶花小錢也能享高品質。' },
-                EN: { title: 'Lowest Cost But Highest Quality', desc: 'Control the budget accurately and provide the best service.' }
+            'f3': { 
+                CH: { title: '最低的預算，最高的品質', desc: '精準掌控預算，追求完美成效，致力於讓客戶花小錢也能享高品質。' }, 
+                EN: { title: 'Lowest Cost But Highest Quality', desc: 'Control the budget accurately and provide the best service.' } 
             },
-            4: {
-                CH: { title: '行事俐落，使命必達', desc: '執行迅速確實，絕不拖泥帶水。' },
-                EN: { title: 'Execute Quickly & Accurately', desc: 'Complete every mission with speed and precision.' }
+            'f4': { 
+                CH: { title: '行事俐落，使命必達', desc: '執行迅速確實，絕不拖泥帶水。' }, 
+                EN: { title: 'Execute Quickly & Accurately', desc: 'Complete every mission with speed and precision.' } 
+            },
+            's1': { 
+                CH: { title: '網紅媒合', desc: '分析特性、受眾與趨勢，媒合最佳KOL。' }, 
+                EN: { title: 'Contacting Talents', desc: 'Analyze product features, TA audiences, platform trends, matching with the best talent.' } 
+            },
+            's2': { 
+                CH: { title: '實況直播', desc: 'Live產品體驗，直接與觀眾互動講解。' }, 
+                EN: { title: 'Live Streaming', desc: 'Interact directly with the audience.' } 
+            },
+            's3': { 
+                CH: { title: '社群貼文', desc: '推廣文案、實拍照片與抽獎曝光。' }, 
+                EN: { title: 'FB/IG Posts', desc: 'Including the text and pictures, and lottery can be release with the post.' } 
+            },
+            's4': { 
+                CH: { title: '活動站台', desc: '線下主持與宣傳，吸引粉絲同樂。' }, 
+                EN: { title: 'Offline Activities', desc: 'Attend the offline activities to promote products or to be the host.' } 
+            },
+            's5': { 
+                CH: { title: '異業合作', desc: '跨界心得分享，美食與活動推廣。' }, 
+                EN: { title: 'Cooperation with Other Industry', desc: 'Promote movie, foods, 3C, etc.' } 
+            },
+            's6': { 
+                CH: { title: '影片剪輯', desc: '實況精華剪輯，提供高品質廣告素材。' }, 
+                EN: { title: 'Video Editing', desc: 'Edit the clips of stream for advertising.' } 
             }
         };
 
-        const cellStatus = { 1: 'CH', 2: 'CH', 3: 'CH', 4: 'CH' };
+        const state = { currentLang: 'CH', isSwitching: false };
 
         function toggleCell(element, id) {
             if (element.classList.contains('scanning')) return;
-
             element.classList.add('scanning');
-
             setTimeout(() => {
                 element.classList.add('switching');
-                
                 setTimeout(() => {
-                    const nextLang = (cellStatus[id] === 'CH') ? 'EN' : 'CH';
-                    cellStatus[id] = nextLang;
-                    
-                    const titleEl = element.querySelector('[data-field="title"]');
-                    const descEl = element.querySelector('[data-field="desc"]');
-                    
-                    titleEl.innerText = cellData[id][nextLang].title;
-                    descEl.innerText = cellData[id][nextLang].desc;
-
-                    if (nextLang === 'EN') {
-                        titleEl.classList.add('cyber-font', 'text-xl');
-                    } else {
-                        titleEl.classList.remove('cyber-font', 'text-xl');
-                    }
-
+                    const current = element.querySelector('[data-field="title"]').innerText === dataMap[id].CH.title ? 'CH' : 'EN';
+                    const target = current === 'CH' ? 'EN' : 'CH';
+                    updateContent(element, id, target);
                     element.classList.remove('switching');
-                }, 200);
+                }, 150);
+            }, 500);
+            setTimeout(() => element.classList.remove('scanning'), 1200);
+        }
+
+        function updateContent(element, id, lang) {
+            const title = element.querySelector('[data-field="title"]');
+            const desc = element.querySelector('[data-field="desc"]');
+            title.innerText = dataMap[id][lang].title;
+            desc.innerText = dataMap[id][lang].desc;
+            
+            // 處理英文字型與間距
+            if (lang === 'EN') {
+                title.classList.add('cyber-font');
+                title.style.fontSize = id.startsWith('s') ? '1.1rem' : ''; 
+                desc.style.lineHeight = '1.2';
+            } else {
+                title.classList.remove('cyber-font');
+                title.style.fontSize = '';
+                desc.style.lineHeight = '';
+            }
+        }
+
+        function triggerGlobalSwitch() {
+            if (state.isSwitching) return;
+            state.isSwitching = true;
+
+            const container = document.getElementById('ring-container');
+            const coreTrigger = document.getElementById('global-trigger');
+            const targetLang = state.currentLang === 'CH' ? 'EN' : 'CH';
+            state.currentLang = targetLang;
+
+            coreTrigger.classList.add('impact');
+            setTimeout(() => coreTrigger.classList.remove('impact'), 500);
+
+            container.classList.add('rotating');
+
+            setTimeout(() => {
+                Object.keys(dataMap).forEach(id => {
+                    const el = document.getElementById(id) || document.querySelector(`[onclick*="'${id}'"]`);
+                    if (!el) return;
+                    
+                    el.classList.add('switching');
+                    setTimeout(() => {
+                        updateContent(el, id, targetLang);
+                        el.classList.remove('switching');
+                    }, 300);
+                });
             }, 100);
 
             setTimeout(() => {
-                element.classList.remove('scanning');
-            }, 600);
+                container.style.transition = 'none';
+                container.classList.remove('rotating');
+                container.offsetHeight; 
+                container.style.transition = '';
+                state.isSwitching = false;
+            }, 850);
         }
     </script>
 </body>
