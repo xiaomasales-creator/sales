@@ -1,514 +1,412 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>小馬娛樂 | 品牌特色&合作項目</title>
+    <title>小馬娛樂 | 品牌特色 BRAND FEATURES</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Noto+Sans+TC:wght@300;500;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
+            --primary-neon: #8600ff;
+            --secondary-neon: #00f3ff;
             --neon-purple: #bc13fe;
-            --neon-blue: #00d2ff;
-            --deep-dark: #050505;
-            --border-gray: rgba(255, 255, 255, 0.1);
+            --neon-blue: #00f3ff;
+            --neon-red: #ff003c;
+            --bg-dark: #050508;
         }
 
         body {
-            background-color: var(--deep-dark);
-            color: #ffffff;
+            background-color: var(--bg-dark);
+            color: #fff;
             font-family: 'Noto Sans TC', sans-serif;
+            margin: 0;
             overflow-x: hidden;
-            letter-spacing: 0.1em;
+            scroll-behavior: smooth;
+            padding-bottom: 150px; /* 增加底部空間給面板 */
+            position: relative;
         }
 
-        .cyber-font {
-            font-family: 'Orbitron', sans-serif;
+        /* 頁首樣式強化 */
+        header.site-header {
+            background: linear-gradient(to bottom, var(--bg-dark) 0%, var(--bg-dark) 70%, transparent 100%);
+            position: relative;
+            z-index: 50; 
+            padding-top: 5rem;
+            padding-bottom: 2rem;
+            margin-bottom: 4rem;
         }
 
-        .bg-grid {
+        /* 點陣背景紋理 */
+        body::after {
+            content: "";
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: 
-                linear-gradient(rgba(188, 19, 254, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(188, 19, 254, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            z-index: -1;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 0);
+            background-size: 30px 30px;
+            z-index: 0; 
+            pointer-events: none;
         }
 
-        /* 回到主頁按鈕樣式 */
-        .home-btn {
-            position: absolute;
-            top: 40px;
-            left: 20px;
-            z-index: 1000;
-            padding: 8px 16px;
-            background: rgba(188, 19, 254, 0.1);
-            border: 1px solid var(--neon-purple);
-            color: white;
-            font-size: 12px;
-            font-weight: bold;
+        .cyber-font { font-family: 'Orbitron', sans-serif; }
+
+        /* 背景裝飾文字 */
+        .floating-deco {
+            position: fixed;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 15vw;
+            line-height: 1;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.03;
+            white-space: nowrap;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
-            transition: all 0.3s ease;
-            cursor: pointer;
+        }
+
+        .outlined {
+            -webkit-text-stroke: 2px rgba(255, 255, 255, 0.5);
+            color: transparent;
+        }
+
+        /* 掃描線效果 */
+        .scanline {
+            width: 100%;
+            height: 2px;
+            background: rgba(188, 19, 254, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            animation: scan 6s linear infinite;
+            z-index: 60;
+        }
+        @keyframes scan { 0% { top: -10%; } 100% { top: 110%; } }
+
+        /* 品牌特色卡片 */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .feature-card {
+            background: rgba(15, 15, 25, 0.8);
+            border: 1px solid rgba(134, 0, 255, 0.2);
+            padding: 2.5rem;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 0;
+            background: var(--neon-purple);
+            transition: height 0.4s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(134, 0, 255, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(134, 0, 255, 0.2);
+        }
+
+        .feature-card:hover::before { height: 100%; }
+
+        .feature-num {
+            font-size: 3rem;
+            font-weight: 900;
+            opacity: 0.05;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            color: white;
+        }
+
+       /* 控制面板設計 */
+        .control-panel {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            max-width: 1100px;
+            z-index: 1000;
+        }
+
+        .panel-container {
+            position: relative;
             display: flex;
+            justify-content: center;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            padding: 12px 20px;
+            background: linear-gradient(180deg, rgba(20, 20, 20, 0.9) 0%, rgba(5, 5, 5, 0.95) 100%);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(134, 0, 255, 0.4);
+            border-bottom: 2px solid rgba(134, 0, 255, 0.2);
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.8);
+            border-radius: 4px;
+        }
+
+        @media (min-width: 768px) {
+            .panel-container { gap: 30px; padding: 15px 50px; border-radius: 4px; }
+            .panel-container::before, .panel-container::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                width: 25px;
+                height: 100%;
+                background: inherit;
+                z-index: -1;
+            }
+            .panel-container::before { left: -12px; transform: skewX(-15deg); border-left: 1px solid rgba(134, 0, 255, 0.4); }
+            .panel-container::after { right: -12px; transform: skewX(15deg); border-right: 1px solid rgba(134, 0, 255, 0.4); }
+            .panel-btn { font-size: 1.15rem; } 
+        }
+
+        @media (max-width: 767px) {
+            .panel-container { gap: 6px; padding: 12px 10px; border-radius: 12px; }
+            .panel-btn { font-size: 0.85rem !important; letter-spacing: 0.05em !important; } 
+        }
+
+        .nav-item { position: relative; }
+
+        .panel-btn {
+            position: relative;
+            font-weight: bold;
+            color: #ccc;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            letter-spacing: 0.15em;
+            cursor: pointer;
+            padding-bottom: 8px;
+            z-index: 2;
+        }
+
+        .energy-bar {
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: var(--secondary-neon);
+            box-shadow: 0 0 10px var(--secondary-neon);
+            transition: width 0.3s ease;
+        }
+
+        .nav-item:hover .panel-btn {
+            color: var(--secondary-neon);
+            text-shadow: 0 0 8px var(--secondary-neon);
+        }
+
+        .nav-item:hover .energy-bar {
+            width: 100%;
+        }
+
+        /* 子選單樣式 */
+        .submenu {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: rgba(5, 5, 5, 0.98);
+            border: 1px solid var(--primary-neon);
+            min-width: 180px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s;
+            backdrop-filter: blur(15px);
+            padding: 12px;
+            box-shadow: 0 0 30px rgba(134, 0, 255, 0.4);
+            pointer-events: none;
+            z-index: 1001;
+            margin-bottom: 15px;
+        }
+
+        .submenu::before {
+            content: "";
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            width: 100%;
+            height: 25px;
+            background: transparent;
+        }
+
+        .nav-item:hover .submenu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+            pointer-events: auto;
+        }
+
+        .submenu-link {
+            display: block;
+            padding: 10px 14px;
+            color: #bbb;
+            font-size: 0.95rem; 
+            text-align: left;
+            transition: all 0.2s;
+            border-left: 2px solid transparent;
             text-decoration: none;
         }
 
-        @media (min-width: 1024px) {
-            .home-btn {
-                position: fixed;
-                top: 20px;
-                left: 20px;
-            }
-        }
-
-        .home-btn:hover {
-            background: var(--neon-purple);
-            box-shadow: 0 0 15px var(--neon-purple);
-            transform: translateX(5px);
-        }
-
-        .home-btn svg {
-            width: 14px;
-            height: 14px;
-            fill: currentColor;
-        }
-
-        /* 品牌特色卡片樣式 */
-        .cyber-panel {
-            position: relative;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--border-gray);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0% 100%);
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .cyber-panel:hover {
-            border-color: var(--neon-blue);
-            background: rgba(0, 210, 255, 0.05);
-            transform: translateY(-5px);
-        }
-
-        .laser-beam {
-            position: absolute;
-            left: 0;
-            top: -10px;
-            width: 100%;
-            height: 2px;
-            background: var(--neon-blue);
-            box-shadow: 0 0 10px var(--neon-blue);
-            opacity: 0;
-            z-index: 20;
-        }
-
-        .scanning .laser-beam {
-            animation: laserScan 1.2s ease-in-out forwards;
-        }
-
-        @keyframes laserScan {
-            0% { top: -10%; opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { top: 110%; opacity: 0; }
-        }
-
-        .switching .content-inner {
-            opacity: 0;
-            transform: scale(0.9);
-        }
-
-        .content-inner {
-            transition: all 0.3s ease;
-        }
-
-        /* 合作項目佈局 */
-        .ring-container-outer {
-            position: relative;
-            width: 100%;
-            max-width: 850px;
-            height: 850px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .mech-orbit {
-            position: absolute;
-            border-radius: 50%;
-            border: 1px solid rgba(188, 19, 254, 0.1);
-            pointer-events: none;
-        }
-
-        .orbit-1 { width: 95%; height: 95%; border-style: dashed; animation: rotateCW 60s linear infinite; }
-        .orbit-2 { width: 78%; height: 78%; border: 2px solid rgba(0, 210, 255, 0.1); animation: rotateCCW 40s linear infinite; }
-        
-        .ticks {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-image: repeating-conic-gradient(
-                from 0deg,
-                rgba(0, 210, 255, 0.2) 0deg 1deg,
-                transparent 1deg 10deg
-            );
-            mask-image: radial-gradient(circle, transparent 44%, black 45%, black 46%, transparent 47%);
-            -webkit-mask-image: radial-gradient(circle, transparent 44%, black 45%, black 46%, transparent 47%);
-        }
-
-        @keyframes rotateCW { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        @keyframes rotateCCW { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
-
-        .ring-wrapper {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            z-index: 10;
-            transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-
-        .ring-wrapper.rotating {
-            transform: rotate(360deg);
-        }
-
-        .service-circle {
-            position: absolute;
-            width: 195px;
-            height: 195px;
-            background: rgba(5, 5, 5, 0.95);
-            border: 1px solid var(--border-gray);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 24px;
-            transform: translate(-50%, -50%);
-            clip-path: polygon(15% 0%, 85% 0%, 100% 15%, 100% 85%, 85% 100%, 15% 100%, 0% 85%, 0% 15%);
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-
-        .service-circle:hover {
-            border-color: var(--neon-blue);
-            box-shadow: 0 0 25px rgba(0, 210, 255, 0.3);
-        }
-
-        /* 核心反應爐 - 更新呼吸燈效果 */
-        .core-trigger {
-            position: relative;
-            width: 150px;
-            height: 150px;
-            background: #000;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 100;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            border: 2px solid var(--neon-blue);
-            animation: coreBreath 4s infinite ease-in-out;
-            transition: transform 0.2s ease;
-        }
-
-        .core-trigger .core-text {
-            animation: textGlow 4s infinite ease-in-out;
-        }
-
-        @keyframes coreBreath {
-            0%, 100% { 
-                border-color: var(--neon-blue); 
-                box-shadow: 0 0 20px var(--neon-blue), inset 0 0 15px var(--neon-blue);
-                transform: scale(1);
-            }
-            50% { 
-                border-color: var(--neon-purple); 
-                box-shadow: 0 0 40px var(--neon-purple), inset 0 0 25px var(--neon-purple);
-                transform: scale(1.05);
-            }
-        }
-
-        @keyframes textGlow {
-            0%, 100% { color: var(--neon-blue); text-shadow: 0 0 10px var(--neon-blue); }
-            50% { color: var(--neon-purple); text-shadow: 0 0 15px var(--neon-purple); }
-        }
-
-        .core-trigger.impact {
-            animation: coreImpact 0.5s ease-out !important;
-        }
-
-        @keyframes coreImpact {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); box-shadow: 0 0 60px #fff; }
-            100% { transform: scale(1); }
-        }
-
-        .core-glow {
-            position: absolute;
-            width: 220%;
-            height: 220%;
-            background: radial-gradient(circle, rgba(0, 210, 255, 0.2) 0%, transparent 70%);
-            animation: pulseGlow 4s infinite ease-in-out;
-            pointer-events: none;
-        }
-
-        @keyframes pulseGlow {
-            0%, 100% { transform: scale(1); opacity: 0.3; background: radial-gradient(circle, rgba(0, 210, 255, 0.2) 0%, transparent 70%); }
-            50% { transform: scale(1.15); opacity: 0.6; background: radial-gradient(circle, rgba(188, 19, 254, 0.2) 0%, transparent 70%); }
-        }
-
-        /* 手機端響應式調整 */
-        @media (max-width: 1024px) {
-            body { padding-top: 100px; }
-            .ring-container-outer { height: auto; min-height: auto; flex-direction: column; padding: 2rem 0; }
-            .mech-orbit, .ticks { display: none; }
-            .core-trigger { margin-bottom: 3rem; width: 120px; height: 120px; }
-            .ring-wrapper { position: relative; width: 100%; height: auto; display: grid; grid-template-columns: 1fr; gap: 1.5rem; padding: 0 1rem; }
-            .service-circle { position: relative !important; left: auto !important; top: auto !important; transform: none !important; width: 100%; height: auto; min-height: 140px; padding: 2rem; background: rgba(255, 255, 255, 0.03); }
-            .ring-wrapper.rotating { transform: none; }
-        }
-
-        @media (max-width: 768px) {
-            body { padding-left: 1.5rem; padding-right: 1.5rem; }
-            .home-btn { top: 20px; left: 1.5rem; padding: 6px 12px; font-size: 10px; }
+        .submenu-link:hover {
+            background: rgba(134, 0, 255, 0.15);
+            color: var(--secondary-neon);
+            border-left: 2px solid var(--secondary-neon);
+            padding-left: 18px;
         }
     </style>
 </head>
-<body class="p-8 md:p-20">
-    <div class="bg-grid"></div>
+<body>
+    <div class="scanline"></div>
 
-    <!-- 回到主頁按鈕 -->
-    <a href="https://xiaomasales-creator.github.io/sales/presentation/index.html" class="home-btn cyber-font">
-        <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-        Home
-    </a>
+    <!-- 背景裝飾文字 -->
+    <div class="floating-deco outlined" style="bottom: 15%; right: -2%;">XIAOMA</div>
 
-    <div class="max-w-6xl mx-auto">
-        <!-- 品牌特色標頭 -->
-        <header class="mb-16 flex flex-col items-start">
-            <div class="flex items-center gap-3 mb-4">
-                <div class="deco-block w-[10px] h-[10px] bg-[#bc13fe]"></div>
-                <span class="cyber-font text-[10px] tracking-[0.6em] text-white/40 uppercase">XIAOMA ENT.</span>
-            </div>
-            
-            <div class="flex flex-col mb-4">
-                <h1 class="text-5xl md:text-7xl font-black italic tracking-tighter leading-none mb-2">品牌特色</h1>
-                <span class="cyber-font text-xl md:text-3xl font-black text-white/10 uppercase italic tracking-widest leading-none">BRAND_IMAGE</span>
-            </div>
-            
-            <div class="w-[60px] h-[4px] bg-gradient-to-r from-[#bc13fe] to-[#00d2ff] mb-4"></div>
-            <span class="cyber-font text-[10px] text-white/30 tracking-[0.2em] uppercase">Click to View in English</span>
-        </header>
-
-        <!-- 品牌特色網格 -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-32">
-            <div class="cyber-panel p-10 group" onclick="toggleCell(this, 'f1')">
-                <div class="laser-beam"></div>
-                <div class="content-inner">
-                    <div class="flex items-center gap-4 mb-8">
-                        <span class="cyber-font text-xs text-purple-500">01_</span>
-                        <div class="h-px flex-grow bg-white/10"></div>
-                    </div>
-                    <h3 class="text-2xl font-bold italic text-white mb-6 group-hover:text-blue-400 transition-colors" data-field="title">風格領域多元，自由不設限</h3>
-                    <p class="text-white/50 text-sm leading-relaxed font-light" data-field="desc">不侷限領域，勇於挑戰創新；實況主自由發揮，展現獨特魅力。</p>
-                </div>
-            </div>
-            <div class="cyber-panel p-10 group" onclick="toggleCell(this, 'f2')">
-                <div class="laser-beam"></div>
-                <div class="content-inner">
-                    <div class="flex items-center gap-4 mb-8">
-                        <span class="cyber-font text-xs text-blue-500">02_</span>
-                        <div class="h-px flex-grow bg-white/10"></div>
-                    </div>
-                    <h3 class="text-2xl font-bold italic text-white mb-6 group-hover:text-blue-400 transition-colors" data-field="title">專業與趣味兼顧</h3>
-                    <p class="text-white/50 text-sm leading-relaxed font-light" data-field="desc">以專業而不失趣味的行銷推廣，吸引大量潛在客群。</p>
-                </div>
-            </div>
-            <div class="cyber-panel p-10 group" onclick="toggleCell(this, 'f3')">
-                <div class="laser-beam"></div>
-                <div class="content-inner">
-                    <div class="flex items-center gap-4 mb-8">
-                        <span class="cyber-font text-xs text-purple-500">03_</span>
-                        <div class="h-px flex-grow bg-white/10"></div>
-                    </div>
-                    <h3 class="text-2xl font-bold italic text-white mb-6 group-hover:text-blue-400 transition-colors" data-field="title">最低的預算，最高的品質</h3>
-                    <p class="text-white/50 text-sm leading-relaxed font-light" data-field="desc">精準掌控預算，追求完美成效，致力於讓客戶花小錢也能享高品質。</p>
-                </div>
-            </div>
-            <div class="cyber-panel p-10 group" onclick="toggleCell(this, 'f4')">
-                <div class="laser-beam"></div>
-                <div class="content-inner">
-                    <div class="flex items-center gap-4 mb-8">
-                        <span class="cyber-font text-xs text-blue-500">04_</span>
-                        <div class="h-px flex-grow bg-white/10"></div>
-                    </div>
-                    <h3 class="text-2xl font-bold italic text-white mb-6 group-hover:text-blue-400 transition-colors" data-field="title">行事俐落，使命必達</h3>
-                    <p class="text-white/50 text-sm leading-relaxed font-light" data-field="desc">執行迅速確實，絕不拖泥帶水。</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- 合作項目區塊 -->
-        <section class="relative py-20 flex flex-col items-start overflow-hidden">
-            <header class="mb-12 flex flex-col items-start w-full relative z-20">
+    <!-- 頁首容器 -->
+    <header class="site-header">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex flex-col items-start relative z-10">
                 <div class="flex items-center gap-3 mb-4">
-                    <div class="deco-block w-[10px] h-[10px] bg-[#00d2ff]"></div>
+                    <div class="deco-block w-[10px] h-[10px] bg-[#bc13fe] shadow-[0_0_10px_#bc13fe]"></div>
                     <span class="cyber-font text-[10px] tracking-[0.6em] text-white/40 uppercase">XIAOMA ENT.</span>
                 </div>
                 
                 <div class="flex flex-col mb-4">
-                    <h2 class="text-5xl md:text-7xl font-black italic tracking-tighter leading-none mb-2">合作項目</h2>
-                    <span class="cyber-font text-xl md:text-3xl font-black text-white/10 uppercase italic tracking-widest leading-none">PROJECT_COMMISSION</span>
+                    <h1 class="text-5xl md:text-7xl font-black italic tracking-tighter leading-none mb-2 text-white">品牌特色</h1>
+                    <span class="cyber-font text-xl md:text-3xl font-black text-white/10 uppercase italic tracking-widest leading-none">BRAND_IMAGE</span>
                 </div>
                 
-                <div class="w-[60px] h-[4px] bg-gradient-to-r from-[#00d2ff] to-[#bc13fe] mb-4"></div>
-                <span class="cyber-font text-[10px] text-white/30 tracking-[0.2em] uppercase">Touch the Core to Start Global Switch</span>
-            </header>
-
-            <div class="ring-container-outer">
-                <div class="mech-orbit orbit-1"></div>
-                <div class="mech-orbit orbit-2"></div>
-                <div class="ticks"></div>
-                
-                <!-- 呼吸燈 CORE 按鈕 -->
-                <div class="core-trigger" id="global-trigger" onclick="triggerGlobalSwitch()">
-                    <div class="core-glow"></div>
-                    <span class="core-text cyber-font text-[24px] font-black tracking-widest">CORE</span>
-                </div>
-
-                <div class="ring-wrapper" id="ring-container">
-                    <div class="service-circle" style="left: 50%; top: 12%;" id="s1">
-                        <div class="content-inner">
-                            <span class="cyber-font text-[10px] text-white/30 block mb-1">01</span>
-                            <h4 class="text-blue-400 font-bold mb-2 text-xl md:text-2xl" data-field="title">網紅媒合</h4>
-                            <p class="text-white/70 text-xs md:text-sm leading-tight px-2" data-field="desc">分析特性、受眾與趨勢，媒合最佳KOL。</p>
-                        </div>
-                    </div>
-                    <div class="service-circle" style="left: 83%; top: 31%;" id="s2">
-                        <div class="content-inner">
-                            <span class="cyber-font text-[10px] text-white/30 block mb-1">02</span>
-                            <h4 class="text-blue-400 font-bold mb-2 text-xl md:text-2xl" data-field="title">實況直播</h4>
-                            <p class="text-white/70 text-xs md:text-sm leading-tight px-2" data-field="desc">Live產品體驗，直接與觀眾互動講解。</p>
-                        </div>
-                    </div>
-                    <div class="service-circle" style="left: 83%; top: 69%;" id="s3">
-                        <div class="content-inner">
-                            <span class="cyber-font text-[10px] text-white/30 block mb-1">03</span>
-                            <h4 class="text-blue-400 font-bold mb-2 text-xl md:text-2xl" data-field="title">社群貼文</h4>
-                            <p class="text-white/70 text-xs md:text-sm leading-tight px-2" data-field="desc">推廣文案、實拍照片與抽獎曝光。</p>
-                        </div>
-                    </div>
-                    <div class="service-circle" style="left: 50%; top: 88%;" id="s4">
-                        <div class="content-inner">
-                            <span class="cyber-font text-[10px] text-white/30 block mb-1">04</span>
-                            <h4 class="text-blue-400 font-bold mb-2 text-xl md:text-2xl" data-field="title">活動站台</h4>
-                            <p class="text-white/70 text-xs md:text-sm leading-tight px-2" data-field="desc">線下主持與宣傳，吸引粉絲同樂。</p>
-                        </div>
-                    </div>
-                    <div class="service-circle" style="left: 17%; top: 69%;" id="s5">
-                        <div class="content-inner">
-                            <span class="cyber-font text-[10px] text-white/30 block mb-1">05</span>
-                            <h4 class="text-blue-400 font-bold mb-2 text-xl md:text-2xl" data-field="title">異業合作</h4>
-                            <p class="text-white/70 text-xs md:text-sm leading-tight px-2" data-field="desc">跨界心得分享，美食與活動推廣。</p>
-                        </div>
-                    </div>
-                    <div class="service-circle" style="left: 17%; top: 31%;" id="s6">
-                        <div class="content-inner">
-                            <span class="cyber-font text-[10px] text-white/30 block mb-1">06</span>
-                            <h4 class="text-blue-400 font-bold mb-2 text-xl md:text-2xl" data-field="title">影片剪輯</h4>
-                            <p class="text-white/70 text-xs md:text-sm leading-tight px-2" data-field="desc">實況精華剪輯，提供高品質廣告素材。</p>
-                        </div>
-                    </div>
-                </div>
+                <div class="w-[60px] h-[4px] bg-gradient-to-r from-[#bc13fe] to-[#00d2ff] mb-4"></div>
+                <span class="cyber-font text-[10px] text-white/30 tracking-[0.2em] uppercase">Brand Core & Visual Identity</span>
             </div>
-        </section>
+        </div>
+    </header>
+
+    <div class="max-w-6xl mx-auto px-6 pb-32 relative">
+        <main class="feature-grid">
+            <!-- 特色卡片 01 -->
+            <div class="feature-card group">
+                <span class="cyber-font feature-num">01</span>
+                <div class="text-[#bc13fe] mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold mb-4 tracking-wider">極速執行力</h3>
+                <p class="text-gray-400 leading-relaxed text-sm">
+                    我們以電光石火的速度響應市場需求。從提案到執行，確保每個專案都能在最短時間內精準落地。
+                </p>
+            </div>
+
+            <!-- 特色卡片 02 -->
+            <div class="feature-card group">
+                <span class="cyber-font feature-num">02</span>
+                <div class="text-[#00f3ff] mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold mb-4 tracking-wider">前瞻視覺美學</h3>
+                <p class="text-gray-400 leading-relaxed text-sm">
+                    結合賽博龐克與未來主義視覺，不只做設計，更在創造沉浸感。利用霓虹光效讓品牌脫穎而出。
+                </p>
+            </div>
+
+            <!-- 特色卡片 03 -->
+            <div class="feature-card group">
+                <span class="cyber-font feature-num">03</span>
+                <div class="text-[#bc13fe] mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold mb-4 tracking-wider">精準網紅媒合</h3>
+                <p class="text-gray-400 leading-relaxed text-sm">
+                    透過大數據矩陣篩選最具潛力的創作者。媒合品牌基因高度契合的靈魂，實現最高轉換率。
+                </p>
+            </div>
+
+            <!-- 特色卡片 04 -->
+            <div class="feature-card group">
+                <span class="cyber-font feature-num">04</span>
+                <div class="text-[#00f3ff] mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold mb-4 tracking-wider">透明數據分析</h3>
+                <p class="text-gray-400 leading-relaxed text-sm">
+                    數據不說謊。我們提供全透明的視覺化結案報告，讓您的每一分行銷投入都有跡可循。
+                </p>
+            </div>
+        </main>
     </div>
 
-    <script>
-        const dataMap = {
-            'f1': { CH: { title: '風格領域多元，自由不設限', desc: '不侷限領域，勇於挑戰創新；實況主自由發揮，展現獨特魅力。' }, EN: { title: 'Without Limitation', desc: 'Keep challenging ourselves and being creative.' } },
-            'f2': { CH: { title: '專業與趣味兼顧', desc: '以專業而不失趣味的行銷推廣，吸引大量潛在客群。' }, EN: { title: 'Professional & Interesting', desc: 'Use professional and interesting performance to attract audience.' } },
-            'f3': { CH: { title: '最低的預算，最高的品質', desc: '精準掌控預算，追求完美成效，致力於讓客戶花小錢也能享高品質。' }, EN: { title: 'Lowest Cost But Highest Quality', desc: 'Control the budget accurately and provide the best service.' } },
-            'f4': { CH: { title: '行事俐落，使命必達', desc: '執行迅速確實，絕不拖泥帶水。' }, EN: { title: 'Execute Quickly & Accurately', desc: 'Complete every mission with speed and precision.' } },
-            's1': { CH: { title: '網紅媒合', desc: '分析特性、受眾與趨勢，媒合最佳KOL。' }, EN: { title: 'Contacting Talents', desc: 'Analyze product features, TA audiences, platform trends, matching with the best talent.' } },
-            's2': { CH: { title: '實況直播', desc: 'Live產品體驗，直接與觀眾互動講解。' }, EN: { title: 'Live Streaming', desc: 'Interact directly with the audience.' } },
-            's3': { CH: { title: '社群貼文', desc: '推廣文案、實拍照片與抽獎曝光。' }, EN: { title: 'FB/IG Posts', desc: 'Including the text and pictures, and lottery can be release with the post.' } },
-            's4': { CH: { title: '活動站台', desc: '線下主持與宣傳，吸引粉絲同樂。' }, EN: { title: 'Offline Activities', desc: 'Attend the offline activities to promote products or to be the host.' } },
-            's5': { CH: { title: '異業合作', desc: '跨界心得分享，美食與活動推廣。' }, EN: { title: 'Cooperation with Other Industry', desc: 'Promote movie, foods, 3C, etc.' } },
-            's6': { CH: { title: '影片剪輯', desc: '實況精華剪輯，提供高品質廣告素材。' }, EN: { title: 'Video Editing', desc: 'Edit the clips of stream for advertising.' } }
-        };
-
-        const state = { currentLang: 'CH', isSwitching: false };
-
-        function toggleCell(element, id) {
-            if (element.classList.contains('scanning')) return;
-            element.classList.add('scanning');
-            setTimeout(() => {
-                element.classList.add('switching');
-                setTimeout(() => {
-                    const current = element.querySelector('[data-field="title"]').innerText === dataMap[id].CH.title ? 'CH' : 'EN';
-                    const target = current === 'CH' ? 'EN' : 'CH';
-                    updateContent(element, id, target);
-                    element.classList.remove('switching');
-                }, 150);
-            }, 500);
-            setTimeout(() => element.classList.remove('scanning'), 1200);
-        }
-
-        function updateContent(element, id, lang) {
-            const title = element.querySelector('[data-field="title"]');
-            const desc = element.querySelector('[data-field="desc"]');
-            if (!title || !desc) return;
-            title.innerText = dataMap[id][lang].title;
-            desc.innerText = dataMap[id][lang].desc;
-            if (lang === 'EN') {
-                title.classList.add('cyber-font');
-                title.style.fontSize = id.startsWith('s') ? '1.1rem' : ''; 
-                desc.style.lineHeight = '1.2';
-            } else {
-                title.classList.remove('cyber-font');
-                title.style.fontSize = '';
-                desc.style.lineHeight = '';
-            }
-        }
-
-        function triggerGlobalSwitch() {
-            if (state.isSwitching) return;
-            state.isSwitching = true;
-            const container = document.getElementById('ring-container');
-            const coreTrigger = document.getElementById('global-trigger');
-            const targetLang = state.currentLang === 'CH' ? 'EN' : 'CH';
-            state.currentLang = targetLang;
-            coreTrigger.classList.add('impact');
-            setTimeout(() => coreTrigger.classList.remove('impact'), 500);
-            if (window.innerWidth > 1024) container.classList.add('rotating');
-            Object.keys(dataMap).forEach(id => {
-                const el = document.getElementById(id) || document.querySelector(`[onclick*="'${id}'"]`);
-                if (el) {
-                    el.classList.add('switching');
-                    setTimeout(() => { updateContent(el, id, targetLang); el.classList.remove('switching'); }, 300);
-                }
-            });
-            setTimeout(() => {
-                if (window.innerWidth > 1024) {
-                    container.style.transition = 'none';
-                    container.classList.remove('rotating');
-                    container.offsetHeight; 
-                    container.style.transition = '';
-                }
-                state.isSwitching = false;
-            }, 850);
-        }
-    </script>
+    <!-- 底部控制面板 -->
+    <nav class="control-panel">
+        <div class="panel-container">
+            <div class="nav-item">
+                <span class="panel-btn">關於小馬</span>
+                <div class="energy-bar"></div>
+                <div class="submenu">
+                    <a href="https://xiaomasales-creator.github.io/sales/presentation/index.html" class="submenu-link">首頁</a>
+                    <a href="#" class="submenu-link">品牌特色</a>
+                    <a href="#" class="submenu-link">合作項目</a>
+                    <a href="https://xiaomasales-creator.github.io/sales/presentation/nav/%E6%9C%8D%E5%8B%99%E6%B5%81%E7%A8%8B/index.html" class="submenu-link">服務流程</a>
+                </div>
+            </div>
+            <div class="nav-item">
+                <span class="panel-btn">網紅經紀</span>
+                <div class="energy-bar"></div>
+                <div class="submenu">
+                    <a href="#" class="submenu-link">小馬主播陣容</a>
+                    <a href="#" class="submenu-link">經典案例</a>
+                    <a href="#" class="submenu-link">經常合作KOL</a>
+                </div>
+            </div>
+            <div class="nav-item">
+                <span class="panel-btn">活動花絮</span>
+                <div class="energy-bar"></div>
+                <div class="submenu">
+                    <a href="#" class="submenu-link">商案總覽</a>
+                    <a href="#" class="submenu-link">線下活動花絮</a>
+                </div>
+            </div>
+            <div class="nav-item">
+                <span class="panel-btn">其他服務</span>
+                <div class="energy-bar"></div>
+                <div class="submenu">
+                    <a href="#" class="submenu-link">影音剪輯</a>
+                    <a href="#" class="submenu-link">網頁製作</a>
+                    <a href="#" class="submenu-link">美術設計</a>
+                    <a href="#" class="submenu-link">社群經營</a>
+                </div>
+            </div>
+            <div class="nav-item">
+                <span class="panel-btn">聯絡我們</span>
+                <div class="energy-bar"></div>
+                <div class="submenu">
+                    <a href="#" class="submenu-link">工商洽談</a>
+                    <a href="#" class="submenu-link">加入小馬</a>
+                </div>
+            </div>
+        </div>
+    </nav>
 </body>
 </html>
