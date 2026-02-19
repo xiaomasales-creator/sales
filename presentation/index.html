@@ -40,6 +40,56 @@
             background-size: 50px 50px;
             z-index: -1;
         }
+        /* 背景網格 - 最底層 */
+        .grid-overlay {
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(134, 0, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(134, 0, 255, 0.05) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: -2;
+        }
+
+        .grid-overlay::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%, transparent 0%, rgba(5, 5, 8, 0.8) 100%);
+        }
+
+        /* 點陣紋理背景 */
+        .dots-overlay {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(rgba(134, 0, 255, 0.2) 1.5px, transparent 1.5px);
+            background-size: 24px 24px;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 1;
+        }
+
+        /* 裝飾性幾何背景 */
+        .floating-deco {
+            position: fixed;
+            color: var(--primary-neon);
+            opacity: 0.05;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14vw;
+            font-weight: 900;
+            pointer-events: none;
+            z-index: -1;
+            user-select: none;
+        }
+
+        .floating-deco.outlined {
+            color: transparent;
+            -webkit-text-stroke: 1px var(--secondary-neon);
+            opacity: 0.1;
+        }
 
         /* 超大 LOGO 呼吸光 */
         .hero-logo {
@@ -777,7 +827,13 @@
     </style>
 </head>
 <body>
-
+    <!-- 視覺特效層 -->
+    <div class="dots-overlay"></div>
+    <div class="grid-overlay"></div>
+    
+    <!-- 背景裝飾文字 -->
+    <div class="floating-deco outlined" style="bottom: 15%; right: -2%;">XIAOMA</div>
+    
     <div class="bg-grid"></div>
 
     <div class="min-h-screen flex flex-col pb-32">
