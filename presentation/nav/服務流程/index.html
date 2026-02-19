@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>小馬娛樂 | XIAOMA ENT. S型流程系統</title>
+    <title>小馬娛樂 | 服務流程 Service Process</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Noto+Sans+TC:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Noto+Sans+TC:wght@300;500;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-neon: #8600ff;
@@ -23,185 +23,355 @@
             margin: 0;
             overflow-x: hidden;
             scroll-behavior: smooth;
-            padding-bottom: 120px; /* 為底部選單留空間 */
+            padding-bottom: 120px;
+            position: relative;
         }
 
-        .orbitron { font-family: 'Orbitron', sans-serif; }
+        .cyber-font { font-family: 'Orbitron', sans-serif; }
         .mono { font-family: 'Share Tech Mono', monospace; }
 
-        /* 背景與掃描線 */
+        /* 背景網格 - 最底層 */
         .grid-overlay {
             position: fixed;
             inset: 0;
-            background-image: linear-gradient(rgba(134, 0, 255, 0.03) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(134, 0, 255, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
+            background-image: 
+                linear-gradient(rgba(134, 0, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(134, 0, 255, 0.05) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: -2;
+        }
+
+        .grid-overlay::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%, transparent 0%, rgba(5, 5, 8, 0.8) 100%);
+        }
+
+        /* 點陣紋理背景 */
+        .dots-overlay {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(rgba(134, 0, 255, 0.2) 1.5px, transparent 1.5px);
+            background-size: 24px 24px;
             pointer-events: none;
             z-index: -1;
+            opacity: 1;
         }
 
+        /* 增加 CRT 掃描線效果 */
         .scanline {
             width: 100%;
-            height: 4px;
-            background: rgba(188, 19, 254, 0.05);
-            position: fixed;
-            top: 0;
-            animation: scan 10s linear infinite;
+            height: 2px;
             z-index: 100;
+            background: rgba(0, 243, 255, 0.02);
+            opacity: 0.1;
+            position: fixed;
             pointer-events: none;
+            animation: scanline 8s linear infinite;
         }
 
-        @keyframes scan { from { top: 0; } to { top: 100%; } }
+        @keyframes scanline {
+            0% { top: -5%; }
+            100% { top: 105%; }
+        }
 
-        /* S型路徑容器 */
+        /* 裝飾性幾何背景 */
+        .floating-deco {
+            position: fixed;
+            color: var(--primary-neon);
+            opacity: 0.05;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14vw;
+            font-weight: 900;
+            pointer-events: none;
+            z-index: -1;
+            user-select: none;
+        }
+
+        .floating-deco.outlined {
+            color: transparent;
+            -webkit-text-stroke: 1px var(--secondary-neon);
+            opacity: 0.1;
+        }
+
+        /* 滿版容器與邊界裝飾 */
         .s-path-container {
-            max-width: 1100px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 80px 20px;
+            padding: 40px 40px 80px 40px;
             position: relative;
         }
 
-        .path-svg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
+        /* 頁首樣式強化 */
+        header.site-header {
+            background: linear-gradient(to bottom, var(--bg-dark) 0%, var(--bg-dark) 70%, transparent 100%);
+            position: relative;
+            z-index: 50; 
+            border-bottom: 1px solid rgba(134, 0, 255, 0.1);
         }
 
-        .circuit-line {
-            fill: none;
-            stroke: rgba(255, 255, 255, 0.05);
-            stroke-width: 3;
-            stroke-linecap: round;
+        /* 語言切換按鈕樣式 */
+        .lang-btn {
+            padding: 2px 8px;
+            font-size: 12px;
+            font-family: 'Orbitron', sans-serif;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-radius: 2px;
         }
 
-        .energy-pulse {
-            fill: none;
-            stroke-width: 4;
-            stroke-linecap: round;
-            stroke-dasharray: 40, 1000;
-            animation: pulse-flow 4s linear infinite;
+        .lang-btn:hover {
+            border-color: var(--secondary-neon);
+            color: var(--secondary-neon);
+            box-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
         }
 
-        @keyframes pulse-flow {
-            0% { stroke-dashoffset: 1040; opacity: 0; }
-            5% { opacity: 1; }
-            95% { opacity: 1; }
-            100% { stroke-dashoffset: 0; opacity: 0; }
+        .lang-btn.active {
+            background: var(--secondary-neon);
+            color: var(--bg-dark);
+            border-color: var(--secondary-neon);
+            font-weight: 900;
+            box-shadow: 0 0 15px var(--secondary-neon);
         }
 
-        /* 流程節點 */
+        /* 流程節點容器 */
         .step-row {
             display: flex;
             align-items: center;
-            margin-bottom: 120px;
+            justify-content: center;
+            margin-bottom: 0;
             position: relative;
             z-index: 5;
+            width: 100%;
+            gap: 0;
         }
 
         .step-row.reverse { flex-direction: row-reverse; }
 
-        .guide-arrow {
-            position: absolute;
-            left: 50%;
-            bottom: -80px;
-            transform: translateX(-50%);
-            width: 40px;
-            height: 40px;
-            opacity: 0.6;
-            animation: arrow-bounce 2s ease-in-out infinite;
+        /* 置中多層次發光箭頭 */
+        .arrow-connector-centered {
             display: flex;
             justify-content: center;
             align-items: center;
+            height: 120px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
         }
 
-        @keyframes arrow-bounce {
-            0%, 100% { transform: translate(-50%, 0); opacity: 0.3; }
-            50% { transform: translate(-50%, 20px); opacity: 0.8; }
+        .multi-arrow {
+            width: 60px;
+            height: 60px;
+            opacity: 0.8;
         }
 
+        .arrow-path {
+            stroke: #ffffff;
+            stroke-width: 5;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.7));
+            animation: arrow-flow 2s infinite;
+        }
+
+        .arrow-1 { animation-delay: 0s; }
+        .arrow-2 { animation-delay: 0.2s; }
+        .arrow-3 { animation-delay: 0.4s; }
+
+        @keyframes arrow-flow {
+            0% { opacity: 0.1; transform: translateY(-10px); }
+            50% { opacity: 1; transform: translateY(0px); }
+            100% { opacity: 0.1; transform: translateY(10px); }
+        }
+
+        /* 節點樣式 */
         .tech-node {
-            flex: 0 0 180px;
-            height: 180px;
+            flex: 0 0 220px;
+            width: 220px;
+            height: 220px;
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 10;
         }
 
-        .tech-node:hover { transform: scale(1.1); }
-
-        .outer-ring {
+        .tech-node::before {
+            content: "";
             position: absolute;
-            inset: -5px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            inset: -20px;
             border-radius: 50%;
-            border-top-color: transparent;
-            animation: rotate-cw 4s linear infinite;
+            border: 2px dashed rgba(255, 255, 255, 0.15);
+            animation: rotate-slow 30s linear infinite;
         }
+
+        .node-hud-ring {
+            position: absolute;
+            inset: -10px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            background: conic-gradient(from 0deg, currentColor 0 2deg, transparent 2deg 20deg) 0 0 / 100% 100%;
+            -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 5px), #fff 0);
+            mask: radial-gradient(farthest-side, transparent calc(100% - 5px), #fff 0);
+            animation: rotate-fast 4s steps(40) infinite;
+            opacity: 0.8;
+        }
+
+        .node-glow-ring {
+            position: absolute;
+            inset: -2px;
+            border-radius: 50%;
+            border: 4px solid currentColor;
+            box-shadow: 0 0 25px currentColor, inset 0 0 15px currentColor;
+            opacity: 0.4;
+            animation: breathing 3s ease-in-out infinite;
+        }
+
+        .node-client { color: var(--neon-blue); }
+        .node-us { color: var(--neon-purple); }
+        .node-kol { color: var(--neon-red); }
+
+        @keyframes rotate-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes rotate-fast { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
+        @keyframes breathing { 0%, 100% { opacity: 0.3; transform: scale(0.98); } 50% { opacity: 0.6; transform: scale(1.02); } }
 
         .inner-core {
             position: absolute;
-            inset: 10px;
+            inset: 12px;
             border-radius: 50%;
-            background: rgba(5, 5, 10, 0.95);
+            background: radial-gradient(circle, rgba(15, 15, 25, 0.98) 0%, rgba(5, 5, 10, 1) 100%);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            border: 2px solid transparent;
-            z-index: 2;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            z-index: 5;
+            overflow: hidden;
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.9);
         }
 
-        .node-client .inner-core { border-color: var(--neon-blue); box-shadow: 0 0 30px rgba(0, 243, 255, 0.2); }
-        .node-client .step-num { color: #fff; filter: drop-shadow(0 0 8px var(--neon-blue)); }
-        .node-client .step-label { color: var(--neon-blue); }
+        .step-num { 
+            font-size: 2.8rem; 
+            font-weight: 900; 
+            line-height: 0.9; 
+            font-family: 'Orbitron', sans-serif; 
+            color: #fff; 
+            text-shadow: 0 0 20px currentColor; 
+        }
+
+        /* 放大標籤文字 */
+        .step-label { 
+            font-size: 1.25rem; 
+            font-weight: 900; 
+            margin-top: 8px; 
+            letter-spacing: 3px; 
+            color: rgba(255,255,255,0.95); 
+            font-family: 'Share Tech Mono', monospace; 
+        }
+
+        /* 內容卡片容器 */
+        .step-content { 
+            flex: 0 1 700px;
+            padding: 0; 
+            position: relative;
+        }
         
-        .node-us .inner-core { border-color: var(--neon-purple); box-shadow: 0 0 30px rgba(188, 19, 254, 0.2); }
-        .node-us .step-num { color: #fff; filter: drop-shadow(0 0 8px var(--neon-purple)); }
-        .node-us .step-label { color: var(--neon-purple); }
+        .step-row:not(.reverse) .step-content { padding-left: 40px; }
+        .step-row.reverse .step-content { padding-right: 40px; text-align: right; }
 
-        .node-kol .inner-core { border-color: var(--neon-red); box-shadow: 0 0 30px rgba(255, 0, 60, 0.2); }
-        .node-kol .step-num { color: #fff; filter: drop-shadow(0 0 8px var(--neon-red)); }
-        .node-kol .step-label { color: var(--neon-red); }
+        .content-card::before {
+            content: "DATA_NODE_" attr(data-id);
+            position: absolute;
+            top: -20px;
+            left: 10px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 10px;
+            color: currentColor;
+            opacity: 0.7;
+            letter-spacing: 2px;
+        }
 
-        .step-num { font-size: 2.8rem; font-weight: 900; line-height: 1; }
-        .step-label { font-size: 0.85rem; font-weight: 700; margin-top: 2px; letter-spacing: 1px; }
-
-        .step-content { flex: 1; padding: 0 60px; }
-        .step-row.reverse .step-content { text-align: right; }
+        .step-row.reverse .content-card::before {
+            left: auto;
+            right: 10px;
+        }
 
         .content-card {
-            padding: 30px 40px;
-            backdrop-filter: blur(10px);
-            border-left: 4px solid #444;
-            transition: 0.4s;
-            background: rgba(255, 255, 255, 0.02);
+            padding: 30px 45px; 
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-left: 8px solid currentColor;
+            clip-path: polygon(0 0, 94% 0, 100% 25%, 100% 100%, 6% 100%, 0 75%);
+            position: relative;
+            transition: all 0.3s ease;
         }
 
-        .step-row.reverse .content-card { border-left: 0; border-right: 4px solid #444; }
-        .node-client .content-card { border-color: var(--neon-blue); }
-        .node-us .content-card { border-color: var(--neon-purple); }
-        .node-kol .content-card { border-color: var(--neon-red); }
-
-        .step-row:hover .content-card {
-            background: rgba(255, 255, 255, 0.07);
-            transform: translateX(10px);
+        .step-row.reverse .content-card {
+            border-left: 2px solid rgba(255, 255, 255, 0.1);
+            border-right: 8px solid currentColor;
+            clip-path: polygon(6% 0, 100% 0, 100% 75%, 94% 100%, 0 100%, 0 25%);
         }
 
-        .step-row.reverse:hover .content-card { transform: translateX(-10px); }
+        .content-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 45px -10px currentColor;
+            background: rgba(255, 255, 255, 0.08);
+        }
 
-        .card-title { font-size: 1.8rem; font-weight: 800; color: #fff; margin-bottom: 10px; display: block; }
-        .card-text { color: #aaa; line-height: 1.6; font-size: 1.1rem; }
+        .card-title { 
+            font-size: 2rem; 
+            font-weight: 900; 
+            color: #fff; 
+            margin-bottom: 0px; 
+            display: block;
+            text-shadow: 0 0 15px rgba(255,255,255,0.2);
+            line-height: 1.3; 
+            letter-spacing: 0.05em; 
+        }
+        .has-text .card-title {
+            margin-bottom: 15px; 
+        }
+        
+        .card-text { 
+            color: rgba(255,255,255,0.7); 
+            line-height: 1.8; 
+            font-size: 1.1rem; 
+            letter-spacing: 0.02em;
+            position: relative;
+            font-family: 'Noto Sans TC', sans-serif; 
+            font-weight: 500;
+        }
 
-        @keyframes rotate-cw { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .corner-deco {
+            position: absolute;
+            bottom: 18px; 
+            right: 18px; 
+            width: 25px; 
+            height: 25px;
+            border-right: 3px solid currentColor;
+            border-bottom: 3px solid currentColor;
+            opacity: 0.6;
+        }
 
-        /* --- 控制面板設計 (整合自提供內容) --- */
+        .step-row.reverse .corner-deco {
+            right: auto;
+            left: 18px;
+            border-right: none;
+            border-left: 3px solid currentColor;
+            border-bottom: 3px solid currentColor;
+        }
+
+      /* 控制面板設計 */
         .control-panel {
             position: fixed;
             bottom: 20px;
@@ -219,7 +389,7 @@
             align-items: center;
             gap: 10px;
             padding: 12px 20px;
-            background: linear-gradient(180deg, rgba(20, 20, 20, 0.95) 0%, rgba(5, 5, 5, 0.98) 100%);
+            background: linear-gradient(180deg, rgba(20, 20, 20, 0.9) 0%, rgba(5, 5, 5, 0.95) 100%);
             backdrop-filter: blur(20px);
             border-top: 1px solid rgba(134, 0, 255, 0.4);
             border-bottom: 2px solid rgba(134, 0, 255, 0.2);
@@ -228,28 +398,24 @@
         }
 
         @media (min-width: 768px) {
-            .panel-container { gap: 40px; padding: 15px 60px; border-radius: 4px; }
+            .panel-container { gap: 30px; padding: 15px 50px; border-radius: 4px; }
             .panel-container::before, .panel-container::after {
                 content: "";
                 position: absolute;
                 top: 0;
-                width: 30px;
+                width: 25px;
                 height: 100%;
                 background: inherit;
                 z-index: -1;
             }
-            .panel-container::before { 
-                left: -15px; 
-                transform: skewX(-20deg); 
-                border-left: 1px solid rgba(134, 0, 255, 0.4); 
-                border-top: 1px solid rgba(134, 0, 255, 0.4);
-            }
-            .panel-container::after { 
-                right: -15px; 
-                transform: skewX(20deg); 
-                border-right: 1px solid rgba(134, 0, 255, 0.4); 
-                border-top: 1px solid rgba(134, 0, 255, 0.4);
-            }
+            .panel-container::before { left: -12px; transform: skewX(-15deg); border-left: 1px solid rgba(134, 0, 255, 0.4); }
+            .panel-container::after { right: -12px; transform: skewX(15deg); border-right: 1px solid rgba(134, 0, 255, 0.4); }
+            .panel-btn { font-size: 1.15rem; } 
+        }
+
+        @media (max-width: 767px) {
+            .panel-container { gap: 6px; padding: 12px 10px; border-radius: 12px; }
+            .panel-btn { font-size: 0.85rem !important; letter-spacing: 0.05em !important; } 
         }
 
         .nav-item { position: relative; }
@@ -257,32 +423,29 @@
         .panel-btn {
             position: relative;
             font-weight: bold;
-            color: #aaa;
+            color: #ccc;
             transition: all 0.3s ease;
             white-space: nowrap;
             letter-spacing: 0.15em;
             cursor: pointer;
-            padding: 8px 0;
+            padding-bottom: 8px;
             z-index: 2;
-            text-decoration: none;
-            font-size: 1.1rem;
         }
 
         .energy-bar {
             position: absolute;
-            bottom: 0px;
-            left: 50%;
+            bottom: 4px;
+            left: 0;
             width: 0%;
             height: 2px;
-            background: var(--neon-purple);
-            box-shadow: 0 0 10px var(--neon-purple);
-            transition: all 0.3s ease;
-            transform: translateX(-50%);
+            background: var(--secondary-neon);
+            box-shadow: 0 0 10px var(--secondary-neon);
+            transition: width 0.3s ease;
         }
 
         .nav-item:hover .panel-btn {
-            color: #fff;
-            text-shadow: 0 0 10px var(--neon-purple);
+            color: var(--secondary-neon);
+            text-shadow: 0 0 8px var(--secondary-neon);
         }
 
         .nav-item:hover .energy-bar {
@@ -295,27 +458,28 @@
             bottom: 100%;
             left: 50%;
             transform: translateX(-50%) translateY(10px);
-            background: rgba(10, 10, 15, 0.98);
+            background: rgba(5, 5, 5, 0.98);
             border: 1px solid var(--primary-neon);
             min-width: 180px;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s;
             backdrop-filter: blur(15px);
             padding: 12px;
-            box-shadow: 0 0 30px rgba(134, 0, 255, 0.3);
+            box-shadow: 0 0 30px rgba(134, 0, 255, 0.4);
             pointer-events: none;
             z-index: 1001;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
-        .submenu::after {
+        .submenu::before {
             content: "";
             position: absolute;
             bottom: -20px;
             left: 0;
             width: 100%;
             height: 25px;
+            background: transparent;
         }
 
         .nav-item:hover .submenu {
@@ -337,235 +501,273 @@
         }
 
         .submenu-link:hover {
-            background: rgba(134, 0, 255, 0.1);
-            color: var(--neon-blue);
-            border-left: 2px solid var(--neon-blue);
-            padding-left: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .path-svg, .guide-arrow { display: none; }
-            .step-row, .step-row.reverse { flex-direction: column; text-align: center !important; }
-            .step-content { padding: 20px 0; }
-            .panel-container { gap: 12px; padding: 10px; border-radius: 12px; }
-            .panel-btn { font-size: 0.85rem; letter-spacing: 0.05em; }
-            .submenu { min-width: 140px; }
+            background: rgba(134, 0, 255, 0.15);
+            color: var(--secondary-neon);
+            border-left: 2px solid var(--secondary-neon);
+            padding-left: 18px;
         }
     </style>
 </head>
 <body>
+    <!-- 視覺特效層 -->
+    <div class="dots-overlay"></div>
     <div class="grid-overlay"></div>
     <div class="scanline"></div>
+    
+    <!-- 背景裝飾文字 -->
+    <div class="floating-deco" style="top: 10%; left: -5%;">XM</div>
+    <div class="floating-deco outlined" style="bottom: 15%; right: -2%;">XIAOMA</div>
 
-    <header class="pt-20 pb-12 text-center">
-        <h1 class="orbitron text-4xl md:text-5xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-[#00f3ff] via-[#bc13fe] to-[#ff003c]">
-            SERVICE_WORKFLOW
-        </h1>
-        <p class="mono text-gray-500 mt-2 tracking-[0.4em] text-xs uppercase">Xiaoma Entertainment / Digital Infrastructure</p>
+    <!-- 標頭區域 -->
+    <header class="site-header w-full pt-20 pb-16 overflow-hidden">
+        <div class="max-w-[1400px] mx-auto px-10 flex flex-col items-start relative">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="deco-block w-[10px] h-[10px] bg-[#bc13fe] animate-pulse"></div>
+                <span class="cyber-font text-[10px] tracking-[0.6em] text-white/40 uppercase">XIAOMA ENT. SYSTEMS</span>
+            </div>
+            
+            <div class="flex flex-col mb-4">
+                <div class="flex items-end gap-6 mb-2">
+                    <h1 class="text-5xl md:text-7xl font-black italic tracking-tighter leading-none">服務流程</h1>
+                    <!-- 語言切換按鈕 -->
+                    <div class="flex gap-2 mb-1">
+                        <button onclick="switchLang('ch')" id="btn-ch" class="lang-btn active">CH</button>
+                        <button onclick="switchLang('en')" id="btn-en" class="lang-btn">EN</button>
+                    </div>
+                </div>
+                <span class="cyber-font text-xl md:text-3xl font-black text-white/10 uppercase italic tracking-widest leading-none">SERVICE_PROCESS_v2.5</span>
+            </div>
+            
+            <div class="w-[60px] h-[4px] bg-gradient-to-r from-[#bc13fe] to-[#00d2ff]"></div>
+            <!-- 已刪除 Operations Protocol 文字 -->
+        </div>
     </header>
 
-    <main class="s-path-container" id="s-path">
-        <svg class="path-svg" id="path-svg">
-            <path id="main-path" class="circuit-line"></path>
-            <path id="pulse-path" class="energy-pulse" stroke="url(#pulse-gradient)"></path>
-            <defs>
-                <linearGradient id="pulse-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stop-color="var(--neon-blue)" />
-                    <stop offset="50%" stop-color="var(--neon-purple)" />
-                    <stop offset="100%" stop-color="var(--neon-red)" />
-                </linearGradient>
-            </defs>
-        </svg>
-
-        <!-- 步驟節點 (內容同上版本) -->
-        <div class="step-row node-client" id="step-0">
+    <main class="s-path-container" id="nodes-container">
+        <!-- 步驟 01 -->
+        <div class="step-row node-client">
             <div class="tech-node">
-                <div class="outer-ring"></div>
-                <div class="inner-core">
-                    <span class="orbitron step-num">01</span>
-                    <span class="step-label">CLIENT</span>
-                </div>
+                <div class="node-hud-ring"></div>
+                <div class="node-glow-ring"></div>
+                <div class="inner-core"><span class="step-num">01</span><span class="step-label">CLIENT</span></div>
             </div>
             <div class="step-content">
-                <div class="content-card">
-                    <span class="card-title">需求與預算提出</span>
-                    <p class="card-text">客戶端提出具體的合作需求，包含產品性質、推廣目標以及預計投入的預算區間。</p>
+                <div class="content-card" data-id="1">
+                    <span class="card-title" id="title-1">需求與預算提出</span>
+                    <div class="corner-deco"></div>
                 </div>
-            </div>
-            <div class="guide-arrow">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--neon-blue)" stroke-width="3"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
             </div>
         </div>
 
-        <div class="step-row reverse node-us" id="step-1">
+        <div class="arrow-connector-centered">
+            <svg class="multi-arrow" viewBox="0 0 60 60">
+                <path class="arrow-path arrow-1" d="M10 15 L30 35 L50 15" />
+                <path class="arrow-path arrow-2" d="M10 25 L30 45 L50 25" />
+                <path class="arrow-path arrow-3" d="M10 35 L30 55 L50 35" />
+            </svg>
+        </div>
+
+        <!-- 步驟 02 -->
+        <div class="step-row reverse node-us">
             <div class="tech-node">
-                <div class="outer-ring" style="animation-direction: reverse;"></div>
-                <div class="inner-core">
-                    <span class="orbitron step-num">02</span>
-                    <span class="step-label">XIAOMA</span>
-                </div>
+                <div class="node-hud-ring"></div>
+                <div class="node-glow-ring"></div>
+                <div class="inner-core"><span class="step-num">02</span><span class="step-label">XIAOMA</span></div>
             </div>
             <div class="step-content">
-                <div class="content-card">
-                    <span class="card-title">KOL 名單與報價</span>
-                    <p class="card-text">我方根據需求篩選最合適的 KOL 名單，提供透明的市場行情報價與轉單數據參考。</p>
+                <div class="content-card" data-id="2">
+                    <span class="card-title" id="title-2">KOL 名單與報價</span>
+                    <div class="corner-deco"></div>
                 </div>
-            </div>
-            <div class="guide-arrow">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--neon-purple)" stroke-width="3"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
             </div>
         </div>
 
-        <div class="step-row node-client" id="step-2">
+        <div class="arrow-connector-centered">
+            <svg class="multi-arrow" viewBox="0 0 60 60">
+                <path class="arrow-path arrow-1" d="M10 15 L30 35 L50 15" />
+                <path class="arrow-path arrow-2" d="M10 25 L30 45 L50 25" />
+                <path class="arrow-path arrow-3" d="M10 35 L30 55 L50 35" />
+            </svg>
+        </div>
+
+        <!-- 步驟 03 -->
+        <div class="step-row node-client">
             <div class="tech-node">
-                <div class="outer-ring"></div>
-                <div class="inner-core">
-                    <span class="orbitron step-num">03</span>
-                    <span class="step-label">CLIENT</span>
-                </div>
+                <div class="node-hud-ring"></div>
+                <div class="node-glow-ring"></div>
+                <div class="inner-core"><span class="step-num">03</span><span class="step-label">CLIENT</span></div>
             </div>
             <div class="step-content">
-                <div class="content-card">
-                    <span class="card-title">合作人選最終確認</span>
-                    <p class="card-text">客戶端針對名單進行篩選，確認最終合作的 KOL 人選並開啟合作框架。</p>
+                <div class="content-card" data-id="3">
+                    <span class="card-title" id="title-3">合作人選最終確認</span>
+                    <div class="corner-deco"></div>
                 </div>
-            </div>
-            <div class="guide-arrow">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--neon-blue)" stroke-width="3"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
             </div>
         </div>
 
-        <div class="step-row reverse node-client" id="step-3">
+        <div class="arrow-connector-centered">
+            <svg class="multi-arrow" viewBox="0 0 60 60">
+                <path class="arrow-path arrow-1" d="M10 15 L30 35 L50 15" />
+                <path class="arrow-path arrow-2" d="M10 25 L30 45 L50 25" />
+                <path class="arrow-path arrow-3" d="M10 35 L30 55 L50 35" />
+            </svg>
+        </div>
+
+        <!-- 步驟 04 -->
+        <div class="step-row reverse node-client">
             <div class="tech-node">
-                <div class="outer-ring" style="animation-direction: reverse;"></div>
-                <div class="inner-core">
-                    <span class="orbitron step-num">04</span>
-                    <span class="step-label">CLIENT</span>
-                </div>
+                <div class="node-hud-ring"></div>
+                <div class="node-glow-ring"></div>
+                <div class="inner-core"><span class="step-num">04</span><span class="step-label">CLIENT</span></div>
             </div>
             <div class="step-content">
-                <div class="content-card">
-                    <span class="card-title">品牌內容概要</span>
-                    <p class="card-text">客戶提供產品賣點、品牌規範及核心訴求，確保內容方向精準符合品牌價值。</p>
+                <div class="content-card" data-id="4">
+                    <span class="card-title" id="title-4">品牌內容概要</span>
+                    <div class="corner-deco"></div>
                 </div>
-            </div>
-            <div class="guide-arrow">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--neon-blue)" stroke-width="3"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
             </div>
         </div>
 
-        <div class="step-row node-us" id="step-4">
+        <div class="arrow-connector-centered">
+            <svg class="multi-arrow" viewBox="0 0 60 60">
+                <path class="arrow-path arrow-1" d="M10 15 L30 35 L50 15" />
+                <path class="arrow-path arrow-2" d="M10 25 L30 45 L50 25" />
+                <path class="arrow-path arrow-3" d="M10 35 L30 55 L50 35" />
+            </svg>
+        </div>
+
+        <!-- 步驟 05 -->
+        <div class="step-row node-us">
             <div class="tech-node">
-                <div class="outer-ring"></div>
-                <div class="inner-core">
-                    <span class="orbitron step-num">05</span>
-                    <span class="step-label">XIAOMA</span>
-                </div>
+                <div class="node-hud-ring"></div>
+                <div class="node-glow-ring"></div>
+                <div class="inner-core"><span class="step-num">05</span><span class="step-label">XIAOMA</span></div>
             </div>
             <div class="step-content">
-                <div class="content-card">
-                    <span class="card-title">企劃內容與腳本撰寫</span>
-                    <p class="card-text">我方撰寫詳細腳本（包含貼文需求、直播流程），確保內容具備最強轉化力。</p>
+                <div class="content-card has-text" data-id="5">
+                    <span class="card-title" id="title-5">企劃內容與腳本撰寫</span>
+                    <p class="card-text" id="desc-5">// 我方撰寫詳細腳本，確保內容具備最強轉化力。</p>
+                    <div class="corner-deco"></div>
                 </div>
-            </div>
-            <div class="guide-arrow">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--neon-purple)" stroke-width="3"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
             </div>
         </div>
 
-        <div class="step-row reverse node-kol" id="step-5">
+        <div class="arrow-connector-centered">
+            <svg class="multi-arrow" viewBox="0 0 60 60">
+                <path class="arrow-path arrow-1" d="M10 15 L30 35 L50 15" />
+                <path class="arrow-path arrow-2" d="M10 25 L30 45 L50 25" />
+                <path class="arrow-path arrow-3" d="M10 35 L30 55 L50 35" />
+            </svg>
+        </div>
+
+        <!-- 步驟 06 -->
+        <div class="step-row reverse node-kol">
             <div class="tech-node">
-                <div class="outer-ring" style="animation-direction: reverse;"></div>
-                <div class="inner-core">
-                    <span class="orbitron step-num">06</span>
-                    <span class="step-label">KOL</span>
-                </div>
+                <div class="node-hud-ring"></div>
+                <div class="node-glow-ring"></div>
+                <div class="inner-core"><span class="step-num">06</span><span class="step-label">KOL</span></div>
             </div>
             <div class="step-content">
-                <div class="content-card">
-                    <span class="card-title">KOL 著手準備合作內容</span>
-                    <p class="card-text">KOL 根據腳本進行產品試用、拍攝與初步剪輯素材準備。</p>
+                <div class="content-card" data-id="6">
+                    <span class="card-title" id="title-6">KOL 著手準備合作內容</span>
+                    <div class="corner-deco"></div>
                 </div>
-            </div>
-            <div class="guide-arrow">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--neon-red)" stroke-width="3"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
             </div>
         </div>
 
-        <div class="step-row node-client" id="step-6">
+        <div class="arrow-connector-centered">
+            <svg class="multi-arrow" viewBox="0 0 60 60">
+                <path class="arrow-path arrow-1" d="M10 15 L30 35 L50 15" />
+                <path class="arrow-path arrow-2" d="M10 25 L30 45 L50 25" />
+                <path class="arrow-path arrow-3" d="M10 35 L30 55 L50 35" />
+            </svg>
+        </div>
+
+        <!-- 步驟 07 -->
+        <div class="step-row node-client">
             <div class="tech-node">
-                <div class="outer-ring"></div>
-                <div class="inner-core">
-                    <span class="orbitron step-num">07</span>
-                    <span class="step-label">CLIENT</span>
-                </div>
+                <div class="node-hud-ring"></div>
+                <div class="node-glow-ring"></div>
+                <div class="inner-core"><span class="step-num">07</span><span class="step-label">CLIENT</span></div>
             </div>
             <div class="step-content">
-                <div class="content-card">
-                    <span class="card-title">客戶過稿確認</span>
-                    <p class="card-text">客戶對 KOL 產出的內容進行校對與確認，確保資訊無誤後方可進行發布。</p>
+                <div class="content-card" data-id="7">
+                    <span class="card-title" id="title-7">客戶過稿確認</span>
+                    <div class="corner-deco"></div>
                 </div>
-            </div>
-            <div class="guide-arrow">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--neon-blue)" stroke-width="3"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
             </div>
         </div>
 
-        <div class="step-row reverse node-kol" id="step-7">
+        <div class="arrow-connector-centered">
+            <svg class="multi-arrow" viewBox="0 0 60 60">
+                <path class="arrow-path arrow-1" d="M10 15 L30 35 L50 15" />
+                <path class="arrow-path arrow-2" d="M10 25 L30 45 L50 25" />
+                <path class="arrow-path arrow-3" d="M10 35 L30 55 L50 35" />
+            </svg>
+        </div>
+
+        <!-- 步驟 08 -->
+        <div class="step-row reverse node-kol">
             <div class="tech-node">
-                <div class="outer-ring" style="animation-direction: reverse;"></div>
-                <div class="inner-core">
-                    <span class="orbitron step-num">08</span>
-                    <span class="step-label">KOL</span>
-                </div>
+                <div class="node-hud-ring"></div>
+                <div class="node-glow-ring"></div>
+                <div class="inner-core"><span class="step-num">08</span><span class="step-label">KOL</span></div>
             </div>
             <div class="step-content">
-                <div class="content-card">
-                    <span class="card-title">KOL 發布內容</span>
-                    <p class="card-text">正式啟動曝光（直播、貼文），流量正式對接市場，達成推廣核心環節。</p>
+                <div class="content-card" data-id="8">
+                    <span class="card-title" id="title-8">KOL 發布內容</span>
+                    <div class="corner-deco"></div>
                 </div>
-            </div>
-            <div class="guide-arrow">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--neon-red)" stroke-width="3"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
             </div>
         </div>
 
-        <div class="step-row node-us" id="step-8">
+        <div class="arrow-connector-centered">
+            <svg class="multi-arrow" viewBox="0 0 60 60">
+                <path class="arrow-path arrow-1" d="M10 15 L30 35 L50 15" />
+                <path class="arrow-path arrow-2" d="M10 25 L30 45 L50 25" />
+                <path class="arrow-path arrow-3" d="M10 35 L30 55 L50 35" />
+            </svg>
+        </div>
+
+        <!-- 步驟 09 -->
+        <div class="step-row node-us">
             <div class="tech-node">
-                <div class="outer-ring"></div>
-                <div class="inner-core">
-                    <span class="orbitron step-num">09</span>
-                    <span class="step-label">XIAOMA</span>
-                </div>
+                <div class="node-hud-ring"></div>
+                <div class="node-glow-ring"></div>
+                <div class="inner-core"><span class="step-num">09</span><span class="step-label">XIAOMA</span></div>
             </div>
             <div class="step-content">
-                <div class="content-card">
-                    <span class="card-title">我方提供合作完成檔</span>
-                    <p class="card-text">蒐集所有完成檔（直播VOD、廣告素材）交付客戶方作為數位資產。</p>
+                <div class="content-card has-text" data-id="9">
+                    <span class="card-title" id="title-9">我方提供合作完成檔</span>
+                    <p class="card-text" id="desc-9">// 蒐集所有完成檔交付客戶方作為數位資產。</p>
+                    <div class="corner-deco"></div>
                 </div>
-            </div>
-            <div class="guide-arrow">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--neon-purple)" stroke-width="3"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
             </div>
         </div>
 
-        <div class="step-row reverse node-us" id="step-9">
+        <div class="arrow-connector-centered">
+            <svg class="multi-arrow" viewBox="0 0 60 60">
+                <path class="arrow-path arrow-1" d="M10 15 L30 35 L50 15" />
+                <path class="arrow-path arrow-2" d="M10 25 L30 45 L50 25" />
+                <path class="arrow-path arrow-3" d="M10 35 L30 55 L50 35" />
+            </svg>
+        </div>
+
+        <!-- 步驟 10 -->
+        <div class="step-row reverse node-us">
             <div class="tech-node">
-                <div class="outer-ring" style="animation-direction: reverse;"></div>
-                <div class="inner-core">
-                    <span class="orbitron step-num">10</span>
-                    <span class="step-label">XIAOMA</span>
-                </div>
+                <div class="node-hud-ring"></div>
+                <div class="node-glow-ring"></div>
+                <div class="inner-core"><span class="step-num">10</span><span class="step-label">XIAOMA</span></div>
             </div>
             <div class="step-content">
-                <div class="content-card">
-                    <span class="card-title">我方提供結案報告</span>
-                    <p class="card-text">整理完整的數據報告（觸及、轉單分析等），提供最終成效分析與建議。</p>
+                <div class="content-card" data-id="10">
+                    <span class="card-title" id="title-10">我方提供結案報告</span>
+                    <div class="corner-deco"></div>
                 </div>
             </div>
         </div>
     </main>
-
     <!-- 底部控制面板 -->
     <nav class="control-panel">
         <div class="panel-container">
@@ -615,41 +817,49 @@
             </div>
         </div>
     </nav>
-
-    <footer class="py-12 text-center mono text-xs text-gray-800 bg-[#050508]">
-        XIAOMA ENT. // FLOW_TERMINAL // © 2024
-    </footer>
-
     <script>
-        function drawPath() {
-            if (window.innerWidth < 768) return;
-            const mainPath = document.getElementById('main-path');
-            const pulsePath = document.getElementById('pulse-path');
-            const nodes = document.querySelectorAll('.tech-node');
-            let pathD = "";
+        const langData = {
+            ch: {
+                1: { title: "需求與預算提出" },
+                2: { title: "KOL 名單與報價" },
+                3: { title: "合作人選最終確認" },
+                4: { title: "品牌內容概要" },
+                5: { title: "企劃內容與腳本撰寫", desc: "// 我方撰寫詳細腳本，確保內容具備最強轉化力。" },
+                6: { title: "KOL 著手準備合作內容" },
+                7: { title: "客戶過稿確認" },
+                8: { title: "KOL 發布內容" },
+                9: { title: "我方提供合作完成檔", desc: "// 蒐集所有完成檔交付客戶方作為數位資產。" },
+                10: { title: "我方提供結案報告" }
+            },
+            en: {
+                1: { title: "Requirements & Budget Proposal" },
+                2: { title: "KOL Selection & Quotation" },
+                3: { title: "Final Talent Confirmation" },
+                4: { title: "Brand Content Brief" },
+                5: { title: "Planning & Scriptwriting", desc: "// We craft detailed scripts to ensure maximum conversion power." },
+                6: { title: "KOL Production & Preparation" },
+                7: { title: "Client Content Review" },
+                8: { title: "KOL Content Publication" },
+                9: { title: "Delivery of Final Assets", desc: "// Collect all finished files as digital assets for the client." },
+                10: { title: "Final Campaign Report" }
+            }
+        };
 
-            nodes.forEach((node, i) => {
-                const x = node.offsetLeft + node.offsetWidth / 2;
-                const y = node.offsetTop + node.offsetHeight / 2;
-                if (i === 0) {
-                    pathD += `M ${x} ${y}`;
-                } else {
-                    const prevNode = nodes[i-1];
-                    const prevX = prevNode.offsetLeft + prevNode.offsetWidth / 2;
-                    const prevY = prevNode.offsetTop + prevNode.offsetHeight / 2;
-                    const cpY = (prevY + y) / 2;
-                    pathD += ` C ${prevX} ${cpY}, ${x} ${cpY}, ${x} ${y}`;
+        function switchLang(lang) {
+            document.getElementById('btn-ch').classList.toggle('active', lang === 'ch');
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+            const currentData = langData[lang];
+            for (let i = 1; i <= 10; i++) {
+                const titleEl = document.getElementById(`title-${i}`);
+                if (titleEl) {
+                    titleEl.innerText = currentData[i].title;
                 }
-            });
-
-            mainPath.setAttribute("d", pathD);
-            pulsePath.setAttribute("d", pathD);
-            const length = mainPath.getTotalLength();
-            pulsePath.style.strokeDasharray = `80, ${length}`;
+                const descEl = document.getElementById(`desc-${i}`);
+                if (descEl && currentData[i].desc) {
+                    descEl.innerText = currentData[i].desc;
+                }
+            }
         }
-
-        window.addEventListener('resize', drawPath);
-        window.onload = drawPath;
     </script>
 </body>
 </html>
