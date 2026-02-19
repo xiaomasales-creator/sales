@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>小馬娛樂 | 品牌特色 BRAND FEATURES</title>
+    <title>小馬娛樂 | 品牌特色 BRAND IMAGE</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Noto+Sans+TC:wght@300;500;700;900&display=swap" rel="stylesheet">
     <style>
@@ -23,178 +23,228 @@
             margin: 0;
             overflow-x: hidden;
             scroll-behavior: smooth;
-            padding-bottom: 120px;
+            padding-bottom: 150px;
             position: relative;
         }
 
-        .cyber-font { font-family: 'Orbitron', sans-serif; }
-        .mono { font-family: 'Share Tech Mono', monospace; }
-
-        /* 背景網格 - 最底層 */
-        .grid-overlay {
-            position: fixed;
-            inset: 0;
-            background-image: 
-                linear-gradient(rgba(134, 0, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(134, 0, 255, 0.05) 1px, transparent 1px);
-            background-size: 60px 60px;
-            pointer-events: none;
-            z-index: -2;
-        }
-
-        .grid-overlay::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at 50% 50%, transparent 0%, rgba(5, 5, 8, 0.8) 100%);
-        }
-
-        /* 點陣紋理背景 */
-        .dots-overlay {
-            position: fixed;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            background-image: radial-gradient(rgba(134, 0, 255, 0.2) 1.5px, transparent 1.5px);
-            background-size: 24px 24px;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 1;
-        }
-
-        /* 掃描線樣式 */
-        .scanline {
-            width: 100%;
-            height: 4px; /* 增加高度使其可見 */
-            z-index: 999; /* 提高層級 */
-            background: linear-gradient(to bottom, 
-                transparent, 
-                rgba(0, 243, 255, 0.15) 50%, 
-                rgba(0, 243, 255, 0.05) 80%, 
-                transparent
-            );
-            box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
-            position: fixed;
-            pointer-events: none;
-            animation: scanline 6s linear infinite; /* 稍微加快速度 */
-        }
-
-        @keyframes scanline {
-            0% { top: -10%; }
-            100% { top: 110%; }
-        }
-
-        /* 裝飾性幾何背景 */
-        .floating-deco {
-            position: fixed;
-            color: var(--primary-neon);
-            opacity: 0.05;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 14vw;
-            font-weight: 900;
-            pointer-events: none;
-            z-index: -1;
-            user-select: none;
-        }
-
-        .floating-deco.outlined {
-            color: transparent;
-            -webkit-text-stroke: 1px var(--secondary-neon);
-            opacity: 0.1;
-        }
-
-        /* 滿版容器與邊界裝飾 */
-        .s-path-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 40px 40px 80px 40px;
-            position: relative;
-        }
-
-        /* 頁首樣式強化 */
+        /* 頁首樣式 (保持不變) */
         header.site-header {
             background: linear-gradient(to bottom, var(--bg-dark) 0%, var(--bg-dark) 70%, transparent 100%);
             position: relative;
             z-index: 50; 
-            border-bottom: 0px solid rgba(134, 0, 255, 0.1);
+            padding-top: 5rem;
+            padding-bottom: 2rem;
+            margin-bottom: 4rem;
         }
 
-        /* 語言切換按鈕樣式 */
-        .lang-btn {
-            padding: 2px 8px;
-            font-size: 12px;
+        /* 背景紋理 (保持不變) */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 0);
+            background-size: 30px 30px;
+            z-index: 0; 
+            pointer-events: none;
+        }
+
+        .cyber-font { font-family: 'Orbitron', sans-serif; }
+
+        /* 背景裝飾文字 (保持不變) */
+        .floating-deco {
+            position: fixed;
             font-family: 'Orbitron', sans-serif;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background: rgba(255, 255, 255, 0.05);
-            color: rgba(255, 255, 255, 0.5);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border-radius: 2px;
-        }
-
-        .lang-btn:hover {
-            border-color: var(--secondary-neon);
-            color: var(--secondary-neon);
-            box-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
-        }
-
-        .lang-btn.active {
-            background: var(--secondary-neon);
-            color: var(--bg-dark);
-            border-color: var(--secondary-neon);
             font-weight: 900;
-            box-shadow: 0 0 15px var(--secondary-neon);
+            font-size: 15vw;
+            line-height: 1;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.03;
+            white-space: nowrap;
+            text-transform: uppercase;
         }
 
-        /* 品牌特色卡片 */
+        .outlined {
+            -webkit-text-stroke: 2px rgba(255, 255, 255, 0.5);
+            color: transparent;
+        }
+
+        /* 掃描線效果 (保持不變) */
+        .scanline {
+            width: 100%;
+            height: 2px;
+            background: rgba(188, 19, 254, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            animation: scan 6s linear infinite;
+            z-index: 60;
+        }
+        @keyframes scan { 0% { top: -10%; } 100% { top: 110%; } }
+
+        /* 佈局結構 (保持不變) */
         .feature-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2.5rem;
             position: relative;
             z-index: 10;
         }
 
+        @media (max-width: 767px) {
+            .feature-grid { grid-template-columns: 1fr; gap: 2rem; }
+        }
+
+        /* --- 卡片邊框設計 (沿用上一版本) --- */
         .feature-card {
-            background: rgba(15, 15, 25, 0.8);
-            border: 1px solid rgba(134, 0, 255, 0.2);
-            padding: 2.5rem;
+            background: rgba(10, 10, 18, 0.9);
             position: relative;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            padding: 4rem 3rem;
+            min-height: 380px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            clip-path: polygon(30px 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%, 0 30px);
+            border: 1px solid rgba(134, 0, 255, 0.3);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            cursor: pointer;
             overflow: hidden;
-            backdrop-filter: blur(10px);
+            user-select: none;
         }
 
         .feature-card::before {
             content: "";
             position: absolute;
-            top: 0;
-            left: 0;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(134, 0, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(134, 0, 255, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        .dot-deco {
+            position: absolute;
             width: 4px;
-            height: 0;
-            background: var(--neon-purple);
-            transition: height 0.4s ease;
+            height: 4px;
+            background: var(--secondary-neon);
+            opacity: 0.3;
+            transition: all 0.3s ease;
+        }
+        .dot-tl { top: 15px; left: 15px; }
+        .dot-tr { top: 15px; right: 15px; }
+        .dot-bl { bottom: 15px; left: 15px; }
+        .dot-br { bottom: 15px; right: 15px; }
+
+        .side-accent {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 2px;
+            height: 40px;
+            background: var(--secondary-neon);
+            box-shadow: 0 0 10px var(--secondary-neon);
+            opacity: 0;
+            transition: all 0.3s ease;
         }
 
         .feature-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(134, 0, 255, 0.5);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(134, 0, 255, 0.2);
+            transform: translateY(-8px);
+            border-color: var(--secondary-neon);
+            box-shadow: 0 0 40px rgba(0, 243, 255, 0.15);
         }
 
-        .feature-card:hover::before { height: 100%; }
+        .feature-card:hover .dot-deco { opacity: 1; box-shadow: 0 0 8px var(--secondary-neon); }
+        .feature-card:hover .side-accent { opacity: 1; height: 80px; }
 
         .feature-num {
-            font-size: 3rem;
+            font-size: 5rem;
             font-weight: 900;
-            opacity: 0.05;
+            opacity: 0.07;
             position: absolute;
             top: 10px;
             right: 20px;
             color: white;
+            transition: all 0.3s;
         }
 
-       /* 控制面板設計 */
+        .crosshair {
+            position: absolute;
+            bottom: 45px;
+            right: 15px;
+            width: 20px;
+            height: 20px;
+            opacity: 0.3;
+        }
+        .crosshair::before, .crosshair::after {
+            content: "";
+            position: absolute;
+            background: var(--secondary-neon);
+        }
+        .crosshair::before { width: 100%; height: 1px; top: 50%; }
+        .crosshair::after { height: 100%; width: 1px; left: 50%; }
+
+        /* --- 語言切換內容控制 --- */
+        .content-zh, .content-en {
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .lang-hidden {
+            display: none;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        /* --- 強烈點擊特效 --- */
+        @keyframes glitch-flash {
+            0% { background: rgba(255, 255, 255, 0); }
+            10% { background: rgba(255, 255, 255, 0.8); }
+            20% { background: rgba(0, 243, 255, 0.4); }
+            100% { background: rgba(255, 255, 255, 0); }
+        }
+
+        @keyframes card-shake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-5px) rotate(-1deg); }
+            40% { transform: translateX(5px) rotate(1deg); }
+            60% { transform: translateX(-3px); }
+            80% { transform: translateX(3px); }
+        }
+
+        .clicking-effect {
+            animation: card-shake 0.4s ease;
+        }
+
+        .click-flash-overlay {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 100;
+            opacity: 0;
+        }
+
+        .active-flash .click-flash-overlay {
+            animation: glitch-flash 0.5s ease-out forwards;
+        }
+
+        /* 螢幕震動 */
+        .screen-shake {
+            animation: screen-shake-anim 0.3s linear;
+        }
+        @keyframes screen-shake-anim {
+            0% { transform: translate(0,0); }
+            25% { transform: translate(2px, -2px); }
+            50% { transform: translate(-2px, 2px); }
+            75% { transform: translate(2px, 2px); }
+            100% { transform: translate(0,0); }
+        }
+
+        /* 控制面板設計 */
         .control-panel {
             position: fixed;
             bottom: 20px;
@@ -332,12 +382,8 @@
     </style>
 </head>
 <body>
-    <!-- 視覺特效層 -->
-    <div class="dots-overlay"></div>
-    <div class="grid-overlay"></div>
     <div class="scanline"></div>
-    
-    <!-- 背景裝飾文字 -->
+
     <div class="floating-deco outlined" style="bottom: 15%; right: -2%;">XIAOMA</div>
 
     <!-- 標頭區域 -->
@@ -361,62 +407,118 @@
     </header>
 
     <div class="max-w-6xl mx-auto px-6 pb-32 relative">
-        <main class="feature-grid">
+        <main class="feature-grid" id="main-grid">
             <!-- 特色卡片 01 -->
-            <div class="feature-card group">
+            <div class="feature-card group" onclick="toggleLanguage(this)">
+                <div class="click-flash-overlay"></div>
+                <div class="dot-deco dot-tl"></div><div class="dot-deco dot-tr"></div>
+                <div class="dot-deco dot-bl"></div><div class="dot-deco dot-br"></div>
+                <div class="side-accent"></div><div class="crosshair"></div>
                 <span class="cyber-font feature-num">01</span>
-                <div class="text-[#bc13fe] mb-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                
+                <div class="text-[#bc13fe] mb-8">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 filter drop-shadow-[0_0_10px_rgba(188,19,254,0.5)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
                     </svg>
                 </div>
-                <h3 class="text-2xl font-bold mb-4 tracking-wider">極速執行力</h3>
-                <p class="text-gray-400 leading-relaxed text-sm">
-                    我們以電光石火的速度響應市場需求。從提案到執行，確保每個專案都能在最短時間內精準落地。
-                </p>
+
+                <div class="content-zh">
+                    <h3 class="text-3xl font-bold mb-5 tracking-widest cyber-font text-white group-hover:text-[#00f3ff]">極速執行力</h3>
+                    <p class="text-gray-400 leading-relaxed text-base font-light">
+                        我們以電光石火的速度響應市場需求。從提案到執行，確保每個專案都能在最短時間內精準落地，掌握流量黃金時機。
+                    </p>
+                </div>
+                <div class="content-en lang-hidden">
+                    <h3 class="text-3xl font-bold mb-5 tracking-widest cyber-font text-[#00f3ff]">Rapid Execution</h3>
+                    <p class="text-gray-400 leading-relaxed text-base font-light">
+                        We respond to market demands with lightning speed. From proposal to execution, we ensure every project lands precisely in the shortest time.
+                    </p>
+                </div>
             </div>
 
             <!-- 特色卡片 02 -->
-            <div class="feature-card group">
+            <div class="feature-card group" onclick="toggleLanguage(this)">
+                <div class="click-flash-overlay"></div>
+                <div class="dot-deco dot-tl"></div><div class="dot-deco dot-tr"></div>
+                <div class="dot-deco dot-bl"></div><div class="dot-deco dot-br"></div>
+                <div class="side-accent"></div><div class="crosshair"></div>
                 <span class="cyber-font feature-num">02</span>
-                <div class="text-[#00f3ff] mb-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                
+                <div class="text-[#00f3ff] mb-8">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 filter drop-shadow-[0_0_10px_rgba(0,243,255,0.5)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                     </svg>
                 </div>
-                <h3 class="text-2xl font-bold mb-4 tracking-wider">前瞻視覺美學</h3>
-                <p class="text-gray-400 leading-relaxed text-sm">
-                    結合賽博龐克與未來主義視覺，不只做設計，更在創造沉浸感。利用霓虹光效讓品牌脫穎而出。
-                </p>
+
+                <div class="content-zh">
+                    <h3 class="text-3xl font-bold mb-5 tracking-widest cyber-font text-white group-hover:text-[#00f3ff]">前瞻視覺美學</h3>
+                    <p class="text-gray-400 leading-relaxed text-base font-light">
+                        結合賽博龐克與未來主義視覺，不只做設計，更在創造沉浸感。利用專業霓虹光效與動態構圖，讓品牌脫穎而出。
+                    </p>
+                </div>
+                <div class="content-en lang-hidden">
+                    <h3 class="text-3xl font-bold mb-5 tracking-widest cyber-font text-[#00f3ff]">Visionary Aesthetics</h3>
+                    <p class="text-gray-400 leading-relaxed text-base font-light">
+                        Combining cyberpunk with futuristic visuals to create immersion. We use professional neon effects and dynamic compositions to elevate your brand.
+                    </p>
+                </div>
             </div>
 
             <!-- 特色卡片 03 -->
-            <div class="feature-card group">
+            <div class="feature-card group" onclick="toggleLanguage(this)">
+                <div class="click-flash-overlay"></div>
+                <div class="dot-deco dot-tl"></div><div class="dot-deco dot-tr"></div>
+                <div class="dot-deco dot-bl"></div><div class="dot-deco dot-br"></div>
+                <div class="side-accent"></div><div class="crosshair"></div>
                 <span class="cyber-font feature-num">03</span>
-                <div class="text-[#bc13fe] mb-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                
+                <div class="text-[#bc13fe] mb-8">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 filter drop-shadow-[0_0_10px_rgba(188,19,254,0.5)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
                 </div>
-                <h3 class="text-2xl font-bold mb-4 tracking-wider">精準網紅媒合</h3>
-                <p class="text-gray-400 leading-relaxed text-sm">
-                    透過大數據矩陣篩選最具潛力的創作者。媒合品牌基因高度契合的靈魂，實現最高轉換率。
-                </p>
+
+                <div class="content-zh">
+                    <h3 class="text-3xl font-bold mb-5 tracking-widest cyber-font text-white group-hover:text-[#00f3ff]">精準網紅媒合</h3>
+                    <p class="text-gray-400 leading-relaxed text-base font-light">
+                        透過大數據矩陣篩選最具潛力的創作者。媒合品牌基因高度契合的靈魂，打造最具說服力的口碑。
+                    </p>
+                </div>
+                <div class="content-en lang-hidden">
+                    <h3 class="text-3xl font-bold mb-5 tracking-widest cyber-font text-[#00f3ff]">Influencer Matching</h3>
+                    <p class="text-gray-400 leading-relaxed text-base font-light">
+                        Sourcing top creators through big data. We match souls that align with your brand's DNA to build the most persuasive reputation.
+                    </p>
+                </div>
             </div>
 
             <!-- 特色卡片 04 -->
-            <div class="feature-card group">
+            <div class="feature-card group" onclick="toggleLanguage(this)">
+                <div class="click-flash-overlay"></div>
+                <div class="dot-deco dot-tl"></div><div class="dot-deco dot-tr"></div>
+                <div class="dot-deco dot-bl"></div><div class="dot-deco dot-br"></div>
+                <div class="side-accent"></div><div class="crosshair"></div>
                 <span class="cyber-font feature-num">04</span>
-                <div class="text-[#00f3ff] mb-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                
+                <div class="text-[#00f3ff] mb-8">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 filter drop-shadow-[0_0_10px_rgba(0,243,255,0.5)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zM9 19V9a2 2 0 012-2h2a2 2 0 012 2v10" />
                     </svg>
                 </div>
-                <h3 class="text-2xl font-bold mb-4 tracking-wider">透明數據分析</h3>
-                <p class="text-gray-400 leading-relaxed text-sm">
-                    數據不說謊。我們提供全透明的視覺化結案報告，讓您的每一分行銷投入都有跡可循。
-                </p>
+
+                <div class="content-zh">
+                    <h3 class="text-3xl font-bold mb-5 tracking-widest cyber-font text-white group-hover:text-[#00f3ff]">透明數據分析</h3>
+                    <p class="text-gray-400 leading-relaxed text-base font-light">
+                        數據不說謊。我們提供全透明的視覺化結案報告與即時反饋，讓您的每一分投入都有跡可循。
+                    </p>
+                </div>
+                <div class="content-en lang-hidden">
+                    <h3 class="text-3xl font-bold mb-5 tracking-widest cyber-font text-[#00f3ff]">Data Analytics</h3>
+                    <p class="text-gray-400 leading-relaxed text-base font-light">
+                        Data doesn't lie. We provide transparent visual reports and real-time feedback, ensuring every penny of your investment is traceable.
+                    </p>
+                </div>
             </div>
         </main>
     </div>
@@ -471,5 +573,34 @@
             </div>
         </div>
     </nav>
+
+    <script>
+        function toggleLanguage(card) {
+            // 觸發強烈點擊視覺效果
+            card.classList.add('active-flash', 'clicking-effect');
+            document.body.classList.add('screen-shake');
+
+            // 獲取內容區域
+            const zhContent = card.querySelector('.content-zh');
+            const enContent = card.querySelector('.content-en');
+
+            // 稍微延遲切換，配合閃光效果
+            setTimeout(() => {
+                if (zhContent.classList.contains('lang-hidden')) {
+                    zhContent.classList.remove('lang-hidden');
+                    enContent.classList.add('lang-hidden');
+                } else {
+                    zhContent.classList.add('lang-hidden');
+                    enContent.classList.remove('lang-hidden');
+                }
+            }, 150);
+
+            // 清除效果
+            setTimeout(() => {
+                card.classList.remove('active-flash', 'clicking-effect');
+                document.body.classList.remove('screen-shake');
+            }, 500);
+        }
+    </script>
 </body>
 </html>
