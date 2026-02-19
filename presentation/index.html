@@ -29,17 +29,7 @@
         .cyber-font {
             font-family: 'Orbitron', sans-serif;
         }
-
-        /* 背景特效 */
-        .bg-grid {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: 
-                linear-gradient(to right, rgba(134, 0, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(134, 0, 255, 0.05) 1px, transparent 1px);
-            background-size: 50px 50px;
-            z-index: -1;
-        }
+        
         /* 背景網格 - 最底層 */
         .grid-overlay {
             position: fixed;
@@ -70,25 +60,6 @@
             pointer-events: none;
             z-index: -1;
             opacity: 1;
-        }
-
-        /* 裝飾性幾何背景 */
-        .floating-deco {
-            position: fixed;
-            color: var(--primary-neon);
-            opacity: 0.05;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 14vw;
-            font-weight: 900;
-            pointer-events: none;
-            z-index: -1;
-            user-select: none;
-        }
-
-        .floating-deco.outlined {
-            color: transparent;
-            -webkit-text-stroke: 1px var(--secondary-neon);
-            opacity: 0.1;
         }
 
         /* 超大 LOGO 呼吸光 */
@@ -830,8 +801,6 @@
     <!-- 視覺特效層 -->
     <div class="dots-overlay"></div>
     <div class="grid-overlay"></div>
-    
-    <div class="bg-grid"></div>
 
     <div class="min-h-screen flex flex-col pb-32">
         
