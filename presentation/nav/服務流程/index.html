@@ -371,7 +371,7 @@
             border-bottom: 3px solid currentColor;
         }
 
-        /* 控制面板（選單） */
+        /* 控制面板設計 */
         .control-panel {
             position: fixed;
             bottom: 20px;
@@ -398,7 +398,7 @@
         }
 
         @media (min-width: 768px) {
-            .panel-container { gap: 30px; padding: 15px 50px; }
+            .panel-container { gap: 30px; padding: 15px 50px; border-radius: 4px; }
             .panel-container::before, .panel-container::after {
                 content: "";
                 position: absolute;
@@ -410,28 +410,31 @@
             }
             .panel-container::before { left: -12px; transform: skewX(-15deg); border-left: 1px solid rgba(134, 0, 255, 0.4); }
             .panel-container::after { right: -12px; transform: skewX(15deg); border-right: 1px solid rgba(134, 0, 255, 0.4); }
+            .panel-btn { font-size: 1.15rem; } 
+        }
+
+        @media (max-width: 767px) {
+            .panel-container { gap: 6px; padding: 12px 10px; border-radius: 12px; }
+            .panel-btn { font-size: 0.85rem !important; letter-spacing: 0.05em !important; } 
         }
 
         .nav-item { position: relative; }
-        
-        /* 增加按鈕的內距 (padding-bottom)，拉開文字與 Energy Bar 的間距 */
+
         .panel-btn {
             position: relative;
-            display: inline-block;
             font-weight: bold;
             color: #ccc;
             transition: all 0.3s ease;
             white-space: nowrap;
             letter-spacing: 0.15em;
             cursor: pointer;
-            padding-bottom: 14px; /* 從 8px 增加到 14px 以拉開間距 */
+            padding-bottom: 8px;
             z-index: 2;
-            text-decoration: none;
         }
 
         .energy-bar {
             position: absolute;
-            bottom: 6px; /* 稍微向上調整位置，使其看起來更像底線而非邊界 */
+            bottom: 4px;
             left: 0;
             width: 0%;
             height: 2px;
@@ -440,9 +443,16 @@
             transition: width 0.3s ease;
         }
 
-        .nav-item:hover .panel-btn { color: var(--secondary-neon); text-shadow: 0 0 8px var(--secondary-neon); }
-        .nav-item:hover .energy-bar { width: 100%; }
+        .nav-item:hover .panel-btn {
+            color: var(--secondary-neon);
+            text-shadow: 0 0 8px var(--secondary-neon);
+        }
 
+        .nav-item:hover .energy-bar {
+            width: 100%;
+        }
+
+        /* 子選單樣式 */
         .submenu {
             position: absolute;
             bottom: 100%;
@@ -462,14 +472,39 @@
             margin-bottom: 15px;
         }
 
-        .nav-item:hover .submenu { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); pointer-events: auto; }
-        .submenu-link { display: block; padding: 10px 14px; color: #bbb; font-size: 0.95rem; text-decoration: none; transition: 0.2s; border-left: 2px solid transparent; }
-        .submenu-link:hover { background: rgba(134, 0, 255, 0.15); color: var(--secondary-neon); border-left: 2px solid var(--secondary-neon); padding-left: 18px; }
+        .submenu::before {
+            content: "";
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            width: 100%;
+            height: 25px;
+            background: transparent;
+        }
 
-        @media (max-width: 1024px) {
-            .s-path-container { padding: 40px 20px; }
-            .step-row:not(.reverse) .step-content { padding-left: 20px; }
-            .step-row.reverse .step-content { padding-right: 20px; }
+        .nav-item:hover .submenu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+            pointer-events: auto;
+        }
+
+        .submenu-link {
+            display: block;
+            padding: 10px 14px;
+            color: #bbb;
+            font-size: 0.95rem; 
+            text-align: left;
+            transition: all 0.2s;
+            border-left: 2px solid transparent;
+            text-decoration: none;
+        }
+
+        .submenu-link:hover {
+            background: rgba(134, 0, 255, 0.15);
+            color: var(--secondary-neon);
+            border-left: 2px solid var(--secondary-neon);
+            padding-left: 18px;
         }
 
         /* 手機版排版調整（重點修正區） */
