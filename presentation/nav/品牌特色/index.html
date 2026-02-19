@@ -23,68 +23,101 @@
             margin: 0;
             overflow-x: hidden;
             scroll-behavior: smooth;
-            padding-bottom: 150px;
+            padding-bottom: 120px;
             position: relative;
         }
 
-        /* 頁首樣式 (保持不變) */
+        .cyber-font { font-family: 'Orbitron', sans-serif; }
+        .mono { font-family: 'Share Tech Mono', monospace; }
+
+        /* 背景網格 - 最底層 */
+        .grid-overlay {
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(134, 0, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(134, 0, 255, 0.05) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: -2;
+        }
+
+        .grid-overlay::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%, transparent 0%, rgba(5, 5, 8, 0.8) 100%);
+        }
+
+        /* 點陣紋理背景 */
+        .dots-overlay {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(rgba(134, 0, 255, 0.2) 1.5px, transparent 1.5px);
+            background-size: 24px 24px;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 1;
+        }
+
+        /* 掃描線樣式 */
+        .scanline {
+            width: 100%;
+            height: 4px; /* 增加高度使其可見 */
+            z-index: 999; /* 提高層級 */
+            background: linear-gradient(to bottom, 
+                transparent, 
+                rgba(0, 243, 255, 0.15) 50%, 
+                rgba(0, 243, 255, 0.05) 80%, 
+                transparent
+            );
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+            position: fixed;
+            pointer-events: none;
+            animation: scanline 6s linear infinite; /* 稍微加快速度 */
+        }
+
+        @keyframes scanline {
+            0% { top: -10%; }
+            100% { top: 110%; }
+        }
+
+        /* 裝飾性幾何背景 */
+        .floating-deco {
+            position: fixed;
+            color: var(--primary-neon);
+            opacity: 0.05;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14vw;
+            font-weight: 900;
+            pointer-events: none;
+            z-index: -1;
+            user-select: none;
+        }
+
+        .floating-deco.outlined {
+            color: transparent;
+            -webkit-text-stroke: 1px var(--secondary-neon);
+            opacity: 0.1;
+        }
+
+        /* 滿版容器與邊界裝飾 */
+        .s-path-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 40px 80px 40px;
+            position: relative;
+        }
+
+        /* 頁首樣式強化 */
         header.site-header {
             background: linear-gradient(to bottom, var(--bg-dark) 0%, var(--bg-dark) 70%, transparent 100%);
             position: relative;
             z-index: 50; 
-            padding-top: 5rem;
-            padding-bottom: 2rem;
-            margin-bottom: 4rem;
+            border-bottom: 0px solid rgba(134, 0, 255, 0.1);
         }
-
-        /* 背景紋理 (保持不變) */
-        body::after {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 0);
-            background-size: 30px 30px;
-            z-index: 0; 
-            pointer-events: none;
-        }
-
-        .cyber-font { font-family: 'Orbitron', sans-serif; }
-
-        /* 背景裝飾文字 (保持不變) */
-        .floating-deco {
-            position: fixed;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 900;
-            font-size: 15vw;
-            line-height: 1;
-            z-index: -1;
-            pointer-events: none;
-            opacity: 0.03;
-            white-space: nowrap;
-            text-transform: uppercase;
-        }
-
-        .outlined {
-            -webkit-text-stroke: 2px rgba(255, 255, 255, 0.5);
-            color: transparent;
-        }
-
-        /* 掃描線效果 (保持不變) */
-        .scanline {
-            width: 100%;
-            height: 2px;
-            background: rgba(188, 19, 254, 0.1);
-            position: fixed;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-            animation: scan 6s linear infinite;
-            z-index: 60;
-        }
-        @keyframes scan { 0% { top: -10%; } 100% { top: 110%; } }
 
         /* 佈局結構 (保持不變) */
         .feature-grid {
@@ -382,8 +415,12 @@
     </style>
 </head>
 <body>
+    <!-- 視覺特效層 -->
+    <div class="dots-overlay"></div>
+    <div class="grid-overlay"></div>
     <div class="scanline"></div>
-
+    
+    <!-- 背景裝飾文字 -->
     <div class="floating-deco outlined" style="bottom: 15%; right: -2%;">XIAOMA</div>
 
     <!-- 標頭區域 -->
