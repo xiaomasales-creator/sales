@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>小馬娛樂 | 合作項目 PROJECT COMMISSION</title>
+    <title>小馬娛樂 | 品牌特色 BRAND IMAGE</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Noto+Sans+TC:wght@300;500;700;900&display=swap" rel="stylesheet">
     <style>
@@ -12,7 +12,6 @@
             --secondary-neon: #00f3ff;
             --neon-purple: #bc13fe;
             --neon-blue: #00f3ff;
-            --neon-red: #ff003c;
             --bg-dark: #050508;
         }
 
@@ -28,9 +27,8 @@
         }
 
         .cyber-font { font-family: 'Orbitron', sans-serif; }
-        .mono { font-family: 'Share Tech Mono', monospace; }
 
-        /* 背景網格 - 最底層 */
+        /* 背景網格 */
         .grid-overlay {
             position: fixed;
             inset: 0;
@@ -41,75 +39,30 @@
             pointer-events: none;
             z-index: -2;
         }
-
         .grid-overlay::after {
             content: "";
             position: absolute;
             inset: 0;
             background: radial-gradient(circle at 50% 50%, transparent 0%, rgba(5, 5, 8, 0.8) 100%);
         }
-
-        /* 點陣紋理背景 */
         .dots-overlay {
             position: fixed;
             inset: 0;
-            width: 100%;
-            height: 100%;
             background-image: radial-gradient(rgba(134, 0, 255, 0.2) 1.5px, transparent 1.5px);
             background-size: 24px 24px;
             pointer-events: none;
             z-index: -1;
-            opacity: 1;
         }
-
-        /* 掃描線樣式 */
         .scanline {
             width: 100%;
-            height: 4px; /* 增加高度使其可見 */
-            z-index: 999; /* 提高層級 */
-            background: linear-gradient(to bottom, 
-                transparent, 
-                rgba(0, 243, 255, 0.15) 50%, 
-                rgba(0, 243, 255, 0.05) 80%, 
-                transparent
-            );
-            box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+            height: 4px;
+            z-index: 999;
+            background: linear-gradient(to bottom, transparent, rgba(0, 243, 255, 0.1) 50%, transparent);
             position: fixed;
             pointer-events: none;
-            animation: scanline 6s linear infinite; /* 稍微加快速度 */
+            animation: scanline 6s linear infinite;
         }
-
-        @keyframes scanline {
-            0% { top: -10%; }
-            100% { top: 110%; }
-        }
-
-        /* 裝飾性幾何背景 */
-        .floating-deco {
-            position: fixed;
-            color: var(--primary-neon);
-            opacity: 0.05;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 14vw;
-            font-weight: 900;
-            pointer-events: none;
-            z-index: -1;
-            user-select: none;
-        }
-
-        .floating-deco.outlined {
-            color: transparent;
-            -webkit-text-stroke: 1px var(--secondary-neon);
-            opacity: 0.1;
-        }
-
-        /* 滿版容器與邊界裝飾 */
-        .s-path-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 40px 40px 80px 40px;
-            position: relative;
-        }
+        @keyframes scanline { 0% { top: -10%; } 100% { top: 110%; } }
 
         /* 頁首樣式強化 */
         header.site-header {
@@ -124,9 +77,9 @@
             position: relative;
             max-width: 1400px;
             margin: 0 auto;
-            min-height: 750px;
+            min-height: 850px;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
             padding: 40px;
         }
@@ -135,14 +88,19 @@
         .side-column {
             display: flex;
             flex-direction: column;
-            gap: 40px;
+            gap: 50px;
             z-index: 10;
+            width: 320px;
         }
 
         /* 中心 HUD 核心 */
         .hud-center-area {
-            position: relative;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
             width: 400px;
+            height: 400px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -156,29 +114,57 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            cursor: pointer;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .hud-core:active {
+            transform: scale(0.85);
         }
 
         .hud-ring {
             position: absolute;
             border-radius: 50%;
-            border: 2px solid transparent;
-            border-top-color: var(--secondary-neon);
             animation: rotate 4s linear infinite;
         }
-        .ring-1 { width: 100%; height: 100%; border-width: 1px; opacity: 0.3; border-top-color: var(--neon-purple); }
-        .ring-2 { width: 85%; height: 85%; border-width: 2px; border-style: dashed; opacity: 0.6; animation-direction: reverse; animation-duration: 6s; }
+        
+        .ring-1 { 
+            width: 100%; 
+            height: 100%; 
+            border: 1px solid var(--neon-purple); 
+            opacity: 0.2; 
+        }
+
+        .ring-gradient-flow {
+            width: 88%;
+            height: 88%;
+            background: conic-gradient(from 0deg, var(--secondary-neon) 0%, transparent 40%, transparent 100%);
+            mask: radial-gradient(circle, transparent 69%, black 70%);
+            -webkit-mask: radial-gradient(circle, transparent 69%, black 70%);
+            border-radius: 50%;
+            filter: drop-shadow(0 0 8px var(--secondary-neon));
+            animation: rotate 2s linear infinite;
+            opacity: 0.8;
+        }
+
         .ring-3 { 
             width: 65%; height: 65%; 
             background: radial-gradient(circle, rgba(0, 243, 255, 0.3) 0%, transparent 75%);
             border: 1px solid var(--secondary-neon);
             box-shadow: 0 0 40px rgba(0, 243, 255, 0.4);
+            animation: pulseInner 2s ease-in-out infinite alternate;
         }
 
         @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        
+        @keyframes pulseInner {
+            from { transform: scale(0.95); opacity: 0.6; }
+            to { transform: scale(1.05); opacity: 1; }
+        }
 
         /* 項目方塊樣式 */
         .tech-box {
-            width: 320px;
+            width: 100%;
             padding: 24px;
             background: rgba(5, 10, 20, 0.85);
             border: 1px solid rgba(0, 243, 255, 0.2);
@@ -186,9 +172,36 @@
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
+            overflow: hidden;
         }
 
-        /* 轉角裝飾 */
+        /* 掃描遮罩特效 */
+        .scan-glitch {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg, 
+                transparent, 
+                rgba(0, 243, 255, 0.2) 50%, 
+                transparent
+            );
+            border-right: 2px solid var(--secondary-neon);
+            z-index: 20;
+            pointer-events: none;
+        }
+
+        .tech-box.switching .scan-glitch {
+            animation: scanRewrite 0.6s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+        }
+
+        @keyframes scanRewrite {
+            0% { left: -100%; opacity: 1; }
+            100% { left: 100%; opacity: 0; }
+        }
+
         .tech-box::before {
             content: "";
             position: absolute;
@@ -211,59 +224,40 @@
             transform: scale(1.05);
         }
 
-        /* 加大標題與敘述 */
-        .box-title-zh { 
+        /* 標題與敘述 */
+        .box-title-zh, .box-title-en { 
             color: var(--secondary-neon); 
             font-weight: 900; 
-            font-size: 1.8rem; /* 從 1.4 加大 */
+            font-size: 1.8rem; 
             letter-spacing: 2px; 
             text-shadow: 0 0 15px rgba(0, 243, 255, 0.6); 
             line-height: 1.2;
+            transition: opacity 0.3s;
         }
-        .box-title-en { 
-            color: white; 
-            font-family: 'Orbitron', sans-serif; 
-            font-size: 0.75rem; 
-            opacity: 0.5; 
-            margin-top: 4px; 
-            text-transform: uppercase; 
-            letter-spacing: 1px;
+
+        .box-title-en {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.4rem;
+            text-transform: uppercase;
         }
+
         .box-desc { 
             color: #ddd; 
-            font-size: 1.05rem; /* 從 0.9 加大 */
+            font-size: 1.05rem; 
             margin-top: 14px; 
-            line-height: 1.6; /* 增加行高提升閱讀感 */
+            line-height: 1.6; 
             border-top: 1px solid rgba(255,255,255,0.15); 
             padding-top: 14px; 
             font-weight: 300;
+            transition: opacity 0.3s;
         }
-
-        /* SVG 連接線 */
-        .connector-svg {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-        .line-path {
-            stroke: var(--secondary-neon);
-            stroke-width: 1.5;
-            fill: none;
-            opacity: 0.25;
-            stroke-dasharray: 5;
-            animation: dash 20s linear infinite;
-        }
-        @keyframes dash { from { stroke-dashoffset: 1000; } to { stroke-dashoffset: 0; } }
 
         .lang-hidden { display: none; }
 
         @media (max-width: 1024px) {
-            .tech-matrix-wrapper { flex-direction: column; height: auto; gap: 40px; }
-            .hud-center-area { order: -1; margin-bottom: 20px; }
-            .side-column { width: 100%; align-items: center; }
-            .tech-box { width: 95%; max-width: 450px; }
-            .connector-svg { display: none; }
+            .tech-matrix-wrapper { flex-direction: column; height: auto; gap: 60px; padding-top: 100px; }
+            .hud-center-area { position: relative; left: auto; top: auto; transform: none; margin-bottom: 40px; order: -1; }
+            .side-column { width: 95%; max-width: 450px; align-items: center; }
         }
 
         /* 控制面板設計 */
@@ -404,55 +398,49 @@
     </style>
 </head>
 <body>
-    <!-- 視覺特效層 -->
     <div class="dots-overlay"></div>
     <div class="grid-overlay"></div>
     <div class="scanline"></div>
     
-    <!-- 背景裝飾文字 -->
-    <div class="floating-deco outlined" style="bottom: 15%; right: -2%;">XIAOMA</div>
-
-    <!-- 標頭區域 -->
     <header class="site-header w-full pt-20 pb-16 overflow-hidden">
         <div class="max-w-[1400px] mx-auto px-10 flex flex-col items-start relative">
             <div class="flex items-center gap-3 mb-4">
                 <div class="deco-block w-[10px] h-[10px] bg-[#bc13fe] animate-pulse"></div>
                 <span class="cyber-font text-[10px] tracking-[0.6em] text-white/40 uppercase">XIAOMA ENT.</span>
             </div>
-            
             <div class="flex flex-col mb-4">
                 <div class="flex items-end gap-6 mb-2">
                     <h1 class="text-5xl md:text-7xl font-black italic tracking-tighter leading-none">合作項目</h1>
                 </div>
                 <span class="cyber-font text-xl md:text-3xl font-black text-white/10 uppercase italic tracking-widest leading-none">PROJECT_COMMISSION</span>
             </div>
-                <div class="w-[60px] h-[4px] bg-gradient-to-r from-[#bc13fe] to-[#00d2ff] mb-4"></div>
-                <span class="cyber-font text-[10px] text-white/30 tracking-[0.2em] uppercase">Touch the core to view in English</span>
-            </div>
+            <div class="w-[60px] h-[4px] bg-gradient-to-r from-[#bc13fe] to-[#00d2ff] mb-4"></div>
+            <span class="cyber-font text-[10px] text-white/30 tracking-[0.2em] uppercase">Touch the core to view in English</span>
         </div>
     </header>
 
-    <!-- 主要內容區域：加大文字 -->
-    <main class="max-w-full mx-auto pb-48 px-4">
+    <main class="max-w-[1400px] mx-auto pb-48 px-4 relative">
         <div class="tech-matrix-wrapper">
-            
             <!-- 左側卡片列 -->
             <div class="side-column">
-                <div class="tech-box" onclick="toggleLanguage(this)" id="box-left-1">
+                <div class="tech-box" onclick="toggleLanguage(this)">
+                    <div class="scan-glitch"></div>
                     <div class="box-title-zh">技術探索</div>
-                    <div class="box-title-en">Technological Exploration</div>
+                    <div class="box-title-en lang-hidden">TECH EXPLORATION</div>
                     <div class="box-desc content-zh">探索最新的 AI 與虛擬實境技術，為創作者提供最先進的工具與數據分析。</div>
                     <div class="box-desc content-en lang-hidden">Pushing the boundaries of AI and VR to empower every creator with advanced analytics.</div>
                 </div>
-                <div class="tech-box" onclick="toggleLanguage(this)" id="box-left-2">
+                <div class="tech-box" onclick="toggleLanguage(this)">
+                    <div class="scan-glitch"></div>
                     <div class="box-title-zh">智能酷玩</div>
-                    <div class="box-title-en">Intelligent Cool Play</div>
+                    <div class="box-title-en lang-hidden">SMART PLAY</div>
                     <div class="box-desc content-zh">結合遊戲化機制與社群互動，打造新型態的數位娛樂體驗，增加粉絲黏著度。</div>
                     <div class="box-desc content-en lang-hidden">Merging gamification with social interaction to create sticky digital entertainment experiences.</div>
                 </div>
-                <div class="tech-box" onclick="toggleLanguage(this)" id="box-left-3">
+                <div class="tech-box" onclick="toggleLanguage(this)">
+                    <div class="scan-glitch"></div>
                     <div class="box-title-zh">科技金融</div>
-                    <div class="box-title-en">Tech Finance</div>
+                    <div class="box-title-en lang-hidden">TECH FINTECH</div>
                     <div class="box-desc content-zh">利用數據建模與收益分配系統，優化創作者與品牌的商業合作價值。</div>
                     <div class="box-desc content-en lang-hidden">Optimizing commercial value through data modeling and automated revenue systems.</div>
                 </div>
@@ -460,49 +448,42 @@
 
             <!-- 中心 HUD 核心 -->
             <div class="hud-center-area">
-                <div class="hud-core">
+                <div class="hud-core" onclick="toggleAllLanguages()">
                     <div class="hud-ring ring-1"></div>
-                    <div class="hud-ring ring-2"></div>
+                    <div class="hud-ring ring-gradient-flow"></div>
                     <div class="hud-ring ring-3"></div>
                     <div class="absolute text-center z-10">
                         <div class="cyber-font text-[12px] text-cyan-400 tracking-widest mb-1">SYSTEM</div>
                         <div class="text-3xl font-black italic tracking-tighter text-white">ACTIVE</div>
-                        <div class="cyber-font text-[8px] text-white/40 mt-1">SECURE_LINK</div>
+                        <div class="cyber-font text-[8px] text-white/40 mt-1">DATA_SWITCH</div>
                     </div>
                 </div>
-                <!-- SVG 連接線 (僅桌面端顯示) -->
-                <svg class="connector-svg" id="lines-svg" viewBox="0 0 1400 800" preserveAspectRatio="none">
-                    <line class="line-path" x1="50%" y1="50%" x2="35%" y2="25%" />
-                    <line class="line-path" x1="50%" y1="50%" x2="32%" y2="50%" />
-                    <line class="line-path" x1="50%" y1="50%" x2="35%" y2="75%" />
-                    <line class="line-path" x1="50%" y1="50%" x2="65%" y2="25%" />
-                    <line class="line-path" x1="50%" y1="50%" x2="68%" y2="50%" />
-                    <line class="line-path" x1="50%" y1="50%" x2="65%" y2="75%" />
-                </svg>
             </div>
 
             <!-- 右側卡片列 -->
             <div class="side-column">
-                <div class="tech-box" onclick="toggleLanguage(this)" id="box-right-1">
+                <div class="tech-box" onclick="toggleLanguage(this)">
+                    <div class="scan-glitch"></div>
                     <div class="box-title-zh">智慧零售</div>
-                    <div class="box-title-en">Smart Retail</div>
+                    <div class="box-title-en lang-hidden">SMART RETAIL</div>
                     <div class="box-desc content-zh">數位化商務對接，讓合作品牌在虛擬社群中實現精準銷售與流量轉化。</div>
                     <div class="box-desc content-en lang-hidden">Enabling precise sales and traffic conversion for brands within virtual communities.</div>
                 </div>
-                <div class="tech-box" onclick="toggleLanguage(this)" id="box-right-2">
+                <div class="tech-box" onclick="toggleLanguage(this)">
+                    <div class="scan-glitch"></div>
                     <div class="box-title-zh">量子行銷</div>
-                    <div class="box-title-en">Quantum Marketing</div>
+                    <div class="box-title-en lang-hidden">QUANTUM ADS</div>
                     <div class="box-desc content-zh">透過大數據與精準演算法，鎖定目標客群，發揮爆炸性社群聲量。</div>
                     <div class="box-desc content-en lang-hidden">Targeting specific segments via advanced algorithms for explosive social impact.</div>
                 </div>
-                <div class="tech-box" onclick="toggleLanguage(this)" id="box-right-3">
+                <div class="tech-box" onclick="toggleLanguage(this)">
+                    <div class="scan-glitch"></div>
                     <div class="box-title-zh">極速執行</div>
-                    <div class="box-title-en">High-Speed Execution</div>
+                    <div class="box-title-en lang-hidden">FAST EXECUTION</div>
                     <div class="box-desc content-zh">專業團隊與高效能工作流，將創意在最短時間內完成高品質落地。</div>
                     <div class="box-desc content-en lang-hidden">Turning creative concepts into reality with high-performance professional workflows.</div>
                 </div>
             </div>
-
         </div>
     </main>
 
@@ -514,8 +495,8 @@
                 <div class="energy-bar"></div>
                 <div class="submenu">
                     <a href="https://xiaomasales-creator.github.io/sales/presentation/index.html" class="submenu-link">首頁</a>
-                    <a href="https://xiaomasales-creator.github.io/sales/presentation/nav/品牌特色/index.html" class="submenu-link">品牌特色</a>
-                    <a href="https://xiaomasales-creator.github.io/sales/presentation/nav/合作項目/index.html" class="submenu-link">合作項目</a>
+                    <a href="https://xiaomasales-creator.github.io/sales/presentation/nav/%E5%93%81%E7%89%8C%E7%89%B9%E8%89%B2/index.html" class="submenu-link">品牌特色</a>
+                    <a href="https://xiaomasales-creator.github.io/sales/presentation/nav/%E5%90%88%E4%BD%9C%E9%A0%85%E7%9B%AE/index.html" class="submenu-link">合作項目</a>
                     <a href="https://xiaomasales-creator.github.io/sales/presentation/nav/%E6%9C%8D%E5%8B%99%E6%B5%81%E7%A8%8B/index.html" class="submenu-link">服務流程</a>
                 </div>
             </div>
@@ -558,18 +539,38 @@
     </nav>
 
     <script>
+        // 切換單個卡片語言並觸發特效
         function toggleLanguage(card) {
-            const zh = card.querySelectorAll('.content-zh');
-            const en = card.querySelectorAll('.content-en');
-            
-            zh.forEach(el => el.classList.toggle('lang-hidden'));
-            en.forEach(el => el.classList.toggle('lang-hidden'));
-            
-            // 點擊觸覺回饋
-            card.style.transform = 'scale(0.95)';
+            // 觸發掃描動畫
+            card.classList.remove('switching');
+            void card.offsetWidth; // 強制重繪以重啟動畫
+            card.classList.add('switching');
+
             setTimeout(() => {
-                card.style.transform = '';
-            }, 150);
+                const zhTitles = card.querySelectorAll('.box-title-zh');
+                const enTitles = card.querySelectorAll('.box-title-en');
+                const zhDescs = card.querySelectorAll('.content-zh');
+                const enDescs = card.querySelectorAll('.content-en');
+                
+                zhTitles.forEach(el => el.classList.toggle('lang-hidden'));
+                enTitles.forEach(el => el.classList.toggle('lang-hidden'));
+                zhDescs.forEach(el => el.classList.toggle('lang-hidden'));
+                enDescs.forEach(el => el.classList.toggle('lang-hidden'));
+            }, 150); // 在掃描條到達中間時進行文字切換
+
+            // 移除動畫標籤以便下次點擊
+            setTimeout(() => card.classList.remove('switching'), 600);
+        }
+
+        // 點擊中央核心時，一次切換所有卡片語言
+        function toggleAllLanguages() {
+            const allCards = document.querySelectorAll('.tech-box');
+            allCards.forEach((card, index) => {
+                // 增加一點點延遲感的序列觸發，更有科幻感
+                setTimeout(() => {
+                    toggleLanguage(card);
+                }, index * 50);
+            });
         }
     </script>
 </body>
