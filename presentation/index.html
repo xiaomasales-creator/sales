@@ -977,7 +977,7 @@
                 <div class="flex flex-col gap-6">
                     <!-- 【口頭禪區塊】 -->
                     <div class="catchphrase-block">
-                        <div id="modal-quote" class="catchphrase-text">「載入中...」</div>
+                        <div id="modal-catchphrase" class="catchphrase-text">「載入中...」</div>
                     </div>
                     <div class="info-block">
                         <span class="info-label">主播簡介</span>
@@ -1324,6 +1324,8 @@
             document.getElementById('modal-career-start').innerText = t.career.toUpperCase();
             document.getElementById('modal-stream-type').innerText = t.streamType;
             document.getElementById('modal-game-type').innerText = t.gameType;
+            // 口頭禪文字
+            document.getElementById('modal-catchphrase').innerText = t.quote;
 
             document.getElementById('male-bar').style.width = t.malePct + '%';
             document.getElementById('female-bar').style.width = t.femalePct + '%';
