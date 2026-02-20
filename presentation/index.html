@@ -795,6 +795,44 @@
             color: #fff;
             text-transform: uppercase;
         }
+        /* 口頭禪區塊設計 */
+        .catchphrase-block {
+            position: relative;
+            padding: 15px 20px;
+            margin-bottom: 25px;
+            background: linear-gradient(90deg, rgba(134, 0, 255, 0.1) 0%, transparent 100%);
+            border-left: 4px solid var(--secondary);
+            overflow: hidden;
+        }
+
+        .catchphrase-block::before {
+            content: "“";
+            position: absolute;
+            top: -10px; left: 5px;
+            font-size: 60px;
+            color: var(--secondary);
+            opacity: 0.1;
+            font-family: serif;
+        }
+
+        .catchphrase-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #fff;
+            font-style: italic;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+        }
+
+        .catchphrase-label {
+            display: block;
+            font-size: 10px;
+            color: var(--secondary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 5px;
+            opacity: 0.8;
+        }
     </style>
 </head>
 <body>
@@ -946,9 +984,9 @@
                         </div>
                     </div>
                 </div>
-                <!-- 【新增設計】口頭禪區塊 -->
+                <!-- 【口頭禪區塊】 -->
                 <div class="catchphrase-block">
-                    <div id="modal-catchphrase" class="catchphrase-text">「口頭禪」</div>
+                    <div id="modal-catchphrase" class="catchphrase-text">「載入中...」</div>
                     <div class="catchphrase-label cyber-font">Favorite Quote</div>
                 </div>
                 <div class="flex flex-col gap-6">
