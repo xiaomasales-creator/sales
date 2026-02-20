@@ -959,27 +959,29 @@
                 </div>
             </div>
             <div class="cyber-body">
-                <div class="photo-carousel-wrapper">
-                    <div class="slider-arrow-v2 arrow-v2-left" onclick="moveCarousel(-1)">&lsaquo;</div>
-                    <div class="slider-arrow-v2 arrow-v2-right" onclick="moveCarousel(1)">&rsaquo;</div>
-                    <div class="card-container" id="carousel-cards">
-                        <div class="cyber-photo-card" onclick="setCarouselIndex(0)">
-                            <div class="card-inner"><div class="tech-ring"></div><div class="photo-mask"><img src="" id="photo-0"></div></div>
-                        </div>
-                        <div class="cyber-photo-card" onclick="setCarouselIndex(1)">
-                            <div class="card-inner"><div class="tech-ring"></div><div class="photo-mask"><img src="" id="photo-1"></div></div>
-                        </div>
-                        <div class="cyber-photo-card" onclick="setCarouselIndex(2)">
-                            <div class="card-inner"><div class="tech-ring"></div><div class="photo-mask"><img src="" id="photo-2"></div></div>
+                <div class="cyber-body-left">
+                    <div class="photo-carousel-wrapper">
+                        <div class="slider-arrow-v2 arrow-v2-left" onclick="moveCarousel(-1)">&lsaquo;</div>
+                        <div class="slider-arrow-v2 arrow-v2-right" onclick="moveCarousel(1)">&rsaquo;</div>
+                        <div class="card-container" id="carousel-cards">
+                            <div class="cyber-photo-card" onclick="setCarouselIndex(0)">
+                                <div class="card-inner"><div class="tech-ring"></div><div class="photo-mask"><img src="" id="photo-0"></div></div>
+                            </div>
+                            <div class="cyber-photo-card" onclick="setCarouselIndex(1)">
+                                <div class="card-inner"><div class="tech-ring"></div><div class="photo-mask"><img src="" id="photo-1"></div></div>
+                            </div>
+                            <div class="cyber-photo-card" onclick="setCarouselIndex(2)">
+                                <div class="card-inner"><div class="tech-ring"></div><div class="photo-mask"><img src="" id="photo-2"></div></div>
+                            </div>
                         </div>
                     </div>
+                    <!-- 【口頭禪區塊】 -->
+                    <div class="flex flex-col gap-6">
+                        <div class="catchphrase-block">
+                            <div id="modal-catchphrase" class="catchphrase-text">「載入中...」</div>
+                        </div>
+                    </div>  
                 </div>
-                <!-- 【口頭禪區塊】 -->
-                <div class="flex flex-col gap-6">
-                  <div class="catchphrase-block">
-                    <div id="modal-catchphrase" class="catchphrase-text">「載入中...」</div>
-                  </div>  
-                </div>  
                 <div class="flex flex-col gap-6">
                     <div class="info-block">
                         <span class="info-label">主播簡介</span>
