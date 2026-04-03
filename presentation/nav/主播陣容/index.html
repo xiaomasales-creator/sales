@@ -158,72 +158,141 @@
             overflow-y: auto;
         }
 
-        /* 底部控制面板 */
+        /* 控制面板設計 */
         .control-panel {
             position: fixed;
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            width: 95%;
+            width: 98%;
             max-width: 1100px;
             z-index: 1000;
         }
 
         .panel-container {
+            position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 40px;
-            padding: 15px 50px;
+            gap: 10px;
+            padding: 12px 20px;
             background: linear-gradient(180deg, rgba(20, 20, 20, 0.9) 0%, rgba(5, 5, 5, 0.95) 100%);
             backdrop-filter: blur(20px);
             border-top: 1px solid rgba(134, 0, 255, 0.4);
+            border-bottom: 2px solid rgba(134, 0, 255, 0.2);
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.8);
             border-radius: 4px;
-            position: relative;
         }
 
-        .nav-item {
-            font-family: 'Share Tech Mono';
-            color: #aaa;
-            font-size: 14px;
-            letter-spacing: 2px;
+        @media (min-width: 768px) {
+            .panel-container { gap: 30px; padding: 15px 50px; border-radius: 4px; }
+            .panel-container::before, .panel-container::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                width: 25px;
+                height: 100%;
+                background: inherit;
+                z-index: -1;
+            }
+            .panel-container::before { left: -12px; transform: skewX(-15deg); border-left: 1px solid rgba(134, 0, 255, 0.4); }
+            .panel-container::after { right: -12px; transform: skewX(15deg); border-right: 1px solid rgba(134, 0, 255, 0.4); }
+            .panel-btn { font-size: 1.15rem; } 
+        }
+
+        @media (max-width: 767px) {
+            .panel-container { gap: 6px; padding: 12px 10px; border-radius: 12px; }
+            .panel-btn { font-size: 0.85rem !important; letter-spacing: 0.05em !important; } 
+        }
+
+        .nav-item { position: relative; }
+
+        .panel-btn {
+            position: relative;
+            font-weight: bold;
+            color: #ccc;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            letter-spacing: 0.15em;
             cursor: pointer;
-            position: relative;
-            transition: 0.3s;
+            padding-bottom: 8px;
+            z-index: 2;
         }
 
-        .nav-item:hover { color: var(--secondary-neon); text-shadow: 0 0 10px var(--secondary-neon); }
+        .energy-bar {
+            position: absolute;
+            bottom: 4px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: var(--secondary-neon);
+            box-shadow: 0 0 10px var(--secondary-neon);
+            transition: width 0.3s ease;
+        }
 
+        .nav-item:hover .panel-btn {
+            color: var(--secondary-neon);
+            text-shadow: 0 0 8px var(--secondary-neon);
+        }
+
+        .nav-item:hover .energy-bar {
+            width: 100%;
+        }
+
+        /* 子選單樣式 */
         .submenu {
             position: absolute;
             bottom: 100%;
             left: 50%;
             transform: translateX(-50%) translateY(10px);
-            background: rgba(10, 10, 10, 0.95);
+            background: rgba(5, 5, 5, 0.98);
             border: 1px solid var(--primary-neon);
             min-width: 180px;
-            padding: 15px;
             opacity: 0;
             visibility: hidden;
-            transition: 0.3s;
-            margin-bottom: 20px;
+            transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s;
+            backdrop-filter: blur(15px);
+            padding: 12px;
+            box-shadow: 0 0 30px rgba(134, 0, 255, 0.4);
+            pointer-events: none;
+            z-index: 1001;
+            margin-bottom: 15px;
+        }
+
+        .submenu::before {
+            content: "";
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            width: 100%;
+            height: 25px;
+            background: transparent;
         }
 
         .nav-item:hover .submenu {
             opacity: 1;
             visibility: visible;
             transform: translateX(-50%) translateY(0);
+            pointer-events: auto;
         }
 
-        .submenu a {
+        .submenu-link {
             display: block;
-            padding: 8px 0;
-            color: #888;
-            font-size: 12px;
-            transition: 0.2s;
+            padding: 10px 14px;
+            color: #bbb;
+            font-size: 0.95rem; 
+            text-align: left;
+            transition: all 0.2s;
+            border-left: 2px solid transparent;
+            text-decoration: none;
         }
 
-        .submenu a:hover { color: #fff; padding-left: 5px; }
+        .submenu-link:hover {
+            background: rgba(134, 0, 255, 0.15);
+            color: var(--secondary-neon);
+            border-left: 2px solid var(--secondary-neon);
+            padding-left: 18px;
+        }
 
         /* 案例卡片 */
         .case-card {
@@ -232,11 +301,6 @@
             transition: 0.3s;
         }
         .case-card:hover { border-color: var(--secondary-neon); transform: translateY(-3px); }
-
-        /* 滾動條樣式 */
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: #050508; }
-        ::-webkit-scrollbar-thumb { background: var(--primary-neon); }
     </style>
 </head>
 <body>
@@ -323,33 +387,53 @@
         </div>
     </div>
 
-    <!-- 控制面板設計 -->
+    <!-- 底部控制面板 -->
     <nav class="control-panel">
         <div class="panel-container">
             <div class="nav-item">
-                <span class="cyber-font">HOME</span>
+                <span class="panel-btn">關於小馬</span>
+                <div class="energy-bar"></div>
                 <div class="submenu">
-                    <a href="#">品牌首頁 BRAND HOME</a>
-                    <a href="#">最新消息 LATEST NEWS</a>
-                </div>
-            </div>
-            <div class="nav-item active text-[#00f3ff]">
-                <span class="cyber-font">TALENTS</span>
-                <div class="submenu">
-                    <a href="#" class="text-white">主播陣容 ROSTER</a>
-                    <a href="#">商案合作 COOPERATION</a>
-                    <a href="#">加入我們 RECRUIT</a>
+                    <a href="https://xiaomasales-creator.github.io/sales/presentation/index.html" class="submenu-link">首頁</a>
+                    <a href="#" class="submenu-link">品牌特色</a>
+                    <a href="#" class="submenu-link">合作項目</a>
+                    <a href="https://xiaomasales-creator.github.io/sales/presentation/nav/%E6%9C%8D%E5%8B%99%E6%B5%81%E7%A8%8B/index.html" class="submenu-link">服務流程</a>
                 </div>
             </div>
             <div class="nav-item">
-                <span class="cyber-font">BUSINESS</span>
+                <span class="panel-btn">網紅經紀</span>
+                <div class="energy-bar"></div>
                 <div class="submenu">
-                    <a href="#">服務項目 SERVICES</a>
-                    <a href="#">成功案例 CASE STUDY</a>
+                    <a href="#" class="submenu-link">小馬主播陣容</a>
+                    <a href="#" class="submenu-link">經典案例</a>
+                    <a href="#" class="submenu-link">經常合作KOL</a>
                 </div>
             </div>
             <div class="nav-item">
-                <span class="cyber-font">CONTACT</span>
+                <span class="panel-btn">活動花絮</span>
+                <div class="energy-bar"></div>
+                <div class="submenu">
+                    <a href="#" class="submenu-link">商案總覽</a>
+                    <a href="#" class="submenu-link">線下活動花絮</a>
+                </div>
+            </div>
+            <div class="nav-item">
+                <span class="panel-btn">其他服務</span>
+                <div class="energy-bar"></div>
+                <div class="submenu">
+                    <a href="#" class="submenu-link">影音剪輯</a>
+                    <a href="#" class="submenu-link">網頁製作</a>
+                    <a href="#" class="submenu-link">美術設計</a>
+                    <a href="#" class="submenu-link">社群經營</a>
+                </div>
+            </div>
+            <div class="nav-item">
+                <span class="panel-btn">聯絡我們</span>
+                <div class="energy-bar"></div>
+                <div class="submenu">
+                    <a href="#" class="submenu-link">工商洽談</a>
+                    <a href="#" class="submenu-link">加入小馬</a>
+                </div>
             </div>
         </div>
     </nav>
@@ -357,11 +441,11 @@
     <script>
         let currentLang = 'ch';
 
-        // 模擬主播數據
+        // 主播數據
         const talentNames = [
-            "小馬大將軍", "霓虹喵喵", "電子幻影", "數據浪客", "極光女神", 
-            "代碼殺手", "虛擬戰士", "像素精靈", "流光射手", "矩陣先鋒", 
-            "核心脈衝", "超頻駭客", "極限傳奇"
+            "狂暴小建", "UZRA", "豆豆", "牛牛妹", "西瓜", 
+            "純純", "萌萌吃吃", "小舞", "小鹽", "妖乖", 
+            "丫布丁丁", "奶茶蜜", "妮塔"
         ];
 
         const talentNamesEn = [
