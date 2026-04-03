@@ -123,16 +123,141 @@
 
         @keyframes rotate-glow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        /* 控制面板 */
-        .control-panel { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 95%; max-width: 1100px; z-index: 1000; }
-        .panel-container {
-            display: flex; justify-content: center; align-items: center; gap: 40px; padding: 15px 50px;
-            background: linear-gradient(180deg, rgba(20, 20, 20, 0.9) 0%, rgba(5, 5, 5, 0.95) 100%);
-            backdrop-filter: blur(20px); border-top: 1px solid rgba(134, 0, 255, 0.4); border-radius: 4px;
+        /* 控制面板設計 */
+        .control-panel {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            max-width: 1100px;
+            z-index: 1000;
         }
 
-        .nav-item { font-family: 'Share Tech Mono'; color: #aaa; font-size: 14px; letter-spacing: 2px; cursor: pointer; transition: 0.3s; }
-        .nav-item:hover { color: var(--secondary-neon); text-shadow: 0 0 10px var(--secondary-neon); }
+        .panel-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 20px;
+            background: linear-gradient(180deg, rgba(20, 20, 20, 0.9) 0%, rgba(5, 5, 5, 0.95) 100%);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(134, 0, 255, 0.4);
+            border-bottom: 2px solid rgba(134, 0, 255, 0.2);
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.8);
+            border-radius: 4px;
+        }
+
+        @media (min-width: 768px) {
+            .panel-container { gap: 30px; padding: 15px 50px; border-radius: 4px; }
+            .panel-container::before, .panel-container::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                width: 25px;
+                height: 100%;
+                background: inherit;
+                z-index: -1;
+            }
+            .panel-container::before { left: -12px; transform: skewX(-15deg); border-left: 1px solid rgba(134, 0, 255, 0.4); }
+            .panel-container::after { right: -12px; transform: skewX(15deg); border-right: 1px solid rgba(134, 0, 255, 0.4); }
+            .panel-btn { font-size: 1.15rem; } 
+        }
+
+        @media (max-width: 767px) {
+            .panel-container { gap: 6px; padding: 12px 10px; border-radius: 12px; }
+            .panel-btn { font-size: 0.85rem !important; letter-spacing: 0.05em !important; } 
+        }
+
+        .nav-item { position: relative; }
+
+        .panel-btn {
+            position: relative;
+            font-weight: bold;
+            color: #ccc;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            letter-spacing: 0.15em;
+            cursor: pointer;
+            padding-bottom: 8px;
+            z-index: 2;
+        }
+
+        .energy-bar {
+            position: absolute;
+            bottom: 4px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: var(--secondary-neon);
+            box-shadow: 0 0 10px var(--secondary-neon);
+            transition: width 0.3s ease;
+        }
+
+        .nav-item:hover .panel-btn {
+            color: var(--secondary-neon);
+            text-shadow: 0 0 8px var(--secondary-neon);
+        }
+
+        .nav-item:hover .energy-bar {
+            width: 100%;
+        }
+
+        /* 子選單樣式 */
+        .submenu {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: rgba(5, 5, 5, 0.98);
+            border: 1px solid var(--primary-neon);
+            min-width: 180px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s;
+            backdrop-filter: blur(15px);
+            padding: 12px;
+            box-shadow: 0 0 30px rgba(134, 0, 255, 0.4);
+            pointer-events: none;
+            z-index: 1001;
+            margin-bottom: 15px;
+        }
+
+        .submenu::before {
+            content: "";
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            width: 100%;
+            height: 25px;
+            background: transparent;
+        }
+
+        .nav-item:hover .submenu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+            pointer-events: auto;
+        }
+
+        .submenu-link {
+            display: block;
+            padding: 10px 14px;
+            color: #bbb;
+            font-size: 0.95rem; 
+            text-align: left;
+            transition: all 0.2s;
+            border-left: 2px solid transparent;
+            text-decoration: none;
+        }
+
+        .submenu-link:hover {
+            background: rgba(134, 0, 255, 0.15);
+            color: var(--secondary-neon);
+            border-left: 2px solid var(--secondary-neon);
+            padding-left: 18px;
+        }
     </style>
 </head>
 <body>
@@ -158,16 +283,58 @@
         <!-- Hashtag 篩選列 -->
         <div class="flex flex-wrap gap-2 mb-16" id="filter-bar"></div>
 
-        <!-- 主播網格 (點擊會跳轉至指定連結) -->
+        <!-- 主播網格 -->
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-y-16 gap-x-8 justify-items-center mb-32" id="talents-list"></div>
     </div>
 
+    <!-- 底部控制面板 -->
     <nav class="control-panel">
         <div class="panel-container">
-            <div class="nav-item">HOME</div>
-            <div class="nav-item active text-[#00f3ff]">TALENTS</div>
-            <div class="nav-item">BUSINESS</div>
-            <div class="nav-item">CONTACT</div>
+            <div class="nav-item">
+                <span class="panel-btn">關於小馬</span>
+                <div class="energy-bar"></div>
+                <div class="submenu">
+                    <a href="https://xiaomasales-creator.github.io/sales/presentation/index.html" class="submenu-link">首頁</a>
+                    <a href="#" class="submenu-link">品牌特色</a>
+                    <a href="#" class="submenu-link">合作項目</a>
+                    <a href="https://xiaomasales-creator.github.io/sales/presentation/nav/%E6%9C%8D%E5%8B%99%E6%B5%81%E7%A8%8B/index.html" class="submenu-link">服務流程</a>
+                </div>
+            </div>
+            <div class="nav-item">
+                <span class="panel-btn">網紅經紀</span>
+                <div class="energy-bar"></div>
+                <div class="submenu">
+                    <a href="#" class="submenu-link">小馬主播陣容</a>
+                    <a href="#" class="submenu-link">經典案例</a>
+                    <a href="#" class="submenu-link">經常合作KOL</a>
+                </div>
+            </div>
+            <div class="nav-item">
+                <span class="panel-btn">活動花絮</span>
+                <div class="energy-bar"></div>
+                <div class="submenu">
+                    <a href="#" class="submenu-link">商案總覽</a>
+                    <a href="#" class="submenu-link">線下活動花絮</a>
+                </div>
+            </div>
+            <div class="nav-item">
+                <span class="panel-btn">其他服務</span>
+                <div class="energy-bar"></div>
+                <div class="submenu">
+                    <a href="#" class="submenu-link">影音剪輯</a>
+                    <a href="#" class="submenu-link">網頁製作</a>
+                    <a href="#" class="submenu-link">美術設計</a>
+                    <a href="#" class="submenu-link">社群經營</a>
+                </div>
+            </div>
+            <div class="nav-item">
+                <span class="panel-btn">聯絡我們</span>
+                <div class="energy-bar"></div>
+                <div class="submenu">
+                    <a href="#" class="submenu-link">工商洽談</a>
+                    <a href="#" class="submenu-link">加入小馬</a>
+                </div>
+            </div>
         </div>
     </nav>
 
@@ -177,21 +344,25 @@
 
         const filterOptions = ["All", "MMORPG", "FPS", "MOBA", "社群紅人/Reels", "跳舞/Dancing", "主持站台/Hosting", "Vtuber"];
         
-        // 主播資料設定：請在下方 url 欄位填入對應的 html 網址
+        /**
+         * 主播資料設定
+         * - img: 填入頭像圖片網址
+         * - url: 填入點擊跳轉網址
+         */
         const talentsData = [
-            { ch: "小馬大將軍", en: "Gen. Xiaoma", tags: ["FPS", "主持站台/Hosting"], url: "#" },
-            { ch: "霓虹喵喵", en: "Neon Meow", tags: ["跳舞/Dancing", "社群紅人/Reels"], url: "#" },
-            { ch: "電子幻影", en: "Cyber Phantom", tags: ["MMORPG", "Vtuber"], url: "#" },
-            { ch: "數據浪客", en: "Data Ronin", tags: ["MOBA", "FPS"], url: "#" },
-            { ch: "極光女神", en: "Aurora Goddess", tags: ["社群紅人/Reels", "主持站台/Hosting"], url: "#" },
-            { ch: "代碼殺手", en: "Code Killer", tags: ["MOBA", "MMORPG"], url: "#" },
-            { ch: "虛擬戰士", en: "Virtual Warrior", tags: ["FPS", "Vtuber"], url: "#" },
-            { ch: "像素精靈", en: "Pixel Sprite", tags: ["跳舞/Dancing", "Vtuber"], url: "#" },
-            { ch: "流光射手", en: "Glow Archer", tags: ["FPS", "MOBA"], url: "#" },
-            { ch: "矩陣先鋒", en: "Matrix Vanguard", tags: ["MMORPG", "社群紅人/Reels"], url: "#" },
-            { ch: "核心脈衝", en: "Core Pulse", tags: ["MOBA", "主持站台/Hosting"], url: "#" },
-            { ch: "超頻駭客", en: "Overclock Hacker", tags: ["FPS", "社群紅人/Reels"], url: "#" },
-            { ch: "極限傳奇", en: "Limit Legend", tags: ["MMORPG", "主持站台/Hosting"], url: "#" }
+            { ch: "小馬大將軍", en: "Gen. Xiaoma", tags: ["FPS", "主持站台/Hosting"], img: "#", url: "#" }, // 頭像圖片網址更換處
+            { ch: "霓虹喵喵", en: "Neon Meow", tags: ["跳舞/Dancing", "社群紅人/Reels"], img: "#", url: "#" }, // 頭像圖片網址更換處
+            { ch: "電子幻影", en: "Cyber Phantom", tags: ["MMORPG", "Vtuber"], img: "#", url: "#" }, // 頭像圖片網址更換處
+            { ch: "數據浪客", en: "Data Ronin", tags: ["MOBA", "FPS"], img: "#", url: "#" }, // 頭像圖片網址更換處
+            { ch: "極光女神", en: "Aurora Goddess", tags: ["社群紅人/Reels", "主持站台/Hosting"], img: "#", url: "#" }, // 頭像圖片網址更換處
+            { ch: "代碼殺手", en: "Code Killer", tags: ["MOBA", "MMORPG"], img: "#", url: "#" }, // 頭像圖片網址更換處
+            { ch: "虛擬戰士", en: "Virtual Warrior", tags: ["FPS", "Vtuber"], img: "#", url: "#" }, // 頭像圖片網址更換處
+            { ch: "像素精靈", en: "Pixel Sprite", tags: ["跳舞/Dancing", "Vtuber"], img: "#", url: "#" }, // 頭像圖片網址更換處
+            { ch: "流光射手", en: "Glow Archer", tags: ["FPS", "MOBA"], img: "#", url: "#" }, // 頭像圖片網址更換處
+            { ch: "矩陣先鋒", en: "Matrix Vanguard", tags: ["MMORPG", "社群紅人/Reels"], img: "#", url: "#" }, // 頭像圖片網址更換處
+            { ch: "核心脈衝", en: "Core Pulse", tags: ["MOBA", "主持站台/Hosting"], img: "#", url: "#" }, // 頭像圖片網址更換處
+            { ch: "超頻駭客", en: "Overclock Hacker", tags: ["FPS", "社群紅人/Reels"], img: "#", url: "#" }, // 頭像圖片網址更換處
+            { ch: "極限傳奇", en: "Limit Legend", tags: ["MMORPG", "主持站台/Hosting"], img: "#", url: "#" }  // 頭像圖片網址更換處
         ];
 
         const listContainer = document.getElementById('talents-list');
@@ -227,6 +398,9 @@
                 if (!isMatch) return;
 
                 const displayName = currentLang === 'ch' ? data.ch : data.en;
+                // 若未設定網址則顯示預設占位圖，方便測試
+                const imgSrc = (data.img && data.img !== "#") ? data.img : `https://picsum.photos/seed/talent${i+20}/300/300`;
+                
                 const item = document.createElement('div');
                 item.className = 'talent-item';
                 item.innerHTML = `
@@ -234,7 +408,7 @@
                         <div class="glow-ring"></div>
                         <div class="thin-border"></div>
                         <div class="inner-photo w-[126px] h-[126px]">
-                            <img src="https://picsum.photos/seed/talent${i+20}/300/300" alt="${displayName}">
+                            <img src="${imgSrc}" alt="${displayName}">
                         </div>
                     </div>
                     <div class="text-center">
@@ -254,8 +428,7 @@
             if (targetUrl && targetUrl !== "#") {
                 window.location.href = targetUrl;
             } else {
-                console.log("尚未設定跳轉連結網址");
-                // 為了測試，如果是 "#" 可以先跳提示或不動作
+                console.log("尚未設定該主播的個人網頁連結 (url)");
             }
         }
 
