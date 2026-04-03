@@ -6,6 +6,7 @@
     <title>小馬娛樂 | 主播陣容 TALENT ROSTER</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Noto+Sans+TC:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary-neon: #8600ff;
@@ -25,293 +26,121 @@
 
         .cyber-font { font-family: 'Orbitron', sans-serif; }
 
-        /* 背景裝飾：點陣與雷射掃描 */
+        /* 背景設計 */
         .bg-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: radial-gradient(circle at 2px 2px, rgba(134, 0, 255, 0.15) 1px, transparent 0);
-            background-size: 30px 30px;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(circle at 2px 2px, rgba(134, 0, 255, 0.1) 1px, transparent 0);
+            background-size: 40px 40px;
             z-index: -2;
         }
 
-        .scanline {
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(to bottom, transparent, var(--secondary-neon), transparent);
-            position: fixed;
-            top: 0;
-            z-index: 10;
-            pointer-events: none;
-            opacity: 0.1;
-            animation: scan 6s linear infinite;
-        }
-
-        @keyframes scan {
-            0% { top: -10%; }
-            100% { top: 110%; }
-        }
-
-        .bg-text-hollow {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 25vw;
-            font-weight: 900;
-            font-family: 'Orbitron', sans-serif;
-            color: transparent;
-            -webkit-text-stroke: 1px rgba(134, 0, 255, 0.05);
-            z-index: -1;
+        /* 篩選標籤樣式 */
+        .filter-tag {
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-family: 'Share Tech Mono';
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+            transition: 0.3s;
+            cursor: pointer;
+            letter-spacing: 1px;
             user-select: none;
         }
-
-        /* 主播頭像外框設計 */
-        .talent-circle {
-            position: relative;
-            width: 130px;
-            height: 130px;
-            padding: 8px;
-            background: conic-gradient(from 180deg at 50% 50%, var(--neon-purple), var(--secondary-neon), var(--neon-purple));
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            animation: rotate-border 4s linear infinite;
+        .filter-tag:hover, .filter-tag.active {
+            background: rgba(0, 243, 255, 0.1);
+            border-color: var(--secondary-neon);
+            color: var(--secondary-neon);
+            box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
         }
 
-        @keyframes rotate-border {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        /* 主播卡片內 Hashtag */
+        .talent-tag {
+            font-size: 9px;
+            color: var(--secondary-neon);
+            opacity: 0.6;
+            background: rgba(0, 243, 255, 0.05);
+            padding: 1px 6px;
+            border-radius: 4px;
+            margin: 1px;
+            display: inline-block;
         }
 
-        .talent-inner {
-            width: 100%;
-            height: 100%;
-            background: #000;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 2px solid #000;
-            transform: rotate(-360deg); /* 抵消旋轉保持圖片正向 */
-            animation: rotate-inner 4s linear infinite reverse;
-        }
-
-        @keyframes rotate-inner {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .talent-circle:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 30px var(--secondary-neon);
-        }
-
-        .talent-circle img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: grayscale(30%) contrast(1.1);
-        }
-
-        /* 彈窗電流邊框 */
-        #modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(15px);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .modal-container {
-            position: relative;
-            background: #0a0a0c;
-            width: 100%;
-            max-width: 1100px;
-            max-height: 85vh;
-            border: 1px solid var(--secondary-neon);
-            box-shadow: 0 0 50px rgba(0, 243, 255, 0.2);
-            overflow: hidden;
-        }
-
-        /* 電流流動特效邊框 */
-        .electric-border {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            border: 2px solid transparent;
-        }
-        
-        .electric-line {
-            position: absolute;
-            background: var(--secondary-neon);
-            box-shadow: 0 0 15px var(--secondary-neon);
-        }
-
-        .modal-content-inner {
-            padding: 40px;
-            height: 100%;
-            overflow-y: auto;
-        }
-
-        /* 控制面板設計 */
-        .control-panel {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 98%;
-            max-width: 1100px;
-            z-index: 1000;
-        }
-
-        .panel-container {
+        /* 賽博頭像框共用組件 */
+        .cyber-frame {
             position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px;
-            padding: 12px 20px;
-            background: linear-gradient(180deg, rgba(20, 20, 20, 0.9) 0%, rgba(5, 5, 5, 0.95) 100%);
-            backdrop-filter: blur(20px);
-            border-top: 1px solid rgba(134, 0, 255, 0.4);
-            border-bottom: 2px solid rgba(134, 0, 255, 0.2);
-            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.8);
-            border-radius: 4px;
-        }
-
-        @media (min-width: 768px) {
-            .panel-container { gap: 30px; padding: 15px 50px; border-radius: 4px; }
-            .panel-container::before, .panel-container::after {
-                content: "";
-                position: absolute;
-                top: 0;
-                width: 25px;
-                height: 100%;
-                background: inherit;
-                z-index: -1;
-            }
-            .panel-container::before { left: -12px; transform: skewX(-15deg); border-left: 1px solid rgba(134, 0, 255, 0.4); }
-            .panel-container::after { right: -12px; transform: skewX(15deg); border-right: 1px solid rgba(134, 0, 255, 0.4); }
-            .panel-btn { font-size: 1.15rem; } 
-        }
-
-        @media (max-width: 767px) {
-            .panel-container { gap: 6px; padding: 12px 10px; border-radius: 12px; }
-            .panel-btn { font-size: 0.85rem !important; letter-spacing: 0.05em !important; } 
-        }
-
-        .nav-item { position: relative; }
-
-        .panel-btn {
-            position: relative;
-            font-weight: bold;
-            color: #ccc;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-            letter-spacing: 0.15em;
             cursor: pointer;
-            padding-bottom: 8px;
-            z-index: 2;
         }
 
-        .energy-bar {
+        .glow-ring {
             position: absolute;
-            bottom: 4px;
-            left: 0;
-            width: 0%;
-            height: 2px;
-            background: var(--secondary-neon);
-            box-shadow: 0 0 10px var(--secondary-neon);
-            transition: width 0.3s ease;
+            inset: -4px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, transparent, var(--neon-purple), var(--secondary-neon), transparent);
+            opacity: 0.2;
+            filter: blur(8px);
+            animation: rotate-glow 8s linear infinite;
+            transition: 0.5s;
         }
 
-        .nav-item:hover .panel-btn {
-            color: var(--secondary-neon);
-            text-shadow: 0 0 8px var(--secondary-neon);
-        }
-
-        .nav-item:hover .energy-bar {
-            width: 100%;
-        }
-
-        /* 子選單樣式 */
-        .submenu {
+        .thin-border {
             position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%) translateY(10px);
-            background: rgba(5, 5, 5, 0.98);
-            border: 1px solid var(--primary-neon);
-            min-width: 180px;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s;
-            backdrop-filter: blur(15px);
-            padding: 12px;
-            box-shadow: 0 0 30px rgba(134, 0, 255, 0.4);
-            pointer-events: none;
-            z-index: 1001;
-            margin-bottom: 15px;
+            inset: 0;
+            border-radius: 50%;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(188, 19, 254, 0.5), rgba(0, 243, 255, 0.5));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            transition: 0.5s;
         }
 
-        .submenu::before {
-            content: "";
-            position: absolute;
-            bottom: -20px;
-            left: 0;
-            width: 100%;
-            height: 25px;
-            background: transparent;
+        .inner-photo {
+            border-radius: 50%;
+            overflow: hidden;
+            background: #000;
+            position: relative;
+            z-index: 1;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .nav-item:hover .submenu {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(-50%) translateY(0);
-            pointer-events: auto;
+        .inner-photo img {
+            width: 100%; height: 100%; object-fit: cover;
+            filter: grayscale(20%) brightness(0.8);
+            transition: 0.5s;
         }
 
-        .submenu-link {
-            display: block;
-            padding: 10px 14px;
-            color: #bbb;
-            font-size: 0.95rem; 
-            text-align: left;
-            transition: all 0.2s;
-            border-left: 2px solid transparent;
-            text-decoration: none;
+        /* 互動效果 */
+        .cyber-frame:hover .glow-ring { opacity: 0.8; filter: blur(12px); transform: scale(1.05); }
+        .cyber-frame:hover .thin-border { transform: scale(1.05); background: linear-gradient(135deg, var(--neon-purple), var(--secondary-neon)); }
+        .cyber-frame:hover .inner-photo img { filter: grayscale(0%) brightness(1.1); transform: scale(1.1); }
+
+        @keyframes rotate-glow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* 控制面板 */
+        .control-panel { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 95%; max-width: 1100px; z-index: 1000; }
+        .panel-container {
+            display: flex; justify-content: center; align-items: center; gap: 40px; padding: 15px 50px;
+            background: linear-gradient(180deg, rgba(20, 20, 20, 0.9) 0%, rgba(5, 5, 5, 0.95) 100%);
+            backdrop-filter: blur(20px); border-top: 1px solid rgba(134, 0, 255, 0.4); border-radius: 4px;
         }
 
-        .submenu-link:hover {
-            background: rgba(134, 0, 255, 0.15);
-            color: var(--secondary-neon);
-            border-left: 2px solid var(--secondary-neon);
-            padding-left: 18px;
-        }
-
-        /* 案例卡片 */
-        .case-card {
-            background: #111;
-            border: 1px solid #222;
-            transition: 0.3s;
-        }
-        .case-card:hover { border-color: var(--secondary-neon); transform: translateY(-3px); }
+        .nav-item { font-family: 'Share Tech Mono'; color: #aaa; font-size: 14px; letter-spacing: 2px; cursor: pointer; transition: 0.3s; }
+        .nav-item:hover { color: var(--secondary-neon); text-shadow: 0 0 10px var(--secondary-neon); }
     </style>
 </head>
 <body>
 
     <div class="bg-overlay"></div>
-    <div class="scanline"></div>
-    <div class="bg-text-hollow">XIAOMA</div>
 
     <div class="container mx-auto px-6 py-12">
-        <!-- 品牌特色標頭 -->
-        <header class="mb-16 flex flex-col items-start">
+        <header class="mb-10 flex flex-col items-start">
             <div class="flex items-center gap-3 mb-4">
                 <div class="deco-block w-[10px] h-[10px] bg-[#bc13fe]"></div>
                 <span class="cyber-font text-[10px] tracking-[0.6em] text-white/40 uppercase">XIAOMA ENT.</span>
@@ -319,219 +148,126 @@
             
             <div class="flex flex-col mb-4">
                 <h1 id="main-title" class="text-5xl md:text-7xl font-black italic tracking-tighter leading-none mb-2">主播陣容</h1>
-                <span class="cyber-font text-xl md:text-3xl font-black text-white/10 uppercase italic tracking-widest leading-none">TALENT_ROSTER</span>
+                <span id="sub-title" class="cyber-font text-xl md:text-3xl font-black text-white/10 uppercase italic tracking-widest leading-none">TALENT_ROSTER</span>
             </div>
             
             <div class="w-[60px] h-[4px] bg-gradient-to-r from-[#bc13fe] to-[#00d2ff] mb-4"></div>
             <span class="cyber-font text-[10px] text-white/30 tracking-[0.2em] uppercase cursor-pointer hover:text-white" onclick="toggleLanguage()">Click to View in English / 中文切換</span>
         </header>
 
-        <!-- 主播陣容展示區 -->
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-y-12 gap-x-4 justify-items-center mb-20" id="talents-list">
-            <!-- 由 JS 生成 13 位主播 -->
-        </div>
+        <!-- Hashtag 篩選列 -->
+        <div class="flex flex-wrap gap-2 mb-16" id="filter-bar"></div>
+
+        <!-- 主播網格 (點擊會跳轉至指定連結) -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-y-16 gap-x-8 justify-items-center mb-32" id="talents-list"></div>
     </div>
 
-    <!-- 互動彈窗 -->
-    <div id="modal-overlay" onclick="closeModal()">
-        <div class="modal-container" onclick="event.stopPropagation()">
-            <div class="electric-border"></div>
-            <div class="modal-content-inner">
-                <div class="flex flex-col lg:flex-row gap-10">
-                    <!-- (1) 主播個人照片：電流感邊框 -->
-                    <div class="w-full lg:w-[350px]">
-                        <div class="relative p-2 bg-[#111] border-2 border-purple-600 shadow-[0_0_20px_rgba(188,19,254,0.3)]">
-                            <img id="m-photo" src="" alt="Talent" class="w-full h-[500px] object-cover filter brightness-110">
-                            <!-- 電流裝飾線 -->
-                            <div class="absolute -top-1 -left-1 w-10 h-10 border-t-4 border-l-4 border-cyan-400"></div>
-                            <div class="absolute -bottom-1 -right-1 w-10 h-10 border-b-4 border-r-4 border-cyan-400"></div>
-                        </div>
-                    </div>
-
-                    <!-- (2) 數據與 (3) 案例 -->
-                    <div class="flex-1">
-                        <div class="mb-6">
-                            <h2 id="m-name" class="text-5xl font-black italic text-white mb-2">主播名稱</h2>
-                            <p class="cyber-font text-cyan-400 tracking-widest text-sm">LEVEL: S-RANK INFLUENCER</p>
-                        </div>
-
-                        <!-- 平台數據 -->
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                            <div class="bg-white/5 p-4 border-l-2 border-purple-600">
-                                <h4 class="cyber-font text-[10px] text-purple-400 mb-3">TWITCH DATA</h4>
-                                <ul class="text-xs space-y-2 text-white/70" id="data-twitch"></ul>
-                            </div>
-                            <div class="bg-white/5 p-4 border-l-2 border-cyan-600">
-                                <h4 class="cyber-font text-[10px] text-cyan-400 mb-3">YOUTUBE DATA</h4>
-                                <ul class="text-xs space-y-2 text-white/70" id="data-youtube"></ul>
-                            </div>
-                            <div class="bg-white/5 p-4 border-l-2 border-pink-600">
-                                <h4 class="cyber-font text-[10px] text-pink-400 mb-3">FB & IG DATA</h4>
-                                <ul class="text-xs space-y-2 text-white/70" id="data-social"></ul>
-                            </div>
-                        </div>
-
-                        <!-- 工商案例 (10張 4:3) -->
-                        <div>
-                            <h4 class="cyber-font text-xs text-white/40 mb-4 tracking-tighter">PROJECT_ARCHIVES // 最近合作案例</h4>
-                            <div class="grid grid-cols-2 sm:grid-cols-5 gap-3" id="case-gallery">
-                                <!-- 由 JS 生成 10 張案例 -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 關閉按鈕 -->
-            <button onclick="closeModal()" class="absolute top-4 right-4 text-white/30 hover:text-white cyber-font text-xl">×</button>
-        </div>
-    </div>
-
-    <!-- 底部控制面板 -->
     <nav class="control-panel">
         <div class="panel-container">
-            <div class="nav-item">
-                <span class="panel-btn">關於小馬</span>
-                <div class="energy-bar"></div>
-                <div class="submenu">
-                    <a href="https://xiaomasales-creator.github.io/sales/presentation/index.html" class="submenu-link">首頁</a>
-                    <a href="#" class="submenu-link">品牌特色</a>
-                    <a href="#" class="submenu-link">合作項目</a>
-                    <a href="https://xiaomasales-creator.github.io/sales/presentation/nav/%E6%9C%8D%E5%8B%99%E6%B5%81%E7%A8%8B/index.html" class="submenu-link">服務流程</a>
-                </div>
-            </div>
-            <div class="nav-item">
-                <span class="panel-btn">網紅經紀</span>
-                <div class="energy-bar"></div>
-                <div class="submenu">
-                    <a href="#" class="submenu-link">小馬主播陣容</a>
-                    <a href="#" class="submenu-link">經典案例</a>
-                    <a href="#" class="submenu-link">經常合作KOL</a>
-                </div>
-            </div>
-            <div class="nav-item">
-                <span class="panel-btn">活動花絮</span>
-                <div class="energy-bar"></div>
-                <div class="submenu">
-                    <a href="#" class="submenu-link">商案總覽</a>
-                    <a href="#" class="submenu-link">線下活動花絮</a>
-                </div>
-            </div>
-            <div class="nav-item">
-                <span class="panel-btn">其他服務</span>
-                <div class="energy-bar"></div>
-                <div class="submenu">
-                    <a href="#" class="submenu-link">影音剪輯</a>
-                    <a href="#" class="submenu-link">網頁製作</a>
-                    <a href="#" class="submenu-link">美術設計</a>
-                    <a href="#" class="submenu-link">社群經營</a>
-                </div>
-            </div>
-            <div class="nav-item">
-                <span class="panel-btn">聯絡我們</span>
-                <div class="energy-bar"></div>
-                <div class="submenu">
-                    <a href="#" class="submenu-link">工商洽談</a>
-                    <a href="#" class="submenu-link">加入小馬</a>
-                </div>
-            </div>
+            <div class="nav-item">HOME</div>
+            <div class="nav-item active text-[#00f3ff]">TALENTS</div>
+            <div class="nav-item">BUSINESS</div>
+            <div class="nav-item">CONTACT</div>
         </div>
     </nav>
 
     <script>
         let currentLang = 'ch';
+        let selectedFilters = [];
 
-        // 主播數據
-        const talentNames = [
-            "狂暴小建", "UZRA", "豆豆", "牛牛妹", "西瓜", 
-            "純純", "萌萌吃吃", "小舞", "小鹽", "妖乖", 
-            "丫布丁丁", "奶茶蜜", "妮塔"
+        const filterOptions = ["All", "MMORPG", "FPS", "MOBA", "社群紅人/Reels", "跳舞/Dancing", "主持站台/Hosting", "Vtuber"];
+        
+        // 主播資料設定：請在下方 url 欄位填入對應的 html 網址
+        const talentsData = [
+            { ch: "小馬大將軍", en: "Gen. Xiaoma", tags: ["FPS", "主持站台/Hosting"], url: "#" },
+            { ch: "霓虹喵喵", en: "Neon Meow", tags: ["跳舞/Dancing", "社群紅人/Reels"], url: "#" },
+            { ch: "電子幻影", en: "Cyber Phantom", tags: ["MMORPG", "Vtuber"], url: "#" },
+            { ch: "數據浪客", en: "Data Ronin", tags: ["MOBA", "FPS"], url: "#" },
+            { ch: "極光女神", en: "Aurora Goddess", tags: ["社群紅人/Reels", "主持站台/Hosting"], url: "#" },
+            { ch: "代碼殺手", en: "Code Killer", tags: ["MOBA", "MMORPG"], url: "#" },
+            { ch: "虛擬戰士", en: "Virtual Warrior", tags: ["FPS", "Vtuber"], url: "#" },
+            { ch: "像素精靈", en: "Pixel Sprite", tags: ["跳舞/Dancing", "Vtuber"], url: "#" },
+            { ch: "流光射手", en: "Glow Archer", tags: ["FPS", "MOBA"], url: "#" },
+            { ch: "矩陣先鋒", en: "Matrix Vanguard", tags: ["MMORPG", "社群紅人/Reels"], url: "#" },
+            { ch: "核心脈衝", en: "Core Pulse", tags: ["MOBA", "主持站台/Hosting"], url: "#" },
+            { ch: "超頻駭客", en: "Overclock Hacker", tags: ["FPS", "社群紅人/Reels"], url: "#" },
+            { ch: "極限傳奇", en: "Limit Legend", tags: ["MMORPG", "主持站台/Hosting"], url: "#" }
         ];
 
-        const talentNamesEn = [
-            "Gen. Xiaoma", "Neon Meow", "Cyber Phantom", "Data Ronin", "Aurora Goddess",
-            "Code Killer", "Virtual Warrior", "Pixel Sprite", "Glow Archer", "Matrix Vanguard",
-            "Core Pulse", "Overclock Hacker", "Limit Legend"
-        ];
-
-        const platformMetrics = {
-            ch: ["最高在線人數", "月平均觀看", "粉絲總數", "互動成長率", "忠實會員數"],
-            en: ["Peak CCU", "Avg. Monthly Views", "Total Followers", "Engagement Rate", "Active Members"]
-        };
-
-        const caseTitles = ["ROG手機開箱", "雷蛇耳機實測", "原神版本更新", "三星新機宣傳", "電競椅聯名", "手遊週年祭", "3C家電展演", "能量飲料推廣", "筆電性能對決", "VR設備體驗"];
-
-        // 初始化列表
         const listContainer = document.getElementById('talents-list');
-        for (let i = 0; i < 13; i++) {
-            const talentDiv = document.createElement('div');
-            talentDiv.className = 'flex flex-col items-center gap-3';
-            talentDiv.innerHTML = `
-                <div class="talent-circle" onclick="openTalent(${i})">
-                    <div class="talent-inner">
-                        <img src="https://picsum.photos/seed/${i + 100}/300/300" alt="Talent">
-                    </div>
-                </div>
-                <span class="cyber-font text-[10px] text-white/60 tracking-widest talent-name-tag" data-id="${i}">${talentNames[i]}</span>
-            `;
-            listContainer.appendChild(talentDiv);
+        const filterBar = document.getElementById('filter-bar');
+        
+        function renderFilters() {
+            filterBar.innerHTML = '';
+            filterOptions.forEach(opt => {
+                const btn = document.createElement('div');
+                const isAll = opt === 'All';
+                const isActive = isAll ? selectedFilters.length === 0 : selectedFilters.includes(opt);
+                btn.className = `filter-tag ${isActive ? 'active' : ''}`;
+                btn.innerText = opt;
+                btn.onclick = () => {
+                    if (isAll) { selectedFilters = []; } 
+                    else {
+                        if (selectedFilters.includes(opt)) {
+                            selectedFilters = selectedFilters.filter(f => f !== opt);
+                        } else {
+                            selectedFilters.push(opt);
+                        }
+                    }
+                    renderFilters(); renderTalents();
+                };
+                filterBar.appendChild(btn);
+            });
         }
 
-        function openTalent(index) {
-            const overlay = document.getElementById('modal-overlay');
-            const nameEl = document.getElementById('m-name');
-            const photoEl = document.getElementById('m-photo');
-            const gallery = document.getElementById('case-gallery');
-            
-            // 設定姓名與圖片
-            nameEl.innerText = currentLang === 'ch' ? talentNames[index] : talentNamesEn[index];
-            photoEl.src = `https://picsum.photos/seed/${index + 500}/400/600`;
+        function renderTalents() {
+            listContainer.innerHTML = '';
+            talentsData.forEach((data, i) => {
+                const isMatch = selectedFilters.length === 0 || selectedFilters.every(filter => data.tags.includes(filter));
+                if (!isMatch) return;
 
-            // 設定數據
-            const metrics = currentLang === 'ch' ? platformMetrics.ch : platformMetrics.en;
-            const fillData = (id) => {
-                const el = document.getElementById(id);
-                el.innerHTML = metrics.map(m => `<li>${m}: <span class="text-white font-bold">${(Math.random()*100).toFixed(1)}K+</span></li>`).join('');
-            };
-            fillData('data-twitch');
-            fillData('data-youtube');
-            fillData('data-social');
-
-            // 設定案例圖片 (4:3)
-            gallery.innerHTML = '';
-            for (let i = 0; i < 10; i++) {
-                gallery.innerHTML += `
-                    <div class="case-card">
-                        <img src="https://picsum.photos/seed/case${index}${i}/400/300" class="w-full aspect-[4/3] object-cover border-b border-white/10">
-                        <p class="p-2 text-[9px] text-white/40 truncate">${caseTitles[i]}</p>
+                const displayName = currentLang === 'ch' ? data.ch : data.en;
+                const item = document.createElement('div');
+                item.className = 'talent-item';
+                item.innerHTML = `
+                    <div class="cyber-frame w-[140px] h-[140px]" onclick="navigateToTalent(${i})">
+                        <div class="glow-ring"></div>
+                        <div class="thin-border"></div>
+                        <div class="inner-photo w-[126px] h-[126px]">
+                            <img src="https://picsum.photos/seed/talent${i+20}/300/300" alt="${displayName}">
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="cyber-font text-[11px] tracking-[0.2em] text-white/90 uppercase font-bold mb-1">${displayName}</div>
+                        <div class="flex flex-wrap justify-center gap-1">
+                            ${data.tags.map(t => `<span class="talent-tag">#${t}</span>`).join('')}
+                        </div>
                     </div>
                 `;
-            }
-
-            overlay.style.display = 'flex';
+                listContainer.appendChild(item);
+            });
         }
 
-        function closeModal() {
-            document.getElementById('modal-overlay').style.display = 'none';
+        // 點擊跳轉函式
+        function navigateToTalent(index) {
+            const targetUrl = talentsData[index].url;
+            if (targetUrl && targetUrl !== "#") {
+                window.location.href = targetUrl;
+            } else {
+                console.log("尚未設定跳轉連結網址");
+                // 為了測試，如果是 "#" 可以先跳提示或不動作
+            }
         }
 
         function toggleLanguage() {
             currentLang = currentLang === 'ch' ? 'en' : 'ch';
-            const title = document.getElementById('main-title');
-            title.innerText = currentLang === 'ch' ? '主播陣容' : 'TALENT ROSTER';
-            
-            // 更新列表姓名
-            const tags = document.querySelectorAll('.talent-name-tag');
-            tags.forEach(tag => {
-                const id = tag.getAttribute('data-id');
-                tag.innerText = currentLang === 'ch' ? talentNames[id] : talentNamesEn[id];
-            });
+            document.getElementById('main-title').innerText = currentLang === 'ch' ? '主播陣容' : 'TALENT ROSTER';
+            document.getElementById('sub-title').innerText = currentLang === 'ch' ? 'TALENT_ROSTER' : 'CYBER_INFLUENCERS';
+            renderTalents();
         }
 
-        // ESC 關閉彈窗
-        window.addEventListener('keydown', (e) => {
-            if(e.key === 'Escape') closeModal();
-        });
+        renderFilters();
+        renderTalents();
     </script>
 </body>
 </html>
