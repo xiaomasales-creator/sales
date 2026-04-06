@@ -14,18 +14,17 @@
             --neon-purple: #bc13fe;
             --bg-dark: #050508;
             
-            /* 各平台專屬顏色 - 純色系漸層 */
-            --twitch-gradient: linear-gradient(135deg, rgba(134, 0, 255, 0.95), rgba(60, 0, 120, 0.9));
+            /* 平台品牌色 */
             --twitch-brand: #a970ff;
-            
-            --youtube-gradient: linear-gradient(135deg, rgba(230, 0, 0, 0.95), rgba(120, 0, 0, 0.9));
             --youtube-brand: #ff0000;
-
-            --facebook-gradient: linear-gradient(135deg, rgba(24, 119, 242, 0.9), rgba(0, 243, 255, 0.8));
             --facebook-brand: #1877F2;
-
-            --instagram-gradient: linear-gradient(135deg, rgba(225, 48, 108, 0.9), rgba(255, 126, 95, 0.8));
             --instagram-brand: #E1306C;
+
+            /* 邊框專用漸層 */
+            --twitch-border: linear-gradient(135deg, rgba(134, 0, 255, 0.95), rgba(60, 0, 120, 0.9));
+            --youtube-border: linear-gradient(135deg, rgba(230, 0, 0, 0.95), rgba(120, 0, 0, 0.9));
+            --facebook-border: linear-gradient(135deg, rgba(24, 119, 242, 0.9), rgba(0, 243, 255, 0.8));
+            --instagram-border: linear-gradient(135deg, rgba(225, 48, 108, 0.9), rgba(255, 126, 95, 0.8));
         }
 
         body {
@@ -80,76 +79,41 @@
             object-fit: cover;
         }
 
-        /* 磨砂玻璃卡片 */
+        /* 數據卡片 */
         .stat-card {
             padding: 24px;
             position: relative;
-            border-radius: 12px;
+            border-radius: 16px;
             transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
+            backdrop-filter: blur(30px) saturate(180%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%);
+            min-height: 220px;
+            display: flex;
+            flex-direction: column;
             border: 1px solid transparent;
-            min-height: 240px;
         }
         
+        .stat-card.twitch { background: linear-gradient(rgba(10, 5, 20, 0.7), rgba(5, 5, 10, 0.85)) padding-box, var(--twitch-border) border-box; }
+        .stat-card.youtube { background: linear-gradient(rgba(20, 5, 5, 0.7), rgba(10, 5, 5, 0.85)) padding-box, var(--youtube-border) border-box; }
+        .stat-card.facebook { background: linear-gradient(rgba(10, 15, 30, 0.7), rgba(5, 5, 10, 0.85)) padding-box, var(--facebook-border) border-box; }
+        .stat-card.instagram { background: linear-gradient(rgba(30, 10, 20, 0.7), rgba(10, 5, 5, 0.85)) padding-box, var(--instagram-border) border-box; }
+
         .stat-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
             filter: brightness(1.1);
         }
 
-        .stat-card.twitch { 
-            background: linear-gradient(rgba(10, 5, 20, 0.94), rgba(2, 2, 5, 0.98)) padding-box,
-                        var(--twitch-gradient) border-box;
-        }
-        .stat-card.youtube { 
-            background: linear-gradient(rgba(20, 5, 5, 0.94), rgba(5, 2, 2, 0.98)) padding-box,
-                        var(--youtube-gradient) border-box;
-        }
-        .stat-card.facebook { 
-            background: linear-gradient(rgba(10, 15, 30, 0.92), rgba(5, 5, 5, 0.98)) padding-box,
-                        var(--facebook-gradient) border-box;
-        }
-        .stat-card.instagram { 
-            background: linear-gradient(rgba(30, 10, 20, 0.92), rgba(5, 5, 5, 0.98)) padding-box,
-                        var(--instagram-gradient) border-box;
-        }
-
-        .card-icon {
-            font-size: 1.5rem;
-            filter: drop-shadow(0 0 8px rgba(255,255,255,0.2));
-        }
-
-        .card-title {
-            font-size: 0.875rem;
-            letter-spacing: 0.15em;
-            font-weight: 700;
-            color: #FFFFFF;
-        }
-
         .stat-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 0;
+            padding: 10px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            font-size: 13px;
+            font-size: 12px;
         }
-        .stat-row:last-child { border-bottom: none; }
-
-        .stat-label { 
-            color: rgba(255, 255, 255, 0.85);
-            font-weight: 500; 
-        }
-        
-        .stat-val { 
-            font-family: 'Inter', sans-serif; 
-            font-weight: 800; 
-            color: #FFFFFF;
-            letter-spacing: 0.02em;
-            font-size: 15px;
-            text-align: right;
-        }
+        .stat-val { font-family: 'Inter', sans-serif; font-weight: 800; color: #FFFFFF; font-size: 14px; }
+        .stat-label { color: rgba(255, 255, 255, 0.6); }
 
         /* 返回按鈕 */
         .back-nav {
@@ -160,44 +124,81 @@
             font-size: 20px;
             cursor: pointer;
             transition: 0.3s;
+            z-index: 50;
         }
         .back-nav:hover { color: #fff; }
 
-        /* 作品展示 - 更新為更大尺寸與更簡潔文字 */
+        /* 作品展示區塊樣式 */
         .case-card {
             position: relative;
-            aspect-ratio: 16 / 9;
             overflow: hidden;
             border-radius: 8px;
             cursor: pointer;
             border: 1px solid rgba(255,255,255,0.1);
+            background: #111;
         }
+        
+        .aspect-video-horizontal { aspect-ratio: 16 / 9; }
+        .aspect-video-vertical { aspect-ratio: 9 / 16; }
+
         .case-card img {
             width: 100%; height: 100%; object-fit: cover;
             transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
-            filter: brightness(0.7);
+            filter: brightness(0.9);
         }
-        .case-card:hover img { transform: scale(1.08); filter: brightness(0.9); }
+        .case-card:hover img { transform: scale(1.1); filter: brightness(1); }
         
-        /* 漸層遮罩確保文字清晰 */
+        /* 橫式遮罩：下方 1/3 */
         .case-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(transparent 60%, rgba(0,0,0,0.8));
+            background: linear-gradient(
+                to top, 
+                rgba(30, 0, 60, 0.9) 0%, 
+                rgba(60, 0, 120, 0.6) 20%, 
+                rgba(60, 0, 120, 0) 45%
+            );
             pointer-events: none;
+            transition: opacity 0.3s;
         }
 
+        /* 直式遮罩：下方 1/4，避免遮擋過多照片 */
+        .case-overlay-vertical {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to top, 
+                rgba(30, 0, 60, 0.95) 0%, 
+                rgba(60, 0, 120, 0.7) 12%, 
+                rgba(60, 0, 120, 0) 25%
+            );
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        
         .case-info {
             position: absolute;
-            bottom: 12px; left: 16px;
+            bottom: 14px; left: 16px; right: 16px;
             z-index: 5;
         }
         .case-title {
             color: white;
             font-weight: 700;
-            font-size: 1.1rem;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            font-size: 0.85rem;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
             letter-spacing: 0.05em;
+        }
+
+        .category-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        .category-line {
+            height: 1px;
+            flex-grow: 1;
+            background: linear-gradient(to right, var(--neon-purple), transparent);
         }
     </style>
 </head>
@@ -206,10 +207,10 @@
     <div class="bg-overlay"></div>
     <div class="back-nav" onclick="window.location.href='xiaoma_talents.html'"><i class="fas fa-times"></i></div>
 
-    <div class="container mx-auto px-6 py-16 max-w-[1100px]">
+    <div class="container mx-auto px-6 py-16 max-w-7xl">
         
         <!-- Header 區塊 -->
-        <header class="flex flex-col md:flex-row items-center gap-12 mb-20">
+        <header class="flex flex-col md:flex-row items-center gap-12 mb-20 lg:px-10">
             <div class="header-avatar-container">
                 <div class="avatar-glow"></div>
                 <div class="avatar-circle">
@@ -224,133 +225,171 @@
                     <span class="px-3 py-1 border border-cyan-500/50 rounded-full text-[10px] text-cyan-400 font-bold">#FPS</span>
                     <span class="px-3 py-1 border border-cyan-500/50 rounded-full text-[10px] text-cyan-400 font-bold">#Variety</span>
                 </div>
-                <p class="text-white/80 text-lg leading-relaxed max-w-xl font-light">
-                    頂尖內容創作者，在各大社群平台擁有極高影響力，擅長與觀眾建立深層情感連結。
+                <p class="text-white/80 text-lg leading-relaxed max-w-2xl font-light">
+                    頂尖內容創作者，在各大社群平台擁有極高影響力，擅長與觀眾建立深層情感連結。其獨特的直播風格與高互動性，使其在電競與娛樂領域皆佔有一席之地。
                 </p>
             </div>
         </header>
 
-        <!-- 數據統計區塊 -->
-        <section class="mb-20">
-            <div class="flex items-center gap-3 mb-8">
+        <!-- 數據統計區塊 (4 欄並排) -->
+        <section class="mb-24 lg:px-10">
+            <div class="flex items-center gap-3 mb-10">
                 <div class="w-1.5 h-6 bg-[#00f3ff]"></div>
-                <h2 class="cyber-font text-lg tracking-widest uppercase font-bold">PLATFORM_STATISTICS</h2>
+                <h2 class="cyber-font text-lg tracking-widest uppercase font-bold">Platform_Statistics</h2>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Twitch 資料卡片 -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Twitch -->
                 <div class="stat-card twitch">
                     <div class="flex items-center gap-3 mb-6">
-                        <i class="fab fa-twitch card-icon" style="color: var(--twitch-brand);"></i>
-                        <span class="cyber-font card-title">TWITCH_LIVE</span>
+                        <i class="fab fa-twitch text-2xl" style="color: var(--twitch-brand);"></i>
+                        <span class="cyber-font text-[12px] font-bold tracking-wider">TWITCH LIVE</span>
                     </div>
-                    <div class="space-y-1">
+                    <div class="space-y-0.5">
                         <div class="stat-row"><span class="stat-label">追隨人數</span><span class="stat-val">100,000+</span></div>
-                        <div class="stat-row"><span class="stat-label">Q2 總觀看人數</span><span class="stat-val">250,000+</span></div>
-                        <div class="stat-row"><span class="stat-label">Q2 平均觀看人數</span><span class="stat-val">400+</span></div>
-                        <div class="stat-row"><span class="stat-label">Q2 最高同上人數</span><span class="stat-val">800+</span></div>
-                        <div class="stat-row"><span class="stat-label">Q2 直播時數(hr)</span><span class="stat-val">90+</span></div>
+                        <div class="stat-row"><span class="stat-label">Q2 總觀看</span><span class="stat-val">250,000+</span></div>
+                        <div class="stat-row"><span class="stat-label">Q2 平均同上</span><span class="stat-val">400+</span></div>
+                        <div class="stat-row"><span class="stat-label">Q2 直播時數</span><span class="stat-val">90+</span></div>
                     </div>
                 </div>
 
-                <!-- YouTube 資料卡片 -->
+                <!-- Youtube -->
                 <div class="stat-card youtube">
                     <div class="flex items-center gap-3 mb-6">
-                        <i class="fab fa-youtube card-icon" style="color: var(--youtube-brand);"></i>
-                        <span class="cyber-font card-title">YOUTUBE_CH</span>
+                        <i class="fab fa-youtube text-2xl" style="color: var(--youtube-brand);"></i>
+                        <span class="cyber-font text-[12px] font-bold tracking-wider">YOUTUBE CH</span>
                     </div>
-                    <div class="space-y-1">
+                    <div class="space-y-0.5">
                         <div class="stat-row"><span class="stat-label">訂閱人數</span><span class="stat-val">6,300+</span></div>
-                        <div class="stat-row"><span class="stat-label">總累積觀看次數</span><span class="stat-val">190,000+</span></div>
-                        <div class="stat-row"><span class="stat-label">Q2 總觀看次數</span><span class="stat-val">8,500+</span></div>
-                        <div class="stat-row"><span class="stat-label">Q2 觀看時間(hr)</span><span class="stat-val">100+</span></div>
-                        <div class="stat-row"><span class="stat-label">二十支影片平均觀看</span><span class="stat-val">2,000+</span></div>
-                        <div class="stat-row"><span class="stat-label">Q2 影片最高觀看</span><span class="stat-val">1,400+</span></div>
+                        <div class="stat-row"><span class="stat-label">累積觀看</span><span class="stat-val">190,000+</span></div>
+                        <div class="stat-row"><span class="stat-label">影片最高觀看</span><span class="stat-val">1,400+</span></div>
+                        <div class="stat-row"><span class="stat-label">平均觀看</span><span class="stat-val">2,000+</span></div>
                     </div>
                 </div>
 
-                <!-- Facebook 資料卡片 -->
+                <!-- Facebook -->
                 <div class="stat-card facebook">
                     <div class="flex items-center gap-3 mb-6">
-                        <i class="fab fa-facebook card-icon" style="color: var(--facebook-brand);"></i>
-                        <span class="cyber-font card-title">FACEBOOK_FANPAGE</span>
+                        <i class="fab fa-facebook text-2xl" style="color: var(--facebook-brand);"></i>
+                        <span class="cyber-font text-[12px] font-bold tracking-wider">FACEBOOK</span>
                     </div>
-                    <div class="space-y-1">
-                        <div class="stat-row"><span class="stat-label">粉絲追蹤數</span><span class="stat-val">7,900+</span></div>
-                        <div class="stat-row"><span class="stat-label">貼文平均觸及數</span><span class="stat-val">12,500+</span></div>
-                        <div class="stat-row"><span class="stat-label">影片平均觀看數</span><span class="stat-val">3,200+</span></div>
+                    <div class="space-y-0.5">
+                        <div class="stat-row"><span class="stat-label">粉絲追蹤</span><span class="stat-val">7,900+</span></div>
+                        <div class="stat-row"><span class="stat-label">貼文平均觸及</span><span class="stat-val">12,500+</span></div>
+                        <div class="stat-row"><span class="stat-label">影片平均觀看</span><span class="stat-val">3,200+</span></div>
+                        <div class="stat-row"><span class="stat-label">互動率指標</span><span class="stat-val">High</span></div>
                     </div>
                 </div>
 
-                <!-- Instagram 資料卡片 -->
+                <!-- Instagram -->
                 <div class="stat-card instagram">
                     <div class="flex items-center gap-3 mb-6">
-                        <i class="fab fa-instagram card-icon" style="color: var(--instagram-brand);"></i>
-                        <span class="cyber-font card-title">INSTAGRAM_PROFILE</span>
+                        <i class="fab fa-instagram text-2xl" style="color: var(--instagram-brand);"></i>
+                        <span class="cyber-font text-[12px] font-bold tracking-wider">INSTAGRAM</span>
                     </div>
-                    <div class="space-y-1">
-                        <div class="stat-row"><span class="stat-label">粉絲追蹤數</span><span class="stat-val">120,000+</span></div>
-                        <div class="stat-row"><span class="stat-label">貼文平均觸及數</span><span class="stat-val">45,000+</span></div>
-                        <div class="stat-row"><span class="stat-label">影片平均觀看數</span><span class="stat-val">68,000+</span></div>
+                    <div class="space-y-0.5">
+                        <div class="stat-row"><span class="stat-label">粉絲追蹤</span><span class="stat-val">120,000+</span></div>
+                        <div class="stat-row"><span class="stat-label">貼文平均觸及</span><span class="stat-val">45,000+</span></div>
+                        <div class="stat-row"><span class="stat-label">Reels 平均觀看</span><span class="stat-val">68,000+</span></div>
+                        <div class="stat-row"><span class="stat-label">Q2 總曝光</span><span class="stat-val">850k+</span></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 作品展示區塊 - 更新為大尺寸排版 -->
-        <section class="mb-32">
-            <div class="flex items-center gap-3 mb-8">
+        <!-- 作品展示區塊 (4 欄並排) -->
+        <section class="mb-32 lg:px-10">
+            <div class="flex items-center gap-3 mb-12">
                 <div class="w-1.5 h-6 bg-[#bc13fe]"></div>
-                <h2 class="cyber-font text-lg tracking-widest uppercase font-bold">BUSINESS_SHOWCASE</h2>
+                <h2 class="cyber-font text-lg tracking-widest uppercase font-bold">Business_Showcase</h2>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- 案例 01 -->
-                <div class="case-card">
-                    <img src="https://picsum.photos/seed/case1/800/450" alt="ROG 聯名宣傳">
-                    <div class="case-overlay"></div>
-                    <div class="case-info">
-                        <span class="case-title">ROG 聯名宣傳</span>
+            <!-- Category 1: 線上推廣 (16:9) -->
+            <div class="mb-20">
+                <div class="category-label">
+                    <h3 class="text-[#bc13fe] font-bold text-sm tracking-widest uppercase">線上推廣 / ONLINE_PROMOTION</h3>
+                    <div class="category-line"></div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                    <div class="case-card aspect-video-horizontal">
+                        <img src="https://picsum.photos/seed/online1/800/450" alt="ROG 聯名宣傳">
+                        <div class="case-overlay"></div>
+                        <div class="case-info"><span class="case-title">ROG 聯名旗艦推廣</span></div>
+                    </div>
+                    <div class="case-card aspect-video-horizontal">
+                        <img src="https://picsum.photos/seed/online2/800/450" alt="頂級鍵盤滑鼠組合推廣">
+                        <div class="case-overlay"></div>
+                        <div class="case-info"><span class="case-title">鍵盤滑鼠組合實測</span></div>
+                    </div>
+                    <div class="case-card aspect-video-horizontal">
+                        <img src="https://picsum.photos/seed/online3/800/450" alt="高效能筆電深度評測">
+                        <div class="case-overlay"></div>
+                        <div class="case-info"><span class="case-title">高效能筆電深度評測</span></div>
+                    </div>
+                    <div class="case-card aspect-video-horizontal">
+                        <img src="https://picsum.photos/seed/online4/800/450" alt="硬體零件組裝直播實測">
+                        <div class="case-overlay"></div>
+                        <div class="case-info"><span class="case-title">組裝直播實戰</span></div>
                     </div>
                 </div>
-                <!-- 案例 02 -->
-                <div class="case-card">
-                    <img src="https://picsum.photos/seed/case2/800/450" alt="電競椅品牌開箱">
-                    <div class="case-overlay"></div>
-                    <div class="case-info">
-                        <span class="case-title">電競椅品牌開箱</span>
+            </div>
+
+            <!-- Category 2: 線下活動 (16:9) -->
+            <div class="mb-20">
+                <div class="category-label">
+                    <h3 class="text-[#bc13fe] font-bold text-sm tracking-widest uppercase">線下活動 / OFFLINE_EVENTS</h3>
+                    <div class="category-line"></div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                    <div class="case-card aspect-video-horizontal">
+                        <img src="https://picsum.photos/seed/event1/800/450" alt="電競大賽官方特邀嘉賓">
+                        <div class="case-overlay"></div>
+                        <div class="case-info"><span class="case-title">電競大賽特邀嘉賓</span></div>
+                    </div>
+                    <div class="case-card aspect-video-horizontal">
+                        <img src="https://picsum.photos/seed/event2/800/450" alt="連鎖餐飲品牌聯名套餐">
+                        <div class="case-overlay"></div>
+                        <div class="case-info"><span class="case-title">餐飲品牌聯名活動</span></div>
+                    </div>
+                    <div class="case-card aspect-video-horizontal">
+                        <img src="https://picsum.photos/seed/event3/800/450" alt="動漫主題線下見面會">
+                        <div class="case-overlay"></div>
+                        <div class="case-info"><span class="case-title">主題線下見面會</span></div>
+                    </div>
+                    <div class="case-card aspect-video-horizontal">
+                        <img src="https://picsum.photos/seed/event4/800/450" alt="新型VR設備體驗推廣">
+                        <div class="case-overlay"></div>
+                        <div class="case-info"><span class="case-title">VR 設備體驗推廣</span></div>
                     </div>
                 </div>
-                <!-- 案例 03 -->
-                <div class="case-card">
-                    <img src="https://picsum.photos/seed/case3/800/450" alt="手遊代言週年慶活動">
-                    <div class="case-overlay"></div>
-                    <div class="case-info">
-                        <span class="case-title">手遊代言週年慶活動</span>
-                    </div>
+            </div>
+
+            <!-- Category 3: 短影音 (直式 9:16) -->
+            <div class="mb-20">
+                <div class="category-label">
+                    <h3 class="text-[#bc13fe] font-bold text-sm tracking-widest uppercase">短影音 / SHORT_VIDEO_CONTENT</h3>
+                    <div class="category-line"></div>
                 </div>
-                <!-- 案例 04 -->
-                <div class="case-card">
-                    <img src="https://picsum.photos/seed/case4/800/450" alt="頂級鍵盤滑鼠組合推廣">
-                    <div class="case-overlay"></div>
-                    <div class="case-info">
-                        <span class="case-title">頂級鍵盤滑鼠組合推廣</span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                    <div class="case-card aspect-video-vertical">
+                        <img src="https://picsum.photos/seed/short1/450/800" alt="電競椅品牌開箱">
+                        <div class="case-overlay-vertical"></div>
+                        <div class="case-info"><span class="case-title">品牌開箱 Shorts</span></div>
                     </div>
-                </div>
-                <!-- 案例 05 -->
-                <div class="case-card">
-                    <img src="https://picsum.photos/seed/case5/800/450" alt="能量飲料賽事贊助">
-                    <div class="case-overlay"></div>
-                    <div class="case-info">
-                        <span class="case-title">能量飲料賽事贊助</span>
+                    <div class="case-card aspect-video-vertical">
+                        <img src="https://picsum.photos/seed/short2/450/800" alt="手遊代言週年慶活動">
+                        <div class="case-overlay-vertical"></div>
+                        <div class="case-info"><span class="case-title">手遊代言宣傳 Reels</span></div>
                     </div>
-                </div>
-                <!-- 案例 06 -->
-                <div class="case-card">
-                    <img src="https://picsum.photos/seed/case6/800/450" alt="知名服飾聯名合作">
-                    <div class="case-overlay"></div>
-                    <div class="case-info">
-                        <span class="case-title">知名服飾聯名合作</span>
+                    <div class="case-card aspect-video-vertical">
+                        <img src="https://picsum.photos/seed/short3/450/800" alt="能量飲料賽事贊助">
+                        <div class="case-overlay-vertical"></div>
+                        <div class="case-info"><span class="case-title">賽事贊助短影音</span></div>
+                    </div>
+                    <div class="case-card aspect-video-vertical">
+                        <img src="https://picsum.photos/seed/short4/450/800" alt="知名服飾聯名合作">
+                        <div class="case-overlay-vertical"></div>
+                        <div class="case-info"><span class="case-title">服飾聯名合作影片</span></div>
                     </div>
                 </div>
             </div>
