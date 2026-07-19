@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>小馬娛樂 | 主播陣容 TALENTS</title>
+    <title>小馬娛樂 | 主播陣容 TALENT ROSTER</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Noto+Sans+TC:wght@300;500;700;900&display=swap" rel="stylesheet">
     <style>
@@ -30,7 +30,7 @@
         .cyber-font { font-family: 'Orbitron', sans-serif; }
         .mono { font-family: 'Share Tech Mono', monospace; }
 
-        /* 背景網格 - 最底層 */
+        /* 背景網格 */
         .grid-overlay {
             position: fixed;
             inset: 0;
@@ -41,7 +41,6 @@
             pointer-events: none;
             z-index: -2;
         }
-
         .grid-overlay::after {
             content: "";
             position: absolute;
@@ -53,30 +52,26 @@
         .dots-overlay {
             position: fixed;
             inset: 0;
-            width: 100%;
-            height: 100%;
             background-image: radial-gradient(rgba(134, 0, 255, 0.2) 1.5px, transparent 1.5px);
             background-size: 24px 24px;
             pointer-events: none;
             z-index: -1;
-            opacity: 1;
         }
 
-        /* CRT 掃描線效果 */
+        /* 掃描線樣式 */
         .scanline {
             width: 100%;
-            height: 2px;
-            z-index: 100;
-            background: rgba(0, 243, 255, 0.02);
-            opacity: 0.1;
+            height: 4px;
+            z-index: 999;
+            background: linear-gradient(to bottom, transparent, rgba(0, 243, 255, 0.15) 50%, rgba(0, 243, 255, 0.05) 80%, transparent);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
             position: fixed;
             pointer-events: none;
-            animation: scanline 8s linear infinite;
+            animation: scanline 6s linear infinite;
         }
-
         @keyframes scanline {
-            0% { top: -5%; }
-            100% { top: 105%; }
+            0% { top: -10%; }
+            100% { top: 110%; }
         }
 
         /* 裝飾性幾何背景 */
@@ -91,27 +86,16 @@
             z-index: -1;
             user-select: none;
         }
-
         .floating-deco.outlined {
             color: transparent;
             -webkit-text-stroke: 1px var(--secondary-neon);
             opacity: 0.1;
         }
 
-        /* 滿版容器與邊界裝飾 */
-        .s-path-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 40px 40px 80px 40px;
-            position: relative;
-        }
-
-        /* 頁首樣式強化 */
         header.site-header {
             background: linear-gradient(to bottom, var(--bg-dark) 0%, var(--bg-dark) 70%, transparent 100%);
             position: relative;
             z-index: 50; 
-            border-bottom: 1px solid rgba(134, 0, 255, 0.1);
         }
 
         /* 語言切換按鈕樣式 */
@@ -126,228 +110,133 @@
             cursor: pointer;
             border-radius: 2px;
         }
-
-        .lang-btn:hover {
+        .lang-btn:hover, .lang-btn.active {
             border-color: var(--secondary-neon);
             color: var(--secondary-neon);
             box-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
         }
-
         .lang-btn.active {
             background: var(--secondary-neon);
             color: var(--bg-dark);
-            border-color: var(--secondary-neon);
             font-weight: 900;
-            box-shadow: 0 0 15px var(--secondary-neon);
         }
 
-        /* 篩選器按鈕樣式 */
-        .filter-btn {
-            border: 1px solid rgba(0, 243, 255, 0.3);
-            background: rgba(5, 5, 10, 0.6);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        /* 篩選標籤樣式 */
+        .filter-tag {
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-family: 'Share Tech Mono';
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+            transition: 0.3s;
+            cursor: pointer;
+            letter-spacing: 1px;
+            user-select: none;
         }
-        .filter-btn:hover, .filter-btn.active {
-            background: var(--primary-neon);
-            color: #fff;
+        .filter-tag:hover, .filter-tag.active {
+            background: rgba(0, 243, 255, 0.1);
             border-color: var(--secondary-neon);
-            box-shadow: 0 0 15px var(--primary-neon);
-            text-shadow: 0 0 5px #fff;
-        }
-
-        /* 賽博主播卡牌與光圈裝飾 */
-        .streamer-card {
-            background: rgba(15, 15, 25, 0.8);
-            border: 1px solid rgba(134, 0, 255, 0.3);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-        .streamer-card::before {
-            content: "SYS_STREAMER_LOG";
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 9px;
             color: var(--secondary-neon);
-            opacity: 0.4;
-        }
-        .streamer-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            border-color: var(--secondary-neon);
-            box-shadow: 0 15px 40px rgba(134, 0, 255, 0.3);
+            box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
         }
 
-        /* 仿造圖片「頭像外框設計」的同心發光圓圈效果 */
-        .avatar-hud-wrap {
-            position: relative;
-            width: 160px;
-            height: 160px;
-            margin: 0 auto;
-        }
-        .avatar-circle-bg {
-            position: absolute;
-            inset: -8px;
-            border-radius: 50%;
-            border: 2px dashed rgba(134, 0, 255, 0.4);
-            animation: rotate-slow 20s linear infinite;
-        }
-        .avatar-circle-glow {
-            position: absolute;
-            inset: -3px;
-            border-radius: 50%;
-            border: 3px solid var(--secondary-neon);
-            box-shadow: 0 0 18px var(--secondary-neon), inset 0 0 10px var(--secondary-neon);
-            animation: pulse-glow 3s ease-in-out infinite;
-        }
-        @keyframes rotate-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        @keyframes pulse-glow {
-            0%, 100% { opacity: 0.7; transform: scale(0.98); }
-            50% { opacity: 1; transform: scale(1.02); }
-        }
-
-        /* 底部控制面板設計 */
-        .control-panel {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 98%;
-            max-width: 1100px;
-            z-index: 1000;
-        }
-
-        .panel-container {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 20px;
-            background: linear-gradient(180deg, rgba(20, 20, 20, 0.9) 0%, rgba(5, 5, 5, 0.95) 100%);
-            backdrop-filter: blur(20px);
-            border-top: 1px solid rgba(134, 0, 255, 0.4);
-            border-bottom: 2px solid rgba(134, 0, 255, 0.2);
-            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.8);
+        /* 主播卡片內 Hashtag */
+        .talent-tag {
+            font-size: 11px;
+            color: var(--secondary-neon);
+            opacity: 0.6;
+            background: rgba(0, 243, 255, 0.05);
+            padding: 1px 6px;
             border-radius: 4px;
+            margin: 1px;
+            display: inline-block;
+        }
+
+        /* 頭像外框與動態發光 */
+        .cyber-frame {
+            position: relative; width: 140px; height: 140px;
+            display: flex; justify-content: center; align-items: center;
+            cursor: pointer; margin-bottom: 16px;
+        }
+        .glow-ring {
+            position: absolute; inset: -4px; border-radius: 50%;
+            background: conic-gradient(from 0deg, transparent, var(--neon-purple), var(--secondary-neon), transparent);
+            opacity: 0.2; filter: blur(8px); animation: rotate-glow 8s linear infinite; transition: 0.5s;
+        }
+        .thin-border {
+            position: absolute; inset: 0; border-radius: 50%; padding: 3px;
+            background: linear-gradient(135deg, rgba(188, 19, 254, 0.5), rgba(0, 243, 255, 0.5));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor; mask-composite: exclude; transition: 0.5s;
+        }
+        .inner-photo {
+            width: 126px; height: 126px; border-radius: 50%; overflow: hidden;
+            background: #000; position: relative; z-index: 1; border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .inner-photo img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(20%) brightness(0.8); transition: 0.5s; }
+
+        .cyber-frame:hover .glow-ring { opacity: 0.8; filter: blur(12px); transform: scale(1.05); }
+        .cyber-frame:hover .thin-border { transform: scale(1.05); background: linear-gradient(135deg, var(--neon-purple), var(--secondary-neon)); }
+        .cyber-frame:hover .inner-photo img { filter: grayscale(0%) brightness(1.1); transform: scale(1.1); }
+
+        @keyframes rotate-glow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* 控制面板設計 */
+        .control-panel {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            width: 98%; max-width: 1100px; z-index: 1000;
+        }
+        .panel-container {
+            position: relative; display: flex; justify-content: center; align-items: center; gap: 10px;
+            padding: 12px 20px; background: linear-gradient(180deg, rgba(20, 20, 20, 0.9) 0%, rgba(5, 5, 5, 0.95) 100%);
+            backdrop-filter: blur(20px); border-top: 1px solid rgba(134, 0, 255, 0.4); border-bottom: 2px solid rgba(134, 0, 255, 0.2);
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.8); border-radius: 4px;
         }
 
         @media (min-width: 768px) {
-            .panel-container { gap: 30px; padding: 15px 50px; border-radius: 4px; }
+            .panel-container { gap: 30px; padding: 15px 50px; }
             .panel-container::before, .panel-container::after {
-                content: "";
-                position: absolute;
-                top: 0;
-                width: 25px;
-                height: 100%;
-                background: inherit;
-                z-index: -1;
+                content: ""; position: absolute; top: 0; width: 25px; height: 100%; background: inherit; z-index: -1;
             }
             .panel-container::before { left: -12px; transform: skewX(-15deg); border-left: 1px solid rgba(134, 0, 255, 0.4); }
             .panel-container::after { right: -12px; transform: skewX(15deg); border-right: 1px solid rgba(134, 0, 255, 0.4); }
             .panel-btn { font-size: 1.15rem; } 
         }
-
         @media (max-width: 767px) {
             .panel-container { gap: 6px; padding: 12px 10px; border-radius: 12px; }
             .panel-btn { font-size: 0.85rem !important; letter-spacing: 0.05em !important; } 
         }
 
         .nav-item { position: relative; }
-
         .panel-btn {
-            position: relative;
-            font-weight: bold;
-            color: #ccc;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-            letter-spacing: 0.15em;
-            cursor: pointer;
-            padding-bottom: 14px;
-            z-index: 2;
+            position: relative; font-weight: bold; color: #ccc; transition: all 0.3s ease;
+            white-space: nowrap; letter-spacing: 0.15em; cursor: pointer; padding-bottom: 8px; z-index: 2;
         }
-
         .energy-bar {
-            position: absolute;
-            bottom: 2px;
-            left: 0;
-            width: 0%;
-            height: 2px;
-            background: var(--secondary-neon);
-            box-shadow: 0 0 10px var(--secondary-neon);
-            transition: width 0.3s ease;
+            position: absolute; bottom: -5px; left: 0; width: 0%; height: 2px;
+            background: var(--secondary-neon); box-shadow: 0 0 10px var(--secondary-neon); transition: width 0.3s ease;
         }
-
-        .nav-item:hover .panel-btn {
-            color: var(--secondary-neon);
-            text-shadow: 0 0 8px var(--secondary-neon);
-        }
-
-        .nav-item:hover .energy-bar {
-            width: 100%;
-        }
+        .nav-item:hover .panel-btn { color: var(--secondary-neon); text-shadow: 0 0 8px var(--secondary-neon); }
+        .nav-item:hover .energy-bar { width: 100%; }
 
         /* 子選單樣式 */
         .submenu {
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%) translateY(10px);
-            background: rgba(5, 5, 5, 0.98);
-            border: 1px solid var(--primary-neon);
-            min-width: 180px;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s;
-            backdrop-filter: blur(15px);
-            padding: 12px;
-            box-shadow: 0 0 30px rgba(134, 0, 255, 0.4);
-            pointer-events: none;
-            z-index: 1001;
-            margin-bottom: 15px;
+            position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%) translateY(10px);
+            background: rgba(5, 5, 5, 0.98); border: 1px solid var(--primary-neon); min-width: 180px;
+            opacity: 0; visibility: hidden; transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s;
+            backdrop-filter: blur(15px); padding: 12px; box-shadow: 0 0 30px rgba(134, 0, 255, 0.4);
+            pointer-events: none; z-index: 1001; margin-bottom: 15px;
         }
-
-        .submenu::before {
-            content: "";
-            position: absolute;
-            bottom: -20px;
-            left: 0;
-            width: 100%;
-            height: 25px;
-            background: transparent;
-        }
-
-        .nav-item:hover .submenu {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(-50%) translateY(0);
-            pointer-events: auto;
-        }
-
+        .submenu::before { content: ""; position: absolute; bottom: -20px; left: 0; width: 100%; height: 25px; background: transparent; }
+        .nav-item:hover .submenu { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); pointer-events: auto; }
         .submenu-link {
-            display: block;
-            padding: 10px 14px;
-            color: #bbb;
-            font-size: 0.95rem; 
-            text-align: left;
-            transition: all 0.2s;
-            border-left: 2px solid transparent;
-            text-decoration: none;
+            display: block; padding: 10px 14px; color: #bbb; font-size: 0.95rem; text-align: left;
+            transition: all 0.2s; border-left: 2px solid transparent; text-decoration: none;
         }
-
-        .submenu-link:hover {
-            background: rgba(134, 0, 255, 0.15);
-            color: var(--secondary-neon);
-            border-left: 2px solid var(--secondary-neon);
-            padding-left: 18px;
-        }
-
-        /* 手機版排版調整 */
-        @media (max-width: 768px) {
-            .s-path-container { padding: 20px 20px 140px 20px; }
-            .floating-deco { display: none; }
-        }
+        .submenu-link:hover { background: rgba(134, 0, 255, 0.15); color: var(--secondary-neon); border-left: 2px solid var(--secondary-neon); padding-left: 18px; }
     </style>
 </head>
 <body>
@@ -355,12 +244,9 @@
     <div class="dots-overlay"></div>
     <div class="grid-overlay"></div>
     <div class="scanline"></div>
-    
-    <!-- 背景裝飾文字 -->
-    <div class="floating-deco" style="top: 15%; left: -3%;">LIVE</div>
-    <div class="floating-deco outlined" style="bottom: 25%; right: -2%;">XIAOMA</div>
+    <div class="floating-deco outlined" style="bottom: 15%; right: -2%;">XIAOMA</div>
 
-    <!-- 1. 頁首區域（嚴格繼承品牌特色標頭） -->
+    <!-- 標頭區域 -->
     <header class="site-header w-full pt-20 pb-16 overflow-hidden">
         <div class="max-w-[1400px] mx-auto px-10 flex flex-col items-start relative">
             <div class="flex items-center gap-3 mb-4">
@@ -370,395 +256,145 @@
             
             <div class="flex flex-col mb-4">
                 <div class="flex items-end gap-6 mb-2">
-                    <!-- 主題內容替換為：小馬主播陣容 -->
-                    <h1 class="text-5xl md:text-7xl font-black italic tracking-tighter leading-none" id="header-main-title">小馬主播陣容</h1>
-                    <!-- 語言切換按鈕 -->
+                    <!-- 新增 ID 供語系切換使用 -->
+                    <h1 id="main-title" class="text-5xl md:text-7xl font-black italic tracking-tighter leading-none">主播陣容</h1>
+                    <!-- 補上參考檔的實體語系切換按鈕 -->
                     <div class="flex gap-2 mb-1">
-                        <button onclick="switchLang('ch')" id="btn-ch" class="lang-btn active">CH</button>
-                        <button onclick="switchLang('en')" id="btn-en" class="lang-btn">EN</button>
+                        <button onclick="toggleLanguage('ch')" id="btn-ch" class="lang-btn active">CH</button>
+                        <button onclick="toggleLanguage('en')" id="btn-en" class="lang-btn">EN</button>
                     </div>
                 </div>
-                <span class="cyber-font text-xl md:text-3xl font-black text-white/10 uppercase italic tracking-widest leading-none" id="header-sub-title">STREAMERS_MATRIX</span>
+                <span id="sub-title" class="cyber-font text-xl md:text-3xl font-black text-white/10 uppercase italic tracking-widest leading-none">TALENT_ROSTER</span>
             </div>
-            
             <div class="w-[60px] h-[4px] bg-gradient-to-r from-[#bc13fe] to-[#00d2ff]"></div>
         </div>
     </header>
-
-    <!-- 2. 主要內容區域（包含篩選互動方案與動態卡牌群） -->
-    <main class="s-path-container">
-        <!-- 廠商專用即時商案篩選器 -->
-        <div class="flex flex-wrap gap-4 mb-12 justify-center md:justify-start" id="filter-container">
-            <button onclick="filterStreamers('all')" class="filter-btn active px-6 py-2 rounded cyber-font text-sm font-bold tracking-wider text-white" id="filter-all">ALL / 全部陣容</button>
-            <button onclick="filterStreamers('game')" class="filter-btn px-6 py-2 rounded cyber-font text-sm font-bold tracking-wider text-[#00f3ff]" id="filter-game">GAME / 遊戲實況</button>
-            <button onclick="filterStreamers('tech')" class="filter-btn px-6 py-2 rounded cyber-font text-sm font-bold tracking-wider text-[#bc13fe]" id="filter-tech">3C & TECH / 科技開箱</button>
-        </div>
-
-        <!-- 主播卡牌網格群 -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="streamer-grid">
-            
-            <!-- 主播 1 -->
-            <div class="streamer-card p-6 rounded-lg text-center" data-category="game tech">
-                <div class="mb-6 pt-4">
-                    <div class="avatar-hud-wrap">
-                        <div class="avatar-circle-bg"></div>
-                        <div class="avatar-circle-glow"></div>
-                        <!-- 頭像圖片遮罩區 -->
-                        <div class="w-full h-full rounded-full overflow-hidden border-4 border-black relative z-10">
-                            <div class="w-full h-full bg-gradient-to-tr from-[#8600ff] to-[#00f3ff] flex items-center justify-center text-3xl font-bold italic">XM_01</div>
-                        </div>
-                    </div>
-                </div>
-                <h3 class="text-2xl font-black italic tracking-wide mb-1 text-white" id="name-1">電競狂人 艾力克斯</h3>
-                <span class="mono text-xs text-[#00f3ff] tracking-widest uppercase block mb-4">FPS Specialist / Hardware Review</span>
-                <p class="card-text text-sm text-white/70 leading-relaxed mb-6 h-12 overflow-hidden" id="desc-1">精通各類FPS與競技遊戲，硬體評測風格辛辣直白，深受3C及大廠青睞。</p>
-                <div class="border-t border-white/10 pt-4 flex justify-between items-center text-xs">
-                    <span class="mono text-white/40">FANS: <strong class="text-white text-sm">450K+</strong></span>
-                    <span class="px-2 py-1 bg-[#00f3ff]/10 text-[#00f3ff] border border-[#00f3ff]/30 rounded text-[10px]" id="tag-1">遊戲/3C雙棲</span>
-                </div>
-            </div>
-
-            <!-- 主播 2 -->
-            <div class="streamer-card p-6 rounded-lg text-center" data-category="game">
-                <div class="mb-6 pt-4">
-                    <div class="avatar-hud-wrap">
-                        <div class="avatar-circle-bg"></div>
-                        <div class="avatar-circle-glow" style="border-color: #ff003c; box-shadow: 0 0 18px #ff003c;"></div>
-                        <div class="w-full h-full rounded-full overflow-hidden border-4 border-black relative z-10">
-                            <div class="w-full h-full bg-gradient-to-tr from-[#ff003c] to-[#bc13fe] flex items-center justify-center text-3xl font-bold italic">XM_02</div>
-                        </div>
-                    </div>
-                </div>
-                <h3 class="text-2xl font-black italic tracking-wide mb-1 text-white" id="name-2">元氣少女 露露</h3>
-                <span class="mono text-xs text-[#ff003c] tracking-widest uppercase block mb-4">RPG & ACG Cultivator</span>
-                <p class="card-text text-sm text-white/70 leading-relaxed mb-6 h-12 overflow-hidden" id="desc-2">主打二次元與手遊封測實況，互動率極高，新遊首發社群宣傳的最佳核心選人。</p>
-                <div class="border-t border-white/10 pt-4 flex justify-between items-center text-xs">
-                    <span class="mono text-white/40">FANS: <strong class="text-white text-sm">280K+</strong></span>
-                    <span class="px-2 py-1 bg-[#ff003c]/10 text-[#ff003c] border border-[#ff003c]/30 rounded text-[10px]" id="tag-2">手遊宣傳先鋒</span>
-                </div>
-            </div>
-
-            <!-- 主播 3 -->
-            <div class="streamer-card p-6 rounded-lg text-center" data-category="tech">
-                <div class="mb-6 pt-4">
-                    <div class="avatar-hud-wrap">
-                        <div class="avatar-circle-bg"></div>
-                        <div class="avatar-circle-glow" style="border-color: #bc13fe; box-shadow: 0 0 18px #bc13fe;"></div>
-                        <div class="w-full h-full rounded-full overflow-hidden border-4 border-black relative z-10">
-                            <div class="w-full h-full bg-gradient-to-tr from-[#bc13fe] to-[#8600ff] flex items-center justify-center text-3xl font-bold italic">XM_03</div>
-                        </div>
-                    </div>
-                </div>
-                <h3 class="text-2xl font-black italic tracking-wide mb-1 text-white" id="name-3">科技極客 麥克斯</h3>
-                <span class="mono text-xs text-[#bc13fe] tracking-widest uppercase block mb-4">Gadget & Mobile Expert</span>
-                <p class="card-text text-sm text-white/70 leading-relaxed mb-6 h-12 overflow-hidden" id="desc-3">專注於高階電競手機、筆電與潮流3C硬體評測，受眾多為高消費力的精準男性廠商客戶。</p>
-                <div class="border-t border-white/10 pt-4 flex justify-between items-center text-xs">
-                    <span class="mono text-white/40">FANS: <strong class="text-white text-sm">620K+</strong></span>
-                    <span class="px-2 py-1 bg-[#bc13fe]/10 text-[#bc13fe] border border-[#bc13fe]/30 rounded text-[10px]" id="tag-3">3C新品開箱</span>
-                </div>
-            </div>
-            <!-- 主播 4 -->
-            <div class="streamer-card p-6 rounded-lg text-center" data-category="game">
-                <div class="mb-6 pt-4">
-                    <div class="avatar-hud-wrap">
-                        <div class="avatar-circle-bg"></div>
-                        <div class="avatar-circle-glow" style="border-color: #ff003c; box-shadow: 0 0 18px #ff003c;"></div>
-                        <div class="w-full h-full rounded-full overflow-hidden border-4 border-black relative z-10">
-                            <div class="w-full h-full bg-gradient-to-tr from-[#ff003c] to-[#bc13fe] flex items-center justify-center text-3xl font-bold italic">XM_02</div>
-                        </div>
-                    </div>
-                </div>
-                <h3 class="text-2xl font-black italic tracking-wide mb-1 text-white" id="name-2">元氣少女 露露</h3>
-                <span class="mono text-xs text-[#ff003c] tracking-widest uppercase block mb-4">RPG & ACG Cultivator</span>
-                <p class="card-text text-sm text-white/70 leading-relaxed mb-6 h-12 overflow-hidden" id="desc-2">主打二次元與手遊封測實況，互動率極高，新遊首發社群宣傳的最佳核心選人。</p>
-                <div class="border-t border-white/10 pt-4 flex justify-between items-center text-xs">
-                    <span class="mono text-white/40">FANS: <strong class="text-white text-sm">280K+</strong></span>
-                    <span class="px-2 py-1 bg-[#ff003c]/10 text-[#ff003c] border border-[#ff003c]/30 rounded text-[10px]" id="tag-2">手遊宣傳先鋒</span>
-                </div>
-            </div>
-            <!-- 主播 5 -->
-            <div class="streamer-card p-6 rounded-lg text-center" data-category="game">
-                <div class="mb-6 pt-4">
-                    <div class="avatar-hud-wrap">
-                        <div class="avatar-circle-bg"></div>
-                        <div class="avatar-circle-glow" style="border-color: #ff003c; box-shadow: 0 0 18px #ff003c;"></div>
-                        <div class="w-full h-full rounded-full overflow-hidden border-4 border-black relative z-10">
-                            <div class="w-full h-full bg-gradient-to-tr from-[#ff003c] to-[#bc13fe] flex items-center justify-center text-3xl font-bold italic">XM_02</div>
-                        </div>
-                    </div>
-                </div>
-                <h3 class="text-2xl font-black italic tracking-wide mb-1 text-white" id="name-2">元氣少女 露露</h3>
-                <span class="mono text-xs text-[#ff003c] tracking-widest uppercase block mb-4">RPG & ACG Cultivator</span>
-                <p class="card-text text-sm text-white/70 leading-relaxed mb-6 h-12 overflow-hidden" id="desc-2">主打二次元與手遊封測實況，互動率極高，新遊首發社群宣傳的最佳核心選人。</p>
-                <div class="border-t border-white/10 pt-4 flex justify-between items-center text-xs">
-                    <span class="mono text-white/40">FANS: <strong class="text-white text-sm">280K+</strong></span>
-                    <span class="px-2 py-1 bg-[#ff003c]/10 text-[#ff003c] border border-[#ff003c]/30 rounded text-[10px]" id="tag-2">手遊宣傳先鋒</span>
-                </div>
-            </div>
-            <!-- 主播 6 -->
-            <div class="streamer-card p-6 rounded-lg text-center" data-category="game">
-                <div class="mb-6 pt-4">
-                    <div class="avatar-hud-wrap">
-                        <div class="avatar-circle-bg"></div>
-                        <div class="avatar-circle-glow" style="border-color: #ff003c; box-shadow: 0 0 18px #ff003c;"></div>
-                        <div class="w-full h-full rounded-full overflow-hidden border-4 border-black relative z-10">
-                            <div class="w-full h-full bg-gradient-to-tr from-[#ff003c] to-[#bc13fe] flex items-center justify-center text-3xl font-bold italic">XM_02</div>
-                        </div>
-                    </div>
-                </div>
-                <h3 class="text-2xl font-black italic tracking-wide mb-1 text-white" id="name-2">元氣少女 露露</h3>
-                <span class="mono text-xs text-[#ff003c] tracking-widest uppercase block mb-4">RPG & ACG Cultivator</span>
-                <p class="card-text text-sm text-white/70 leading-relaxed mb-6 h-12 overflow-hidden" id="desc-2">主打二次元與手遊封測實況，互動率極高，新遊首發社群宣傳的最佳核心選人。</p>
-                <div class="border-t border-white/10 pt-4 flex justify-between items-center text-xs">
-                    <span class="mono text-white/40">FANS: <strong class="text-white text-sm">280K+</strong></span>
-                    <span class="px-2 py-1 bg-[#ff003c]/10 text-[#ff003c] border border-[#ff003c]/30 rounded text-[10px]" id="tag-2">手遊宣傳先鋒</span>
-                </div>
-            </div>
-            <!-- 主播 7 -->
-            <div class="streamer-card p-6 rounded-lg text-center" data-category="game">
-                <div class="mb-6 pt-4">
-                    <div class="avatar-hud-wrap">
-                        <div class="avatar-circle-bg"></div>
-                        <div class="avatar-circle-glow" style="border-color: #ff003c; box-shadow: 0 0 18px #ff003c;"></div>
-                        <div class="w-full h-full rounded-full overflow-hidden border-4 border-black relative z-10">
-                            <div class="w-full h-full bg-gradient-to-tr from-[#ff003c] to-[#bc13fe] flex items-center justify-center text-3xl font-bold italic">XM_02</div>
-                        </div>
-                    </div>
-                </div>
-                <h3 class="text-2xl font-black italic tracking-wide mb-1 text-white" id="name-2">元氣少女 露露</h3>
-                <span class="mono text-xs text-[#ff003c] tracking-widest uppercase block mb-4">RPG & ACG Cultivator</span>
-                <p class="card-text text-sm text-white/70 leading-relaxed mb-6 h-12 overflow-hidden" id="desc-2">主打二次元與手遊封測實況，互動率極高，新遊首發社群宣傳的最佳核心選人。</p>
-                <div class="border-t border-white/10 pt-4 flex justify-between items-center text-xs">
-                    <span class="mono text-white/40">FANS: <strong class="text-white text-sm">280K+</strong></span>
-                    <span class="px-2 py-1 bg-[#ff003c]/10 text-[#ff003c] border border-[#ff003c]/30 rounded text-[10px]" id="tag-2">手遊宣傳先鋒</span>
-                </div>
-            </div>
-            <!-- 主播 8 -->
-            <div class="streamer-card p-6 rounded-lg text-center" data-category="game">
-                <div class="mb-6 pt-4">
-                    <div class="avatar-hud-wrap">
-                        <div class="avatar-circle-bg"></div>
-                        <div class="avatar-circle-glow" style="border-color: #ff003c; box-shadow: 0 0 18px #ff003c;"></div>
-                        <div class="w-full h-full rounded-full overflow-hidden border-4 border-black relative z-10">
-                            <div class="w-full h-full bg-gradient-to-tr from-[#ff003c] to-[#bc13fe] flex items-center justify-center text-3xl font-bold italic">XM_02</div>
-                        </div>
-                    </div>
-                </div>
-                <h3 class="text-2xl font-black italic tracking-wide mb-1 text-white" id="name-2">元氣少女 露露</h3>
-                <span class="mono text-xs text-[#ff003c] tracking-widest uppercase block mb-4">RPG & ACG Cultivator</span>
-                <p class="card-text text-sm text-white/70 leading-relaxed mb-6 h-12 overflow-hidden" id="desc-2">主打二次元與手遊封測實況，互動率極高，新遊首發社群宣傳的最佳核心選人。</p>
-                <div class="border-t border-white/10 pt-4 flex justify-between items-center text-xs">
-                    <span class="mono text-white/40">FANS: <strong class="text-white text-sm">280K+</strong></span>
-                    <span class="px-2 py-1 bg-[#ff003c]/10 text-[#ff003c] border border-[#ff003c]/30 rounded text-[10px]" id="tag-2">手遊宣傳先鋒</span>
-                </div>
-            </div>
-            <!-- 主播 9 -->
-            <div class="streamer-card p-6 rounded-lg text-center" data-category="game">
-                <div class="mb-6 pt-4">
-                    <div class="avatar-hud-wrap">
-                        <div class="avatar-circle-bg"></div>
-                        <div class="avatar-circle-glow" style="border-color: #ff003c; box-shadow: 0 0 18px #ff003c;"></div>
-                        <div class="w-full h-full rounded-full overflow-hidden border-4 border-black relative z-10">
-                            <div class="w-full h-full bg-gradient-to-tr from-[#ff003c] to-[#bc13fe] flex items-center justify-center text-3xl font-bold italic">XM_02</div>
-                        </div>
-                    </div>
-                </div>
-                <h3 class="text-2xl font-black italic tracking-wide mb-1 text-white" id="name-2">元氣少女 露露</h3>
-                <span class="mono text-xs text-[#ff003c] tracking-widest uppercase block mb-4">RPG & ACG Cultivator</span>
-                <p class="card-text text-sm text-white/70 leading-relaxed mb-6 h-12 overflow-hidden" id="desc-2">主打二次元與手遊封測實況，互動率極高，新遊首發社群宣傳的最佳核心選人。</p>
-                <div class="border-t border-white/10 pt-4 flex justify-between items-center text-xs">
-                    <span class="mono text-white/40">FANS: <strong class="text-white text-sm">280K+</strong></span>
-                    <span class="px-2 py-1 bg-[#ff003c]/10 text-[#ff003c] border border-[#ff003c]/30 rounded text-[10px]" id="tag-2">手遊宣傳先鋒</span>
-                </div>
-            </div>
-            <!-- 主播 10 -->
-            <div class="streamer-card p-6 rounded-lg text-center" data-category="game">
-                <div class="mb-6 pt-4">
-                    <div class="avatar-hud-wrap">
-                        <div class="avatar-circle-bg"></div>
-                        <div class="avatar-circle-glow" style="border-color: #ff003c; box-shadow: 0 0 18px #ff003c;"></div>
-                        <div class="w-full h-full rounded-full overflow-hidden border-4 border-black relative z-10">
-                            <div class="w-full h-full bg-gradient-to-tr from-[#ff003c] to-[#bc13fe] flex items-center justify-center text-3xl font-bold italic">XM_02</div>
-                        </div>
-                    </div>
-                </div>
-                <h3 class="text-2xl font-black italic tracking-wide mb-1 text-white" id="name-2">元氣少女 露露</h3>
-                <span class="mono text-xs text-[#ff003c] tracking-widest uppercase block mb-4">RPG & ACG Cultivator</span>
-                <p class="card-text text-sm text-white/70 leading-relaxed mb-6 h-12 overflow-hidden" id="desc-2">主打二次元與手遊封測實況，互動率極高，新遊首發社群宣傳的最佳核心選人。</p>
-                <div class="border-t border-white/10 pt-4 flex justify-between items-center text-xs">
-                    <span class="mono text-white/40">FANS: <strong class="text-white text-sm">280K+</strong></span>
-                    <span class="px-2 py-1 bg-[#ff003c]/10 text-[#ff003c] border border-[#ff003c]/30 rounded text-[10px]" id="tag-2">手遊宣傳先鋒</span>
-                </div>
-            </div>
-            <!-- 主播 11 -->
-            <div class="streamer-card p-6 rounded-lg text-center" data-category="game">
-                <div class="mb-6 pt-4">
-                    <div class="avatar-hud-wrap">
-                        <div class="avatar-circle-bg"></div>
-                        <div class="avatar-circle-glow" style="border-color: #ff003c; box-shadow: 0 0 18px #ff003c;"></div>
-                        <div class="w-full h-full rounded-full overflow-hidden border-4 border-black relative z-10">
-                            <div class="w-full h-full bg-gradient-to-tr from-[#ff003c] to-[#bc13fe] flex items-center justify-center text-3xl font-bold italic">XM_02</div>
-                        </div>
-                    </div>
-                </div>
-                <h3 class="text-2xl font-black italic tracking-wide mb-1 text-white" id="name-2">元氣少女 露露</h3>
-                <span class="mono text-xs text-[#ff003c] tracking-widest uppercase block mb-4">RPG & ACG Cultivator</span>
-                <p class="card-text text-sm text-white/70 leading-relaxed mb-6 h-12 overflow-hidden" id="desc-2">主打二次元與手遊封測實況，互動率極高，新遊首發社群宣傳的最佳核心選人。</p>
-                <div class="border-t border-white/10 pt-4 flex justify-between items-center text-xs">
-                    <span class="mono text-white/40">FANS: <strong class="text-white text-sm">280K+</strong></span>
-                    <span class="px-2 py-1 bg-[#ff003c]/10 text-[#ff003c] border border-[#ff003c]/30 rounded text-[10px]" id="tag-2">手遊宣傳先鋒</span>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- 3. 導覽列（底部控制面板設計） -->
+    
+    <div class="container mx-auto px-6 py-12 max-w-[1100px]">
+        <!-- 互動篩選列 -->
+        <div class="flex flex-wrap gap-2 mb-16" id="filter-bar"></div>
+        <!-- 主播網格 -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-y-16 gap-x-8 justify-items-center mb-32" id="talents-list"></div>
+    </div>
+    
+    <!-- 底部控制面板 -->
     <nav class="control-panel">
         <div class="panel-container">
             <div class="nav-item">
-                <span class="panel-btn" id="nav-1">關於小馬</span>
+                <span class="panel-btn">關於小馬</span>
                 <div class="energy-bar"></div>
                 <div class="submenu">
-                    <a href="#" class="submenu-link" id="sub-1-1">首頁</a>
-                    <a href="#" class="submenu-link" id="sub-1-2">品牌特色</a>
-                    <a href="#" class="submenu-link" id="sub-1-3">合作項目</a>
-                    <a href="#" class="submenu-link" id="sub-1-4">服務流程</a>
+                    <a href="https://xiaomasales-creator.github.io/sales/presentation/index.html" class="submenu-link">首頁</a>
+                    <a href="https://xiaomasales-creator.github.io/sales/presentation/nav/%E5%93%81%E7%89%8C%E7%89%B9%E8%89%B2/index.html" class="submenu-link">品牌特色</a>
+                    <a href="https://xiaomasales-creator.github.io/sales/presentation/nav/%E6%9C%8D%E5%8B%99%E6%B5%81%E7%A8%8B/index.html" class="submenu-link">服務流程</a>
                 </div>
             </div>
             <div class="nav-item">
-                <span class="panel-btn" id="nav-2">網紅經紀</span>
+                <span class="panel-btn">網紅經紀</span>
                 <div class="energy-bar"></div>
                 <div class="submenu">
-                    <a href="#" class="submenu-link" id="sub-2-1">小馬主播陣容</a>
-                    <a href="#" class="submenu-link" id="sub-2-2">經典案例</a>
-                    <a href="#" class="submenu-link" id="sub-2-3">經常合作KOL</a>
+                    <a href="#" class="submenu-link">小馬主播陣容</a>
+                    <a href="#" class="submenu-link">經典案例</a>
                 </div>
             </div>
             <div class="nav-item">
-                <span class="panel-btn" id="nav-3">活動花絮</span>
+                <span class="panel-btn">聯絡我們</span>
                 <div class="energy-bar"></div>
                 <div class="submenu">
-                    <a href="#" class="submenu-link" id="sub-3-1">商案總覽</a>
-                    <a href="#" class="submenu-link" id="sub-3-2">線下活動花絮</a>
-                </div>
-            </div>
-            <div class="nav-item">
-                <span class="panel-btn" id="nav-4">其他服務</span>
-                <div class="energy-bar"></div>
-                <div class="submenu">
-                    <a href="#" class="submenu-link" id="sub-4-1">影音剪輯</a>
-                    <a href="#" class="submenu-link" id="sub-4-2">網頁製作</a>
-                    <a href="#" class="submenu-link" id="sub-4-3">美術設計</a>
-                    <a href="#" class="submenu-link" id="sub-4-4">社群經營</a>
-                </div>
-            </div>
-            <div class="nav-item">
-                <span class="panel-btn" id="nav-5">聯絡我們</span>
-                <div class="energy-bar"></div>
-                <div class="submenu">
-                    <a href="#" class="submenu-link" id="sub-5-1">工商洽談</a>
-                    <a href="#" class="submenu-link" id="sub-5-2">加入小馬</a>
+                    <a href="#" class="submenu-link">工商洽談</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- 4. 核心 JavaScript：控制互動篩選功能與中英文切換機制 -->
     <script>
-        // 互動功能設計方案：即時篩選器
-        function filterStreamers(category) {
-            // 切換按鈕 active 樣式
-            const buttons = document.querySelectorAll('.filter-btn');
-            buttons.forEach(btn => btn.classList.remove('active'));
-            
-            event.currentTarget.classList.add('active');
+        let currentLang = 'ch';
+        let selectedFilters = [];
 
-            // 執行卡牌過濾與動畫效果
-            const cards = document.querySelectorAll('.streamer-card');
-            cards.forEach(card => {
-                const categories = card.getAttribute('data-category').split(' ');
-                if (category === 'all' || categories.includes(category)) {
-                    card.style.display = 'block';
-                    setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'scale(1)'; }, 50);
-                } else {
-                    card.style.opacity = '0';
-                    card.style.transform = 'scale(0.9)';
-                    setTimeout(() => { card.style.display = 'none'; }, 300);
-                }
+        const filterOptions = ["All", "MMORPG", "FPS", "MOBA", "社群紅人/Reels", "跳舞/Dancing", "主持站台/Hosting", "Vtuber"];
+        
+        const talentsData = [
+            { ch: "狂暴小建", en: "Jian", tags: ["FPS", "主持站台/Hosting"], img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/1-1.png", url: "#" },
+            { ch: "UZRA", en: "UZRA", tags: ["跳舞/Dancing", "社群紅人/Reels"], img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/2-1.png", url: "#" },
+            { ch: "豆豆", en: "Dou Dou", tags: ["MMORPG", "Vtuber"], img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/3-1.png", url: "#" },
+            { ch: "牛牛妹", en: "Niu", tags: ["MOBA", "FPS"], img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/4-1.png", url: "#" }
+        ];
+
+        const listContainer = document.getElementById('talents-list');
+        const filterBar = document.getElementById('filter-bar');
+        
+        function renderFilters() {
+            filterBar.innerHTML = '';
+            filterOptions.forEach(opt => {
+                const btn = document.createElement('div');
+                const isAll = opt === 'All';
+                const isActive = isAll ? selectedFilters.length === 0 : selectedFilters.includes(opt);
+                btn.className = `filter-tag ${isActive ? 'active' : ''}`;
+                btn.innerText = opt;
+                btn.onclick = () => {
+                    if (isAll) { selectedFilters = []; } 
+                    else {
+                        if (selectedFilters.includes(opt)) {
+                            selectedFilters = selectedFilters.filter(f => f !== opt);
+                        } else {
+                            selectedFilters.push(opt);
+                        }
+                    }
+                    renderFilters(); renderTalents();
+                };
+                filterBar.appendChild(btn);
             });
         }
 
-        // 中英文切換資料庫
-        const langData = {
-            ch: {
-                headerTitle: "小馬主播陣容",
-                headerSub: "STREAMERS_MATRIX",
-                filterAll: "ALL / 全部陣容",
-                filterGame: "GAME / 遊戲實況",
-                filterTech: "3C & TECH / 科技開箱",
-                name1: "電競狂人 艾力克斯",
-                desc1: "精通各類FPS與競技遊戲，硬體評測風格辛辣直白，深受3C及大廠青睞。",
-                tag1: "遊戲/3C雙棲",
-                name2: "元氣少女 露露",
-                desc2: "主打二次元與手遊封測實況，互動率極高，新遊首發社群宣傳的最佳核心選人。",
-                tag2: "手遊宣傳先鋒",
-                name3: "科技極客 麥克斯",
-                desc3: "專注於高階電競手機、筆電與潮流3C硬體評測，受眾多為高消費力的精準男性廠商客戶。",
-                tag3: "3C新品開箱",
-                nav1: "關於小馬", nav2: "網紅經紀", nav3: "活動花絮", nav4: "其他服務", nav5: "聯絡我們"
-            },
-            en: {
-                headerTitle: "XIAOMA STREAMERS",
-                headerSub: "STREAMERS_MATRIX",
-                filterAll: "ALL / SHOW ALL",
-                filterGame: "GAME / LIVE STREAM",
-                filterTech: "3C & TECH / UNBOXING",
-                name1: "Alex the Esports Fanatic",
-                desc1: "Proficient in FPS & competitive games. His tech hardware reviews are bold & direct, favored by big brands.",
-                tag1: "Gaming & 3C Duo",
-                name2: "Lulu Chuan",
-                desc2: "Focuses on Anime, Manga, and Mobile Game betas. Highly interactive, best for new game campaigns.",
-                tag2: "Mobile Game Pioneer",
-                name3: "Geeky Max",
-                desc3: "Specializes in high-end gaming phones, laptops, and trendy 3C unboxing. High-spending male demographic.",
-                tag3: "Tech Product Launch",
-                nav1: "ABOUT XM", nav2: "TALENT BROKERAGE", nav3: "HIGHLIGHTS", nav4: "SERVICES", nav5: "CONTACT US"
-            }
-        };
+        function renderTalents() {
+            listContainer.innerHTML = '';
+            talentsData.forEach((data, i) => {
+                const isMatch = selectedFilters.length === 0 || selectedFilters.every(filter => data.tags.includes(filter));
+                if (!isMatch) return;
 
-        // 語系切換執行
-        function switchLang(lang) {
+                const displayName = currentLang === 'ch' ? data.ch : data.en;
+                const imgSrc = (data.img && data.img !== "#") ? data.img : `https://picsum.photos/seed/talent${i}/300/300`;
+                
+                const item = document.createElement('div');
+                // 移除額外包裹層的多餘 class，直接作為 Grid 節點
+                item.className = 'flex flex-col items-center text-center'; 
+                item.innerHTML = `
+                    <div class="cyber-frame" onclick="navigateToTalent(${i})">
+                        <div class="glow-ring"></div>
+                        <div class="thin-border"></div>
+                        <div class="inner-photo">
+                            <img src="${imgSrc}" alt="${displayName}">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="cyber-font text-[11px] tracking-[0.2em] text-white/90 uppercase font-bold mb-1">${displayName}</div>
+                        <div class="flex flex-wrap justify-center gap-1">
+                            ${data.tags.map(t => `<span class="talent-tag">#${t}</span>`).join('')}
+                        </div>
+                    </div>
+                `;
+                listContainer.appendChild(item);
+            });
+        }
+
+        function navigateToTalent(index) {
+            const targetUrl = talentsData[index].url;
+            if (targetUrl && targetUrl !== "#") { window.location.href = targetUrl; }
+        }
+
+        // 修改切換語系邏輯，配合實體按鈕行為
+        function toggleLanguage(lang) {
+            currentLang = lang;
             document.getElementById('btn-ch').classList.toggle('active', lang === 'ch');
             document.getElementById('btn-en').classList.toggle('active', lang === 'en');
             
-            const data = langData[lang];
-            
-            // 變更頁首及篩選器
-            document.getElementById('header-main-title').innerText = data.headerTitle;
-            document.getElementById('filter-all').innerText = data.filterAll;
-            document.getElementById('filter-game').innerText = data.filterGame;
-            document.getElementById('filter-tech').innerText = data.filterTech;
-
-            // 變更主要卡牌內容
-            document.getElementById('name-1').innerText = data.name1;
-            document.getElementById('desc-1').innerText = data.desc1;
-            document.getElementById('tag-1').innerText = data.tag1;
-            
-            document.getElementById('name-2').innerText = data.name2;
-            document.getElementById('desc-2').innerText = data.desc2;
-            document.getElementById('tag-2').innerText = data.tag2;
-
-            document.getElementById('name-3').innerText = data.name3;
-            document.getElementById('desc-3').innerText = data.desc3;
-            document.getElementById('tag-3').innerText = data.tag3;
-
-            // 變更主導覽列文字
-            document.getElementById('nav-1').innerText = data.nav1;
-            document.getElementById('nav-2').innerText = data.nav2;
-            document.getElementById('nav-3').innerText = data.nav3;
-            document.getElementById('nav-4').innerText = data.nav4;
-            document.getElementById('nav-5').innerText = data.nav5;
+            document.getElementById('main-title').innerText = lang === 'ch' ? '主播陣容' : 'TALENT ROSTER';
+            document.getElementById('sub-title').innerText = lang === 'ch' ? 'TALENT_ROSTER' : 'CYBER_INFLUENCERS';
+            renderTalents();
         }
+
+        renderFilters();
+        renderTalents();
     </script>
 </body>
 </html>
