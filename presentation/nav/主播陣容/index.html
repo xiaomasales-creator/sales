@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>小馬娛樂 | 主播陣容 Streamers</title>
+    <title>小馬娛樂 | 主播陣容 STREAMERS</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Noto+Sans+TC:wght@300;500;700;900&display=swap" rel="stylesheet">
     <style>
@@ -141,60 +141,73 @@
             box-shadow: 0 0 15px var(--secondary-neon);
         }
 
-        /* 主播頭像外框 HUD 動效 */
-        .avatar-hud-frame {
+        /* 篩選器按鈕樣式 */
+        .filter-btn {
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            background: rgba(5, 5, 10, 0.6);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary-neon);
+            color: #fff;
+            border-color: var(--secondary-neon);
+            box-shadow: 0 0 15px var(--primary-neon);
+            text-shadow: 0 0 5px #fff;
+        }
+
+        /* 賽博主播卡牌與光圈裝飾 */
+        .streamer-card {
+            background: rgba(15, 15, 25, 0.8);
+            border: 1px solid rgba(134, 0, 255, 0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .streamer-card::before {
+            content: "SYS_STREAMER_LOG";
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 9px;
+            color: var(--secondary-neon);
+            opacity: 0.4;
+        }
+        .streamer-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--secondary-neon);
+            box-shadow: 0 15px 40px rgba(134, 0, 255, 0.3);
+        }
+
+        /* 仿造圖片「頭像外框設計」的同心發光圓圈效果 */
+        .avatar-hud-wrap {
             position: relative;
             width: 160px;
             height: 160px;
             margin: 0 auto;
         }
-
-        .avatar-ring {
+        .avatar-circle-bg {
             position: absolute;
-            inset: 0;
+            inset: -8px;
             border-radius: 50%;
-            border: 3px solid var(--secondary-neon);
-            box-shadow: 0 0 20px var(--secondary-neon), inset 0 0 10px var(--secondary-neon);
-            transition: all 0.3s ease;
-        }
-
-        .avatar-hud-outer {
-            position: absolute;
-            inset: -10px;
-            border-radius: 50%;
-            border: 1px dashed rgba(134, 0, 255, 0.4);
+            border: 2px dashed rgba(134, 0, 255, 0.4);
             animation: rotate-slow 20s linear infinite;
         }
-
-        .streamer-card:hover .avatar-ring {
-            transform: scale(1.05);
-            border-color: var(--neon-purple);
-            box-shadow: 0 0 25px var(--neon-purple), inset 0 0 15px var(--neon-purple);
+        .avatar-circle-glow {
+            position: absolute;
+            inset: -3px;
+            border-radius: 50%;
+            border: 3px solid var(--secondary-neon);
+            box-shadow: 0 0 18px var(--secondary-neon), inset 0 0 10px var(--secondary-neon);
+            animation: pulse-glow 3s ease-in-out infinite;
         }
-
         @keyframes rotate-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-        /* 科技感卡片剪裁與發光 */
-        .content-card {
-            padding: 25px; 
-            backdrop-filter: blur(12px);
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-top: 4px solid var(--secondary-neon);
-            clip-path: polygon(0 0, 88% 0, 100% 12%, 100% 100%, 12% 100%, 0 88%);
-            position: relative;
-            transition: all 0.3s ease;
-            cursor: pointer;
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.7; transform: scale(0.98); }
+            50% { opacity: 1; transform: scale(1.02); }
         }
 
-        .content-card:hover {
-            transform: translateY(-5px);
-            border-top-color: var(--neon-purple);
-            box-shadow: 0 10px 30px rgba(134, 0, 255, 0.3);
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        /* 控制面板設計 */
+        /* 底部控制面板設計 */
         .control-panel {
             position: fixed;
             bottom: 30px;
@@ -330,8 +343,9 @@
             padding-left: 18px;
         }
 
+        /* 手機版排版調整 */
         @media (max-width: 768px) {
-            .s-path-container { padding: 20px 20px 120px 20px; }
+            .s-path-container { padding: 20px 20px 140px 20px; }
             .floating-deco { display: none; }
         }
     </style>
@@ -343,10 +357,10 @@
     <div class="scanline"></div>
     
     <!-- 背景裝飾文字 -->
-    <div class="floating-deco" style="top: 10%; left: -5%;">XM</div>
-    <div class="floating-deco outlined" style="bottom: 15%; right: -2%;">XIAOMA</div>
+    <div class="floating-deco" style="top: 15%; left: -3%;">LIVE</div>
+    <div class="floating-deco outlined" style="bottom: 25%; right: -2%;">XIAOMA</div>
 
-    <!-- 標頭區域 [1] -->
+    <!-- 1. 頁首區域（嚴格繼承品牌特色標頭） -->
     <header class="site-header w-full pt-20 pb-16 overflow-hidden">
         <div class="max-w-[1400px] mx-auto px-10 flex flex-col items-start relative">
             <div class="flex items-center gap-3 mb-4">
@@ -356,187 +370,243 @@
             
             <div class="flex flex-col mb-4">
                 <div class="flex items-end gap-6 mb-2">
-                    <h1 class="text-5xl md:text-7xl font-black italic tracking-tighter leading-none" id="main-header-title">網紅經紀</h1>
+                    <!-- 主題內容替換為：小馬主播陣容 -->
+                    <h1 class="text-5xl md:text-7xl font-black italic tracking-tighter leading-none" id="header-main-title">小馬主播陣容</h1>
                     <!-- 語言切換按鈕 -->
                     <div class="flex gap-2 mb-1">
                         <button onclick="switchLang('ch')" id="btn-ch" class="lang-btn active">CH</button>
                         <button onclick="switchLang('en')" id="btn-en" class="lang-btn">EN</button>
                     </div>
                 </div>
-                <span class="cyber-font text-xl md:text-3xl font-black text-white/10 uppercase italic tracking-widest leading-none" id="main-header-sub">STREAMERS_LIST</span>
+                <span class="cyber-font text-xl md:text-3xl font-black text-white/10 uppercase italic tracking-widest leading-none" id="header-sub-title">STREAMERS_MATRIX</span>
             </div>
             
             <div class="w-[60px] h-[4px] bg-gradient-to-r from-[#bc13fe] to-[#00d2ff]"></div>
         </div>
     </header>
 
-    <!-- 主要內容區域：生成 11 個主播大頭貼與名片 -->
+    <!-- 2. 主要內容區域（包含篩選互動方案與動態卡牌群） -->
     <main class="s-path-container">
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8" id="streamers-grid">
-            <!-- 迴圈生成 11 個節點 -->
-            <script>
-                const gridContainer = document.getElementById('streamers-grid');
-                for (let i = 1; i <= 11; i++) {
-                    gridContainer.innerHTML += `
-                        <div class="streamer-card content-card text-center" onclick="openModal(${i})">
-                            <div class="avatar-hud-frame mb-4">
-                                <div class="avatar-hud-outer"></div>
-                                <div class="avatar-ring flex items-center justify-center overflow-hidden bg-black/50">
-                                    <img src="https://api.dicebear.com/7.x/bottts/svg?seed=streamer${i}" alt="Streamer ${i}" class="w-[85%] h-[85%] object-cover rounded-full" />
-                                </div>
-                            </div>
-                            <div class="mono text-[11px] text-[#00f3ff] mb-1 tracking-wider">#STREAMER_0${i}</div>
-                            <h3 class="text-xl font-black italic tracking-wide mb-2 text-white" id="name-${i}">主播 ${i}</h3>
-                            <p class="text-xs text-white/50 line-clamp-1" id="hash-${i}">#遊戲實況 #3C開箱</p>
+        <!-- 廠商專用即時商案篩選器 -->
+        <div class="flex flex-wrap gap-4 mb-12 justify-center md:justify-start" id="filter-container">
+            <button onclick="filterStreamers('all')" class="filter-btn active px-6 py-2 rounded cyber-font text-sm font-bold tracking-wider text-white" id="filter-all">ALL / 全部陣容</button>
+            <button onclick="filterStreamers('game')" class="filter-btn px-6 py-2 rounded cyber-font text-sm font-bold tracking-wider text-[#00f3ff]" id="filter-game">GAME / 遊戲實況</button>
+            <button onclick="filterStreamers('tech')" class="filter-btn px-6 py-2 rounded cyber-font text-sm font-bold tracking-wider text-[#bc13fe]" id="filter-tech">3C & TECH / 科技開箱</button>
+        </div>
+
+        <!-- 主播卡牌網格群 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="streamer-grid">
+            
+            <!-- 主播 1 (遊戲與3C雙棲) -->
+            <div class="streamer-card p-6 rounded-lg text-center" data-category="game tech">
+                <div class="mb-6 pt-4">
+                    <div class="avatar-hud-wrap">
+                        <div class="avatar-circle-bg"></div>
+                        <div class="avatar-circle-glow"></div>
+                        <!-- 頭像圖片遮罩區 -->
+                        <div class="w-full h-full rounded-full overflow-hidden border-4 border-black relative z-10">
+                            <div class="w-full h-full bg-gradient-to-tr from-[#8600ff] to-[#00f3ff] flex items-center justify-center text-3xl font-bold italic">XM_01</div>
                         </div>
-                    `;
-                }
-            </script>
+                    </div>
+                </div>
+                <h3 class="text-2xl font-black italic tracking-wide mb-1 text-white" id="name-1">電競狂人 艾力克斯</h3>
+                <span class="mono text-xs text-[#00f3ff] tracking-widest uppercase block mb-4">FPS Specialist / Hardware Review</span>
+                <p class="card-text text-sm text-white/70 leading-relaxed mb-6 h-12 overflow-hidden" id="desc-1">精通各類FPS與競技遊戲，硬體評測風格辛辣直白，深受3C及大廠青睞。</p>
+                <div class="border-t border-white/10 pt-4 flex justify-between items-center text-xs">
+                    <span class="mono text-white/40">FANS: <strong class="text-white text-sm">450K+</strong></span>
+                    <span class="px-2 py-1 bg-[#00f3ff]/10 text-[#00f3ff] border border-[#00f3ff]/30 rounded text-[10px]" id="tag-1">遊戲/3C雙棲</span>
+                </div>
+            </div>
+
+            <!-- 主播 2 (純遊戲推廣) -->
+            <div class="streamer-card p-6 rounded-lg text-center" data-category="game">
+                <div class="mb-6 pt-4">
+                    <div class="avatar-hud-wrap">
+                        <div class="avatar-circle-bg"></div>
+                        <div class="avatar-circle-glow" style="border-color: #ff003c; box-shadow: 0 0 18px #ff003c;"></div>
+                        <div class="w-full h-full rounded-full overflow-hidden border-4 border-black relative z-10">
+                            <div class="w-full h-full bg-gradient-to-tr from-[#ff003c] to-[#bc13fe] flex items-center justify-center text-3xl font-bold italic">XM_02</div>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="text-2xl font-black italic tracking-wide mb-1 text-white" id="name-2">元氣少女 露露</h3>
+                <span class="mono text-xs text-[#ff003c] tracking-widest uppercase block mb-4">RPG & ACG Cultivator</span>
+                <p class="card-text text-sm text-white/70 leading-relaxed mb-6 h-12 overflow-hidden" id="desc-2">主打二次元與手遊封測實況，互動率極高，新遊首發社群宣傳的最佳核心選人。</p>
+                <div class="border-t border-white/10 pt-4 flex justify-between items-center text-xs">
+                    <span class="mono text-white/40">FANS: <strong class="text-white text-sm">280K+</strong></span>
+                    <span class="px-2 py-1 bg-[#ff003c]/10 text-[#ff003c] border border-[#ff003c]/30 rounded text-[10px]" id="tag-2">手遊宣傳先鋒</span>
+                </div>
+            </div>
+
+            <!-- 主播 3 (純3C/手機周邊) -->
+            <div class="streamer-card p-6 rounded-lg text-center" data-category="tech">
+                <div class="mb-6 pt-4">
+                    <div class="avatar-hud-wrap">
+                        <div class="avatar-circle-bg"></div>
+                        <div class="avatar-circle-glow" style="border-color: #bc13fe; box-shadow: 0 0 18px #bc13fe;"></div>
+                        <div class="w-full h-full rounded-full overflow-hidden border-4 border-black relative z-10">
+                            <div class="w-full h-full bg-gradient-to-tr from-[#bc13fe] to-[#8600ff] flex items-center justify-center text-3xl font-bold italic">XM_03</div>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="text-2xl font-black italic tracking-wide mb-1 text-white" id="name-3">科技極客 麥克斯</h3>
+                <span class="mono text-xs text-[#bc13fe] tracking-widest uppercase block mb-4">Gadget & Mobile Expert</span>
+                <p class="card-text text-sm text-white/70 leading-relaxed mb-6 h-12 overflow-hidden" id="desc-3">專注於高階電競手機、筆電與潮流3C硬體評測，受眾多為高消費力的精準男性廠商客戶。</p>
+                <div class="border-t border-white/10 pt-4 flex justify-between items-center text-xs">
+                    <span class="mono text-white/40">FANS: <strong class="text-white text-sm">620K+</strong></span>
+                    <span class="px-2 py-1 bg-[#bc13fe]/10 text-[#bc13fe] border border-[#bc13fe]/30 rounded text-[10px]" id="tag-3">3C新品開箱</span>
+                </div>
+            </div>
+
         </div>
     </main>
 
-    <!-- 互動彈窗（Modal）-->
-    <div id="info-modal" class="fixed inset-0 bg-black/80 backdrop-filter backdrop-blur-md hidden items-center justify-center z-[2000] p-4">
-        <div class="bg-[#0a0a0f] border-2 border-[#8600ff] p-8 max-w-md w-full relative clip-path-modal" style="clip-path: polygon(0 0, 90% 0, 100% 10%, 100% 100%, 10% 100%, 0 90%);">
-            <button onclick="closeModal()" class="absolute top-4 right-4 text-white/50 hover:text-[#00f3ff] font-bold cyber-font">[X]</button>
-            <div class="text-center">
-                <div class="w-32 h-32 mx-auto mb-4 border-2 border-[#00f3ff] rounded-full overflow-hidden p-2 bg-black/40">
-                    <img id="modal-img" src="" alt="Avatar" class="w-full h-full object-cover rounded-full">
-                </div>
-                <h2 id="modal-name" class="text-3xl font-black italic tracking-tighter text-white mb-2">主播姓名</h2>
-                <div id="modal-tags" class="mono text-sm text-[#00f3ff] mb-4">#Tags</div>
-                <div class="w-full h-[1px] bg-white/10 my-4"></div>
-                <p id="modal-desc" class="text-white/70 text-sm leading-relaxed text-left">數據載入中...</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- 底部控制面板 [2] -->
+    <!-- 3. 導覽列（底部控制面板設計，嚴格繼承） -->
     <nav class="control-panel">
         <div class="panel-container">
             <div class="nav-item">
-                <span class="panel-btn">關於小馬</span>
+                <span class="panel-btn" id="nav-1">關於小馬</span>
                 <div class="energy-bar"></div>
                 <div class="submenu">
-                    <a href="#" class="submenu-link">首頁</a>
-                    <a href="#" class="submenu-link">品牌特色</a>
-                    <a href="#" class="submenu-link">合作項目</a>
-                    <a href="#" class="submenu-link">服務流程</a>
+                    <a href="#" class="submenu-link" id="sub-1-1">首頁</a>
+                    <a href="#" class="submenu-link" id="sub-1-2">品牌特色</a>
+                    <a href="#" class="submenu-link" id="sub-1-3">合作項目</a>
+                    <a href="#" class="submenu-link" id="sub-1-4">服務流程</a>
                 </div>
             </div>
             <div class="nav-item">
-                <span class="panel-btn">網紅經紀</span>
+                <span class="panel-btn" id="nav-2">網紅經紀</span>
                 <div class="energy-bar"></div>
                 <div class="submenu">
-                    <a href="#" class="submenu-link">小馬主播陣容</a>
-                    <a href="#" class="submenu-link">經典案例</a>
-                    <a href="#" class="submenu-link">經常合作KOL</a>
+                    <a href="#" class="submenu-link" id="sub-2-1">小馬主播陣容</a>
+                    <a href="#" class="submenu-link" id="sub-2-2">經典案例</a>
+                    <a href="#" class="submenu-link" id="sub-2-3">經常合作KOL</a>
                 </div>
             </div>
             <div class="nav-item">
-                <span class="panel-btn">活動花絮</span>
+                <span class="panel-btn" id="nav-3">活動花絮</span>
                 <div class="energy-bar"></div>
                 <div class="submenu">
-                    <a href="#" class="submenu-link">商案總覽</a>
-                    <a href="#" class="submenu-link">線下活動花絮</a>
+                    <a href="#" class="submenu-link" id="sub-3-1">商案總覽</a>
+                    <a href="#" class="submenu-link" id="sub-3-2">線下活動花絮</a>
                 </div>
             </div>
             <div class="nav-item">
-                <span class="panel-btn">其他服務</span>
+                <span class="panel-btn" id="nav-4">其他服務</span>
                 <div class="energy-bar"></div>
                 <div class="submenu">
-                    <a href="#" class="submenu-link">影音剪輯</a>
-                    <a href="#" class="submenu-link">網頁製作</a>
-                    <a href="#" class="submenu-link">美術設計</a>
-                    <a href="#" class="submenu-link">社群經營</a>
+                    <a href="#" class="submenu-link" id="sub-4-1">影音剪輯</a>
+                    <a href="#" class="submenu-link" id="sub-4-2">網頁製作</a>
+                    <a href="#" class="submenu-link" id="sub-4-3">美術設計</a>
+                    <a href="#" class="submenu-link" id="sub-4-4">社群經營</a>
                 </div>
             </div>
             <div class="nav-item">
-                <span class="panel-btn">聯絡我們</span>
+                <span class="panel-btn" id="nav-5">聯絡我們</span>
                 <div class="energy-bar"></div>
                 <div class="submenu">
-                    <a href="#" class="submenu-link">工商洽談</a>
-                    <a href="#" class="submenu-link">加入小馬</a>
+                    <a href="#" class="submenu-link" id="sub-5-1">工商洽談</a>
+                    <a href="#" class="submenu-link" id="sub-5-2">加入小馬</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- 核心數據與控制指令 [3] -->
+    <!-- 4. 核心 JavaScript：控制互動篩選功能與中英文切換機制 -->
     <script>
-        // 擴充至 11 位主播的完整數據集（包含彈窗細節描述）
+        // 互動功能設計方案：即時篩選器
+        function filterStreamers(category) {
+            // 切換按鈕 active 樣式
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            event.currentTarget.classList.add('active');
+
+            // 執行卡牌過濾與動畫效果
+            const cards = document.querySelectorAll('.streamer-card');
+            cards.forEach(card => {
+                const categories = card.getAttribute('data-category').split(' ');
+                if (category === 'all' || categories.includes(category)) {
+                    card.style.display = 'block';
+                    setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'scale(1)'; }, 50);
+                } else {
+                    card.style.opacity = '0';
+                    card.style.transform = 'scale(0.9)';
+                    setTimeout(() => { card.style.display = 'none'; }, 300);
+                }
+            });
+        }
+
+        // 中英文切換資料庫
         const langData = {
             ch: {
-                header: { title: "網紅經紀", sub: "STREAMERS_LIST" },
-                streamers: {
-                    1: { name: "狂暴小馬", tags: "#射擊遊戲 #電競硬體", desc: "前職業電競選手，專精各類 FPS 射擊遊戲。其精湛操作與風趣的毒舌風格，在 3C 週邊硬體與新游推廣商案中轉換率極高。" },
-                    2: { name: "妮歐 Neon", tags: "#主機遊戲 #3C科技", desc: "主打賽博龐克風格女性實況主，擅長 3C 開箱與大型主機遊戲 3A 大作全破評測，在硬派玩家群體中具備強大的影響力。" },
-                    3: { name: "零號機 Zero", tags: "#二次元手遊 #動漫", desc: "ACG 領域資深意見領袖，專精二次元畫風手遊與卡牌戰略遊戲，配音與角色實測影片在 YouTube 擁有極高播放量。" },
-                    4: { name: "微風大叔", tags: "#MMORPG #策略經營", desc: "核心向老牌實況主，對宏大世界觀的 MMORPG 與策略模擬遊戲有獨到見解，受眾年齡層具備極高的高客單價消費力。" },
-                    5: { name: "艾莉絲 Iris", tags: "#大眾娛樂 #聯名推廣", desc: "甜美系全能女藝人，跨足電玩、生活與美妝。擅長將遊戲及 APP 以生活化的方式推廣給大眾市場，親和力滿分。" },
-                    6: { name: "代號 404", tags: "#獨立遊戲 #高難挑戰", desc: "技術流神祕實況主，專攻類魂系列與各類高難度獨立遊戲。擅長創造高度互動的直播效果與社群迷因話題。" },
-                    7: { name: "電玩雷達", tags: "#新遊開箱 #跨平台", desc: "全方位遊戲評測媒體型 KOL，即時速報各大平台最新遊戲動態，是各大遊戲大廠發布首發商案的第一首選合作夥伴。" },
-                    8: { name: "密碼破譯員", tags: "#密室解謎 #AVG遊戲", desc: "頭腦派實況主，主打懸疑、解謎、恐怖遊戲實況。其沉浸式的劇情說書風格深受粉絲喜愛，極適合劇情導向的新遊宣傳。" },
-                    9: { name: "賽博極客", tags: "#硬體改裝 #高階3C", desc: "頂級硬體改裝大師兼 3C 評測博主，專注於電競主機水冷改裝、顯示卡與高階電競螢幕實測，是 3C 廠商的硬核指標。" },
-                    10: { name: "像素貓 CatX", tags: "#休閒手遊 #女性向", desc: "療癒系實況主，主要受眾為女性與學生族群，針對輕度休閒手遊、女性向遊戲能提供精準且極具渲染力的社群互動推廣。" },
-                    11: { name: "銀翼 V", tags: "#虛擬實況 #VTuber", desc: "小馬娛樂旗下的頂級虛擬主播，完美結合未來感主視覺。在虛擬實況圈擁有龐大死忠粉絲，極適合跨次元連動與遊戲發布。" }
-                }
+                headerTitle: "小馬主播陣容",
+                headerSub: "STREAMERS_MATRIX",
+                filterAll: "ALL / 全部陣容",
+                filterGame: "GAME / 遊戲實況",
+                filterTech: "3C & TECH / 科技開箱",
+                name1: "電競狂人 艾力克斯",
+                desc1: "精通各類FPS與競技遊戲，硬體評測風格辛辣直白，深受3C及大廠青睞。",
+                tag1: "遊戲/3C雙棲",
+                name2: "元氣少女 露露",
+                desc2: "主打二次元與手遊封測實況，互動率極高，新遊首發社群宣傳的最佳核心選人。",
+                tag2: "手遊宣傳先鋒",
+                name3: "科技極客 麥克斯",
+                desc3: "專注於高階電競手機、筆電與潮流3C硬體評測，受眾多為高消費力的精準男性廠商客戶。",
+                tag3: "3C新品開箱",
+                nav1: "關於小馬", nav2: "網紅經紀", nav3: "活動花絮", nav4: "其他服務", nav5: "聯絡我們"
             },
             en: {
-                header: { title: "STREAMERS", sub: "STREAMERS_LIST" },
-                streamers: {
-                    1: { name: "Mad Pony", tags: "#FPS_Games #Gaming_Hardware", desc: "Former pro esports player specializing in FPS games. Known for high skill and witty banter. High conversion rate for hardware brands." },
-                    2: { name: "Neon", tags: "#Console_Games #3C_Tech", desc: "Cyberpunk themed female streamer. Master of 3C unboxings and AAA console game reviews, holding massive sway over core gamers." },
-                    3: { name: "Unit Zero", tags: "#Anime_Games #ACG", desc: "Prominent ACG influencer. Specializes in anime mobile games and tactical card games. High video views on character analysis." },
-                    4: { name: "Uncle Breeze", tags: "#MMORPG #Strategy_Games", desc: "Veteran streamer with deep insights into massive MMORPGs and strategy titles. Audience consists of high-spending mature gamers." },
-                    5: { name: "Iris", tags: "#Entertainment #Apps", desc: "Charming all-rounder bridging gaming and lifestyle. Excels at promoting games and mobile APPs to mass consumer markets." },
-                    6: { name: "Code 404", tags: "#Indie_Games #Hardcore", desc: "High-skill mysterious streamer focusing on Soulslike and brutal indie games. Excellent at generating live memes and hype." },
-                    7: { name: "Game Radar", tags: "#New_Releases #Cross_Platform", desc: "Media-style review KOL providing rapid coverage on new titles. Premium choice for publishers launching day-one campaigns." },
-                    8: { name: "Cipher", tags: "#Puzzle_Games #Horror", desc: "Brainiac streamer focusing on mystery and horror games. Immersive storytelling style that keeps viewers hooked for narrative-driven games." },
-                    9: { name: "Cyber Geek", tags: "#PC_Modding #Premium_3C", desc: "Elite hardware modding expert and reviewer. Focuses on custom water-cooling loops and high-end tech, perfect for premium hardware labs." },
-                    10: { name: "Pixel CatX", tags: "#Casual_Games #Mobile", desc: "Cozy streamer with a large student and female following. Highly effective for promoting casual mobile games with cheerful engagement." },
-                    11: { name: "SilverWing V", tags: "#VTuber #Virtual_Streamer", desc: "Top virtual talent under Xiaoma Ent. Merges flawlessly with the futuristic aesthetic, ideal for cross-dimensional events." }
-                }
+                headerTitle: "XIAOMA STREAMERS",
+                headerSub: "STREAMERS_MATRIX",
+                filterAll: "ALL / SHOW ALL",
+                filterGame: "GAME / LIVE STREAM",
+                filterTech: "3C & TECH / UNBOXING",
+                name1: "Alex the Esports Fanatic",
+                desc1: "Proficient in FPS & competitive games. His tech hardware reviews are bold & direct, favored by big brands.",
+                tag1: "Gaming & 3C Duo",
+                name2: "Lulu Chuan",
+                desc2: "Focuses on Anime, Manga, and Mobile Game betas. Highly interactive, best for new game campaigns.",
+                tag2: "Mobile Game Pioneer",
+                name3: "Geeky Max",
+                desc3: "Specializes in high-end gaming phones, laptops, and trendy 3C unboxing. High-spending male demographic.",
+                tag3: "Tech Product Launch",
+                nav1: "ABOUT XM", nav2: "TALENT BROKERAGE", nav3: "HIGHLIGHTS", nav4: "SERVICES", nav5: "CONTACT US"
             }
         };
 
-        let currentLang = 'ch';
-
+        // 語系切換執行
         function switchLang(lang) {
-            currentLang = lang;
             document.getElementById('btn-ch').classList.toggle('active', lang === 'ch');
             document.getElementById('btn-en').classList.toggle('active', lang === 'en');
             
-            // 更新頁首文字
-            document.getElementById('main-header-title').innerText = langData[lang].header.title;
-            document.getElementById('main-header-sub').innerText = langData[lang].header.sub;
+            const data = langData[lang];
             
-            // 更新 11 個節點的主播資訊
-            for (let i = 1; i <= 11; i++) {
-                const nameEl = document.getElementById(`name-${i}`);
-                const hashEl = document.getElementById(`hash-${i}`);
-                if (nameEl) nameEl.innerText = langData[lang].streamers[i].name;
-                if (hashEl) hashEl.innerText = langData[lang].streamers[i].tags;
-            }
-        }
+            // 變更頁首及篩選器
+            document.getElementById('header-main-title').innerText = data.headerTitle;
+            document.getElementById('filter-all').innerText = data.filterAll;
+            document.getElementById('filter-game').innerText = data.filterGame;
+            document.getElementById('filter-tech').innerText = data.filterTech;
 
-        // 互動功能方案：科技感 HUD 資訊彈窗
-        function openModal(id) {
-            const data = langData[currentLang].streamers[id];
-            document.getElementById('modal-name').innerText = data.name;
-            document.getElementById('modal-tags').innerText = data.tags;
-            document.getElementById('modal-desc').innerText = data.desc;
-            document.getElementById('modal-img').src = `https://api.dicebear.com/7.x/bottts/svg?seed=streamer${id}`;
+            // 變更主要卡牌內容
+            document.getElementById('name-1').innerText = data.name1;
+            document.getElementById('desc-1').innerText = data.desc1;
+            document.getElementById('tag-1').innerText = data.tag1;
             
-            const modal = document.getElementById('info-modal');
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-        }
+            document.getElementById('name-2').innerText = data.name2;
+            document.getElementById('desc-2').innerText = data.desc2;
+            document.getElementById('tag-2').innerText = data.tag2;
 
-        function closeModal() {
-            const modal = document.getElementById('info-modal');
-            modal.classList.remove('flex');
-            modal.classList.add('hidden');
+            document.getElementById('name-3').innerText = data.name3;
+            document.getElementById('desc-3').innerText = data.desc3;
+            document.getElementById('tag-3').innerText = data.tag3;
+
+            // 變更主導覽列文字
+            document.getElementById('nav-1').innerText = data.nav1;
+            document.getElementById('nav-2').innerText = data.nav2;
+            document.getElementById('nav-3').innerText = data.nav3;
+            document.getElementById('nav-4').innerText = data.nav4;
+            document.getElementById('nav-5').innerText = data.nav5;
         }
     </script>
 </body>
