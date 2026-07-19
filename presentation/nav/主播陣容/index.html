@@ -144,61 +144,52 @@
             display: inline-block;
         }
 
-/* 賽博頭像框共用組件 */
+/* 主播卡片 */
+        .talent-card { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; text-align: center; width: 100%; }
+
+        /* 頭像外框 */
         .cyber-frame {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
+            position: relative; width: 140px; height: 140px;
+            display: flex; justify-content: center; align-items: center;
+            cursor: pointer; margin-bottom: 20px;
         }
 
         .glow-ring {
-            position: absolute;
-            inset: -4px;
-            border-radius: 50%;
+            position: absolute; inset: -4px; border-radius: 50%;
             background: conic-gradient(from 0deg, transparent, var(--neon-purple), var(--secondary-neon), transparent);
-            opacity: 0.2;
-            filter: blur(8px);
-            animation: rotate-glow 8s linear infinite;
-            transition: 0.5s;
+            opacity: 0.2; filter: blur(8px); animation: rotate-glow 8s linear infinite; transition: 0.5s;
         }
 
         .thin-border {
-            position: absolute;
-            inset: 0;
-            border-radius: 50%;
-            padding: 3px;
+            position: absolute; inset: 0; border-radius: 50%; padding: 3px;
             background: linear-gradient(135deg, rgba(188, 19, 254, 0.5), rgba(0, 243, 255, 0.5));
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            transition: 0.5s;
+            -webkit-mask-composite: xor; mask-composite: exclude; transition: 0.5s;
         }
 
         .inner-photo {
-            border-radius: 50%;
-            overflow: hidden;
-            background: #000;
-            position: relative;
-            z-index: 1;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 130px; height: 130px; border-radius: 50%; overflow: hidden;
+            background: #000; position: relative; z-index: 1; border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .inner-photo img {
-            width: 100%; height: 100%; object-fit: cover;
-            filter: grayscale(20%) brightness(0.8);
-            transition: 0.5s;
-        }
+        .inner-photo img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(20%) brightness(0.8); transition: 0.5s; }
 
-        /* 互動效果 */
         .cyber-frame:hover .glow-ring { opacity: 0.8; filter: blur(12px); transform: scale(1.05); }
         .cyber-frame:hover .thin-border { transform: scale(1.05); background: linear-gradient(135deg, var(--neon-purple), var(--secondary-neon)); }
         .cyber-frame:hover .inner-photo img { filter: grayscale(0%) brightness(1.1); transform: scale(1.1); }
 
         @keyframes rotate-glow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        
+
+        /* 通知彈窗（自定義代替 Alert） */
+        #toast {
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px);
+            background: rgba(134, 0, 255, 0.9); border: 1px solid var(--secondary-neon);
+            padding: 10px 30px; border-radius: 2px; z-index: 9999;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 14px; font-weight: bold; letter-spacing: 1px;
+        }
+        #toast.show { transform: translateX(-50%) translateY(0); }        
        /* 控制面板設計 */
         .control-panel {
             position: fixed;
