@@ -503,7 +503,9 @@
 
         function navigateToTalent(index) {
             const targetUrl = talentsData[index].url;
-            if (targetUrl && targetUrl !== "#") { window.location.href = targetUrl; }
+            if (targetUrl && targetUrl !== "#") {
+                window.open(targetUrl, '_blank');
+            }
         }
 
         function toggleLanguage(lang) {
