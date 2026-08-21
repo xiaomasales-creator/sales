@@ -361,7 +361,7 @@
                         <button onclick="toggleLanguage('en')" id="btn-en" class="lang-btn">EN</button>
                     </div>
                 </div>
-                <span id="sub-title" class="cyber-font text-xl md:text-3xl font-black text-white/10 uppercase italic tracking-widest leading-none">TALENT_ROSTER</span>
+                <span id="sub-title" class="cyber-font text-xl md:text-3xl font-black text-white/10 uppercase italic tracking-widest leading-none">SUBSIDIARY_TALENTS</span>
             </div>
             <div class="w-[60px] h-[4px] bg-gradient-to-r from-[#bc13fe] to-[#00d2ff]"></div>
         </div>
@@ -512,7 +512,7 @@
             document.getElementById('btn-en').classList.toggle('active', lang === 'en');
             
             document.getElementById('main-title').innerText = lang === 'ch' ? '主播陣容' : 'SUBSIDIARY TALENTS';
-            document.getElementById('sub-title').innerText = lang === 'ch' ? 'SUBSIDIARY TALENTS' : 'CYBER_INFLUENCERS';
+            document.getElementById('sub-title').innerText = lang === 'ch' ? 'SUBSIDIARY_TALENT' : 'SUBSIDIARY_TALENT';
             renderTalents();
         }
 
