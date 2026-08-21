@@ -58,7 +58,6 @@
             z-index: -1;
         }
 
-        /* 掃描線樣式 */
         .scanline {
             width: 100%;
             height: 4px;
@@ -74,7 +73,6 @@
             100% { top: 110%; }
         }
 
-        /* 裝飾性幾何背景 */
         .floating-deco {
             position: fixed;
             color: var(--primary-neon);
@@ -98,7 +96,6 @@
             z-index: 50; 
         }
 
-        /* 語言切換按鈕樣式 */
         .lang-btn {
             padding: 2px 8px;
             font-size: 12px;
@@ -121,7 +118,6 @@
             font-weight: 900;
         }
 
-        /* 篩選標籤樣式 */
         .filter-tag {
             padding: 4px 14px;
             border-radius: 20px;
@@ -142,7 +138,6 @@
             box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
         }
 
-        /* 主播卡片內 Hashtag */
         .talent-tag {
             font-size: 11px;
             color: var(--secondary-neon);
@@ -154,7 +149,6 @@
             display: inline-block;
         }
 
-        /* 頭像外框與動態發光 */
         .cyber-frame {
             position: relative; width: 140px; height: 140px;
             display: flex; justify-content: center; align-items: center;
@@ -184,7 +178,6 @@
 
         @keyframes rotate-glow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        /* 控制面板設計 */
         .control-panel {
             position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
             width: 98%; max-width: 1100px; z-index: 1000;
@@ -222,7 +215,6 @@
         .nav-item:hover .panel-btn { color: var(--secondary-neon); text-shadow: 0 0 8px var(--secondary-neon); }
         .nav-item:hover .energy-bar { width: 100%; }
 
-        /* 子選單樣式 */
         .submenu {
             position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%) translateY(10px);
             background: rgba(5, 5, 5, 0.98); border: 1px solid var(--primary-neon); min-width: 180px;
@@ -240,13 +232,11 @@
     </style>
 </head>
 <body>
-    <!-- 視覺特效層 -->
     <div class="dots-overlay"></div>
     <div class="grid-overlay"></div>
     <div class="scanline"></div>
     <div class="floating-deco outlined" style="bottom: 15%; right: -2%;">XIAOMA</div>
 
-    <!-- 標頭區域 -->
     <header class="site-header w-full pt-20 pb-16 overflow-hidden">
         <div class="max-w-[1400px] mx-auto px-10 flex flex-col items-start relative">
             <div class="flex items-center gap-3 mb-4">
@@ -256,9 +246,7 @@
             
             <div class="flex flex-col mb-4">
                 <div class="flex items-end gap-6 mb-2">
-                    <!-- 新增 ID 供語系切換使用 -->
                     <h1 id="main-title" class="text-5xl md:text-7xl font-black italic tracking-tighter leading-none">主播陣容</h1>
-                    <!-- 補上參考檔的實體語系切換按鈕 -->
                     <div class="flex gap-2 mb-1">
                         <button onclick="toggleLanguage('ch')" id="btn-ch" class="lang-btn active">CH</button>
                         <button onclick="toggleLanguage('en')" id="btn-en" class="lang-btn">EN</button>
@@ -271,13 +259,10 @@
     </header>
     
     <div class="container mx-auto px-6 py-12 max-w-[1100px]">
-        <!-- 互動篩選列 -->
         <div class="flex flex-wrap gap-2 mb-16" id="filter-bar"></div>
-        <!-- 主播網格 -->
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-y-16 gap-x-8 justify-items-center mb-32" id="talents-list"></div>
     </div>
     
-    <!-- 控制面板 -->
     <nav class="control-panel">
         <div class="panel-container cyber-font">
             <div class="nav-item">
@@ -286,30 +271,30 @@
                 <div class="submenu">
                     <div class="submenu-inner">
                         <a href="https://xiaomasales-creator.github.io/sales/presentation/nav/%E5%93%81%E7%89%8C%E7%89%B9%E8%89%B2/index.html" target="_blank" class="submenu-link">品牌特色</a>
-                        <a href="https://xiaomasales-creator.github.io/sales/presentation/nav/%E5%90%88%E4%BD%9C%E9%A0%85%E7%9B%AE/index.html" target="_blank" class="submenu-link">合作項目</a>
+                        <a href="https://xiaomasales-creator.github.io/sales/presentation/nav/%E5%00%88%E4%BD%9C%E9%A0%85%E7%9B%AE/index.html" target="_blank" class="submenu-link">合作項目</a>
                         <a href="https://xiaomasales-creator.github.io/sales/presentation/nav/%E6%9C%8D%E5%8B%99%E6%B5%81%E7%A8%8B/index.html" target="_blank" class="submenu-link">服務流程</a>
                         <a href="https://www.youtube.com/@xiaomaent" target="_blank" class="submenu-link">官方YT頻道</a>
                     </div>
                 </div>
             </div>
             <div class="nav-item">
-                <div class="panel-btn" onclick="scrollToSection('talents')">網紅經紀</div>
+                <div class="panel-btn" onclick="scrollToSection('talents-list')">網紅經紀</div>
                 <div class="energy-bar"></div>
                 <div class="submenu">
                     <div class="submenu-inner">
                         <a href="https://xiaomasales-creator.github.io/sales/presentation/nav/%E4%B8%BB%E6%92%AD%E9%99%A3%E5%AE%B9/index.html" target="_blank" class="submenu-link">小馬主播陣容</a>
-                        <a href="" target="_blank" class="submenu-link">經典案例</a>
-                        <a href="" target="_blank" class="submenu-link">經常合作KOL</a>
+                        <a href="#" class="submenu-link">經典案例</a>
+                        <a href="#" class="submenu-link">經常合作KOL</a>
                     </div>
                 </div>
             </div>
             <div class="nav-item">
-                <div class="panel-btn" onclick="scrollToSection('gallery')">活動花絮</div>
+                <div class="panel-btn" onclick="scrollToSection('talents-list')">活動花絮</div>
                 <div class="energy-bar"></div>
                 <div class="submenu">
                     <div class="submenu-inner">
-                        <a href="" target="_blank" class="submenu-link">商案總覽</a>
-                        <a href="" target="_blank" class="submenu-link">線下活動花絮</a>
+                        <a href="#" class="submenu-link">商案總覽</a>
+                        <a href="#" class="submenu-link">線下活動花絮</a>
                     </div>
                 </div>
             </div>
@@ -318,10 +303,10 @@
                 <div class="energy-bar"></div>
                 <div class="submenu">
                     <div class="submenu-inner">
-                        <a href="" target="_blank" class="submenu-link">影音剪輯</a>
-                        <a href="" target="_blank" class="submenu-link">網頁製作</a>
-                        <a href="" target="_blank" class="submenu-link">美術設計</a>
-                        <a href="" target="_blank" class="submenu-link">社群經營</a>
+                        <a href="#" class="submenu-link">影音剪輯</a>
+                        <a href="#" class="submenu-link">網頁製作</a>
+                        <a href="#" class="submenu-link">美術設計</a>
+                        <a href="#" class="submenu-link">社群經營</a>
                     </div>
                 </div>
             </div>
@@ -330,8 +315,8 @@
                 <div class="energy-bar"></div>
                 <div class="submenu">
                     <div class="submenu-inner">
-                        <a href="" target="_blank" class="submenu-link">工商洽談</a>
-                        <a href="" target="_blank" class="submenu-link">加入小馬</a>
+                        <a href="#" class="submenu-link">工商洽談</a>
+                        <a href="#" class="submenu-link">加入小馬</a>
                     </div>
                 </div>
             </div>
@@ -344,15 +329,16 @@
 
         const filterOptions = ["All", "MMORPG", "FPS", "MOBA", "RP", "社群紅人/Reels", "跳舞/Dancing", "主持站台/Hosting", "Vtuber"];
         
+        // 修正了以下物件陣列中缺少逗號的語法錯誤
         const talentsData = [
             { ch: "狂暴小建", en: "Jian", tags: ["MMORPG", "FPS", "MOBA", "RP"], img: "homepage/talents/1-0.png", url: "#" },
             { ch: "UZRA", en: "UZRA", tags: ["MMORPG", "MOBA", "RP"], img: "homepage/talents/2-0.png", url: "#" },
             { ch: "豆豆", en: "Dou Dou", tags: ["MMORPG", "RP", "社群紅人/Reels", "跳舞/Dancing", "主持站台/Hosting"], img: "homepage/talents/3-0.png", url: "#" },
-            { ch: "牛牛妹", en: "Niu", tags: ["MMORPG", "MOBA", "社群紅人/Reels", "跳舞/Dancing", "主持站台/Hosting"], img: "homepage/talents/4-0.png", url: "#" }
-            { ch: "西瓜", en: "XiGuei", tags: ["MMORPG", "MOBA", "社群紅人/Reels", "跳舞/Dancing", "主持站台/Hosting"], img: "homepage/talents/5-0.png", url: "#" }
-            { ch: "Abby純純", en: "Abby", tags: ["MMORPG", "MOBA", "FPS", "社群紅人/Reels", "跳舞/Dancing", "主持站台/Hosting"], img: "homepage/talents/6-0.png", url: "#" }
-            { ch: "萌萌吃吃", en: "Eat", tags: ["MMORPG", "MOBA", "FPS", "社群紅人/Reels", "跳舞/Dancing", "主持站台/Hosting"], img: "homepage/talents/7-0.png", url: "#" }
-            { ch: "小舞", en: "Nien", tags: ["MMORPG", "MOBA", "FPS", "RP", "Vtuber"], img: "homepage/talents/8-0.png", url: "#" }
+            { ch: "牛牛妹", en: "Niu", tags: ["MMORPG", "MOBA", "社群紅人/Reels", "跳舞/Dancing", "主持站台/Hosting"], img: "homepage/talents/4-0.png", url: "#" },
+            { ch: "西瓜", en: "XiGuei", tags: ["MMORPG", "MOBA", "社群紅人/Reels", "跳舞/Dancing", "主持站台/Hosting"], img: "homepage/talents/5-0.png", url: "#" },
+            { ch: "Abby純純", en: "Abby", tags: ["MMORPG", "MOBA", "FPS", "社群紅人/Reels", "跳舞/Dancing", "主持站台/Hosting"], img: "homepage/talents/6-0.png", url: "#" },
+            { ch: "萌萌吃吃", en: "Eat", tags: ["MMORPG", "MOBA", "FPS", "社群紅人/Reels", "跳舞/Dancing", "主持站台/Hosting"], img: "homepage/talents/7-0.png", url: "#" },
+            { ch: "小舞", en: "Nien", tags: ["MMORPG", "MOBA", "FPS", "RP", "Vtuber"], img: "homepage/talents/8-0.png", url: "#" },
             { ch: "小鹽", en: "Yan", tags: ["MMORPG", "MOBA", "FPS", "Vtuber"], img: "homepage/talents/9-0.png", url: "#" }
         ];
 
@@ -376,7 +362,8 @@
                             selectedFilters.push(opt);
                         }
                     }
-                    renderFilters(); renderTalents();
+                    renderFilters(); 
+                    renderTalents();
                 };
                 filterBar.appendChild(btn);
             });
@@ -392,14 +379,13 @@
                 const imgSrc = (data.img && data.img !== "#") ? data.img : `https://picsum.photos/seed/talent${i}/300/300`;
                 
                 const item = document.createElement('div');
-                // 移除額外包裹層的多餘 class，直接作為 Grid 節點
                 item.className = 'flex flex-col items-center text-center'; 
                 item.innerHTML = `
                     <div class="cyber-frame" onclick="navigateToTalent(${i})">
                         <div class="glow-ring"></div>
                         <div class="thin-border"></div>
                         <div class="inner-photo">
-                            <img src="${imgSrc}" alt="${displayName}">
+                            <img src="${imgSrc}" alt="${displayName}" onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=${data.en}'">
                         </div>
                     </div>
                     <div>
@@ -418,7 +404,6 @@
             if (targetUrl && targetUrl !== "#") { window.location.href = targetUrl; }
         }
 
-        // 修改切換語系邏輯，配合實體按鈕行為
         function toggleLanguage(lang) {
             currentLang = lang;
             document.getElementById('btn-ch').classList.toggle('active', lang === 'ch');
@@ -429,6 +414,14 @@
             renderTalents();
         }
 
+        function scrollToSection(id) {
+            const target = document.getElementById(id);
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // 初始化渲染
         renderFilters();
         renderTalents();
     </script>
