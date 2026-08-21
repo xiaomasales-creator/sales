@@ -277,31 +277,62 @@
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-y-16 gap-x-8 justify-items-center mb-32" id="talents-list"></div>
     </div>
     
-    <!-- 底部控制面板 -->
+    <!-- 控制面板 -->
     <nav class="control-panel">
-        <div class="panel-container">
+        <div class="panel-container cyber-font">
             <div class="nav-item">
-                <span class="panel-btn">關於小馬</span>
+                <div class="panel-btn">關於小馬</div>
                 <div class="energy-bar"></div>
                 <div class="submenu">
-                    <a href="https://xiaomasales-creator.github.io/sales/presentation/index.html" class="submenu-link">首頁</a>
-                    <a href="https://xiaomasales-creator.github.io/sales/presentation/nav/%E5%93%81%E7%89%8C%E7%89%B9%E8%89%B2/index.html" class="submenu-link">品牌特色</a>
-                    <a href="https://xiaomasales-creator.github.io/sales/presentation/nav/%E6%9C%8D%E5%8B%99%E6%B5%81%E7%A8%8B/index.html" class="submenu-link">服務流程</a>
+                    <div class="submenu-inner">
+                        <a href="https://xiaomasales-creator.github.io/sales/presentation/nav/%E5%93%81%E7%89%8C%E7%89%B9%E8%89%B2/index.html" target="_blank" class="submenu-link">品牌特色</a>
+                        <a href="https://xiaomasales-creator.github.io/sales/presentation/nav/%E5%90%88%E4%BD%9C%E9%A0%85%E7%9B%AE/index.html" target="_blank" class="submenu-link">合作項目</a>
+                        <a href="https://xiaomasales-creator.github.io/sales/presentation/nav/%E6%9C%8D%E5%8B%99%E6%B5%81%E7%A8%8B/index.html" target="_blank" class="submenu-link">服務流程</a>
+                        <a href="https://www.youtube.com/@xiaomaent" target="_blank" class="submenu-link">官方YT頻道</a>
+                    </div>
                 </div>
             </div>
             <div class="nav-item">
-                <span class="panel-btn">網紅經紀</span>
+                <div class="panel-btn" onclick="scrollToSection('talents')">網紅經紀</div>
                 <div class="energy-bar"></div>
                 <div class="submenu">
-                    <a href="#" class="submenu-link">小馬主播陣容</a>
-                    <a href="#" class="submenu-link">經典案例</a>
+                    <div class="submenu-inner">
+                        <a href="https://xiaomasales-creator.github.io/sales/presentation/nav/%E4%B8%BB%E6%92%AD%E9%99%A3%E5%AE%B9/index.html" target="_blank" class="submenu-link">小馬主播陣容</a>
+                        <a href="" target="_blank" class="submenu-link">經典案例</a>
+                        <a href="" target="_blank" class="submenu-link">經常合作KOL</a>
+                    </div>
                 </div>
             </div>
             <div class="nav-item">
-                <span class="panel-btn">聯絡我們</span>
+                <div class="panel-btn" onclick="scrollToSection('gallery')">活動花絮</div>
                 <div class="energy-bar"></div>
                 <div class="submenu">
-                    <a href="#" class="submenu-link">工商洽談</a>
+                    <div class="submenu-inner">
+                        <a href="" target="_blank" class="submenu-link">商案總覽</a>
+                        <a href="" target="_blank" class="submenu-link">線下活動花絮</a>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-item">
+                <div class="panel-btn">其他服務</div>
+                <div class="energy-bar"></div>
+                <div class="submenu">
+                    <div class="submenu-inner">
+                        <a href="" target="_blank" class="submenu-link">影音剪輯</a>
+                        <a href="" target="_blank" class="submenu-link">網頁製作</a>
+                        <a href="" target="_blank" class="submenu-link">美術設計</a>
+                        <a href="" target="_blank" class="submenu-link">社群經營</a>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-item">
+                <div class="panel-btn">聯絡我們</div>
+                <div class="energy-bar"></div>
+                <div class="submenu">
+                    <div class="submenu-inner">
+                        <a href="" target="_blank" class="submenu-link">工商洽談</a>
+                        <a href="" target="_blank" class="submenu-link">加入小馬</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -311,13 +342,18 @@
         let currentLang = 'ch';
         let selectedFilters = [];
 
-        const filterOptions = ["All", "MMORPG", "FPS", "MOBA", "社群紅人/Reels", "跳舞/Dancing", "主持站台/Hosting", "Vtuber"];
+        const filterOptions = ["All", "MMORPG", "FPS", "MOBA", "RP", "社群紅人/Reels", "跳舞/Dancing", "主持站台/Hosting", "Vtuber"];
         
         const talentsData = [
-            { ch: "狂暴小建", en: "Jian", tags: ["FPS", "主持站台/Hosting"], img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/1-1.png", url: "#" },
-            { ch: "UZRA", en: "UZRA", tags: ["跳舞/Dancing", "社群紅人/Reels"], img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/2-1.png", url: "#" },
-            { ch: "豆豆", en: "Dou Dou", tags: ["MMORPG", "Vtuber"], img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/3-1.png", url: "#" },
-            { ch: "牛牛妹", en: "Niu", tags: ["MOBA", "FPS"], img: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/4-1.png", url: "#" }
+            { ch: "狂暴小建", en: "Jian", tags: ["MMORPG", "FPS", "MOBA", "RP"], img: "homepage/talents/1-0.png", url: "#" },
+            { ch: "UZRA", en: "UZRA", tags: ["MMORPG", "MOBA", "RP"], img: "homepage/talents/2-0.png", url: "#" },
+            { ch: "豆豆", en: "Dou Dou", tags: ["MMORPG", "RP", "社群紅人/Reels", "跳舞/Dancing", "主持站台/Hosting"], img: "homepage/talents/3-0.png", url: "#" },
+            { ch: "牛牛妹", en: "Niu", tags: ["MMORPG", "MOBA", "社群紅人/Reels", "跳舞/Dancing", "主持站台/Hosting"], img: "homepage/talents/4-0.png", url: "#" }
+            { ch: "西瓜", en: "XiGuei", tags: ["MMORPG", "MOBA", "社群紅人/Reels", "跳舞/Dancing", "主持站台/Hosting"], img: "homepage/talents/5-0.png", url: "#" }
+            { ch: "Abby純純", en: "Abby", tags: ["MMORPG", "MOBA", "FPS", "社群紅人/Reels", "跳舞/Dancing", "主持站台/Hosting"], img: "homepage/talents/6-0.png", url: "#" }
+            { ch: "萌萌吃吃", en: "Eat", tags: ["MMORPG", "MOBA", "FPS", "社群紅人/Reels", "跳舞/Dancing", "主持站台/Hosting"], img: "homepage/talents/7-0.png", url: "#" }
+            { ch: "小舞", en: "Nien", tags: ["MMORPG", "MOBA", "FPS", "RP", "Vtuber"], img: "homepage/talents/8-0.png", url: "#" }
+            { ch: "小鹽", en: "Yan", tags: ["MMORPG", "MOBA", "FPS", "Vtuber"], img: "homepage/talents/9-0.png", url: "#" }
         ];
 
         const listContainer = document.getElementById('talents-list');
