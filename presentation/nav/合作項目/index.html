@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>小馬娛樂 | 合作項目 PROJECT COMMISSION</title>
+    <link rel="icon" type="image/png" href="https://xiaomasales-creator.github.io/sales/presentation/homepage/LOGO_ICON.png">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Noto+Sans+TC:wght@300;500;700;900&display=swap" rel="stylesheet">
     <style>
@@ -374,6 +376,14 @@
     <div class="dots-overlay"></div>
     <div class="grid-overlay"></div>
     <div class="scanline"></div>
+
+    <!-- 網頁建置中 提示彈窗 Toast -->
+    <div id="cyber-toast" class="cyber-toast">
+        <div class="cyber-toast-dot"></div>
+        <span class="cyber-font text-sm md:text-base font-bold tracking-wider text-cyan-300">
+            該頁面尚在建置中，敬請期待！
+        </span>
+    </div>
     
     <!-- 背景裝飾文字 -->
     <div class="floating-deco outlined" style="bottom: 15%; right: -2%;">XIAOMA</div>
@@ -528,6 +538,44 @@
     </nav>
 
     <script>
+        let toastTimer = null;
+
+        // 觸發建置中彈窗 Toast
+        function showNotice(msg) {
+            const toast = document.getElementById('cyber-toast');
+            if (!toast) return;
+            toast.querySelector('span').innerText = msg || '該頁面尚在建置中，敬請期待！';
+            toast.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+
+        // 判斷連結是否為無效或空連結
+        function isEmptyLink(href) {
+            if (!href) return true;
+            const cleaned = href.trim();
+            return (
+                cleaned === '' ||
+                cleaned === '#' ||
+                cleaned.startsWith('javascript:void(0)') ||
+                cleaned.startsWith('javascript:;')
+            );
+        }
+
+        // 全局點擊監聽：當點擊無效連結時自動跳出提示 Toast
+        document.addEventListener('click', function(e) {
+            const link = e.target.closest('a');
+            if (link) {
+                const href = link.getAttribute('href');
+                if (isEmptyLink(href)) {
+                    e.preventDefault();
+                    showNotice('該頁面尚在建置中，敬請期待！');
+                }
+            }
+        });
+        
         function toggleLanguage(contentElement) {
             contentElement.classList.remove('switching');
             void contentElement.offsetWidth;
