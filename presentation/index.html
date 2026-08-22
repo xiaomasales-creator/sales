@@ -5,10 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>小馬娛樂 | XIAOMA ENT.</title>
     <link rel="icon" type="image/png" href="https://xiaomasales-creator.github.io/sales/presentation/homepage/LOGO_ICON.png">
+    
     <!-- Tailwind CSS for utility styling -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
     <!-- Google Fonts: Orbitron for Sci-Fi look -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+TC:wght@300;500;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --primary-neon: #8600FF;
@@ -745,58 +748,7 @@
             border-radius: 2px;
         }
 
-        .modal-action-footer {
-            display: flex;
-            gap: 15px;
-            margin-top: 10px;
-            width: 100%;
-        }
-
-        .cyber-long-btn {
-            position: relative;
-            padding: 16px 20px;
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            overflow: hidden;
-            transition: all 0.3s;
-            text-decoration: none !important;
-        }
-
-        .long-btn-frame {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            border: 1px solid var(--primary-neon);
-            clip-path: polygon(0% 0%, 95% 0%, 100% 30%, 100% 100%, 5% 100%, 0% 70%);
-            background: rgba(134, 0, 255, 0.05);
-            z-index: 1;
-            transition: all 0.3s;
-        }
-
-        .cyber-long-btn:hover .long-btn-frame {
-            background: rgba(134, 0, 255, 0.2);
-            box-shadow: inset 0 0 15px var(--primary-neon);
-            border-color: #fff;
-            transform: scale(1.02);
-        }
-
-        .cyber-long-btn.cyan-variant .long-btn-frame {
-            border-color: var(--secondary-neon);
-            background: rgba(0, 240, 255, 0.05);
-        }
-
-        .long-btn-text {
-            position: relative;
-            z-index: 2;
-            font-size: 14px;
-            font-weight: 900;
-            letter-spacing: 1.5px;
-            color: #fff;
-            text-transform: uppercase;
-        }
-        /* 口頭禪區塊設計 */
+        /* 口頭禪區塊設計 - 已修正變數名稱 */
         .catchphrase-block {
             position: relative;
             padding: 15px 20px;
@@ -811,7 +763,7 @@
             position: absolute;
             top: -10px; left: 5px;
             font-size: 60px;
-            color: var(--secondary);
+            color: var(--secondary-neon);
             opacity: 0.1;
             font-family: serif;
         }
@@ -836,7 +788,7 @@
         <!-- 首頁標題區塊 -->
         <section id="home" class="pt-8 md:pt-16 pb-2 flex flex-col items-center text-center px-6">
             <div class="hero-logo mb-4 md:mb-6">
-                <img src="https://xiaomasales-creator.github.io/sales/presentation/homepage/LOGO_cut.png" alt="小馬娛樂 LOGO" class="max-w-[90%] md:max-w-[800px] h-auto">
+                <img src="https://xiaomasales-creator.github.io/sales/presentation/homepage/LOGO_cut.png" alt="小馬娛樂 LOGO" class="max-w-[90%] md:max-w-[800px] h-auto" onerror="this.src='https://placehold.co/800x200/111/00f0ff?text=XIAOMA+ENT.'">
             </div>
             <div class="max-w-3xl px-4">
                 <h1 class="cyber-font text-xl md:text-4xl font-black mb-0">小馬娛樂 // <span class="text-purple-500">XIAOMA ENT.</span></h1>
@@ -891,8 +843,8 @@
                 <div class="submenu">
                     <div class="submenu-inner">
                         <a href="https://xiaomasales-creator.github.io/sales/presentation/nav/%E4%B8%BB%E6%92%AD%E9%99%A3%E5%AE%B9/index.html" target="_blank" class="submenu-link">小馬主播陣容</a>
-                        <a href="" target="_blank" class="submenu-link">經典案例</a>
-                        <a href="" target="_blank" class="submenu-link">經常合作KOL</a>
+                        <a href="javascript:void(0)" class="submenu-link">經典案例</a>
+                        <a href="javascript:void(0)" class="submenu-link">經常合作KOL</a>
                     </div>
                 </div>
             </div>
@@ -901,8 +853,8 @@
                 <div class="energy-bar"></div>
                 <div class="submenu">
                     <div class="submenu-inner">
-                        <a href="" target="_blank" class="submenu-link">商案總覽</a>
-                        <a href="" target="_blank" class="submenu-link">線下活動花絮</a>
+                        <a href="javascript:void(0)" class="submenu-link">商案總覽</a>
+                        <a href="javascript:void(0)" class="submenu-link">線下活動花絮</a>
                     </div>
                 </div>
             </div>
@@ -911,10 +863,10 @@
                 <div class="energy-bar"></div>
                 <div class="submenu">
                     <div class="submenu-inner">
-                        <a href="" target="_blank" class="submenu-link">影音剪輯</a>
-                        <a href="" target="_blank" class="submenu-link">網頁製作</a>
-                        <a href="" target="_blank" class="submenu-link">美術設計</a>
-                        <a href="" target="_blank" class="submenu-link">社群經營</a>
+                        <a href="javascript:void(0)" class="submenu-link">影音剪輯</a>
+                        <a href="javascript:void(0)" class="submenu-link">網頁製作</a>
+                        <a href="javascript:void(0)" class="submenu-link">美術設計</a>
+                        <a href="javascript:void(0)" class="submenu-link">社群經營</a>
                     </div>
                 </div>
             </div>
@@ -923,8 +875,8 @@
                 <div class="energy-bar"></div>
                 <div class="submenu">
                     <div class="submenu-inner">
-                        <a href="" target="_blank" class="submenu-link">工商洽談</a>
-                        <a href="" target="_blank" class="submenu-link">加入小馬</a>
+                        <a href="javascript:void(0)" class="submenu-link">工商洽談</a>
+                        <a href="javascript:void(0)" class="submenu-link">加入小馬</a>
                     </div>
                 </div>
             </div>
@@ -966,13 +918,13 @@
                         <div class="slider-arrow-v2 arrow-v2-right" onclick="moveCarousel(1)">&rsaquo;</div>
                         <div class="card-container" id="carousel-cards">
                             <div class="cyber-photo-card" onclick="setCarouselIndex(0)">
-                                <div class="card-inner"><div class="tech-ring"></div><div class="photo-mask"><img src="" id="photo-0"></div></div>
+                                <div class="card-inner"><div class="tech-ring"></div><div class="photo-mask"><img src="" id="photo-0" alt="photo-0"></div></div>
                             </div>
                             <div class="cyber-photo-card" onclick="setCarouselIndex(1)">
-                                <div class="card-inner"><div class="tech-ring"></div><div class="photo-mask"><img src="" id="photo-1"></div></div>
+                                <div class="card-inner"><div class="tech-ring"></div><div class="photo-mask"><img src="" id="photo-1" alt="photo-1"></div></div>
                             </div>
                             <div class="cyber-photo-card" onclick="setCarouselIndex(2)">
-                                <div class="card-inner"><div class="tech-ring"></div><div class="photo-mask"><img src="" id="photo-2"></div></div>
+                                <div class="card-inner"><div class="tech-ring"></div><div class="photo-mask"><img src="" id="photo-2" alt="photo-2"></div></div>
                             </div>
                         </div>
                     </div>
@@ -1204,7 +1156,7 @@
                 hashtags: ["推理類", "小遊戲", "MMORPG", "短影音", "社群紅人", "線下活動"],
                 malePct: 96, femalePct: 4, ageDist: "18-34 歲",
                 socialLinks: { fb: "https://www.facebook.com/pudding1223xd?notif_id=1625749850662023&notif_t=page_fan&ref=notif#", ig: "https://www.instagram.com/pudding1223xd/?hl=zh-tw", yt: "https://www.youtube.com/channel/UCrTf5o3WU8SoCKWSSKyVNJA", tw: "https://www.twitch.tv/hipudding1223" }
-            },
+            }
         ];
 
         // 初始化活動花絮
@@ -1217,7 +1169,7 @@
                 item.className = "gallery-item group";
                 item.innerHTML = `
                     <div class="gallery-img-box">
-                        <img src="${data.img}" class="gallery-img" alt="${data.title}" onerror="this.src='https://via.placeholder.com/800x450/111111/444444?text=IMAGE_NOT_FOUND'">
+                        <img src="${data.img}" class="gallery-img" alt="${data.title}" onerror="this.src='https://placehold.co/800x450/111111/444444?text=IMAGE_NOT_FOUND'">
                         <div class="gallery-caption">
                             <div class="caption-line"></div>
                             <span class="caption-title">${data.title}</span>
@@ -1238,7 +1190,7 @@
                 div.onclick = () => openTalentModal(t);
                 div.innerHTML = `
                     <div class="avatar-circle">
-                        <img src="${t.img}" class="w-full h-full object-cover" onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=${t.name}'">
+                        <img src="${t.img}" class="w-full h-full object-cover" alt="${t.name}" onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(t.name)}'">
                     </div>
                     <p class="talent-name-label">${t.name}</p>`;
                 grid.appendChild(div);
@@ -1311,7 +1263,6 @@
             document.getElementById('modal-career-start').innerText = t.career.toUpperCase();
             document.getElementById('modal-stream-type').innerText = t.streamType;
             document.getElementById('modal-game-type').innerText = t.gameType;
-            // 口頭禪文字
             document.getElementById('modal-catchphrase').innerText = t.quote;
 
             document.getElementById('male-bar').style.width = t.malePct + '%';
@@ -1329,7 +1280,12 @@
             const photoList = t.gallery || [t.img, t.img, t.img];
             for(let i=0; i<3; i++) {
                 const imgEl = document.getElementById(`photo-${i}`);
-                if(imgEl) imgEl.src = photoList[i] || photoList[0];
+                if(imgEl) {
+                    imgEl.src = photoList[i] || photoList[0];
+                    imgEl.onerror = function() {
+                        this.src = `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(t.name)}-${i}`;
+                    };
+                }
             }
 
             const tagContainer = document.getElementById('modal-hashtags');
