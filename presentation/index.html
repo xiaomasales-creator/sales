@@ -748,7 +748,7 @@
             border-radius: 2px;
         }
 
-        /* 口頭禪區塊設計 - 已修正變數名稱 */
+        /* 口頭禪區塊設計 */
         .catchphrase-block {
             position: relative;
             padding: 15px 20px;
@@ -776,12 +776,61 @@
             letter-spacing: 1px;
             text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
         }
+
+        /* Cyberpunk Alert Toast Notification */
+        .cyber-toast {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            z-index: 3500;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(10, 10, 15, 0.95);
+            border: 1px solid var(--secondary-neon);
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.4), inset 0 0 15px rgba(0, 240, 255, 0.15);
+            padding: 14px 28px;
+            border-radius: 4px;
+            backdrop-filter: blur(12px);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .cyber-toast.show {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .cyber-toast-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--secondary-neon);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--secondary-neon);
+            animation: pulse-dot 1.5s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.8); }
+        }
     </style>
 </head>
 <body>
     <!-- 視覺特效層 -->
     <div class="dots-overlay"></div>
     <div class="grid-overlay"></div>
+
+    <!-- 網頁建置中 提示彈窗 Toast -->
+    <div id="cyber-toast" class="cyber-toast">
+        <div class="cyber-toast-dot"></div>
+        <span class="cyber-font text-sm md:text-base font-bold tracking-wider text-cyan-300">
+            【網頁建置中】 該頁面或功能尚在籌備中，敬請期待！
+        </span>
+    </div>
 
     <div class="min-h-screen flex flex-col pb-32">
         
@@ -1158,6 +1207,34 @@
                 socialLinks: { fb: "https://www.facebook.com/pudding1223xd?notif_id=1625749850662023&notif_t=page_fan&ref=notif#", ig: "https://www.instagram.com/pudding1223xd/?hl=zh-tw", yt: "https://www.youtube.com/channel/UCrTf5o3WU8SoCKWSSKyVNJA", tw: "https://www.twitch.tv/hipudding1223" }
             }
         ];
+
+        let toastTimer = null;
+        function showNotice(msg) {
+            const toast = document.getElementById('cyber-toast');
+            if (!toast) return;
+            if (msg) {
+                toast.querySelector('span').innerText = msg;
+            } else {
+                toast.querySelector('span').innerText = '【網頁建置中】 該頁面或功能尚在籌備中，敬請期待！';
+            }
+            toast.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+
+        // 全域監聽：捕捉所有點擊空連結行為 (href="#", href="javascript:void(0)", href="")
+        document.addEventListener('click', function(e) {
+            const link = e.target.closest('a');
+            if (link) {
+                const href = link.getAttribute('href');
+                if (!href || href === '#' || href === 'javascript:void(0)' || href === 'javascript:void(0);' || href.trim() === '') {
+                    e.preventDefault();
+                    showNotice('【網頁建置中】 該頁面或功能尚在籌備中，敬請期待！');
+                }
+            }
+        });
 
         // 初始化活動花絮
         function initGalleryTrack() {
