@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>小馬娛樂 | 主播陣容 SUBSIDIARY TALENTS</title>
+    <link rel="icon" type="image/png" href="https://xiaomasales-creator.github.io/sales/presentation/homepage/LOGO_ICON.png">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Noto+Sans+TC:wght@300;500;700;900&display=swap" rel="stylesheet">
     <style>
@@ -71,6 +73,47 @@
         @keyframes scanline {
             0% { top: -10%; }
             100% { top: 110%; }
+        }
+
+        /* Cyberpunk Alert Toast Notification */
+        .cyber-toast {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            z-index: 3500;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(10, 10, 15, 0.95);
+            border: 1px solid var(--secondary-neon);
+            box-shadow: 0 0 25px rgba(0, 243, 255, 0.4), inset 0 0 15px rgba(0, 243, 255, 0.15);
+            padding: 14px 28px;
+            border-radius: 4px;
+            backdrop-filter: blur(12px);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .cyber-toast.show {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .cyber-toast-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--secondary-neon);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--secondary-neon);
+            animation: pulse-dot 1.5s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.8); }
         }
 
         .floating-deco {
@@ -341,10 +384,19 @@
     </style>
 </head>
 <body>
+    <!-- 視覺特效層 -->
     <div class="dots-overlay"></div>
     <div class="grid-overlay"></div>
     <div class="scanline"></div>
     <div class="floating-deco outlined" style="bottom: 15%; right: -2%;">XIAOMA</div>
+
+    <!-- 網頁建置中 提示彈窗 Toast -->
+    <div id="cyber-toast" class="cyber-toast">
+        <div class="cyber-toast-dot"></div>
+        <span class="cyber-font text-sm md:text-base font-bold tracking-wider text-cyan-300">
+            該頁面尚在建置中，敬請期待！
+        </span>
+    </div>
 
     <header class="site-header w-full pt-20 pb-16 overflow-hidden">
         <div class="max-w-[1400px] mx-auto px-10 flex flex-col items-start relative">
@@ -373,58 +425,106 @@
     </div>
     
     <!-- 底部控制面板 -->
+    <!-- 控制面板 -->
     <nav class="control-panel">
-        <div class="panel-container">
+        <div class="panel-container cyber-font">
             <div class="nav-item">
-                <span class="panel-btn">關於小馬</span>
+                <div class="panel-btn">關於小馬</div>
                 <div class="energy-bar"></div>
                 <div class="submenu">
-                    <a href="https://xiaomasales-creator.github.io/sales/presentation/index.html" class="submenu-link">首頁</a>
-                    <a href="https://xiaomasales-creator.github.io/sales/presentation/nav/%E5%93%81%E7%89%8C%E7%89%B9%E8%89%B2/index.html" class="submenu-link">品牌特色</a>
-                    <a href="https://xiaomasales-creator.github.io/sales/presentation/nav/%E5%90%88%E4%BD%9C%E9%A0%85%E7%9B%AE/index.html" class="submenu-link">合作項目</a>
-                    <a href="https://xiaomasales-creator.github.io/sales/presentation/nav/%E6%9C%8D%E5%8B%99%E6%B5%81%E7%A8%8B/index.html" class="submenu-link">服務流程</a>
-                    <a href="https://www.youtube.com/@xiaomaent" class="submenu-link">官方YT頻道</a>
+                    <div class="submenu-inner">
+                        <a href="https://xiaomasales-creator.github.io/sales/presentation/nav/%E5%93%81%E7%89%8C%E7%89%B9%E8%89%B2/index.html" target="_blank" class="submenu-link">品牌特色</a>
+                        <a href="https://xiaomasales-creator.github.io/sales/presentation/nav/%E5%90%88%E4%BD%9C%E9%A0%85%E7%9B%AE/index.html" target="_blank" class="submenu-link">合作項目</a>
+                        <a href="https://xiaomasales-creator.github.io/sales/presentation/nav/%E6%9C%8D%E5%8B%99%E6%B5%81%E7%A8%8B/index.html" target="_blank" class="submenu-link">服務流程</a>
+                        <a href="https://www.youtube.com/@xiaomaent" target="_blank" class="submenu-link">官方YT頻道</a>
+                    </div>
                 </div>
             </div>
             <div class="nav-item">
-                <span class="panel-btn">網紅經紀</span>
+                <div class="panel-btn" onclick="scrollToSection('talents')">網紅經紀</div>
                 <div class="energy-bar"></div>
                 <div class="submenu">
-                    <a href="https://xiaomasales-creator.github.io/sales/presentation/nav/主播陣容/index.html" class="submenu-link">小馬主播陣容</a>
-                    <a href="#" class="submenu-link">經典案例</a>
-                    <a href="#" class="submenu-link">經常合作KOL</a>
+                    <div class="submenu-inner">
+                        <a href="https://xiaomasales-creator.github.io/sales/presentation/nav/%E4%B8%BB%E6%92%AD%E9%99%A3%E5%AE%B9/index.html" target="_blank" class="submenu-link">小馬主播陣容</a>
+                        <a href="javascript:void(0)" class="submenu-link">經典案例</a>
+                        <a href="javascript:void(0)" class="submenu-link">經常合作KOL</a>
+                    </div>
                 </div>
             </div>
             <div class="nav-item">
-                <span class="panel-btn">活動花絮</span>
+                <div class="panel-btn" onclick="scrollToSection('gallery')">活動花絮</div>
                 <div class="energy-bar"></div>
                 <div class="submenu">
-                    <a href="#" class="submenu-link">商案總覽</a>
-                    <a href="#" class="submenu-link">線下活動花絮</a>
+                    <div class="submenu-inner">
+                        <a href="javascript:void(0)" class="submenu-link">商案總覽</a>
+                        <a href="javascript:void(0)" class="submenu-link">線下活動花絮</a>
+                    </div>
                 </div>
             </div>
             <div class="nav-item">
-                <span class="panel-btn">其他服務</span>
+                <div class="panel-btn">其他服務</div>
                 <div class="energy-bar"></div>
                 <div class="submenu">
-                    <a href="#" class="submenu-link">影音剪輯</a>
-                    <a href="#" class="submenu-link">網頁製作</a>
-                    <a href="#" class="submenu-link">美術設計</a>
-                    <a href="#" class="submenu-link">社群經營</a>
+                    <div class="submenu-inner">
+                        <a href="javascript:void(0)" class="submenu-link">影音剪輯</a>
+                        <a href="javascript:void(0)" class="submenu-link">網頁製作</a>
+                        <a href="javascript:void(0)" class="submenu-link">美術設計</a>
+                        <a href="javascript:void(0)" class="submenu-link">社群經營</a>
+                    </div>
                 </div>
             </div>
             <div class="nav-item">
-                <span class="panel-btn">聯絡我們</span>
+                <div class="panel-btn">聯絡我們</div>
                 <div class="energy-bar"></div>
                 <div class="submenu">
-                    <a href="#" class="submenu-link">工商洽談</a>
-                    <a href="#" class="submenu-link">加入小馬</a>
+                    <div class="submenu-inner">
+                        <a href="javascript:void(0)" class="submenu-link">工商洽談</a>
+                        <a href="javascript:void(0)" class="submenu-link">加入小馬</a>
+                    </div>
                 </div>
             </div>
         </div>
     </nav>
 
     <script>
+        let toastTimer = null;
+
+        // 觸發建置中彈窗 Toast
+        function showNotice(msg) {
+            const toast = document.getElementById('cyber-toast');
+            if (!toast) return;
+            toast.querySelector('span').innerText = msg || '該頁面尚在建置中，敬請期待！';
+            toast.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+
+        // 判斷連結是否為無效或空連結
+        function isEmptyLink(href) {
+            if (!href) return true;
+            const cleaned = href.trim();
+            return (
+                cleaned === '' ||
+                cleaned === '#' ||
+                cleaned.startsWith('javascript:void(0)') ||
+                cleaned.startsWith('javascript:;')
+            );
+        }
+
+        // 全局點擊監聽：當點擊無效連結時自動跳出提示 Toast
+        document.addEventListener('click', function(e) {
+            const link = e.target.closest('a');
+            if (link) {
+                const href = link.getAttribute('href');
+                if (isEmptyLink(href)) {
+                    e.preventDefault();
+                    showNotice('該頁面尚在建置中，敬請期待！');
+                }
+            }
+        });
+
         let currentLang = 'ch';
         let selectedFilters = [];
 
