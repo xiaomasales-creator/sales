@@ -1215,7 +1215,7 @@
             if (msg) {
                 toast.querySelector('span').innerText = msg;
             } else {
-                toast.querySelector('span').innerText = '【網頁建置中】 該頁面或功能尚在籌備中，敬請期待！';
+                toast.querySelector('span').innerText = '該頁面尚在建置中，敬請期待！';
             }
             toast.classList.add('show');
             clearTimeout(toastTimer);
@@ -1224,14 +1224,14 @@
             }, 2500);
         }
 
-        // 全域監聽：捕捉所有點擊空連結行為 (href="#", href="javascript:void(0)", href="")
+        // 點擊空連結行為 (href="#", href="javascript:void(0)", href="")
         document.addEventListener('click', function(e) {
             const link = e.target.closest('a');
             if (link) {
                 const href = link.getAttribute('href');
                 if (!href || href === '#' || href === 'javascript:void(0)' || href === 'javascript:void(0);' || href.trim() === '') {
                     e.preventDefault();
-                    showNotice('【網頁建置中】 該頁面或功能尚在籌備中，敬請期待！');
+                    showNotice('該頁面尚在建置中，敬請期待！');
                 }
             }
         });
