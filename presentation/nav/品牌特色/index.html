@@ -6,8 +6,10 @@
     <title>小馬娛樂 | 品牌特色 BRAND IMAGE</title>
     <link rel="icon" type="image/png" href="https://xiaomasales-creator.github.io/sales/presentation/homepage/LOGO_ICON.png">
     
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Noto+Sans+TC:wght@300;500;700;900&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --primary-neon: #8600ff;
@@ -67,8 +69,8 @@
         /* 掃描線樣式 */
         .scanline {
             width: 100%;
-            height: 4px; /* 增加高度使其可見 */
-            z-index: 999; /* 提高層級 */
+            height: 4px;
+            z-index: 999;
             background: linear-gradient(to bottom, 
                 transparent, 
                 rgba(0, 243, 255, 0.15) 50%, 
@@ -78,12 +80,53 @@
             box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
             position: fixed;
             pointer-events: none;
-            animation: scanline 6s linear infinite; /* 稍微加快速度 */
+            animation: scanline 6s linear infinite;
         }
 
         @keyframes scanline {
             0% { top: -10%; }
             100% { top: 110%; }
+        }
+
+        /* Cyberpunk Alert Toast Notification */
+        .cyber-toast {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            z-index: 3500;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(10, 10, 15, 0.95);
+            border: 1px solid var(--secondary-neon);
+            box-shadow: 0 0 25px rgba(0, 243, 255, 0.4), inset 0 0 15px rgba(0, 243, 255, 0.15);
+            padding: 14px 28px;
+            border-radius: 4px;
+            backdrop-filter: blur(12px);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .cyber-toast.show {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .cyber-toast-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--secondary-neon);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--secondary-neon);
+            animation: pulse-dot 1.5s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.8); }
         }
 
         /* 裝飾性幾何背景 */
@@ -113,7 +156,6 @@
             border-bottom: 0px solid rgba(134, 0, 255, 0.1);
         }
 
-        /* 佈局結構 (保持不變) */
         .feature-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -126,7 +168,6 @@
             .feature-grid { grid-template-columns: 1fr; gap: 2rem; }
         }
 
-        /* --- 卡片邊框設計 (沿用上一版本) --- */
         .feature-card {
             background: rgba(10, 10, 18, 0.9);
             position: relative;
@@ -217,7 +258,6 @@
         .crosshair::before { width: 100%; height: 1px; top: 50%; }
         .crosshair::after { height: 100%; width: 1px; left: 50%; }
 
-        /* --- 語言切換內容控制 --- */
         .content-zh, .content-en {
             transition: opacity 0.4s ease, transform 0.4s ease;
         }
@@ -227,7 +267,6 @@
             transform: translateY(10px);
         }
 
-        /* --- 強烈點擊特效 --- */
         @keyframes glitch-flash {
             0% { background: rgba(255, 255, 255, 0); }
             10% { background: rgba(255, 255, 255, 0.8); }
@@ -243,10 +282,7 @@
             80% { transform: translateX(3px); }
         }
 
-        .clicking-effect {
-            animation: card-shake 0.4s ease;
-        }
-
+        .clicking-effect { animation: card-shake 0.4s ease; }
         .click-flash-overlay {
             position: absolute;
             inset: 0;
@@ -254,15 +290,9 @@
             z-index: 100;
             opacity: 0;
         }
+        .active-flash .click-flash-overlay { animation: glitch-flash 0.5s ease-out forwards; }
 
-        .active-flash .click-flash-overlay {
-            animation: glitch-flash 0.5s ease-out forwards;
-        }
-
-        /* 螢幕震動 */
-        .screen-shake {
-            animation: screen-shake-anim 0.3s linear;
-        }
+        .screen-shake { animation: screen-shake-anim 0.3s linear; }
         @keyframes screen-shake-anim {
             0% { transform: translate(0,0); }
             25% { transform: translate(2px, -2px); }
@@ -352,7 +382,6 @@
             width: 100%;
         }
 
-        /* 子選單樣式 */
         .submenu {
             position: absolute;
             bottom: 100%;
@@ -439,9 +468,8 @@
                 </div>
                 <span class="cyber-font text-xl md:text-3xl font-black text-white/10 uppercase italic tracking-widest leading-none">BRAND_IMAGE</span>
             </div>
-                <div class="w-[60px] h-[4px] bg-gradient-to-r from-[#bc13fe] to-[#00d2ff] mb-4"></div>
-                <span class="cyber-font text-[10px] text-white/30 tracking-[0.2em] uppercase">Click the card to view in English</span>
-            </div>
+            <div class="w-[60px] h-[4px] bg-gradient-to-r from-[#bc13fe] to-[#00d2ff] mb-4"></div>
+            <span class="cyber-font text-[10px] text-white/30 tracking-[0.2em] uppercase">Click the card to view in English</span>
         </div>
     </header>
 
@@ -485,21 +513,20 @@
                 
                 <div class="text-[#00f3ff] mb-8">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 filter drop-shadow-[0_0_10px_rgba(0,243,255,0.5)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                     </svg>
                 </div>
 
                 <div class="content-zh">
-                    <h3 class="text-3xl font-bold mb-5 tracking-widest cyber-font text-white group-hover:text-[#00f3ff]">專業與趣味兼顧</h3>
+                    <h3 class="text-3xl font-bold mb-5 tracking-widest cyber-font text-white group-hover:text-[#00f3ff]">專業經紀培訓，陪伴成長</h3>
                     <p class="text-gray-400 leading-relaxed text-base font-light">
-                        以專業而不失趣味的行銷推廣，吸引大量潛在客群。
+                        提供全方位資源支援與職涯規劃，協助主播發掘潛能並持續突破。
                     </p>
                 </div>
                 <div class="content-en lang-hidden">
-                    <h3 class="text-3xl font-bold mb-5 tracking-widest cyber-font text-[#00f3ff]">Professional & Interesting</h3>
+                    <h3 class="text-3xl font-bold mb-5 tracking-widest cyber-font text-[#00f3ff]">Professional Guidance</h3>
                     <p class="text-gray-400 leading-relaxed text-base font-light">
-                        Use professional and interesting performance to attract audience.
+                        Providing comprehensive resource support and career planning to help creators grow.
                     </p>
                 </div>
             </div>
@@ -514,20 +541,20 @@
                 
                 <div class="text-[#bc13fe] mb-8">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 filter drop-shadow-[0_0_10px_rgba(188,19,254,0.5)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                     </svg>
                 </div>
 
                 <div class="content-zh">
-                    <h3 class="text-3xl font-bold mb-5 tracking-widest cyber-font text-white group-hover:text-[#00f3ff]">最低的預算，最高的品質</h3>
+                    <h3 class="text-3xl font-bold mb-5 tracking-widest cyber-font text-white group-hover:text-[#00f3ff]">精準商業對接，極致效益</h3>
                     <p class="text-gray-400 leading-relaxed text-base font-light">
-                        精準掌控預算，追求完美成效，致力於讓客戶花小錢也能享高品質。
+                        深入了解品牌需求，媒合最適切的創作者，創造最大行銷價值。
                     </p>
                 </div>
                 <div class="content-en lang-hidden">
-                    <h3 class="text-3xl font-bold mb-5 tracking-widest cyber-font text-[#00f3ff]">Lowest Cost But Highest Quality</h3>
+                    <h3 class="text-3xl font-bold mb-5 tracking-widest cyber-font text-[#00f3ff]">Precision Matching</h3>
                     <p class="text-gray-400 leading-relaxed text-base font-light">
-                        Control the budget accurately and provide the best service.
+                        Deeply understanding brand needs and matching the best creator for maximum value.
                     </p>
                 </div>
             </div>
@@ -542,114 +569,95 @@
                 
                 <div class="text-[#00f3ff] mb-8">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 filter drop-shadow-[0_0_10px_rgba(0,243,255,0.5)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zM9 19V9a2 2 0 012-2h2a2 2 0 012 2v10" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
                     </svg>
                 </div>
 
                 <div class="content-zh">
-                    <h3 class="text-3xl font-bold mb-5 tracking-widest cyber-font text-white group-hover:text-[#00f3ff]">行事俐落，使命必達</h3>
+                    <h3 class="text-3xl font-bold mb-5 tracking-widest cyber-font text-white group-hover:text-[#00f3ff]">資源跨界整合，雙贏共創</h3>
                     <p class="text-gray-400 leading-relaxed text-base font-light">
-                        執行迅速確實，絕不拖泥帶水。
+                        串聯影音、線下活動與社群推播，打造全方位的整合行銷生態圈。
                     </p>
                 </div>
                 <div class="content-en lang-hidden">
-                    <h3 class="text-3xl font-bold mb-5 tracking-widest cyber-font text-[#00f3ff]">Execute Quickly & Accurately</h3>
+                    <h3 class="text-3xl font-bold mb-5 tracking-widest cyber-font text-[#00f3ff]">Ecosystem Synergy</h3>
                     <p class="text-gray-400 leading-relaxed text-base font-light">
-                        Complete every mission with speed and precision.
+                        Connecting video, offline events, and social channels to build a complete ecosystem.
                     </p>
                 </div>
             </div>
         </main>
     </div>
 
-    <!-- 底部控制面板 -->
+    <!-- 控制面板 (NAV 選單) -->
     <nav class="control-panel">
-        <div class="panel-container">
+        <div class="panel-container cyber-font">
             <div class="nav-item">
-                <span class="panel-btn">關於小馬</span>
+                <div class="panel-btn">關於小馬</div>
                 <div class="energy-bar"></div>
                 <div class="submenu">
-                    <a href="https://xiaomasales-creator.github.io/sales/presentation/index.html" class="submenu-link">首頁</a>
-                    <a href="https://xiaomasales-creator.github.io/sales/presentation/nav/%E5%93%81%E7%89%8C%E7%89%B9%E8%89%B2/index.html" class="submenu-link">品牌特色</a>
-                    <a href="https://xiaomasales-creator.github.io/sales/presentation/nav/%E5%90%88%E4%BD%9C%E9%A0%85%E7%9B%AE/index.html" class="submenu-link">合作項目</a>
-                    <a href="https://xiaomasales-creator.github.io/sales/presentation/nav/%E6%9C%8D%E5%8B%99%E6%B5%81%E7%A8%8B/index.html" class="submenu-link">服務流程</a>
-                    <a href="https://www.youtube.com/@xiaomaent" class="submenu-link">官方YT頻道</a>
+                    <div class="submenu-inner">
+                        <a href="https://xiaomasales-creator.github.io/sales/presentation/nav/%E5%93%81%E7%89%8C%E7%89%B9%E8%89%B2/index.html" class="submenu-link">品牌特色</a>
+                        <a href="https://xiaomasales-creator.github.io/sales/presentation/nav/%E5%90%88%E4%BD%9C%E9%A0%85%E7%9B%AE/index.html" class="submenu-link">合作項目</a>
+                        <a href="https://xiaomasales-creator.github.io/sales/presentation/nav/%E6%9C%8D%E5%8B%99%E6%B5%81%E7%A8%8B/index.html" class="submenu-link">服務流程</a>
+                        <a href="https://www.youtube.com/@xiaomaent" target="_blank" class="submenu-link">官方YT頻道</a>
+                    </div>
                 </div>
             </div>
             <div class="nav-item">
-                <span class="panel-btn">網紅經紀</span>
+                <div class="panel-btn">網紅經紀</div>
                 <div class="energy-bar"></div>
                 <div class="submenu">
-                    <a href="https://xiaomasales-creator.github.io/sales/presentation/nav/主播陣容/index.html" class="submenu-link">小馬主播陣容</a>
-                    <a href="#" class="submenu-link">經典案例</a>
-                    <a href="#" class="submenu-link">經常合作KOL</a>
+                    <div class="submenu-inner">
+                        <a href="https://xiaomasales-creator.github.io/sales/presentation/nav/%E4%B8%BB%E6%92%AD%E9%99%A3%E5%AE%B9/index.html" class="submenu-link">小馬主播陣容</a>
+                        <a href="javascript:void(0)" class="submenu-link">經典案例</a>
+                        <a href="javascript:void(0)" class="submenu-link">經常合作KOL</a>
+                    </div>
                 </div>
             </div>
             <div class="nav-item">
-                <span class="panel-btn">活動花絮</span>
+                <div class="panel-btn">活動花絮</div>
                 <div class="energy-bar"></div>
                 <div class="submenu">
-                    <a href="#" class="submenu-link">商案總覽</a>
-                    <a href="#" class="submenu-link">線下活動花絮</a>
+                    <div class="submenu-inner">
+                        <a href="javascript:void(0)" class="submenu-link">商案總覽</a>
+                        <a href="javascript:void(0)" class="submenu-link">線下活動花絮</a>
+                    </div>
                 </div>
             </div>
             <div class="nav-item">
-                <span class="panel-btn">其他服務</span>
+                <div class="panel-btn">其他服務</div>
                 <div class="energy-bar"></div>
                 <div class="submenu">
-                    <a href="#" class="submenu-link">影音剪輯</a>
-                    <a href="#" class="submenu-link">網頁製作</a>
-                    <a href="#" class="submenu-link">美術設計</a>
-                    <a href="#" class="submenu-link">社群經營</a>
+                    <div class="submenu-inner">
+                        <a href="javascript:void(0)" class="submenu-link">影音剪輯</a>
+                        <a href="javascript:void(0)" class="submenu-link">網頁製作</a>
+                        <a href="javascript:void(0)" class="submenu-link">美術設計</a>
+                        <a href="javascript:void(0)" class="submenu-link">社群經營</a>
+                    </div>
                 </div>
             </div>
             <div class="nav-item">
-                <span class="panel-btn">聯絡我們</span>
+                <div class="panel-btn">聯絡我們</div>
                 <div class="energy-bar"></div>
                 <div class="submenu">
-                    <a href="#" class="submenu-link">工商洽談</a>
-                    <a href="#" class="submenu-link">加入小馬</a>
+                    <div class="submenu-inner">
+                        <a href="javascript:void(0)" class="submenu-link">工商洽談</a>
+                        <a href="javascript:void(0)" class="submenu-link">加入小馬</a>
+                    </div>
                 </div>
             </div>
         </div>
     </nav>
 
     <script>
-        function toggleLanguage(card) {
-            // 觸發強烈點擊視覺效果
-            card.classList.add('active-flash', 'clicking-effect');
-            document.body.classList.add('screen-shake');
-
-            // 獲取內容區域
-            const zhContent = card.querySelector('.content-zh');
-            const enContent = card.querySelector('.content-en');
-
-            // 稍微延遲切換，配合閃光效果
-            setTimeout(() => {
-                if (zhContent.classList.contains('lang-hidden')) {
-                    zhContent.classList.remove('lang-hidden');
-                    enContent.classList.add('lang-hidden');
-                } else {
-                    zhContent.classList.add('lang-hidden');
-                    enContent.classList.remove('lang-hidden');
-                }
-            }, 150);
-
-            // 清除效果
-            setTimeout(() => {
-                card.classList.remove('active-flash', 'clicking-effect');
-                document.body.classList.remove('screen-shake');
-            }, 500);
-        }
         let toastTimer = null;
+
+        // 觸發建置中彈窗 Toast
         function showNotice(msg) {
             const toast = document.getElementById('cyber-toast');
             if (!toast) return;
-            if (msg) {
-                toast.querySelector('span').innerText = msg;
-            } else {
-                toast.querySelector('span').innerText = '該頁面尚在建置中，敬請期待！';
-            }
+            toast.querySelector('span').innerText = msg || '該頁面尚在建置中，敬請期待！';
             toast.classList.add('show');
             clearTimeout(toastTimer);
             toastTimer = setTimeout(() => {
@@ -657,7 +665,7 @@
             }, 2500);
         }
 
-        // 判斷連結是否為空或無效連結
+        // 判斷連結是否為無效或空連結
         function isEmptyLink(href) {
             if (!href) return true;
             const cleaned = href.trim();
@@ -669,26 +677,35 @@
             );
         }
 
-        // 全局點擊事件處理
+        // 全局點擊監聽：當點擊無效連結時自動跳出提示 Toast
         document.addEventListener('click', function(e) {
             const link = e.target.closest('a');
             if (link) {
                 const href = link.getAttribute('href');
-                
-                // 檢查點擊對象是否為詳情彈窗內的四個社群平台按鈕
-                const isSocialBtn = link.classList.contains('social-link-btn') || !!link.closest('.social-link-wrapper');
-
                 if (isEmptyLink(href)) {
                     e.preventDefault();
-                    if (isSocialBtn) {
-                        // 若為未填寫的空連結，點擊時不會跳轉頁面，也不會跳出任何提示文字
-                        return;
-                    } else {
-                        showNotice('該頁面尚在建置中，敬請期待！');
-                    }
+                    showNotice('該頁面尚在建置中，敬請期待！');
                 }
             }
         });
+
+        // 卡片中英切換與點擊視覺特效
+        function toggleLanguage(card) {
+            card.classList.add('clicking-effect', 'active-flash');
+            document.body.classList.add('screen-shake');
+
+            setTimeout(() => {
+                card.classList.remove('clicking-effect', 'active-flash');
+                document.body.classList.remove('screen-shake');
+            }, 500);
+
+            const zh = card.querySelector('.content-zh');
+            const en = card.querySelector('.content-en');
+            if (zh && en) {
+                zh.classList.toggle('lang-hidden');
+                en.classList.toggle('lang-hidden');
+            }
+        }
     </script>
 </body>
 </html>
