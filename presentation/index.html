@@ -1257,7 +1257,7 @@
             );
         }
 
-        // 全局點擊事件處理（包含社群按鈕空連結提示【該主播無此社群平台~】）
+        // 全局點擊事件處理
         document.addEventListener('click', function(e) {
             const link = e.target.closest('a');
             if (link) {
@@ -1269,7 +1269,8 @@
                 if (isEmptyLink(href)) {
                     e.preventDefault();
                     if (isSocialBtn) {
-                        showNotice('該主播無此社群平台~');
+                        // 無效的社群連結按鈕點擊時不跳轉頁面，也不顯示提示文字
+                        return;
                     } else {
                         showNotice('該頁面尚在建置中，敬請期待！');
                     }
@@ -1299,6 +1300,7 @@
         }
         initGalleryTrack();
 
+        // 渲染旗下主播列表
         function renderTalentGrid() {
             const grid = document.getElementById('talent-grid');
             grid.innerHTML = ''; 
@@ -1404,7 +1406,7 @@
                     const validUrl = item.url && item.url.trim() !== '' ? item.url : '#';
                     el.href = validUrl;
                     
-                    // 若無有效網址，加上 class is-empty 提供暗化樣式
+                    // 若無有效網址，加上 class is-empty 提供暗化視覺效果
                     if (isEmptyLink(validUrl)) {
                         el.classList.add('is-empty');
                     } else {
