@@ -673,6 +673,26 @@
             transform: scale(1.1);
         }
 
+        /* 空連結 (無此社群) 狀態之視覺提示 */
+        .cyber-icon-btn.is-empty {
+            opacity: 0.5;
+        }
+        .cyber-icon-btn.is-empty .btn-frame {
+            border-color: #555;
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .cyber-icon-btn.is-empty .btn-content {
+            color: #888;
+        }
+        .cyber-icon-btn.is-empty:hover .btn-frame {
+            background: rgba(255, 0, 85, 0.2);
+            border-color: var(--danger-neon);
+            box-shadow: 0 0 15px var(--danger-neon);
+        }
+        .cyber-icon-btn.is-empty:hover .btn-content {
+            color: #fff;
+        }
+
         .cyber-icon-btn.close {
             width: 44px; height: 44px;
         }
@@ -824,7 +844,7 @@
     <div class="dots-overlay"></div>
     <div class="grid-overlay"></div>
 
-    <!-- 網頁建置中 提示彈窗 Toast -->
+    <!-- 網頁建置中 / 空連結 提示彈窗 Toast -->
     <div id="cyber-toast" class="cyber-toast">
         <div class="cyber-toast-dot"></div>
         <span class="cyber-font text-sm md:text-base font-bold tracking-wider text-cyan-300">
@@ -945,16 +965,17 @@
                 </div>
                 <div class="cyber-action-group">
                     <div class="social-link-wrapper">
-                        <a id="link-fb" href="#" target="_blank" class="cyber-icon-btn" title="Facebook">
+                        <!-- 社群平台連結 (FB/IG/YT/TW) -->
+                        <a id="link-fb" href="#" target="_blank" class="cyber-icon-btn social-link-btn" title="Facebook">
                             <div class="btn-frame"></div><div class="btn-content">FB</div><div class="btn-dot"></div>
                         </a>
-                        <a id="link-ig" href="#" target="_blank" class="cyber-icon-btn" title="Instagram">
+                        <a id="link-ig" href="#" target="_blank" class="cyber-icon-btn social-link-btn" title="Instagram">
                             <div class="btn-frame"></div><div class="btn-content">IG</div><div class="btn-dot"></div>
                         </a>
-                        <a id="link-yt" href="#" target="_blank" class="cyber-icon-btn" title="YouTube">
+                        <a id="link-yt" href="#" target="_blank" class="cyber-icon-btn social-link-btn" title="YouTube">
                             <div class="btn-frame"></div><div class="btn-content">YT</div><div class="btn-dot"></div>
                         </a>
-                        <a id="link-tw" href="#" target="_blank" class="cyber-icon-btn" title="Twitch">
+                        <a id="link-tw" href="#" target="_blank" class="cyber-icon-btn social-link-btn" title="Twitch">
                             <div class="btn-frame"></div><div class="btn-content">TW</div><div class="btn-dot"></div>
                         </a>
                     </div>
@@ -1224,14 +1245,34 @@
             }, 2500);
         }
 
-        // 點擊空連結行為 (href="#", href="javascript:void(0)", href="")
+        // 判斷連結是否為空或無效連結
+        function isEmptyLink(href) {
+            if (!href) return true;
+            const cleaned = href.trim();
+            return (
+                cleaned === '' ||
+                cleaned === '#' ||
+                cleaned.startsWith('javascript:void(0)') ||
+                cleaned.startsWith('javascript:;')
+            );
+        }
+
+        // 全局點擊事件處理（包含社群按鈕空連結提示【該主播無此社群平台~】）
         document.addEventListener('click', function(e) {
             const link = e.target.closest('a');
             if (link) {
                 const href = link.getAttribute('href');
-                if (!href || href === '#' || href === 'javascript:void(0)' || href === 'javascript:void(0);' || href.trim() === '') {
+                
+                // 檢查點擊對象是否為詳情彈窗內的四個社群平台按鈕
+                const isSocialBtn = link.classList.contains('social-link-btn') || link.closest('.social-link-wrapper');
+
+                if (isEmptyLink(href)) {
                     e.preventDefault();
-                    showNotice('該頁面尚在建置中，敬請期待！');
+                    if (isSocialBtn) {
+                        showNotice('該主播無此社群平台~');
+                    } else {
+                        showNotice('該頁面尚在建置中，敬請期待！');
+                    }
                 }
             }
         });
@@ -1348,12 +1389,31 @@
             document.getElementById('female-pct').innerText = t.femalePct + '%';
             document.getElementById('modal-age-dist').innerText = t.ageDist;
 
+            // 綁定社群平台連結 (socialLinks) 並判斷是否為空
             const links = t.socialLinks || { fb: "#", ig: "#", yt: "#", tw: "#" };
-            document.getElementById('link-fb').href = links.fb || "#";
-            document.getElementById('link-ig').href = links.ig || "#";
-            document.getElementById('link-yt').href = links.yt || "#";
-            document.getElementById('link-tw').href = links.tw || "#";
+            const socialMap = [
+                { id: 'link-fb', url: links.fb },
+                { id: 'link-ig', url: links.ig },
+                { id: 'link-yt', url: links.yt },
+                { id: 'link-tw', url: links.tw }
+            ];
 
+            socialMap.forEach(item => {
+                const el = document.getElementById(item.id);
+                if (el) {
+                    const validUrl = item.url && item.url.trim() !== '' ? item.url : '#';
+                    el.href = validUrl;
+                    
+                    // 若無有效網址，加上 class is-empty 提供暗化樣式
+                    if (isEmptyLink(validUrl)) {
+                        el.classList.add('is-empty');
+                    } else {
+                        el.classList.remove('is-empty');
+                    }
+                }
+            });
+
+            // 照片輪播器設置
             const photoList = t.gallery || [t.img, t.img, t.img];
             for(let i=0; i<3; i++) {
                 const imgEl = document.getElementById(`photo-${i}`);
@@ -1365,6 +1425,7 @@
                 }
             }
 
+            // 標籤雲
             const tagContainer = document.getElementById('modal-hashtags');
             tagContainer.innerHTML = '';
             t.hashtags.forEach(tag => {
@@ -1410,6 +1471,7 @@
             if(el) window.scrollTo({ top: el.offsetTop - 50, behavior: 'smooth' });
         }
 
+        // 主播陣容面板滑鼠拖拽滾動
         const talentScrollContainer = document.getElementById('talent-scroll-container');
         let tIsDown = false, tStartX, tScrollLeft;
         talentScrollContainer.addEventListener('mousedown', (e) => {
