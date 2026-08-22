@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>小馬娛樂 | 品牌特色 BRAND IMAGE</title>
+    <link rel="icon" type="image/png" href="https://xiaomasales-creator.github.io/sales/presentation/homepage/LOGO_ICON.png">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Noto+Sans+TC:wght@300;500;700;900&display=swap" rel="stylesheet">
     <style>
@@ -411,6 +413,14 @@
     <div class="dots-overlay"></div>
     <div class="grid-overlay"></div>
     <div class="scanline"></div>
+
+    <!-- 網頁建置中 提示彈窗 Toast -->
+    <div id="cyber-toast" class="cyber-toast">
+        <div class="cyber-toast-dot"></div>
+        <span class="cyber-font text-sm md:text-base font-bold tracking-wider text-cyan-300">
+            該頁面尚在建置中，敬請期待！
+        </span>
+    </div>
     
     <!-- 背景裝飾文字 -->
     <div class="floating-deco outlined" style="bottom: 15%; right: -2%;">XIAOMA</div>
@@ -631,6 +641,54 @@
                 document.body.classList.remove('screen-shake');
             }, 500);
         }
+        let toastTimer = null;
+        function showNotice(msg) {
+            const toast = document.getElementById('cyber-toast');
+            if (!toast) return;
+            if (msg) {
+                toast.querySelector('span').innerText = msg;
+            } else {
+                toast.querySelector('span').innerText = '該頁面尚在建置中，敬請期待！';
+            }
+            toast.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+
+        // 判斷連結是否為空或無效連結
+        function isEmptyLink(href) {
+            if (!href) return true;
+            const cleaned = href.trim();
+            return (
+                cleaned === '' ||
+                cleaned === '#' ||
+                cleaned.startsWith('javascript:void(0)') ||
+                cleaned.startsWith('javascript:;')
+            );
+        }
+
+        // 全局點擊事件處理
+        document.addEventListener('click', function(e) {
+            const link = e.target.closest('a');
+            if (link) {
+                const href = link.getAttribute('href');
+                
+                // 檢查點擊對象是否為詳情彈窗內的四個社群平台按鈕
+                const isSocialBtn = link.classList.contains('social-link-btn') || !!link.closest('.social-link-wrapper');
+
+                if (isEmptyLink(href)) {
+                    e.preventDefault();
+                    if (isSocialBtn) {
+                        // 若為未填寫的空連結，點擊時不會跳轉頁面，也不會跳出任何提示文字
+                        return;
+                    } else {
+                        showNotice('該頁面尚在建置中，敬請期待！');
+                    }
+                }
+            }
+        });
     </script>
 </body>
 </html>
