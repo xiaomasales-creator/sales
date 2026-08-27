@@ -406,16 +406,6 @@
                 }
             });
         });
-
-        const mobileLink = document.getElementById('mobile-twitch-link');
-        if (mobileLink) {
-            mobileLink.addEventListener('click', function(e) {
-                if (this.getAttribute('href') === '#') {
-                    e.preventDefault();
-                    showToast();
-                }
-            });
-        }
     </script>
 
 </body>
