@@ -182,14 +182,20 @@
             50% { opacity: 0.4; transform: scale(0.8); }
         }
 
-        /* 櫥窗 Showcase 卡片設計 */
+        /* 櫥窗 Showcase 卡片設計 (恢復水平並排與原比例) */
         .showcase-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-            max-width: 1000px;
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 30px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px 60px 20px;
+        }
+
+        @media (min-width: 768px) {
+            .showcase-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
 
         .showcase-card {
@@ -201,10 +207,12 @@
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
         }
 
         .showcase-card:hover {
-            transform: translateY(-8px) scale(1.01);
+            transform: translateY(-8px) scale(1.02);
             border-color: var(--secondary-neon);
             box-shadow: 0 15px 35px rgba(0, 243, 255, 0.25), 0 0 15px rgba(188, 19, 254, 0.4);
         }
@@ -212,7 +220,7 @@
         .showcase-img-wrapper {
             position: relative;
             width: 100%;
-            aspect-ratio: 4 / 3;
+            aspect-ratio: 16 / 9;
             overflow: hidden;
         }
 
@@ -243,10 +251,14 @@
 
         .showcase-content {
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
         }
 
         .showcase-title {
-            font-size: 1.35rem;
+            font-size: 1.2rem;
             font-weight: 700;
             color: #fff;
             margin-bottom: 8px;
@@ -258,7 +270,7 @@
         }
 
         .showcase-desc {
-            font-size: 0.95rem;
+            font-size: 0.88rem;
             color: rgba(255, 255, 255, 0.6);
             line-height: 1.5;
             margin-bottom: 15px;
@@ -272,6 +284,7 @@
             font-size: 0.85rem;
             font-weight: 700;
             letter-spacing: 0.1em;
+            margin-top: auto;
         }
 
         /* 彈窗 Modal 樣式 */
