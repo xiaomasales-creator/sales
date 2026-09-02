@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>小馬娛樂 | 服務流程 Service Process</title>
+    <title>小馬娛樂 | 經典案例 Classic Cases</title>
     <link rel="icon" type="image/png" href="https://xiaomasales-creator.github.io/sales/presentation/homepage/LOGO_ICON.png">
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -68,8 +68,8 @@
         /* 掃描線樣式 */
         .scanline {
             width: 100%;
-            height: 4px; /* 增加高度使其可見 */
-            z-index: 999; /* 提高層級 */
+            height: 4px;
+            z-index: 999;
             background: linear-gradient(to bottom, 
                 transparent, 
                 rgba(0, 243, 255, 0.15) 50%, 
@@ -79,7 +79,7 @@
             box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
             position: fixed;
             pointer-events: none;
-            animation: scanline 6s linear infinite; /* 稍微加快速度 */
+            animation: scanline 6s linear infinite;
         }
 
         @keyframes scanline {
@@ -104,14 +104,6 @@
             color: transparent;
             -webkit-text-stroke: 1px var(--secondary-neon);
             opacity: 0.1;
-        }
-
-        /* 滿版容器與邊界裝飾 */
-        .s-path-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 40px 40px 80px 40px;
-            position: relative;
         }
 
         /* 頁首樣式強化 */
@@ -188,6 +180,275 @@
         @keyframes pulse-dot {
             0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.4; transform: scale(0.8); }
+        }
+
+        /* 櫥窗 Showcase 卡片設計 */
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px 60px 40px;
+        }
+
+        .showcase-card {
+            position: relative;
+            background: rgba(15, 15, 25, 0.8);
+            border: 1px solid rgba(134, 0, 255, 0.3);
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+        }
+
+        .showcase-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--secondary-neon);
+            box-shadow: 0 15px 35px rgba(0, 243, 255, 0.25), 0 0 15px rgba(188, 19, 254, 0.4);
+        }
+
+        .showcase-img-wrapper {
+            position: relative;
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .showcase-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .showcase-card:hover .showcase-img-wrapper img {
+            transform: scale(1.1);
+        }
+
+        .showcase-tag {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(5, 5, 8, 0.85);
+            border: 1px solid var(--neon-purple);
+            color: var(--secondary-neon);
+            padding: 4px 10px;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            border-radius: 2px;
+            backdrop-filter: blur(5px);
+        }
+
+        .showcase-content {
+            padding: 20px;
+        }
+
+        .showcase-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+            transition: color 0.3s;
+        }
+
+        .showcase-card:hover .showcase-title {
+            color: var(--secondary-neon);
+        }
+
+        .showcase-desc {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .showcase-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--secondary-neon);
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+        }
+
+        /* 彈窗 Modal 樣式 */
+        .cyber-modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(3, 3, 8, 0.85);
+            backdrop-filter: blur(15px);
+            z-index: 2500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .cyber-modal-backdrop.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .cyber-modal {
+            background: rgba(10, 10, 18, 0.95);
+            border: 1px solid var(--neon-purple);
+            box-shadow: 0 0 50px rgba(134, 0, 255, 0.4), inset 0 0 20px rgba(0, 243, 255, 0.1);
+            border-radius: 8px;
+            width: 100%;
+            max-width: 900px;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            transform: scale(0.9) translateY(20px);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            padding: 35px;
+        }
+
+        .cyber-modal-backdrop.open .cyber-modal {
+            transform: scale(1) translateY(0);
+        }
+
+        /* Modal 關閉按鈕 */
+        .modal-close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 36px;
+            height: 36px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .modal-close-btn:hover {
+            border-color: var(--neon-red);
+            color: var(--neon-red);
+            box-shadow: 0 0 15px var(--neon-red);
+            transform: rotate(90deg);
+        }
+
+        /* 區域標題通用樣式 */
+        .modal-section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--secondary-neon);
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 243, 255, 0.2);
+            padding-bottom: 8px;
+        }
+
+        /* 區域 1：KOL 圓形頭像外框設計 (基於頭像外框設計.jpg) */
+        .avatar-ring-container {
+            position: relative;
+            width: 90px;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px auto;
+        }
+
+        /* 內外賽博光環效果 */
+        .avatar-outer-ring {
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            border: 2px solid var(--secondary-neon);
+            box-shadow: 0 0 12px var(--secondary-neon);
+            animation: ring-pulse 3s infinite ease-in-out;
+        }
+
+        .avatar-inner-ring {
+            position: absolute;
+            inset: -10px;
+            border-radius: 50%;
+            border: 1px dashed var(--neon-purple);
+            opacity: 0.6;
+        }
+
+        @keyframes ring-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; box-shadow: 0 0 20px var(--secondary-neon); }
+        }
+
+        .avatar-img-box {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            position: relative;
+            z-index: 2;
+            border: 2px solid #fff;
+        }
+
+        .avatar-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* 區域 2：內容介紹與圖片外框樣式預設 */
+        .modal-intro-img {
+            width: 100%;
+            max-height: 380px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid rgba(134, 0, 255, 0.4);
+            box-shadow: 0 0 20px rgba(134, 0, 255, 0.2);
+            margin: 15px 0;
+            position: relative;
+            clip-path: polygon(0 0, 98% 0, 100% 5%, 100% 100%, 2% 100%, 0 95%);
+        }
+
+        /* 區域 3：照片牆 Photo Grid */
+        .photo-wall-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 15px;
+        }
+
+        .photo-wall-item {
+            position: relative;
+            aspect-ratio: 4/3;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.03);
+            transition: all 0.3s ease;
+        }
+
+        .photo-wall-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease, filter 0.4s ease;
+            filter: brightness(0.85);
+        }
+
+        .photo-wall-item:hover img {
+            transform: scale(1.1);
+            filter: brightness(1.1);
+        }
+
+        .photo-wall-item:hover {
+            border-color: var(--secondary-neon);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
         }
 
         /* 控制面板設計 */
@@ -325,9 +586,7 @@
             border-left: 2px solid var(--secondary-neon);
             padding-left: 18px;
         }
-
     </style>
-
 </head>
 
 <body>
@@ -347,8 +606,8 @@
     <!-- 背景裝飾文字 -->
     <div class="floating-deco outlined" style="bottom: 15%; right: -2%;">XIAOMA</div>
 
-    <!-- 標頭區域 -->
-    <header class="site-header w-full pt-20 pb-16 overflow-hidden">
+    <!-- 品牌特色標頭 (嚴格採用「品牌特色標頭」語法並更新內容) -->
+    <header class="site-header w-full pt-20 pb-12 overflow-hidden mb-8">
         <div class="max-w-[1400px] mx-auto px-10 flex flex-col items-start relative">
             <div class="flex items-center gap-3 mb-4">
                 <div class="deco-block w-[10px] h-[10px] bg-[#bc13fe] animate-pulse"></div>
@@ -357,24 +616,141 @@
             
             <div class="flex flex-col mb-4">
                 <div class="flex items-end gap-6 mb-2">
-                    <h1 class="text-5xl md:text-7xl font-black italic tracking-tighter leading-none">服務流程</h1>
+                    <h1 class="text-5xl md:text-7xl font-black italic tracking-tighter leading-none" id="page-title">經典案例</h1>
                     <!-- 語言切換按鈕 -->
                     <div class="flex gap-2 mb-1">
                         <button onclick="switchLang('ch')" id="btn-ch" class="lang-btn active">CH</button>
                         <button onclick="switchLang('en')" id="btn-en" class="lang-btn">EN</button>
                     </div>
                 </div>
-                <span class="cyber-font text-xl md:text-3xl font-black text-white/10 uppercase italic tracking-widest leading-none">SERVICE_PROCESS</span>
+                <span class="cyber-font text-xl md:text-3xl font-black text-white/10 uppercase italic tracking-widest leading-none" id="page-subtitle">CLASSIC_CASES</span>
             </div>
-            
-            <div class="w-[60px] h-[4px] bg-gradient-to-r from-[#bc13fe] to-[#00d2ff]"></div>
-        </div>
     </header>
 
-    <main class="" id="">
+    <!-- 主要內容區域 Main Area -->
+    <main>
+        <!-- 經典案例櫥窗 (Showcase Grid) -->
+        <section class="showcase-grid">
+
+            <!-- 商案 1 -->
+            <div class="showcase-card" onclick="openModal(1)">
+                <div class="showcase-img-wrapper">
+                    <!-- 案例封面照片網址 -->
+                    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80" alt="3C旗艦電競手機宣傳企劃">
+                    <div class="showcase-tag cyber-font">3C / HARDWARE</div>
+                </div>
+                <div class="showcase-content">
+                    <h3 class="showcase-title" id="card-title-1">3C 旗艦電競手機宣傳企劃</h3>
+                    <p class="showcase-desc" id="card-desc-1">攜手頂級遊戲實況主進行極限效能實測與實況開箱，創造百萬次曝光與高互動迴響。</p>
+                    <div class="showcase-btn cyber-font">
+                        <span>VIEW_DETAILS</span>
+                        <span>→</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 商案 2 -->
+            <div class="showcase-card" onclick="openModal(2)">
+                <div class="showcase-img-wrapper">
+                    <!-- 案例封面照片網址 -->
+                    <img src="https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80" alt="賽博魔幻MMO手遊上市發布">
+                    <div class="showcase-tag cyber-font">GAME / MOBILE</div>
+                </div>
+                <div class="showcase-content">
+                    <h3 class="showcase-title" id="card-title-2">賽博魔幻 MMO 手遊上市發布</h3>
+                    <p class="showcase-desc" id="card-desc-2">集結 8 位小馬專屬人氣 KOL 組隊連線直播，首週即創下遊戲下載量排行第一佳績。</p>
+                    <div class="showcase-btn cyber-font">
+                        <span>VIEW_DETAILS</span>
+                        <span>→</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 商案 3 -->
+            <div class="showcase-card" onclick="openModal(3)">
+                <div class="showcase-img-wrapper">
+                    <!-- 案例封面照片網址 -->
+                    <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80" alt="跨國電競周邊品牌線下體驗會">
+                    <div class="showcase-tag cyber-font">EVENT / OFFLINE</div>
+                </div>
+                <div class="showcase-content">
+                    <h3 class="showcase-title" id="card-title-3">跨國電競周邊品牌線下體驗會</h3>
+                    <p class="showcase-desc" id="card-desc-3">結合線上實況直播與線下粉絲見面會，達成線上線下雙向聲量爆發與品牌轉化。</p>
+                    <div class="showcase-btn cyber-font">
+                        <span>VIEW_DETAILS</span>
+                        <span>→</span>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- 詳情彈窗 Modal -->
+        <div id="case-modal" class="cyber-modal-backdrop" onclick="closeModalOnBackdrop(event)">
+            <div class="cyber-modal">
+                <!-- 關閉按鈕 -->
+                <button class="modal-close-btn" onclick="closeModal()">✕</button>
+
+                <!-- 彈窗標頭 -->
+                <div class="mb-6">
+                    <span class="cyber-font text-xs text-cyan-400 tracking-widest uppercase block mb-1" id="modal-category">CASE_STUDY</span>
+                    <h2 class="text-2xl md:text-3xl font-black text-white" id="modal-title">案例名稱</h2>
+                </div>
+
+                <!-- 彈窗第一區：參與該商案的 KOL -->
+                <div class="mb-8">
+                    <div class="modal-section-title cyber-font">
+                        <span>// 01. PARTICIPATING_KOL</span>
+                    </div>
+                    <div class="flex flex-wrap items-center justify-center sm:justify-start gap-8 py-2" id="modal-kol-list">
+                        <!-- KOL 項目範例（由 JavaScript 動態填入或直接替換） -->
+                    </div>
+                </div>
+
+                <!-- 彈窗第二區：內容介紹 -->
+                <div class="mb-8">
+                    <div class="modal-section-title cyber-font">
+                        <span>// 02. CONTENT_INTRODUCTION</span>
+                    </div>
+                    
+                    <!-- 內容介紹文字與圖片置入區 -->
+                    <div id="modal-intro-container" class="text-gray-300 leading-relaxed text-sm md:text-base space-y-4">
+                        <!-- ======================================================== -->
+                        <!-- [語法位置標記：可在下方標籤內自由新增文稿段落及圖片 HTML] -->
+                        <!-- ======================================================== -->
+                        
+                        <p id="modal-intro-p1">
+                            本專案由小馬娛樂團隊全權統籌規劃，結合遊戲特色與 KOL 個人風格，量身打造專屬直播腳本與動態素材。
+                        </p>
+                        
+                        <!-- 預設圖片位置 (搭配 pre-designed 外框樣式 .modal-intro-img) -->
+                        <img id="modal-intro-img" class="modal-intro-img" src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1000&q=80" alt="專案執行畫面">
+                        
+                        <p id="modal-intro-p2">
+                            透過精準的人群輪廓定位與社群擴散策略，活動期間總觀看時數突破 500,000 分鐘，相關貼文轉載互動率高達 18.5%，成功建立高黏著度的粉絲迴響。
+                        </p>
+                        
+                        <!-- ======================================================== -->
+                        <!-- [語法位置標記結束] -->
+                        <!-- ======================================================== -->
+                    </div>
+                </div>
+
+                <!-- 彈窗第三區：照片牆 -->
+                <div>
+                    <div class="modal-section-title cyber-font">
+                        <span>// 03. PHOTO_GALLERY</span>
+                    </div>
+                    <div class="photo-wall-grid" id="modal-photo-wall">
+                        <!-- 照片牆圖片預留網址區 (由 JS 動態更新或手動填入) -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </main>
-    
-    <!-- 控制面板 -->
+
+    <!-- 底部控制面板 (嚴格採用「控制面板設計」) -->
     <nav class="control-panel">
         <div class="panel-container cyber-font">
             <div class="nav-item">
@@ -391,7 +767,7 @@
                 </div>
             </div>
             <div class="nav-item">
-                <div class="panel-btn" onclick="scrollToSection('talents')">網紅經紀</div>
+                <div class="panel-btn">網紅經紀</div>
                 <div class="energy-bar"></div>
                 <div class="submenu">
                     <div class="submenu-inner">
@@ -402,7 +778,7 @@
                 </div>
             </div>
             <div class="nav-item">
-                <div class="panel-btn" onclick="scrollToSection('gallery')">活動花絮</div>
+                <div class="panel-btn">活動花絮</div>
                 <div class="energy-bar"></div>
                 <div class="submenu">
                     <div class="submenu-inner">
@@ -435,9 +811,181 @@
             </div>
         </div>
     </nav>
-    
+
+    <!-- JS 邏輯處理 -->
     <script>
+        let currentLang = 'ch';
         let toastTimer = null;
+
+        // 案例資料庫 (支援雙語與動態彈窗填入)
+        const caseData = {
+            1: {
+                category: "3C / HARDWARE",
+                title: { ch: "3C 旗艦電競手機宣傳企劃", en: "Flagship Gaming Phone Promo Project" },
+                desc: { 
+                    ch: "攜手頂級遊戲實況主進行極限效能實測與實況開箱，創造百萬次曝光與高互動迴響。", 
+                    en: "Partnered with top game streamers for extreme performance testing and unboxing live streams, achieving over 1M impressions." 
+                },
+                kols: [
+                    { name: "小馬哥 Xiaoma", avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80" },
+                    { name: "狂暴阿傑 Jay", avatar: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=200&q=80" },
+                    { name: "霓虹愛莉 Ally", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80" }
+                ],
+                introImg: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1000&q=80",
+                introText1: {
+                    ch: "本專案針對旗下最新旗艦電競手機，安排 3 位小馬獨家簽約 KOL 於 Twitch 與 YouTube 平台進行為期 2 週的實況開箱與遊戲幀率極限測試。",
+                    en: "This project features 3 exclusive Xiaoma KOLs conducting live unboxings and frame-rate stress tests for the flagship gaming phone over two weeks on Twitch and YouTube."
+                },
+                introText2: {
+                    ch: "直播期間同時進行專屬優惠碼發放，即時帶動品牌官網導流與預購高峰，達成品牌推廣與銷售轉換雙贏成果。",
+                    en: "Exclusive promo codes were released during the stream, driving immediate traffic to the store and resulting in a peak for pre-orders."
+                },
+                photos: [
+                    "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=500&q=80",
+                    "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=500&q=80",
+                    "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=500&q=80",
+                    "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=500&q=80"
+                ]
+            },
+            2: {
+                category: "GAME / MOBILE",
+                title: { ch: "賽博魔幻 MMO 手遊上市發布", en: "Cyber Fantasy MMO Mobile Game Launch" },
+                desc: { 
+                    ch: "集結 8 位小馬專屬人氣 KOL 組隊連線直播，首週即創下遊戲下載量排行第一佳績。", 
+                    en: "Assembled 8 popularity KOLs for team live-streaming, securing top download rank in the first week." 
+                },
+                kols: [
+                    { name: "電競少女 Ivy", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80" },
+                    { name: "戰術大師 Ray", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80" }
+                ],
+                introImg: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=1000&q=80",
+                introText1: {
+                    ch: "為搭配年度重磅 MMO 手遊上市，小馬娛樂規劃跨頻道「王牌公會開戰」企劃，由主播帶領玩家一同組隊攻城。",
+                    en: "To celebrate the launch of the blockbuster MMO mobile game, Xiaoma planned a cross-channel guild war event with streamers leading players."
+                },
+                introText2: {
+                    ch: "透過多視角同時聯播，大幅增加遊戲話題聲量，遊戲上市首日即登上 iOS 與 Android 免費下載榜冠軍。",
+                    en: "Simultaneous multi-angle broadcasts greatly amplified game buzz, taking #1 spot on iOS and Android free charts on day one."
+                },
+                photos: [
+                    "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=500&q=80",
+                    "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=500&q=80",
+                    "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=500&q=80"
+                ]
+            },
+            3: {
+                category: "EVENT / OFFLINE",
+                title: { ch: "跨國電競周邊品牌線下體驗會", en: "Global Esports Gear Offline Expo" },
+                desc: { 
+                    ch: "結合線上實況直播與線下粉絲見面會，達成線上線下雙向聲量爆發與品牌轉化。", 
+                    en: "Combined online live stream with offline fan meetups for double exposure and high engagement." 
+                },
+                kols: [
+                    { name: "小馬哥 Xiaoma", avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80" },
+                    { name: "霓虹愛莉 Ally", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80" }
+                ],
+                introImg: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1000&q=80",
+                introText1: {
+                    ch: "小馬娛樂協助國際電競品牌於台北三創舉行實體旗艦館體驗會，現場邀請人氣 KOL 進行一日店長活動。",
+                    en: "Xiaoma managed the offline flagship experience event for an international esports brand, featuring popular KOLs as store managers for a day."
+                },
+                introText2: {
+                    ch: "當天吸引超過上千名玩家現場參與，同步搭配線上直播打卡抽獎，社群曝光觸及人次打破該品牌年度紀錄。",
+                    en: "Attracted over 1,000 players on-site while live streaming social check-in raffles, breaking the brand's annual record in reach."
+                },
+                photos: [
+                    "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=500&q=80",
+                    "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=500&q=80"
+                ]
+            }
+        };
+
+        // 開啟彈窗
+        function openModal(id) {
+            const data = caseData[id];
+            if (!data) return;
+
+            // 類別與標題
+            document.getElementById('modal-category').innerText = data.category;
+            document.getElementById('modal-title').innerText = data.title[currentLang];
+
+            // 區域 1：KOL 清單渲染 (圓形頭像外框設計)
+            const kolListContainer = document.getElementById('modal-kol-list');
+            kolListContainer.innerHTML = '';
+            data.kols.forEach(kol => {
+                const kolHtml = `
+                    <div class="flex flex-col items-center">
+                        <div class="avatar-ring-container">
+                            <div class="avatar-outer-ring"></div>
+                            <div class="avatar-inner-ring"></div>
+                            <div class="avatar-img-box">
+                                <img src="${kol.avatar}" alt="${kol.name}">
+                            </div>
+                        </div>
+                        <span class="cyber-font text-xs font-bold text-gray-200 mt-1 tracking-wider">${kol.name}</span>
+                    </div>
+                `;
+                kolListContainer.insertAdjacentHTML('beforeend', kolHtml);
+            });
+
+            // 區域 2：內容介紹
+            document.getElementById('modal-intro-p1').innerText = data.introText1[currentLang];
+            document.getElementById('modal-intro-p2').innerText = data.introText2[currentLang];
+            document.getElementById('modal-intro-img').src = data.introImg;
+
+            // 區域 3：照片牆渲染 (預留插入圖片網址位置)
+            const photoWallContainer = document.getElementById('modal-photo-wall');
+            photoWallContainer.innerHTML = '';
+            data.photos.forEach(imgUrl => {
+                const photoHtml = `
+                    <div class="photo-wall-item">
+                        <img src="${imgUrl}" alt="案例花絮">
+                    </div>
+                `;
+                photoWallContainer.insertAdjacentHTML('beforeend', photoHtml);
+            });
+
+            // 顯示 Modal
+            document.getElementById('case-modal').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // 關閉彈窗
+        function closeModal() {
+            document.getElementById('case-modal').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        function closeModalOnBackdrop(e) {
+            if (e.target.id === 'case-modal') {
+                closeModal();
+            }
+        }
+
+        // 切換中英文
+        function switchLang(lang) {
+            currentLang = lang;
+            document.getElementById('btn-ch').classList.toggle('active', lang === 'ch');
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+
+            if (lang === 'ch') {
+                document.getElementById('page-title').innerText = "經典案例";
+                document.getElementById('page-subtitle').innerText = "CLASSIC_CASES";
+                document.getElementById('lang-tip').innerText = "Click to View in English";
+            } else {
+                document.getElementById('page-title').innerText = "Classic Cases";
+                document.getElementById('page-subtitle').innerText = "CLASSIC_CASES";
+                document.getElementById('lang-tip').innerText = "點擊切換為中文閱讀";
+            }
+
+            // 更新 Showcase 卡片雙語
+            for (let i = 1; i <= 3; i++) {
+                if (caseData[i]) {
+                    document.getElementById(`card-title-${i}`).innerText = caseData[i].title[lang];
+                    document.getElementById(`card-desc-${i}`).innerText = caseData[i].desc[lang];
+                }
+            }
+        }
 
         // 觸發建置中彈窗 Toast
         function showNotice(msg) {
@@ -474,33 +1022,6 @@
                 }
             }
         });
-        
-        const langData = {
-            ch: {
-                1: { title: "" },
-                2: { title: "" }
-            },
-            en: {
-                1: { title: "" },
-                2: { title: "" }
-            }
-        };
-
-        function switchLang(lang) {
-            document.getElementById('btn-ch').classList.toggle('active', lang === 'ch');
-            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
-            const currentData = langData[lang];
-            for (let i = 1; i <= 10; i++) {
-                const titleEl = document.getElementById(`title-${i}`);
-                if (titleEl) {
-                    titleEl.innerText = currentData[i].title;
-                }
-                const descEl = document.getElementById(`desc-${i}`);
-                if (descEl && currentData[i].desc) {
-                    descEl.innerText = currentData[i].desc;
-                }
-            }
-        }
     </script>
 </body>
 </html>
