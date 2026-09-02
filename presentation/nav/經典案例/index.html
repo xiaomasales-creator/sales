@@ -184,12 +184,12 @@
 
         /* 櫥窗 Showcase 卡片設計 */
         .showcase-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-            max-width: 1400px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            max-width: 1000px;
             margin: 0 auto;
-            padding: 0 40px 60px 40px;
+            padding: 0 20px 60px 20px;
         }
 
         .showcase-card {
@@ -204,7 +204,7 @@
         }
 
         .showcase-card:hover {
-            transform: translateY(-10px) scale(1.02);
+            transform: translateY(-8px) scale(1.01);
             border-color: var(--secondary-neon);
             box-shadow: 0 15px 35px rgba(0, 243, 255, 0.25), 0 0 15px rgba(188, 19, 254, 0.4);
         }
@@ -212,7 +212,7 @@
         .showcase-img-wrapper {
             position: relative;
             width: 100%;
-            height: 220px;
+            aspect-ratio: 4 / 3;
             overflow: hidden;
         }
 
@@ -405,15 +405,34 @@
 
         /* 區域 2：內容介紹與圖片外框樣式預設 */
         .modal-intro-img {
-            width: 100%;
-            max-height: 380px;
+            width: 70%;
+            max-height: 480px;
             object-fit: cover;
             border-radius: 6px;
             border: 1px solid rgba(134, 0, 255, 0.4);
             box-shadow: 0 0 20px rgba(134, 0, 255, 0.2);
-            margin: 15px 0;
+            margin: 20px auto;
+            display: block;
             position: relative;
             clip-path: polygon(0 0, 98% 0, 100% 5%, 100% 100%, 2% 100%, 0 95%);
+        }
+
+        /* 區域 3：照片牆 Photo Grid */
+        .photo-wall-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 15px;
+        }
+
+        .photo-wall-item {
+            position: relative;
+            aspect-ratio: 4/3;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.03);
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         /* 區域 3：照片牆 Photo Grid */
@@ -627,6 +646,7 @@
             </div>
             
             <div class="w-[60px] h-[4px] bg-gradient-to-r from-[#bc13fe] to-[#00d2ff] mb-4"></div>
+            <span class="cyber-font text-[10px] text-white/30 tracking-[0.2em] uppercase" id="lang-tip">Click to View in English</span>
         </div>
     </header>
 
@@ -718,6 +738,10 @@
                     
                     <!-- 內容介紹文字與圖片置入區 -->
                     <div id="modal-intro-container" class="text-gray-300 leading-relaxed text-sm md:text-base space-y-4">
+                        <!-- ======================================================== -->
+                        <!-- [語法位置標記：可在下方標籤內自由新增文稿段落及圖片 HTML] -->
+                        <!-- ======================================================== -->
+                        
                         <p id="modal-intro-p1">
                             本專案由小馬娛樂團隊全權統籌規劃，結合遊戲特色與 KOL 個人風格，量身打造專屬直播腳本與動態素材。
                         </p>
@@ -728,6 +752,10 @@
                         <p id="modal-intro-p2">
                             透過精準的人群輪廓定位與社群擴散策略，活動期間總觀看時數突破 500,000 分鐘，相關貼文轉載互動率高達 18.5%，成功建立高黏著度的粉絲迴響。
                         </p>
+                        
+                        <!-- ======================================================== -->
+                        <!-- [語法位置標記結束] -->
+                        <!-- ======================================================== -->
                     </div>
                 </div>
 
@@ -741,6 +769,14 @@
                     </div>
                 </div>
 
+            </div>
+        </div>
+
+        <!-- 原圖照片檢視彈窗 Lightbox Modal -->
+        <div id="lightbox-modal" class="cyber-modal-backdrop" style="z-index: 3000;" onclick="closeLightboxOnBackdrop(event)">
+            <div class="relative max-w-[92vw] max-h-[92vh] flex items-center justify-center">
+                <button class="modal-close-btn" style="top: -45px; right: 0;" onclick="closeLightbox()">✕</button>
+                <img id="lightbox-img" src="" alt="原圖照片" class="max-w-full max-h-[82vh] object-contain border-2 border-cyan-400 rounded-md shadow-[0_0_35px_rgba(0,243,255,0.4)]">
             </div>
         </div>
     </main>
@@ -917,23 +953,26 @@
                                 <img src="${kol.avatar}" alt="${kol.name}">
                             </div>
                         </div>
-                        <span class="cyber-font text-xs font-bold text-gray-200 mt-1 tracking-wider">${kol.name}</span>
+                        <span class="text-xs font-bold text-gray-300 mt-1">${kol.name}</span>
                     </div>
                 `;
                 kolListContainer.insertAdjacentHTML('beforeend', kolHtml);
             });
 
-            // 區域 2：內容介紹
-            document.getElementById('modal-intro-p1').innerText = data.introText1[currentLang];
-            document.getElementById('modal-intro-p2').innerText = data.introText2[currentLang];
-            document.getElementById('modal-intro-img').src = data.introImg;
+            // 區域 2：內容介紹與圖片更新
+            const p1 = document.getElementById('modal-intro-p1');
+            if (p1) p1.innerText = data.introText1[currentLang];
+            const img = document.getElementById('modal-intro-img');
+            if (img) img.src = data.introImg;
+            const p2 = document.getElementById('modal-intro-p2');
+            if (p2) p2.innerText = data.introText2[currentLang];
 
-            // 區域 3：照片牆渲染 (預留插入圖片網址位置)
+            // 區域 3：照片牆渲染 (點擊觸發原圖彈窗)
             const photoWallContainer = document.getElementById('modal-photo-wall');
             photoWallContainer.innerHTML = '';
             data.photos.forEach(imgUrl => {
                 const photoHtml = `
-                    <div class="photo-wall-item">
+                    <div class="photo-wall-item" onclick="openLightbox('${imgUrl}')">
                         <img src="${imgUrl}" alt="案例花絮">
                     </div>
                 `;
@@ -957,6 +996,25 @@
             }
         }
 
+        // 開啟照片原圖彈窗 Lightbox
+        function openLightbox(imgSrc) {
+            const lightboxModal = document.getElementById('lightbox-modal');
+            const lightboxImg = document.getElementById('lightbox-img');
+            lightboxImg.src = imgSrc;
+            lightboxModal.classList.add('open');
+        }
+
+        // 關閉照片原圖彈窗 Lightbox
+        function closeLightbox() {
+            document.getElementById('lightbox-modal').classList.remove('open');
+        }
+
+        function closeLightboxOnBackdrop(e) {
+            if (e.target.id === 'lightbox-modal') {
+                closeLightbox();
+            }
+        }
+
         // 切換中英文
         function switchLang(lang) {
             currentLang = lang;
@@ -966,9 +1024,11 @@
             if (lang === 'ch') {
                 document.getElementById('page-title').innerText = "經典案例";
                 document.getElementById('page-subtitle').innerText = "CLASSIC_CASES";
+                document.getElementById('lang-tip').innerText = "Click to View in English";
             } else {
-                document.getElementById('page-title').innerText = "經典案例";
+                document.getElementById('page-title').innerText = "Classic Cases";
                 document.getElementById('page-subtitle').innerText = "CLASSIC_CASES";
+                document.getElementById('lang-tip').innerText = "點擊切換為中文閱讀";
             }
 
             // 更新 Showcase 卡片雙語
