@@ -351,33 +351,40 @@
                 </div>
             </div>
 
-            <!-- Category 3: 短影音 (直式 9:16) -->
+             <!-- Category 3: 短影音 (直式 9:16) [點擊以新頁籤開啟連結] -->
             <div class="mb-20">
                 <div class="category-label">
                     <h3 class="text-[#bc13fe] font-bold text-sm tracking-widest uppercase">短影音 / SHORT_VIDEO_CONTENT</h3>
                     <div class="category-line"></div>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                    <div class="case-card aspect-video-vertical">
+                    <!-- 短影音案例 1 -->
+                    <a href="#" target="_blank" rel="noopener noreferrer" class="case-card aspect-video-vertical">
                         <img src="https://xiaomasales-creator.github.io/sales/presentation/nav/主播陣容/個人頁面/jian/1-9.png" alt="《天龍八部2》">
                         <div class="case-overlay-vertical"></div>
                         <div class="case-info"><span class="case-title">《天龍八部2》</span></div>
-                    </div>
-                    <div class="case-card aspect-video-vertical">
+                    </a>
+
+                    <!-- 短影音案例 2 -->
+                    <a href="#" target="_blank" rel="noopener noreferrer" class="case-card aspect-video-vertical">
                         <img src="https://xiaomasales-creator.github.io/sales/presentation/nav/主播陣容/個人頁面/jian/1-10.png" alt="ROG Phone 7 Ultimate">
                         <div class="case-overlay-vertical"></div>
                         <div class="case-info"><span class="case-title">ROG Phone 7 Ultimate</span></div>
-                    </div>
-                    <div class="case-card aspect-video-vertical">
+                    </a>
+
+                    <!-- 短影音案例 3 -->
+                    <a href="#" target="_blank" rel="noopener noreferrer" class="case-card aspect-video-vertical">
                         <img src="https://xiaomasales-creator.github.io/sales/presentation/nav/主播陣容/個人頁面/jian/1-11.png" alt="《蛋仔派對》">
                         <div class="case-overlay-vertical"></div>
                         <div class="case-info"><span class="case-title">《蛋仔派對》</span></div>
-                    </div>
-                    <div class="case-card aspect-video-vertical">
+                    </a>
+
+                    <!-- 短影音案例 4 -->
+                    <a href="#" target="_blank" rel="noopener noreferrer" class="case-card aspect-video-vertical">
                         <img src="https://xiaomasales-creator.github.io/sales/presentation/nav/主播陣容/個人頁面/jian/1-12.png" alt="《燕雲十六聲》">
                         <div class="case-overlay-vertical"></div>
                         <div class="case-info"><span class="case-title">《燕雲十六聲》</span></div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </section>
@@ -406,6 +413,19 @@
                 }
             });
         });
+
+        // 短影音卡片空連結提示
+        const shortVideoLinks = document.querySelectorAll('a.case-card');
+        shortVideoLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href === '#') {
+                    e.preventDefault();
+                    showToast('連結尚未設定');
+                }
+            });
+        });
+
     </script>
 
 </body>
