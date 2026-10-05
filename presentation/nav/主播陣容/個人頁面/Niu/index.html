@@ -1,291 +1,4 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>牛牛妹 Niu</title>
-    <link rel="icon" type="image/png" href="https://xiaomasales-creator.github.io/sales/presentation/homepage/LOGO_ICON.png">
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Noto+Sans+TC:wght@300;500;700;900&family=Inter:wght@700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary-neon: #8600ff;
-            --secondary-neon: #00f3ff;
-            --neon-purple: #bc13fe;
-            --bg-dark: #050508;
-            
-            /* 平台品牌色 */
-            --twitch-brand: #a970ff;
-            --youtube-brand: #ff0000;
-            --facebook-brand: #1877F2;
-            --instagram-brand: #E1306C;
-
-            /* 邊框專用漸層 */
-            --twitch-border: linear-gradient(135deg, rgba(134, 0, 255, 0.95), rgba(60, 0, 120, 0.9));
-            --youtube-border: linear-gradient(135deg, rgba(230, 0, 0, 0.95), rgba(120, 0, 0, 0.9));
-            --facebook-border: linear-gradient(135deg, rgba(24, 119, 242, 0.9), rgba(0, 243, 255, 0.8));
-            --instagram-border: linear-gradient(135deg, rgba(225, 48, 108, 0.9), rgba(255, 126, 95, 0.8));
-        }
-
-        body {
-            background-color: var(--bg-dark);
-            color: #fff;
-            font-family: 'Noto Sans TC', sans-serif;
-            margin: 0;
-            overflow-x: hidden;
-            letter-spacing: 0.05em;
-        }
-
-        .cyber-font { font-family: 'Orbitron', sans-serif; }
-
-        /* 背景設計 */
-        .bg-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: 
-                radial-gradient(circle at 2px 2px, rgba(134, 0, 255, 0.05) 1px, transparent 0);
-            background-size: 40px 40px;
-            z-index: -2;
-        }
-
-        /* 提示文字樣式 */
-        #toast-msg {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(134, 0, 255, 0.2);
-            backdrop-filter: blur(15px);
-            border: 1px solid var(--secondary-neon);
-            color: var(--secondary-neon);
-            padding: 15px 40px;
-            border-radius: 4px;
-            font-weight: 900;
-            letter-spacing: 5px;
-            z-index: 10000;
-            box-shadow: 0 0 30px rgba(0, 243, 255, 0.4);
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        #toast-msg.show {
-            opacity: 1;
-            transform: translate(-50%, -60%);
-        }
-
-        /* 頭像區塊 */
-        .header-avatar-container {
-            position: relative;
-            width: 280px;
-            height: 280px;
-            flex-shrink: 0;
-        }
-        .avatar-glow {
-            position: absolute;
-            inset: -5px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--neon-purple) 0%, var(--secondary-neon) 100%);
-            filter: blur(20px);
-            opacity: 0.6;
-        }
-        .avatar-circle {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            border: 2px solid rgba(0, 243, 255, 0.5);
-            overflow: hidden;
-            z-index: 2;
-            background: #111;
-        }
-        .avatar-circle img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* 數據卡片 */
-        .stat-card {
-            padding: 24px;
-            position: relative;
-            border-radius: 16px;
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            backdrop-filter: blur(30px) saturate(180%);
-            -webkit-backdrop-filter: blur(30px) saturate(180%);
-            min-height: 220px;
-            display: flex;
-            flex-direction: column;
-            border: 1px solid transparent;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-        }
-        
-        .stat-card.twitch { background: linear-gradient(rgba(10, 5, 20, 0.7), rgba(5, 5, 10, 0.85)) padding-box, var(--twitch-border) border-box; }
-        .stat-card.youtube { background: linear-gradient(rgba(20, 5, 5, 0.7), rgba(10, 5, 5, 0.85)) padding-box, var(--youtube-border) border-box; }
-        .stat-card.facebook { background: linear-gradient(rgba(10, 15, 30, 0.7), rgba(5, 5, 10, 0.85)) padding-box, var(--facebook-border) border-box; }
-        .stat-card.instagram { background: linear-gradient(rgba(30, 10, 20, 0.7), rgba(10, 5, 5, 0.85)) padding-box, var(--instagram-border) border-box; }
-
-        .stat-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-            filter: brightness(1.1);
-        }
-
-        .stat-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            font-size: 12px;
-        }
-        .stat-val { font-family: 'Inter', sans-serif; font-weight: 800; color: #FFFFFF; font-size: 14px; }
-        .stat-label { color: rgba(255, 255, 255, 0.6); }
-
-        /* 作品展示區塊樣式 */
-        .case-card {
-            position: relative;
-            overflow: hidden;
-            border-radius: 8px;
-            cursor: pointer;
-            border: 1px solid rgba(255,255,255,0.1);
-            background: #111;
-        }
-        
-        .aspect-video-horizontal { aspect-ratio: 16 / 9; }
-        .aspect-video-vertical { aspect-ratio: 9 / 16; }
-
-        .case-card img {
-            width: 100%; height: 100%; object-fit: cover;
-            transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
-            filter: brightness(0.9);
-        }
-        .case-card:hover img { transform: scale(1.1); filter: brightness(1); }
-        
-        .case-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(30, 0, 60, 0.9) 0%, rgba(60, 0, 120, 0.6) 20%, rgba(60, 0, 120, 0) 45%);
-            pointer-events: none;
-        }
-        .case-overlay-vertical {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(30, 0, 60, 0.95) 0%, rgba(60, 0, 120, 0.7) 12%, rgba(60, 0, 120, 0) 25%);
-            pointer-events: none;
-        }
-        
-        .case-info { position: absolute; bottom: 14px; left: 16px; right: 16px; z-index: 5; }
-        .case-title { color: white; font-weight: 700; font-size: 0.85rem; text-shadow: 0 1px 3px rgba(0,0,0,0.8); letter-spacing: 0.05em; }
-
-        .category-label { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
-        .category-line { height: 1px; flex-grow: 1; background: linear-gradient(to right, var(--neon-purple), transparent); }
-    </style>
-</head>
-<body>
-
-    <div class="bg-overlay"></div>
-
-    <!-- 浮動提示元件 -->
-    <div id="toast-msg" class="cyber-font">無社群連結</div>
-
-    <div class="container mx-auto px-6 py-16 max-w-7xl">
-        
-        <!-- Header 區塊 -->
-        <header class="flex flex-col md:flex-row items-center gap-12 mb-20 lg:px-10">
-            <div class="header-avatar-container">
-                <div class="avatar-glow"></div>
-                <div class="avatar-circle">
-                    <img src="https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/4-0.png" alt="牛牛妹">
-                </div>
-            </div>
-            
-            <div class="flex-grow text-center md:text-left">
-                <span class="cyber-font text-sm tracking-[0.4em] text-[#00f3ff] mb-2 block font-bold">Xiao-ma Talents</span>
-                <h1 class="text-7xl md:text-8xl font-black italic tracking-tighter mb-4 leading-none uppercase">牛牛妹 Niu</h1>
-                <div class="flex flex-wrap justify-center md:justify-start gap-3 mb-6">
-                    <span class="px-3 py-1 border border-cyan-500/50 rounded-full text-[10px] text-cyan-400 font-bold">#MMORPG</span>
-                    <span class="px-3 py-1 border border-cyan-500/50 rounded-full text-[10px] text-cyan-400 font-bold">#MOBA</span>
-                    <span class="px-3 py-1 border border-cyan-500/50 rounded-full text-[10px] text-cyan-400 font-bold">#社群紅人/Reels</span>
-                    <span class="px-3 py-1 border border-cyan-500/50 rounded-full text-[10px] text-cyan-400 font-bold">#跳舞/Dancing</span>
-                    <span class="px-3 py-1 border border-cyan-500/50 rounded-full text-[10px] text-cyan-400 font-bold">#主持站台/Hosting</span>
-                </div>
-                <p class="text-white/80 text-lg leading-relaxed max-w-2xl font-light">
-                    牛牛妹目前主要經營Twitch實況、FB及IG粉專。除了遊戲相關商案，也接洽過3C和保養品業配，商案合作經驗相當豐富。用心經營粉絲與社群，具有強大號召力，能吸引粉絲共同參與線下活動。
-                </p>
-            </div>
-        </header>
-
-        <!-- 數據統計區塊 -->
-        <section class="mb-24 lg:px-10">
-            <div class="flex items-center gap-3 mb-10">
-                <div class="w-1.5 h-6 bg-[#00f3ff]"></div>
-                <h2 class="cyber-font text-lg tracking-widest uppercase font-bold">Platform_Statistics</h2>
-            </div>
-            
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Twitch -->
-                <a href="https://www.twitch.tv/NIU0716" target="_blank" class="stat-card twitch">
-                    <div class="flex items-center gap-3 mb-6">
-                        <i class="fab fa-twitch text-2xl" style="color: var(--twitch-brand);"></i>
-                        <span class="cyber-font text-[12px] font-bold tracking-wider">TWITCH</span>
-                    </div>
-                    <div class="space-y-0.5">
-                        <div class="stat-row"><span class="stat-label">追隨人數</span><span class="stat-val">77,000</span></div>
-                        <div class="stat-row"><span class="stat-label">月平均Live觀看次數</span><span class="stat-val">225,000</span></div>
-                        <div class="stat-row"><span class="stat-label">月平均同上人數</span><span class="stat-val">550</span></div>
-                        <div class="stat-row"><span class="stat-label">月最高同上人數</span><span class="stat-val">1,700</span></div>
-                    </div>
-                </a>
-
-                <!-- Youtube -->
-                <a href="https://pse.is/4f42rp" target="_blank" class="stat-card youtube">
-                    <div class="flex items-center gap-3 mb-6">
-                        <i class="fab fa-youtube text-2xl" style="color: var(--youtube-brand);"></i>
-                        <span class="cyber-font text-[12px] font-bold tracking-wider">YOUTUBE</span>
-                    </div>
-                    <div class="space-y-0.5">
-                        <div class="stat-row"><span class="stat-label">訂閱人數</span><span class="stat-val">6,300</span></div>
-                        <div class="stat-row"><span class="stat-label">月平均總觀看次數</span><span class="stat-val">11,000</span></div>
-                        <div class="stat-row"><span class="stat-label">近期平均觀看次數</span><span class="stat-val">2,000</span></div>
-                        <div class="stat-row"><span class="stat-label">近期最高觀看次數</span><span class="stat-val">6,500</span></div>
-                    </div>
-                </a>
-
-                <!-- Facebook -->
-                <a href="https://www.facebook.com/NIU860716" target="_blank" class="stat-card facebook">
-                    <div class="flex items-center gap-3 mb-6">
-                        <i class="fab fa-facebook text-2xl" style="color: var(--facebook-brand);"></i>
-                        <span class="cyber-font text-[12px] font-bold tracking-wider">FACEBOOK</span>
-                    </div>
-                    <div class="space-y-0.5">
-                        <div class="stat-row"><span class="stat-label">粉絲追蹤人數</span><span class="stat-val">181,000</span></div>
-                        <div class="stat-row"><span class="stat-label">月平均總瀏覽次數</span><span class="stat-val">420,000</span></div>
-                        <div class="stat-row"><span class="stat-label">貼文平均觸及人數</span><span class="stat-val">20,000</span></div>
-                        <div class="stat-row"><span class="stat-label">Reels平均觀看次數</span><span class="stat-val">15,000</span></div>
-                    </div>
-                </a>
-
-                <!-- Instagram -->
-                <a href="https://www.instagram.com/niu860716/" target="_blank" class="stat-card instagram">
-                    <div class="flex items-center gap-3 mb-6">
-                        <i class="fab fa-instagram text-2xl" style="color: var(--instagram-brand);"></i>
-                        <span class="cyber-font text-[12px] font-bold tracking-wider">INSTAGRAM</span>
-                    </div>
-                    <div class="space-y-0.5">
-                        <div class="stat-row"><span class="stat-label">粉絲追蹤人數</span><span class="stat-val">171,000</span></div>
-                        <div class="stat-row"><span class="stat-label">月平均總瀏覽次數</span><span class="stat-val">640,000</span></div>
-                        <div class="stat-row"><span class="stat-label">貼文平均觸及人數</span><span class="stat-val">40,000</span></div>
-                        <div class="stat-row"><span class="stat-label">Reels平均觀看次數</span><span class="stat-val">15,000</span></div>
-                    </div>
-                </a>
-            </div>
-        </section>
-
-        <!-- 作品展示區塊 (Business Showcase) -->
+<!-- 作品展示區塊 (Business Showcase) -->
         <section class="mb-32 lg:px-10">
             <div class="flex items-center gap-3 mb-12">
                 <div class="w-1.5 h-6 bg-[#bc13fe]"></div>
@@ -299,22 +12,22 @@
                     <div class="category-line"></div>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                    <div class="case-card aspect-video-horizontal">
+                    <div class="case-card aspect-video-horizontal" onclick="openImageModal('https://xiaomasales-creator.github.io/sales/presentation/nav/主播陣容/個人頁面/Niu/4-1.jpg', '《嘎嘎特攻》')">
                         <img src="https://xiaomasales-creator.github.io/sales/presentation/nav/主播陣容/個人頁面/Niu/4-1.jpg" alt="《嘎嘎特攻》">
                         <div class="case-overlay"></div>
                         <div class="case-info"><span class="case-title">《嘎嘎特攻》</span></div>
                     </div>
-                    <div class="case-card aspect-video-horizontal">
+                    <div class="case-card aspect-video-horizontal" onclick="openImageModal('https://xiaomasales-creator.github.io/sales/presentation/nav/主播陣容/個人頁面/Niu/4-2.png', '《逆水寒》')">
                         <img src="https://xiaomasales-creator.github.io/sales/presentation/nav/主播陣容/個人頁面/Niu/4-2.png" alt="《逆水寒》">
                         <div class="case-overlay"></div>
                         <div class="case-info"><span class="case-title">《逆水寒》</span></div>
                     </div>
-                    <div class="case-card aspect-video-horizontal">
+                    <div class="case-card aspect-video-horizontal" onclick="openImageModal('https://xiaomasales-creator.github.io/sales/presentation/nav/主播陣容/個人頁面/Niu/4-3.jpg', '《RO仙境傳說：世界之旅》')">
                         <img src="https://xiaomasales-creator.github.io/sales/presentation/nav/主播陣容/個人頁面/Niu/4-3.jpg" alt="《RO仙境傳說：世界之旅》">
                         <div class="case-overlay"></div>
                         <div class="case-info"><span class="case-title">《RO仙境傳說：世界之旅》</span></div>
                     </div>
-                    <div class="case-card aspect-video-horizontal">
+                    <div class="case-card aspect-video-horizontal" onclick="openImageModal('https://xiaomasales-creator.github.io/sales/presentation/nav/主播陣容/個人頁面/Niu/4-4.jpg', '《天堂M》')">
                         <img src="https://xiaomasales-creator.github.io/sales/presentation/nav/主播陣容/個人頁面/Niu/4-4.jpg" alt="《天堂M》">
                         <div class="case-overlay"></div>
                         <div class="case-info"><span class="case-title">《天堂M》</span></div>
@@ -329,22 +42,22 @@
                     <div class="category-line"></div>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                    <div class="case-card aspect-video-horizontal">
+                    <div class="case-card aspect-video-horizontal" onclick="openImageModal('https://xiaomasales-creator.github.io/sales/presentation/nav/主播陣容/個人頁面/Niu/4-5.jpg', 'Intel Gamer Days 活動出席')">
                         <img src="https://xiaomasales-creator.github.io/sales/presentation/nav/主播陣容/個人頁面/Niu/4-5.jpg" alt="Intel Gamer Days 活動出席">
                         <div class="case-overlay"></div>
                         <div class="case-info"><span class="case-title">Intel Gamer Days 活動出席</span></div>
                     </div>
-                    <div class="case-card aspect-video-horizontal">
+                    <div class="case-card aspect-video-horizontal" onclick="openImageModal('https://xiaomasales-creator.github.io/sales/presentation/nav/主播陣容/個人頁面/Niu/4-6.jpg', '漫博 藍色星原 攤位活動')">
                         <img src="https://xiaomasales-creator.github.io/sales/presentation/nav/主播陣容/個人頁面/Niu/4-6.jpg" alt="漫博 藍色星原 攤位活動">
                         <div class="case-overlay"></div>
                         <div class="case-info"><span class="case-title">漫博 藍色星原 攤位活動</span></div>
                     </div>
-                    <div class="case-card aspect-video-horizontal">
+                    <div class="case-card aspect-video-horizontal" onclick="openImageModal('https://xiaomasales-creator.github.io/sales/presentation/nav/主播陣容/個人頁面/Niu/4-7.jpg', '漫博 Razer 一日店長')">
                         <img src="https://xiaomasales-creator.github.io/sales/presentation/nav/主播陣容/個人頁面/Niu/4-7.jpg" alt="漫博 Razer 一日店長">
                         <div class="case-overlay"></div>
                         <div class="case-info"><span class="case-title">漫博 Razer 一日店長</span></div>
                     </div>
-                    <div class="case-card aspect-video-horizontal">
+                    <div class="case-card aspect-video-horizontal" onclick="openImageModal('https://xiaomasales-creator.github.io/sales/presentation/nav/主播陣容/個人頁面/Niu/4-8.jpg', '六都電競 高雄財政局 攤位出席')">
                         <img src="https://xiaomasales-creator.github.io/sales/presentation/nav/主播陣容/個人頁面/Niu/4-8.jpg" alt="六都電競 高雄財政局 攤位出席">
                         <div class="case-overlay"></div>
                         <div class="case-info"><span class="case-title">六都電競 高雄財政局 攤位出席</span></div>
@@ -352,46 +65,78 @@
                 </div>
             </div>
 
-            <!-- Category 3: 短影音 (直式 9:16) -->
+             <!-- Category 3: 短影音 (直式 9:16) [點擊以新頁籤開啟連結] -->
             <div class="mb-20">
                 <div class="category-label">
                     <h3 class="text-[#bc13fe] font-bold text-sm tracking-widest uppercase">短影音 / SHORT_VIDEO_CONTENT</h3>
                     <div class="category-line"></div>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                    <div class="case-card aspect-video-vertical">
+                    <!-- 短影音案例 1 -->
+                    <a href="#" target="_blank" rel="noopener noreferrer" class="case-card aspect-video-vertical">
                         <img src="https://xiaomasales-creator.github.io/sales/presentation/nav/主播陣容/個人頁面/Niu/4-9.png" alt="《RO仙境傳說》玩家見面會">
                         <div class="case-overlay-vertical"></div>
                         <div class="case-info"><span class="case-title">《RO仙境傳說》玩家見面會</span></div>
-                    </div>
-                    <div class="case-card aspect-video-vertical">
+                    </a>
+
+                    <!-- 短影音案例 2 -->
+                    <a href="#" target="_blank" rel="noopener noreferrer" class="case-card aspect-video-vertical">
                         <img src="https://xiaomasales-creator.github.io/sales/presentation/nav/主播陣容/個人頁面/Niu/4-10.png" alt="《咻咻史萊姆》創意短片">
                         <div class="case-overlay-vertical"></div>
-                        <div class="case-info"><span class="case-title">手遊代言宣傳 Reels</span></div>
-                    </div>
-                    <div class="case-card aspect-video-vertical">
+                        <div class="case-info"><span class="case-title">《咻咻史萊姆》創意短片</span></div>
+                    </a>
+
+                    <!-- 短影音案例 3 -->
+                    <a href="#" target="_blank" rel="noopener noreferrer" class="case-card aspect-video-vertical">
                         <img src="https://xiaomasales-creator.github.io/sales/presentation/nav/主播陣容/個人頁面/Niu/4-11.png" alt="綜藝OK啦 x《失落的方舟》">
                         <div class="case-overlay-vertical"></div>
                         <div class="case-info"><span class="case-title">綜藝OK啦 x《失落的方舟》</span></div>
-                    </div>
-                    <div class="case-card aspect-video-vertical">
+                    </a>
+
+                    <!-- 短影音案例 4 -->
+                    <a href="#" target="_blank" rel="noopener noreferrer" class="case-card aspect-video-vertical">
                         <img src="https://xiaomasales-creator.github.io/sales/presentation/nav/主播陣容/個人頁面/Niu/4-12.png" alt="《玩星派對》創意短片">
                         <div class="case-overlay-vertical"></div>
                         <div class="case-info"><span class="case-title">《玩星派對》創意短片</span></div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </section>
 
-    </div>
+                <!-- 圖片大圖預覽彈窗 (Image Lightbox Modal) -->
+                <div id="image-modal" class="fixed inset-0 z-[2000] hidden flex items-center justify-center p-4 sm:p-8 bg-black/80 backdrop-blur-md transition-opacity duration-300 opacity-0 pointer-events-none">
+                <div class="relative max-w-5xl w-full bg-[#0a0a10] border border-[#00f3ff]/40 rounded-xl p-3 sm:p-5 shadow-[0_0_50px_rgba(0,243,255,0.25)] transform scale-95 transition-transform duration-300" id="modal-container">
+                
+                <!-- 關閉按鈕 -->
+                <button onclick="closeImageModal()" class="absolute -top-3 -right-3 sm:-top-4 sm:-right-4 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#111] border border-[#00f3ff] text-[#00f3ff] flex items-center justify-center hover:bg-[#00f3ff] hover:text-black transition-all duration-200 z-10 shadow-[0_0_15px_rgba(0,243,255,0.4)] cursor-pointer" title="關閉">
+                    <i class="fas fa-times text-lg"></i>
+                </button>
+                
+                <!-- 圖片顯示區 -->
+                <div class="relative overflow-hidden rounded-lg bg-black/60 flex items-center justify-center max-h-[75vh]">
+                    <img id="modal-img" src="" alt="" class="max-w-full max-h-[70vh] object-contain rounded shadow-lg">
+                </div>
+                
+                <!-- 標題與裝飾標籤 -->
+                <div class="mt-4 px-2 flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <div class="w-2 h-2 bg-[#00f3ff] animate-ping"></div>
+                        <span id="modal-title" class="cyber-font text-[#00f3ff] font-bold text-sm sm:text-base tracking-wider"></span>
+                    </div>
+                    <span class="cyber-font text-white/30 text-[10px] tracking-widest uppercase hidden sm:inline-block">XIAOMA_SHOWCASE</span>
+                </div>
+            </div>
+        </div>
 
-    <script>
+<script>
+        // 1. Toast 提示訊息邏輯
         const statCards = document.querySelectorAll('.stat-card');
         const toast = document.getElementById('toast-msg');
         let toastTimeout;
 
-        function showToast() {
+        function showToast(msg) {
             clearTimeout(toastTimeout);
+            if (msg) toast.innerText = msg;
             toast.classList.add('show');
             toastTimeout = setTimeout(() => {
                 toast.classList.remove('show');
@@ -403,11 +148,67 @@
                 const href = this.getAttribute('href');
                 if (!href || href === '#' || href === 'javascript:void(0)') {
                     e.preventDefault();
-                    showToast();
+                    showToast('無社群連結');
                 }
             });
         });
-    </script>
 
-</body>
-</html>
+        // 2. 短影音卡片空連結提示
+        const shortVideoLinks = document.querySelectorAll('a.case-card');
+        shortVideoLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href === '#') {
+                    e.preventDefault();
+                    showToast('連結尚未設定');
+                }
+            });
+        });
+
+        // 3. 圖片大圖彈窗邏輯
+        const imageModal = document.getElementById('image-modal');
+        const modalContainer = document.getElementById('modal-container');
+        const modalImg = document.getElementById('modal-img');
+        const modalTitle = document.getElementById('modal-title');
+
+        function openImageModal(src, title) {
+            if (!imageModal || !modalImg) return;
+            modalImg.src = src;
+            modalImg.alt = title || '';
+            modalTitle.innerText = title || '';
+            
+            imageModal.classList.remove('hidden');
+            setTimeout(() => {
+                imageModal.classList.remove('opacity-0', 'pointer-events-none');
+                modalContainer.classList.remove('scale-95');
+                modalContainer.classList.add('scale-100');
+            }, 10);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeImageModal() {
+            if (!imageModal) return;
+            imageModal.classList.add('opacity-0', 'pointer-events-none');
+            modalContainer.classList.remove('scale-100');
+            modalContainer.classList.add('scale-95');
+            setTimeout(() => {
+                imageModal.classList.add('hidden');
+                modalImg.src = '';
+                document.body.style.overflow = '';
+            }, 300);
+        }
+
+        // 點擊背景空白處關閉彈窗
+        imageModal?.addEventListener('click', function(e) {
+            if (e.target === imageModal) {
+                closeImageModal();
+            }
+        });
+
+        // 按 ESC 鍵關閉彈窗
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeImageModal();
+            }
+        });
+    </script>
