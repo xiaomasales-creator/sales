@@ -1026,12 +1026,32 @@
             });
 
             // 區域 2：內容介紹與圖片更新
-            const p1 = document.getElementById('modal-intro-p1');
-            if (p1) p1.innerText = data.introText1[currentLang];
             const img = document.getElementById('modal-intro-img');
             if (img) img.src = data.introImg;
+            
+            const p1 = document.getElementById('modal-intro-p1');
+            if (p1) p1.innerText = data.introText1[currentLang];
+            
             const p2 = document.getElementById('modal-intro-p2');
             if (p2) p2.innerText = data.introText2[currentLang];
+            
+            const p3 = document.getElementById('modal-intro-p3');
+            if (p3) p3.innerText = data.introText3[currentLang];
+            
+            const p4 = document.getElementById('modal-intro-p4');
+            if (p4) p4.innerText = data.introText4[currentLang];
+            
+            const p5 = document.getElementById('modal-intro-p5');
+            if (p5) p5.innerText = data.introText5[currentLang];
+            
+            const p6 = document.getElementById('modal-intro-p6');
+            if (p6) p6.innerText = data.introText6[currentLang];
+            
+            const p7 = document.getElementById('modal-intro-p7');
+            if (p7) p7.innerText = data.introText7[currentLang];
+            
+            const p8 = document.getElementById('modal-intro-p8');
+            if (p8) p8.innerText = data.introText8[currentLang];
 
             // 區域 3：照片牆渲染 (點擊觸發原圖彈窗)
             const photoWallContainer = document.getElementById('modal-photo-wall');
