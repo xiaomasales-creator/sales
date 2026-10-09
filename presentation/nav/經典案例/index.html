@@ -981,66 +981,70 @@
         };
 
         // 開啟彈窗
-        function openModal(id) {
-            const data = caseData[id];
-            if (!data) return;
+function openModal(id) {
+    const data = caseData[id];
+    if (!data) return;
 
-            // 類別與標題
-            document.getElementById('modal-category').innerText = data.category;
-            document.getElementById('modal-title').innerText = data.title[currentLang];
+    // 類別與標題
+    document.getElementById('modal-category').innerText = data.category;
+    document.getElementById('modal-title').innerText = data.title[currentLang];
 
-            // 區域 1：KOL 清單渲染 (圓形頭像外框設計)
-            const kolListContainer = document.getElementById('modal-kol-list');
-            kolListContainer.innerHTML = '';
-            data.kols.forEach(kol => {
-                const kolHtml = `
-                    <div class="flex flex-col items-center">
-                        <div class="avatar-ring-container">
-                            <div class="avatar-outer-ring"></div>
-                            <div class="avatar-inner-ring"></div>
-                            <div class="avatar-img-box">
-                                <img src="${kol.avatar}" alt="${kol.name}">
-                            </div>
-                        </div>
-                        <span class="text-xs font-bold text-gray-300 mt-1">${kol.name}</span>
+    // 區域 1：KOL 清單渲染 (圓形頭像外框設計)
+    const kolListContainer = document.getElementById('modal-kol-list');
+    kolListContainer.innerHTML = '';
+    data.kols.forEach(kol => {
+        const kolHtml = `
+            <div class="flex flex-col items-center">
+                <div class="avatar-ring-container">
+                    <div class="avatar-outer-ring"></div>
+                    <div class="avatar-inner-ring"></div>
+                    <div class="avatar-img-box">
+                        <img src="${kol.avatar}" alt="${kol.name}">
                     </div>
-                `;
-                kolListContainer.insertAdjacentHTML('beforeend', kolHtml);
-            });
+                </div>
+                <span class="text-xs font-bold text-gray-300 mt-1">${kol.name}</span>
+            </div>
+        `;
+        kolListContainer.insertAdjacentHTML('beforeend', kolHtml);
+    });
 
-            // 區域 2：內容介紹與圖片更新
-            const img = document.getElementById('modal-intro-img');
-            if (img) img.src = data.introImg || '';
-            
-            // 依序更新 1 ~ 8 段文字，若無資料則隱藏該 p 標籤
-            for (let i = 1; i <= 8; i++) {
-                const pEl = document.getElementById(`modal-intro-p${i}`);
-                if (pEl) {const textKey = `introText${i}`;
-                if (data[textKey] && data[textKey][currentLang]) {
-                    pEl.innerText = data[textKey][currentLang];
-                    pEl.style.display = 'block';
-                    } else {
-                    pEl.innerText = '';
-                    pEl.style.display = 'none'; // 無內容時自動隱藏}
-                    }
-                 }
-
-            // 區域 3：照片牆渲染 (點擊觸發原圖彈窗)
-            const photoWallContainer = document.getElementById('modal-photo-wall');
-            photoWallContainer.innerHTML = '';
-            data.photos.forEach(imgUrl => {
-                const photoHtml = `
-                    <div class="photo-wall-item" onclick="openLightbox('${imgUrl}')">
-                        <img src="${imgUrl}" alt="案例花絮">
-                    </div>
-                `;
-                photoWallContainer.insertAdjacentHTML('beforeend', photoHtml);
-            });
-
-            // 顯示 Modal
-            document.getElementById('case-modal').classList.add('open');
-            document.body.style.overflow = 'hidden';
+    // 區域 2：內容介紹與圖片更新
+    const img = document.getElementById('modal-intro-img');
+    if (img) img.src = data.introImg || '';
+    
+    // 依序更新 1 ~ 8 段文字，若無資料則隱藏該 p 標籤
+    for (let i = 1; i <= 8; i++) {
+        const pEl = document.getElementById(`modal-intro-p${i}`);
+        if (pEl) {
+            const textKey = `introText${i}`;
+            if (data[textKey] && data[textKey][currentLang]) {
+                pEl.innerText = data[textKey][currentLang];
+                pEl.style.display = 'block';
+            } else {
+                pEl.innerText = '';
+                pEl.style.display = 'none'; // 無內容時自動隱藏
+            }
         }
+    }
+
+    // 區域 3：照片牆渲染 (點擊觸發原圖彈窗)
+    const photoWallContainer = document.getElementById('modal-photo-wall');
+    photoWallContainer.innerHTML = '';
+    if (data.photos && data.photos.length > 0) {
+        data.photos.forEach(imgUrl => {
+            const photoHtml = `
+                <div class="photo-wall-item" onclick="openLightbox('${imgUrl}')">
+                    <img src="${imgUrl}" alt="案例花絮">
+                </div>
+            `;
+            photoWallContainer.insertAdjacentHTML('beforeend', photoHtml);
+        });
+    }
+
+    // 顯示 Modal
+    document.getElementById('case-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
 
         // 關閉彈窗
         function closeModal() {
