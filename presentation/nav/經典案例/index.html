@@ -991,74 +991,74 @@
         };
 
         // 開啟彈窗
-        function openModal(id) {
-            currentModalId = id;
-            const data = caseData[id];
-            if (!data) return;
+function openModal(id) {
+    currentModalId = id;
+    const data = caseData[id];
+    if (!data) return;
 
-            document.getElementById('modal-category').innerText = data.category;
-            document.getElementById('modal-title').innerText = data.title[currentLang];
+    document.getElementById('modal-category').innerText = data.category;
+    document.getElementById('modal-title').innerText = data.title[currentLang];
 
-            // 1. 參與 KOL
-            const kolListContainer = document.getElementById('modal-kol-list');
-            kolListContainer.innerHTML = '';
-            data.kols.forEach(kol => {
-                const kolHtml = `
-                    <div class="flex flex-col items-center">
-                        <div class="avatar-ring-container">
-                            <div class="avatar-outer-ring"></div>
-                            <div class="avatar-inner-ring"></div>
-                            <div class="avatar-img-box">
-                                <img src="${kol.avatar}" alt="${kol.name}">
-                            </div>
-                        </div>
-                        <span class="text-xs font-bold text-gray-300 mt-1">${kol.name}</span>
+    // 1. 參與 KOL
+    const kolListContainer = document.getElementById('modal-kol-list');
+    kolListContainer.innerHTML = '';
+    data.kols.forEach(kol => {
+        const kolHtml = `
+            <div class="flex flex-col items-center">
+                <div class="avatar-ring-container">
+                    <div class="avatar-outer-ring"></div>
+                    <div class="avatar-inner-ring"></div>
+                    <div class="avatar-img-box">
+                        <img src="${kol.avatar}" alt="${kol.name}">
                     </div>
-                `;
-                kolListContainer.insertAdjacentHTML('beforeend', kolHtml);
-            });
+                </div>
+                <span class="text-xs font-bold text-gray-300 mt-1">${kol.name}</span>
+            </div>
+        `;
+        kolListContainer.insertAdjacentHTML('beforeend', kolHtml);
+    });
 
-            // 2. 簡介與「段落標題」動態渲染
-            const img = document.getElementById('modal-intro-img');
-            if (img) img.src = data.introImg || '';
+    // 2. 簡介與「純文字段落標題」動態渲染
+    const img = document.getElementById('modal-intro-img');
+    if (img) img.src = data.introImg || '';
 
-            const introContainer = document.getElementById('modal-intro-container');
-            introContainer.innerHTML = '';
+    const introContainer = document.getElementById('modal-intro-container');
+    introContainer.innerHTML = '';
 
-            if (data.sections && data.sections.length > 0) {
-                data.sections.forEach((sec, idx) => {
-                    const blockHtml = `
-                        <div class="cyber-paragraph-block">
-                            <div class="cyber-paragraph-header cyber-font">
-                                <div class="head-indicator"></div>
-                                <span>0${idx + 1} // ${sec.heading[currentLang]}</span>
-                            </div>
-                            <div class="cyber-paragraph-body">
-                                ${sec.content[currentLang]}
-                            </div>
-                        </div>
-                    `;
-                    introContainer.insertAdjacentHTML('beforeend', blockHtml);
-                });
-            }
+    if (data.sections && data.sections.length > 0) {
+        data.sections.forEach((sec) => {
+            const blockHtml = `
+                <div class="cyber-paragraph-block">
+                    <div class="cyber-paragraph-header cyber-font">
+                        <div class="head-indicator"></div>
+                        <span>${sec.heading[currentLang]}</span>
+                    </div>
+                    <div class="cyber-paragraph-body">
+                        ${sec.content[currentLang]}
+                    </div>
+                </div>
+            `;
+            introContainer.insertAdjacentHTML('beforeend', blockHtml);
+        });
+    }
 
-            // 3. 照片牆
-            const photoWallContainer = document.getElementById('modal-photo-wall');
-            photoWallContainer.innerHTML = '';
-            if (data.photos && data.photos.length > 0) {
-                data.photos.forEach(imgUrl => {
-                    const photoHtml = `
-                        <div class="photo-wall-item" onclick="openLightbox('${imgUrl}')">
-                            <img src="${imgUrl}" alt="案例花絮">
-                        </div>
-                    `;
-                    photoWallContainer.insertAdjacentHTML('beforeend', photoHtml);
-                });
-            }
+    // 3. 照片牆
+    const photoWallContainer = document.getElementById('modal-photo-wall');
+    photoWallContainer.innerHTML = '';
+    if (data.photos && data.photos.length > 0) {
+        data.photos.forEach(imgUrl => {
+            const photoHtml = `
+                <div class="photo-wall-item" onclick="openLightbox('${imgUrl}')">
+                    <img src="${imgUrl}" alt="案例花絮">
+                </div>
+            `;
+            photoWallContainer.insertAdjacentHTML('beforeend', photoHtml);
+        });
+    }
 
-            document.getElementById('case-modal').classList.add('open');
-            document.body.style.overflow = 'hidden';
-        }
+    document.getElementById('case-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
 
         function closeModal() {
             document.getElementById('case-modal').classList.remove('open');
