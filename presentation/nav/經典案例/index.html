@@ -33,7 +33,7 @@
         .cyber-font { font-family: 'Orbitron', sans-serif; }
         .mono { font-family: 'Share Tech Mono', monospace; }
 
-        /* 背景網格 - 最底層 */
+        /* 4. 背景裝飾：背景網格 - 最底層 */
         .grid-overlay {
             position: fixed;
             inset: 0;
@@ -65,7 +65,7 @@
             opacity: 1;
         }
 
-        /* 掃描線樣式 */
+        /* 動態雷射掃描線樣式 */
         .scanline {
             width: 100%;
             height: 4px;
@@ -87,7 +87,7 @@
             100% { top: 110%; }
         }
 
-        /* 裝飾性幾何背景 */
+        /* 背景 XIAOMA 鏤空字裝飾 */
         .floating-deco {
             position: fixed;
             color: var(--primary-neon);
@@ -106,7 +106,7 @@
             opacity: 0.1;
         }
 
-        /* 頁首樣式強化 */
+        /* 1. 頁首樣式強化 */
         header.site-header {
             background: linear-gradient(to bottom, var(--bg-dark) 0%, var(--bg-dark) 70%, transparent 100%);
             position: relative;
@@ -366,7 +366,7 @@
             padding-bottom: 8px;
         }
 
-        /* 新增：賽博龐克內文「段落標題」樣式 */
+        /* 賽博龐克純文字「段落標題」樣式 */
         .cyber-paragraph-block {
             margin-bottom: 20px;
             background: rgba(255, 255, 255, 0.02);
@@ -504,7 +504,7 @@
             box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
         }
 
-        /* 控制面板設計 */
+        /* 3. 導覽列：控制面板設計 */
         .control-panel {
             position: fixed;
             bottom: 20px;
@@ -585,6 +585,7 @@
             width: 100%;
         }
 
+        /* 子選單樣式 */
         .submenu {
             position: absolute;
             bottom: 100%;
@@ -642,12 +643,12 @@
 </head>
 
 <body>
-    <!-- 視覺特效層 -->
+    <!-- 4. 視覺特效與背景裝飾層 -->
     <div class="dots-overlay"></div>
     <div class="grid-overlay"></div>
     <div class="scanline"></div>
 
-    <!-- 網頁建置中 提示彈窗 Toast -->
+    <!-- 建置中提示 Toast -->
     <div id="cyber-toast" class="cyber-toast">
         <div class="cyber-toast-dot"></div>
         <span class="cyber-font text-sm md:text-base font-bold tracking-wider text-cyan-300">
@@ -658,7 +659,7 @@
     <!-- 背景裝飾文字 -->
     <div class="floating-deco outlined" style="bottom: 15%; right: -2%;">XIAOMA</div>
 
-    <!-- 品牌特色標頭 -->
+    <!-- 1. 品牌特色標頭 -->
     <header class="site-header w-full pt-20 pb-12 overflow-hidden mb-8">
         <div class="max-w-[1400px] mx-auto px-10 flex flex-col items-start relative">
             <div class="flex items-center gap-3 mb-4">
@@ -669,7 +670,6 @@
             <div class="flex flex-col mb-4">
                 <div class="flex items-end gap-6 mb-2">
                     <h1 class="text-5xl md:text-7xl font-black italic tracking-tighter leading-none" id="page-title">經典案例</h1>
-                    <!-- 語言切換按鈕 -->
                     <div class="flex gap-2 mb-1">
                         <button onclick="switchLang('ch')" id="btn-ch" class="lang-btn active">CH</button>
                         <button onclick="switchLang('en')" id="btn-en" class="lang-btn">EN</button>
@@ -682,7 +682,7 @@
         </div>
     </header>
 
-    <!-- 主要內容區域 Main Area -->
+    <!-- 2. 主要內容區域 Main Area -->
     <main>
         <!-- 經典案例櫥窗 (Showcase Grid) -->
         <section class="showcase-grid">
@@ -756,7 +756,7 @@
                     <div class="flex flex-wrap items-center justify-center sm:justify-start gap-8 py-2" id="modal-kol-list"></div>
                 </div>
 
-                <!-- 彈窗第二區：內容介紹 (改寫為段落標題設計區) -->
+                <!-- 彈窗第二區：內容介紹 -->
                 <div class="mb-8">
                     <div class="modal-section-title cyber-font">
                         <span>INTRODUCTION // 商案簡介</span>
@@ -764,7 +764,7 @@
                     
                     <img id="modal-intro-img" class="modal-intro-img" src="" alt="專案執行畫面">
 
-                    <!-- 動態渲染的段落標題與內文容器 -->
+                    <!-- 動態渲染的純文字段落標題與內文容器 -->
                     <div id="modal-intro-container" class="space-y-4"></div>
                 </div>
 
@@ -788,7 +788,7 @@
         </div>
     </main>
 
-    <!-- 底部控制面板 -->
+    <!-- 3. 底部控制面板 -->
     <nav class="control-panel">
         <div class="panel-container cyber-font">
             <div class="nav-item">
@@ -850,20 +850,20 @@
         </div>
     </nav>
 
-    <!-- JS 邏輯處理 -->
+    <!-- JS 邏輯處理 (已全面防錯修復) -->
     <script>
         let currentLang = 'ch';
         let currentModalId = null;
         let toastTimer = null;
 
-        // 案例資料庫 (改寫支援「段落標題」結構)
+        // 案例資料庫
         const caseData = {
             1: {
                 category: "ONLINE EVENT",
                 title: { ch: "《吊人村2》小馬之夜", en: "《Town of Salem Ⅱ》XIAO MA Game Night" },
                 desc: { 
                     ch: "集結小馬娛樂旗下10位實況主，推出鬥智鬥勇的多人「狼人殺」主題企劃。", 
-                    en: "A thrilling "XIAO MA Game Night" themed campaign bringing together 10 featured streamers for a high-stakes, multi-player Werewolf showdown." 
+                    en: "A thrilling \"XIAO MA Game Night\" themed campaign bringing together 10 featured streamers for a high-stakes, multi-player Werewolf showdown." 
                 },
                 kols: [
                     { name: "狂暴小建 Jian", avatar: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/1-0.png" },
@@ -888,7 +888,7 @@
                         heading: { ch: "統包企劃完美還原滿桌局", en: "A Turnkey Campaign That Brought Back the Full-Lobby Vibe" },
                         content: {
                             ch: "打破傳統模式，推出客製化主題企劃「小馬之夜」。整合旗下10位實況主及部分外部夥伴，同時組局開播，將宣傳節目化。完美還原了狼人殺遊戲最精彩的「滿桌局」張力，掀起跨頻道討論熱潮。",
-                            en: "We flipped the script with "XIAO MA Game Night"—a custom event bringing together 10 streamers for one big live session. Instead of a typical sponsored stream, we turned it into a real show that captured all the fun of a full Werewolf lobby and got everyone talking across channels."
+                            en: "We flipped the script with \"XIAO MA Game Night\"—a custom event bringing together 10 streamers for one big live session. Instead of a typical sponsored stream, we turned it into a real show that captured all the fun of a full Werewolf lobby and got everyone talking across channels."
                         }
                     },
                     {
@@ -902,7 +902,7 @@
                         heading: { ch: "高爆發曝光，帶動實質轉化", en: "High-Impact Exposure That Actually Converts" },
                         content: {
                             ch: "「小馬之夜」成功在短時間內集中爆發話題聲量，實現高密度曝光。流暢的遊戲實況與極具張力的精彩博弈，有效帶動社群討論，成功將觀看熱度轉化為實質的遊戲下載與願望清單成長，是極具投報率的推廣案例參考。",
-                            en: ""XIAO MA Game Night" packed a ton of exposure into a short window. The fun gameplay and intense mind games got the community talking, successfully turning viewers into real game downloads and Steam Wishlist adds—a great high-ROI template for game promotions."
+                            en: "\"XIAO MA Game Night\" packed a ton of exposure into a short window. The fun gameplay and intense mind games got the community talking, successfully turning viewers into real game downloads and Steam Wishlist adds—a great high-ROI template for game promotions."
                         }
                     }
                 ],
@@ -991,75 +991,76 @@
         };
 
         // 開啟彈窗
-function openModal(id) {
-    currentModalId = id;
-    const data = caseData[id];
-    if (!data) return;
+        function openModal(id) {
+            currentModalId = id;
+            const data = caseData[id];
+            if (!data) return;
 
-    document.getElementById('modal-category').innerText = data.category;
-    document.getElementById('modal-title').innerText = data.title[currentLang];
+            document.getElementById('modal-category').innerText = data.category;
+            document.getElementById('modal-title').innerText = data.title[currentLang];
 
-    // 1. 參與 KOL
-    const kolListContainer = document.getElementById('modal-kol-list');
-    kolListContainer.innerHTML = '';
-    data.kols.forEach(kol => {
-        const kolHtml = `
-            <div class="flex flex-col items-center">
-                <div class="avatar-ring-container">
-                    <div class="avatar-outer-ring"></div>
-                    <div class="avatar-inner-ring"></div>
-                    <div class="avatar-img-box">
-                        <img src="${kol.avatar}" alt="${kol.name}">
+            // 1. 參與 KOL 渲染
+            const kolListContainer = document.getElementById('modal-kol-list');
+            kolListContainer.innerHTML = '';
+            data.kols.forEach(kol => {
+                const kolHtml = `
+                    <div class="flex flex-col items-center">
+                        <div class="avatar-ring-container">
+                            <div class="avatar-outer-ring"></div>
+                            <div class="avatar-inner-ring"></div>
+                            <div class="avatar-img-box">
+                                <img src="${kol.avatar}" alt="${kol.name}">
+                            </div>
+                        </div>
+                        <span class="text-xs font-bold text-gray-300 mt-1">${kol.name}</span>
                     </div>
-                </div>
-                <span class="text-xs font-bold text-gray-300 mt-1">${kol.name}</span>
-            </div>
-        `;
-        kolListContainer.insertAdjacentHTML('beforeend', kolHtml);
-    });
+                `;
+                kolListContainer.insertAdjacentHTML('beforeend', kolHtml);
+            });
 
-    // 2. 簡介與「純文字段落標題」動態渲染
-    const img = document.getElementById('modal-intro-img');
-    if (img) img.src = data.introImg || '';
+            // 2. 簡介與「純文字段落標題」動態渲染
+            const img = document.getElementById('modal-intro-img');
+            if (img) img.src = data.introImg || '';
 
-    const introContainer = document.getElementById('modal-intro-container');
-    introContainer.innerHTML = '';
+            const introContainer = document.getElementById('modal-intro-container');
+            introContainer.innerHTML = '';
 
-    if (data.sections && data.sections.length > 0) {
-        data.sections.forEach((sec) => {
-            const blockHtml = `
-                <div class="cyber-paragraph-block">
-                    <div class="cyber-paragraph-header cyber-font">
-                        <div class="head-indicator"></div>
-                        <span>${sec.heading[currentLang]}</span>
-                    </div>
-                    <div class="cyber-paragraph-body">
-                        ${sec.content[currentLang]}
-                    </div>
-                </div>
-            `;
-            introContainer.insertAdjacentHTML('beforeend', blockHtml);
-        });
-    }
+            if (data.sections && data.sections.length > 0) {
+                data.sections.forEach((sec) => {
+                    const blockHtml = `
+                        <div class="cyber-paragraph-block">
+                            <div class="cyber-paragraph-header cyber-font">
+                                <div class="head-indicator"></div>
+                                <span>${sec.heading[currentLang]}</span>
+                            </div>
+                            <div class="cyber-paragraph-body">
+                                ${sec.content[currentLang]}
+                            </div>
+                        </div>
+                    `;
+                    introContainer.insertAdjacentHTML('beforeend', blockHtml);
+                });
+            }
 
-    // 3. 照片牆
-    const photoWallContainer = document.getElementById('modal-photo-wall');
-    photoWallContainer.innerHTML = '';
-    if (data.photos && data.photos.length > 0) {
-        data.photos.forEach(imgUrl => {
-            const photoHtml = `
-                <div class="photo-wall-item" onclick="openLightbox('${imgUrl}')">
-                    <img src="${imgUrl}" alt="案例花絮">
-                </div>
-            `;
-            photoWallContainer.insertAdjacentHTML('beforeend', photoHtml);
-        });
-    }
+            // 3. 照片牆
+            const photoWallContainer = document.getElementById('modal-photo-wall');
+            photoWallContainer.innerHTML = '';
+            if (data.photos && data.photos.length > 0) {
+                data.photos.forEach(imgUrl => {
+                    const photoHtml = `
+                        <div class="photo-wall-item" onclick="openLightbox('${imgUrl}')">
+                            <img src="${imgUrl}" alt="案例花絮">
+                        </div>
+                    `;
+                    photoWallContainer.insertAdjacentHTML('beforeend', photoHtml);
+                });
+            }
 
-    document.getElementById('case-modal').classList.add('open');
-    document.body.style.overflow = 'hidden';
-}
+            document.getElementById('case-modal').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
 
+        // 關閉彈窗
         function closeModal() {
             document.getElementById('case-modal').classList.remove('open');
             document.body.style.overflow = '';
@@ -1071,6 +1072,7 @@ function openModal(id) {
             }
         }
 
+        // 開啟照片原圖彈窗 Lightbox
         function openLightbox(imgSrc) {
             const lightboxModal = document.getElementById('lightbox-modal');
             const lightboxImg = document.getElementById('lightbox-img');
@@ -1088,7 +1090,7 @@ function openModal(id) {
             }
         }
 
-        // 切換中英文 (同時重刷彈窗內的標題段落)
+        // 切換中英文 (同時重刷動態內容)
         function switchLang(lang) {
             currentLang = lang;
             document.getElementById('btn-ch').classList.toggle('active', lang === 'ch');
@@ -1114,6 +1116,7 @@ function openModal(id) {
             }
         }
 
+        // 觸發建置中彈窗 Toast
         function showNotice(msg) {
             const toast = document.getElementById('cyber-toast');
             if (!toast) return;
@@ -1136,6 +1139,7 @@ function openModal(id) {
             );
         }
 
+        // 全局點擊監聽：當點擊無效連結時自動跳出提示 Toast
         document.addEventListener('click', function(e) {
             const link = e.target.closest('a');
             if (link) {
