@@ -851,320 +851,320 @@
     </nav>
 
     <!-- JS 邏輯處理 -->
-    <script>
-        let currentLang = 'ch';
-        let currentModalId = null;
-        let toastTimer = null;
+<script>
+    let currentLang = 'ch';
+    let currentModalId = null;
+    let toastTimer = null;
 
-        // 案例資料庫
-        const caseData = {
-            1: {
-                category: "ONLINE EVENT",
-                title: { ch: "《吊人村2》小馬之夜", en: "《Town of Salem Ⅱ》XIAO MA Game Night" },
-                desc: { 
-                    ch: "集結小馬娛樂旗下10位實況主，推出鬥智鬥勇的多人「狼人殺」主題客製化節目。", 
-                    en: "A thrilling \"XIAO MA Game Night\" themed campaign bringing together 10 featured streamers for a high-stakes, multi-player Werewolf showdown." 
-                },
-                kols: [
-                    { name: "狂暴小建 Jian", avatar: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/1-0.png" },
-                    { name: "UZRA", avatar: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/2-0.png" },
-                    { name: "豆豆 Dou Dou", avatar: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/3-0.png" },
-                    { name: "牛牛妹 Niu", avatar: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/4-0.png" },
-                    { name: "Abby純純", avatar: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/6-0.png" },
-                    { name: "小舞 Nien", avatar: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/8-0.png" },
-                    { name: "妖乖 Monster", avatar: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/10-0.png" },
-                    { name: "丫布丁丁 Pudding", avatar: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/11-0.png" }
-                ],
-                introImg: "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/吊人村2/01.png",
-                sections: [
-                    {
-                        heading: { ch: "告別分散發包、聲量稀釋", en: "No More Dealing with Multiple Agencies or Split Attention" },
-                        content: {
-                            ch: "傳統零散發包給多家經紀公司的模式，溝通與排程成本極高，宣傳聲量也容易被分散，難以在短時間內形成強大的話題爆發力。",
-                            en: "Booking creators through multiple agencies usually means endless back-and-forth and scattered reach, making it really tough to build any big hype."
-                        }
-                    },
-                    {
-                        heading: { ch: "統包企劃完美還原滿桌局", en: "A Turnkey Campaign That Brought Back the Full-Lobby Vibe" },
-                        content: {
-                            ch: "打破傳統模式，推出客製化主題企劃「小馬之夜」。整合旗下10位實況主及部分外部夥伴，同時組局開播，將宣傳節目化。完美還原了狼人殺遊戲最精彩的「滿桌局」張力，掀起跨頻道討論熱潮。",
-                            en: "We flipped the script with \"XIAO MA Game Night\"—a custom event bringing together 10 streamers for one big live session. Instead of a typical sponsored stream, we turned it into a real show that captured all the fun of a full Werewolf lobby and got everyone talking across channels."
-                        }
-                    },
-                    {
-                        heading: { ch: "單一窗口高效對接、主播默契聯動", en: "One Point of Contact with Great Streamer Chemistry" },
-                        content: {
-                            ch: "客戶僅需對接小馬娛樂的單一窗口，即可完成10位實況主的腳本規劃、排程與執行控場，達成高效溝通。旗下實況主間的長期默契及化學反應，能創造極佳的節目效果，並實現跨頻道相互導流，發揮1+1>2的流量綜效。",
-                            en: "Clients only need to talk to one POC at XIAO MA Ent. for everything—briefs, scheduling, and live execution. Plus, our creators already know each other so well, their natural banter made the stream super entertaining while sharing audiences with one another."
-                        }
-                    },
-                    {
-                        heading: { ch: "高爆發曝光，帶動實質轉化", en: "High-Impact Exposure That Actually Converts" },
-                        content: {
-                            ch: "「小馬之夜」成功在短時間內集中爆發話題聲量，實現高密度曝光。流暢的遊戲實況與極具張力的精彩博弈，有效帶動社群討論，成功將觀看熱度轉化為實質的遊戲下載與願望清單成長，是極具投報率的推廣案例參考。",
-                            en: "\"XIAO MA Game Night\" packed a ton of exposure into a short window. The fun gameplay and intense mind games got the community talking, successfully turning viewers into real game downloads and Steam Wishlist adds—a great high-ROI template for game promotions."
-                        }
-                    }
-                ],
-                photos: [
-                    "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/吊人村2/01.png",
-                    "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/吊人村2/02.png",
-                    "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/吊人村2/03.png",
-                    "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/吊人村2/04.png",
-                    "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/吊人村2/05.png",
-                    "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/吊人村2/06.png"
-                ]
+    // 案例資料庫
+    const caseData = {
+        1: {
+            category: "ONLINE EVENT",
+            title: { ch: "《吊人村2》小馬之夜", en: "《Town of Salem Ⅱ》XIAO MA Game Night" },
+            desc: { 
+                ch: "集結小馬娛樂旗下10位實況主，推出鬥智鬥勇的多人「狼人殺」主題客製化節目。", 
+                en: "A thrilling \"XIAO MA Game Night\" themed campaign bringing together 10 featured streamers for a high-stakes, multi-player Werewolf showdown." 
             },
-            2: {
-                category: "ONLINE EVENT",
-                title: { ch: "《麻雀一番街》日麻表演賽 小馬娛樂主辦", en: "《Riichi City》Exhibition Match by XIAOMA Ent." },
-                desc: { 
-                    ch: "由小馬娛樂主辦，設計賽事直播企劃，宣傳聯動資訊，回饋並吸引舊玩家回流。", 
-                    en: "Organized and produced by XIAO MA Ent., this event featured a custom live broadcast plan to promote the new collaboration, reward the community, and re-engage returning players." 
-                },
-                kols: [
-                    { name: "牛牛妹 Niu", avatar: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/4-0.png" },
-                    { name: "豆豆 Dou Dou", avatar: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/3-0.png" },
-                    { name: "小舞 Nien", avatar: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/8-0.png" }
-                ],
-                introImg: "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街表演賽/01.jpg",
-                sections: [
-                    {
-                        heading: { ch: "跨界資源整合，打造最強宣傳陣容", en: "Bringing Together Top Creators for Maximum Hype" },
-                        content: {
-                            ch: "由旗下實況主牛牛妹、冪冪擔任主持人兼賽事講評，出賽陣容包含旗下實況主豆豆、小舞，以及星野Poteto、尤汐伯夷等熱門直播主同場競技。透過跨頻道、跨經紀的聯動合作，打破社群壁壘，極大化預熱聲量與觸及效益。",
-                            en: "Hosted and casted by our creators NiuNiu and MiMi, the showmatch featured our own talent DouDou and Nien alongside two popular streamers. By bridging different creator networks, this cross-channel collaboration broke down audience silos to maximize pre-event hype and reach."
-                        }
-                    },
-                    {
-                        heading: { ch: "全流程一站式企劃，實現端到端完美落地", en: "Full-Service Planning, Flawlessly Executed" },
-                        content: {
-                            ch: "提供真正的 Full-Turnkey（全包式）服務。從主視覺與宣傳素材設計、前期社群預熱、賽事流程控管，到觀眾互動獎品規劃皆由小馬娛樂一手包辦，廠商僅需提出需求，即可享有低溝通成本的極速執行體驗。",
-                            en: "Delivering a complete turnkey solution, we handled everything from key visual designs and pre-event hype to tournament scheduling, live coordination, and viewer reward distribution. Clients get a flawless execution experience with minimal management overhead."
-                        }
+            kols: [
+                { name: "狂暴小建 Jian", avatar: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/1-0.png" },
+                { name: "UZRA", avatar: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/2-0.png" },
+                { name: "豆豆 Dou Dou", avatar: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/3-0.png" },
+                { name: "牛牛妹 Niu", avatar: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/4-0.png" },
+                { name: "Abby純純", avatar: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/6-0.png" },
+                { name: "小舞 Nien", avatar: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/8-0.png" },
+                { name: "妖乖 Monster", avatar: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/10-0.png" },
+                { name: "丫布丁丁 Pudding", avatar: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/11-0.png" }
+            ],
+            introImg: "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/吊人村2/01.png",
+            sections: [
+                {
+                    heading: { ch: "告別分散發包、聲量稀釋", en: "No More Dealing with Multiple Agencies or Split Attention" },
+                    content: {
+                        ch: "傳統零散發包給多家經紀公司的模式，溝通與排程成本極高，宣傳聲量也容易被分散，難以在短時間內形成強大的話題爆發力。",
+                        en: "Booking creators through multiple agencies usually means endless back-and-forth and scattered reach, making it really tough to build any big hype."
                     }
-                ],
-                photos: [
-                    "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街表演賽/01.jpg",
-                    "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街表演賽/02.png",
-                    "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街表演賽/03.png",
-                    "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街表演賽/04.png",
-                    "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街表演賽/05.png"
-                ]
+                },
+                {
+                    heading: { ch: "統包企劃完美還原滿桌局", en: "A Turnkey Campaign That Brought Back the Full-Lobby Vibe" },
+                    content: {
+                        ch: "打破傳統模式，推出客製化主題企劃「小馬之夜」。整合旗下10位實況主及部分外部夥伴，同時組局開播，將宣傳節目化。完美還原了狼人殺遊戲最精彩的「滿桌局」張力，掀起跨頻道討論熱潮。",
+                        en: "We flipped the script with \"XIAO MA Game Night\"—a custom event bringing together 10 streamers for one big live session. Instead of a typical sponsored stream, we turned it into a real show that captured all the fun of a full Werewolf lobby and got everyone talking across channels."
+                    }
+                },
+                {
+                    heading: { ch: "單一窗口高效對接、主播默契聯動", en: "One Point of Contact with Great Streamer Chemistry" },
+                    content: {
+                        ch: "客戶僅需對接小馬娛樂的單一窗口，即可完成10位實況主的腳本規劃、排程與執行控場，達成高效溝通。旗下實況主間的長期默契及化學反應，能創造極佳的節目效果，並實現跨頻道相互導流，發揮1+1>2的流量綜效。",
+                        en: "Clients only need to talk to one POC at XIAO MA Ent. for everything—briefs, scheduling, and live execution. Plus, our creators already know each other so well, their natural banter made the stream super entertaining while sharing audiences with one another."
+                    }
+                },
+                {
+                    heading: { ch: "高爆發曝光，帶動實質轉化", en: "High-Impact Exposure That Actually Converts" },
+                    content: {
+                        ch: "「小馬之夜」成功在短時間內集中爆發話題聲量，實現高密度曝光。流暢的遊戲實況與極具張力的精彩博弈，有效帶動社群討論，成功將觀看熱度轉化為實質的遊戲下載與願望清單成長，是極具投報率的推廣案例參考。",
+                        en: "\"XIAO MA Game Night\" packed a ton of exposure into a short window. The fun gameplay and intense mind games got the community talking, successfully turning viewers into real game downloads and Steam Wishlist adds—a great high-ROI template for game promotions."
+                    }
+                }
+            ],
+            photos: [
+                "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/吊人村2/01.png",
+                "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/吊人村2/02.png",
+                "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/吊人村2/03.png",
+                "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/吊人村2/04.png",
+                "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/吊人村2/05.png",
+                "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/吊人村2/06.png"
+            ]
+        },
+        2: {
+            category: "ONLINE EVENT",
+            title: { ch: "《麻雀一番街》日麻表演賽 小馬娛樂主辦", en: "《Riichi City》Exhibition Match by XIAOMA Ent." },
+            desc: { 
+                ch: "由小馬娛樂主辦，設計賽事直播企劃，宣傳聯動資訊，回饋並吸引舊玩家回流。", 
+                en: "Organized and produced by XIAO MA Ent., this event featured a custom live broadcast plan to promote the new collaboration, reward the community, and re-engage returning players." 
             },
-            3: {
-                category: "OFFLINE EVENT",
-                title: { ch: "《麻雀一番街》玩家見面會 小馬娛樂主辦", en: "《Riichi City》Offline Fan Meetup by XIAOMA Ent." },
-                desc: { 
-                    ch: "首次由小馬娛樂主辦的百人規模玩家見面會，吸引眾多玩家及KOL共襄盛舉。", 
-                    en: "Marking our first 100+ attendee fan meetup hosted by XIAO MA Ent., the event brought together gamers and top KOLs. With vibrant set designs, generous gift packs, and fun, interactive stage games, it earned overwhelming praise from all attendees." 
+            kols: [
+                { name: "牛牛妹 Niu", avatar: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/4-0.png" },
+                { name: "豆豆 Dou Dou", avatar: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/3-0.png" },
+                { name: "小舞 Nien", avatar: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/8-0.png" }
+            ],
+            introImg: "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街表演賽/01.jpg",
+            sections: [
+                {
+                    heading: { ch: "跨界資源整合，打造最強宣傳陣容", en: "Bringing Together Top Creators for Maximum Hype" },
+                    content: {
+                        ch: "由旗下實況主牛牛妹、冪冪擔任主持人兼賽事講評，出賽陣容包含旗下實況主豆豆、小舞，以及星野Poteto、尤汐伯夷等熱門直播主同場競技。透過跨頻道、跨經紀的聯動合作，打破社群壁壘，極大化預熱聲量與觸及效益。",
+                        en: "Hosted and casted by our creators NiuNiu and MiMi, the showmatch featured our own talent DouDou and Nien alongside two popular streamers. By bridging different creator networks, this cross-channel collaboration broke down audience silos to maximize pre-event hype and reach."
+                    }
                 },
-                kols: [
-                    { name: "豆豆 Dou Dou", avatar: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/3-0.png" }
-                ],
-                introImg: "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街玩家見面會/01.jpg",
-                sections: [
-                    {
-                        heading: { ch: "精準預算把控，打造跨國連線百人盛會", en: "Precision Budgeting and Large-Scale Offline Mobilization" },
-                        content: {
-                            ch: "首次主辦即成功打造百人規模玩家見面會，吸引眾多玩家、粉絲與 KOL 共襄盛舉。在客戶預算範圍內進行精準把控與最大化利用，展現極佳的成本效益與大型活動動員力。",
-                            en: "For our first 100+ attendee fan meetup, XIAO MA Ent. brought together gamers, superfans, and top KOLs. We strictly managed and optimized the client's budget while coordinating a seamless live Q&A session with the game’s founder, proving our strong resource integration and cost-effective event management."
-                        }
-                    },
-                    {
-                        heading: { ch: "深耕IP氛圍，從設計到線下沉浸體驗", en: "Immersive IP Setup with Social-Driven Experiences" },
-                        content: {
-                            ch: "為宣傳《麻雀一番街》與《槍彈辯駁》的跨界聯動，精心設計舞台互動節目、參加禮包、抽獎獎品等，更透過會場IP立牌、打卡牆與拍照板設計，帶動現場玩家拍照並於社群擴散分享，極大化宣傳效益。",
-                            en: "To launch the Riichi City x Danganronpa collaboration, we handled everything from custom gift packs and raffle prizes to life-sized IP character standees and a high-end buffet. Interactive photo walls and props naturally encouraged attendees to share photos online, driving organic social media buzz"
-                        }
+                {
+                    heading: { ch: "全流程一站式企劃，實現端到端完美落地", en: "Full-Service Planning, Flawlessly Executed" },
+                    content: {
+                        ch: "提供真正的 Full-Turnkey（全包式）服務。從主視覺與宣傳素材設計、前期社群預熱、賽事流程控管，到觀眾互動獎品規劃皆由小馬娛樂一手包辦，廠商僅需提出需求，即可享有低溝通成本的極速執行體驗。",
+                        en: "Delivering a complete turnkey solution, we handled everything from key visual designs and pre-event hype to tournament scheduling, live coordination, and viewer reward distribution. Clients get a flawless execution experience with minimal management overhead."
                     }
-                    {
-                        heading: { ch: "全方位企劃設計，獲得客戶與玩家一致好評", en: "End-to-End Execution That Delivered Glowing Reviews" },
-                        content: {
-                            ch: "依需求打造完整的線下活動企劃，整合前後期行銷宣傳資源，並憑藉細緻的專案管理與控場能力，收穫客戶與到場玩家的高分好評。",
-                            en: "We craft custom offline event strategies tailored to your needs, fully integrating pre- and post-event marketing resources. With meticulous project management and flawless live coordination, we consistently earn top ratings from both clients and attendees."
-                        }
+                }
+            ],
+            photos: [
+                "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街表演賽/01.jpg",
+                "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街表演賽/02.png",
+                "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街表演賽/03.png",
+                "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街表演賽/04.png",
+                "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街表演賽/05.png"
+            ]
+        },
+        3: {
+            category: "OFFLINE EVENT",
+            title: { ch: "《麻雀一番街》玩家見面會 小馬娛樂主辦", en: "《Riichi City》Offline Fan Meetup by XIAOMA Ent." },
+            desc: { 
+                ch: "首次由小馬娛樂主辦的百人規模玩家見面會，吸引眾多玩家及KOL共襄盛舉。", 
+                en: "Marking our first 100+ attendee fan meetup hosted by XIAO MA Ent., the event brought together gamers and top KOLs. With vibrant set designs, generous gift packs, and fun, interactive stage games, it earned overwhelming praise from all attendees." 
+            },
+            kols: [
+                { name: "豆豆 Dou Dou", avatar: "https://xiaomasales-creator.github.io/sales/presentation/homepage/talents/3-0.png" }
+            ],
+            introImg: "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街玩家見面會/01.jpg",
+            sections: [
+                {
+                    heading: { ch: "精準預算把控，打造跨國連線百人盛會", en: "Precision Budgeting and Large-Scale Offline Mobilization" },
+                    content: {
+                        ch: "首次主辦即成功打造百人規模玩家見面會，吸引眾多玩家、粉絲與 KOL 共襄盛舉。在客戶預算範圍內進行精準把控與最大化利用，展現極佳的成本效益與大型活動動員力。",
+                        en: "For our first 100+ attendee fan meetup, XIAO MA Ent. brought together gamers, superfans, and top KOLs. We strictly managed and optimized the client's budget while coordinating a seamless live Q&A session with the game’s founder, proving our strong resource integration and cost-effective event management."
                     }
-                ],
-                photos: [
-                    "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街玩家見面會/01.jpg",
-                    "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街玩家見面會/02.jpg",
-                    "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街玩家見面會/03.jpg",
-                    "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街玩家見面會/04.jpg",
-                    "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街玩家見面會/05.jpg",
-                    "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街玩家見面會/06.jpg",
-                    "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街玩家見面會/07.jpg",
-                    "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街玩家見面會/08.jpg",
-                    "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街玩家見面會/09.jpg",
-                    "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街玩家見面會/10.jpg",
-                    "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街玩家見面會/11.jpg",
-                    "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街玩家見面會/12.jpg",
-                    "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街玩家見面會/13.jpg",
-                    "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街玩家見面會/14.jpg"
-                ]
-            }
-        };
+                },
+                {
+                    heading: { ch: "深耕IP氛圍，從設計到線下沉浸體驗", en: "Immersive IP Setup with Social-Driven Experiences" },
+                    content: {
+                        ch: "為宣傳《麻雀一番街》與《槍彈辯駁》的跨界聯動，精心設計舞台互動節目、參加禮包、抽獎獎品等，更透過會場IP立牌、打卡牆與拍照板設計，帶動現場玩家拍照並於社群擴散分享，極大化宣傳效益。",
+                        en: "To launch the Riichi City x Danganronpa collaboration, we handled everything from custom gift packs and raffle prizes to life-sized IP character standees and a high-end buffet. Interactive photo walls and props naturally encouraged attendees to share photos online, driving organic social media buzz"
+                    }
+                }, // ✅ 已補上缺失的逗號
+                {
+                    heading: { ch: "全方位企劃設計，獲得客戶與玩家一致好評", en: "End-to-End Execution That Delivered Glowing Reviews" },
+                    content: {
+                        ch: "依需求打造完整的線下活動企劃，整合前後期行銷宣傳資源，並憑藉細緻的專案管理與控場能力，收穫客戶與到場玩家的高分好評。",
+                        en: "We craft custom offline event strategies tailored to your needs, fully integrating pre- and post-event marketing resources. With meticulous project management and flawless live coordination, we consistently earn top ratings from both clients and attendees."
+                    }
+                }
+            ],
+            photos: [
+                "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街玩家見面會/01.jpg",
+                "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街玩家見面會/02.jpg",
+                "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街玩家見面會/03.jpg",
+                "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街玩家見面會/04.jpg",
+                "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街玩家見面會/05.jpg",
+                "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街玩家見面會/06.jpg",
+                "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街玩家見面會/07.jpg",
+                "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街玩家見面會/08.jpg",
+                "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街玩家見面會/09.jpg",
+                "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街玩家見面會/10.jpg",
+                "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街玩家見面會/11.jpg",
+                "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街玩家見面會/12.jpg",
+                "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街玩家見面會/13.jpg",
+                "https://xiaomasales-creator.github.io/sales/presentation/nav/經典案例/麻雀一番街玩家見面會/14.jpg"
+            ]
+        }
+    };
 
-        // 開啟彈窗
-        function openModal(id) {
-            currentModalId = id;
-            const data = caseData[id];
-            if (!data) return;
+    // 開啟彈窗
+    function openModal(id) {
+        currentModalId = id;
+        const data = caseData[id];
+        if (!data) return;
 
-            document.getElementById('modal-category').innerText = data.category;
-            document.getElementById('modal-title').innerText = data.title[currentLang];
+        document.getElementById('modal-category').innerText = data.category;
+        document.getElementById('modal-title').innerText = data.title[currentLang];
 
-            // 1. 參與 KOL 渲染
-            const kolListContainer = document.getElementById('modal-kol-list');
-            kolListContainer.innerHTML = '';
-            data.kols.forEach(kol => {
-                const kolHtml = `
-                    <div class="flex flex-col items-center">
-                        <div class="avatar-ring-container">
-                            <div class="avatar-outer-ring"></div>
-                            <div class="avatar-inner-ring"></div>
-                            <div class="avatar-img-box">
-                                <img src="${kol.avatar}" alt="${kol.name}">
-                            </div>
+        // 1. 參與 KOL 渲染
+        const kolListContainer = document.getElementById('modal-kol-list');
+        kolListContainer.innerHTML = '';
+        data.kols.forEach(kol => {
+            const kolHtml = `
+                <div class="flex flex-col items-center">
+                    <div class="avatar-ring-container">
+                        <div class="avatar-outer-ring"></div>
+                        <div class="avatar-inner-ring"></div>
+                        <div class="avatar-img-box">
+                            <img src="${kol.avatar}" alt="${kol.name}">
                         </div>
-                        <span class="text-xs font-bold text-gray-300 mt-1">${kol.name}</span>
+                    </div>
+                    <span class="text-xs font-bold text-gray-300 mt-1">${kol.name}</span>
+                </div>
+            `;
+            kolListContainer.insertAdjacentHTML('beforeend', kolHtml);
+        });
+
+        // 2. 簡介與段落標題動態渲染
+        const img = document.getElementById('modal-intro-img');
+        if (img) img.src = data.introImg || '';
+
+        const introContainer = document.getElementById('modal-intro-container');
+        introContainer.innerHTML = '';
+
+        if (data.sections && data.sections.length > 0) {
+            data.sections.forEach((sec) => {
+                const blockHtml = `
+                    <div class="cyber-paragraph-block">
+                        <div class="cyber-paragraph-header cyber-font">
+                            <div class="head-indicator"></div>
+                            <span>${sec.heading[currentLang]}</span>
+                        </div>
+                        <div class="cyber-paragraph-body">
+                            ${sec.content[currentLang]}
+                        </div>
                     </div>
                 `;
-                kolListContainer.insertAdjacentHTML('beforeend', kolHtml);
+                introContainer.insertAdjacentHTML('beforeend', blockHtml);
             });
-
-            // 2. 簡介與段落標題動態渲染
-            const img = document.getElementById('modal-intro-img');
-            if (img) img.src = data.introImg || '';
-
-            const introContainer = document.getElementById('modal-intro-container');
-            introContainer.innerHTML = '';
-
-            if (data.sections && data.sections.length > 0) {
-                data.sections.forEach((sec) => {
-                    const blockHtml = `
-                        <div class="cyber-paragraph-block">
-                            <div class="cyber-paragraph-header cyber-font">
-                                <div class="head-indicator"></div>
-                                <span>${sec.heading[currentLang]}</span>
-                            </div>
-                            <div class="cyber-paragraph-body">
-                                ${sec.content[currentLang]}
-                            </div>
-                        </div>
-                    `;
-                    introContainer.insertAdjacentHTML('beforeend', blockHtml);
-                });
-            }
-
-            // 3. 照片牆
-            const photoWallContainer = document.getElementById('modal-photo-wall');
-            photoWallContainer.innerHTML = '';
-            if (data.photos && data.photos.length > 0) {
-                data.photos.forEach(imgUrl => {
-                    const photoHtml = `
-                        <div class="photo-wall-item" onclick="openLightbox('${imgUrl}')">
-                            <img src="${imgUrl}" alt="案例花絮">
-                        </div>
-                    `;
-                    photoWallContainer.insertAdjacentHTML('beforeend', photoHtml);
-                });
-            }
-
-            document.getElementById('case-modal').classList.add('open');
-            document.body.style.overflow = 'hidden';
         }
 
-        // 關閉彈窗
-        function closeModal() {
-            document.getElementById('case-modal').classList.remove('open');
-            document.body.style.overflow = '';
+        // 3. 照片牆
+        const photoWallContainer = document.getElementById('modal-photo-wall');
+        photoWallContainer.innerHTML = '';
+        if (data.photos && data.photos.length > 0) {
+            data.photos.forEach(imgUrl => {
+                const photoHtml = `
+                    <div class="photo-wall-item" onclick="openLightbox('${imgUrl}')">
+                        <img src="${imgUrl}" alt="案例花絮">
+                    </div>
+                `;
+                photoWallContainer.insertAdjacentHTML('beforeend', photoHtml);
+            });
         }
 
-        function closeModalOnBackdrop(e) {
-            if (e.target.id === 'case-modal') {
-                closeModal();
-            }
+        document.getElementById('case-modal').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    // 關閉彈窗
+    function closeModal() {
+        document.getElementById('case-modal').classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    function closeModalOnBackdrop(e) {
+        if (e.target.id === 'case-modal') {
+            closeModal();
+        }
+    }
+
+    // 開啟照片原圖彈窗 Lightbox
+    function openLightbox(imgSrc) {
+        const lightboxModal = document.getElementById('lightbox-modal');
+        const lightboxImg = document.getElementById('lightbox-img');
+        lightboxImg.src = imgSrc;
+        lightboxModal.classList.add('open');
+    }
+
+    function closeLightbox() {
+        document.getElementById('lightbox-modal').classList.remove('open');
+    }
+
+    function closeLightboxOnBackdrop(e) {
+        if (e.target.id === 'lightbox-modal') {
+            closeLightbox();
+        }
+    }
+
+    // 切換中英文 (同時重刷動態內容)
+    function switchLang(lang) {
+        currentLang = lang;
+        document.getElementById('btn-ch').classList.toggle('active', lang === 'ch');
+        document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+
+        if (lang === 'ch') {
+            document.getElementById('page-title').innerText = "經典案例";
+            document.getElementById('page-subtitle').innerText = "CLASSIC_CASES";
+        } else {
+            document.getElementById('page-title').innerText = "CLASSIC CASES"; // ✅ 已修正英文字串
+            document.getElementById('page-subtitle').innerText = "CLASSIC_CASES";
         }
 
-        // 開啟照片原圖彈窗 Lightbox
-        function openLightbox(imgSrc) {
-            const lightboxModal = document.getElementById('lightbox-modal');
-            const lightboxImg = document.getElementById('lightbox-img');
-            lightboxImg.src = imgSrc;
-            lightboxModal.classList.add('open');
-        }
-
-        function closeLightbox() {
-            document.getElementById('lightbox-modal').classList.remove('open');
-        }
-
-        function closeLightboxOnBackdrop(e) {
-            if (e.target.id === 'lightbox-modal') {
-                closeLightbox();
+        for (let i = 1; i <= 3; i++) {
+            if (caseData[i]) {
+                document.getElementById(`card-title-${i}`).innerText = caseData[i].title[lang];
+                document.getElementById(`card-desc-${i}`).innerText = caseData[i].desc[lang];
             }
         }
 
-        // 切換中英文 (同時重刷動態內容)
-        function switchLang(lang) {
-            currentLang = lang;
-            document.getElementById('btn-ch').classList.toggle('active', lang === 'ch');
-            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+        if (currentModalId && document.getElementById('case-modal').classList.contains('open')) {
+            openModal(currentModalId);
+        }
+    }
 
-            if (lang === 'ch') {
-                document.getElementById('page-title').innerText = "經典案例";
-                document.getElementById('page-subtitle').innerText = "CLASSIC_CASES";
-            } else {
-                document.getElementById('page-title').innerText = "經典案例";
-                document.getElementById('page-subtitle').innerText = "CLASSIC_CASES";
-            }
+    // 觸發建置中彈窗 Toast
+    function showNotice(msg) {
+        const toast = document.getElementById('cyber-toast');
+        if (!toast) return;
+        toast.querySelector('span').innerText = msg || '該頁面尚在建置中，敬請期待！';
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+            toast.classList.remove('show');
+        }, 2500);
+    }
 
-            for (let i = 1; i <= 3; i++) {
-                if (caseData[i]) {
-                    document.getElementById(`card-title-${i}`).innerText = caseData[i].title[lang];
-                    document.getElementById(`card-desc-${i}`).innerText = caseData[i].desc[lang];
-                }
-            }
+    function isEmptyLink(href) {
+        if (!href) return true;
+        const cleaned = href.trim();
+        return (
+            cleaned === '' ||
+            cleaned === '#' ||
+            cleaned.startsWith('javascript:void(0)') ||
+            cleaned.startsWith('javascript:;')
+        );
+    }
 
-            if (currentModalId && document.getElementById('case-modal').classList.contains('open')) {
-                openModal(currentModalId);
+    // 全局點擊監聽：當點擊無效連結時自動跳出提示 Toast
+    document.addEventListener('click', function(e) {
+        const link = e.target.closest('a');
+        if (link) {
+            const href = link.getAttribute('href');
+            if (isEmptyLink(href)) {
+                e.preventDefault();
+                showNotice('該頁面尚在建置中，敬請期待！');
             }
         }
-
-        // 觸發建置中彈窗 Toast
-        function showNotice(msg) {
-            const toast = document.getElementById('cyber-toast');
-            if (!toast) return;
-            toast.querySelector('span').innerText = msg || '該頁面尚在建置中，敬請期待！';
-            toast.classList.add('show');
-            clearTimeout(toastTimer);
-            toastTimer = setTimeout(() => {
-                toast.classList.remove('show');
-            }, 2500);
-        }
-
-        function isEmptyLink(href) {
-            if (!href) return true;
-            const cleaned = href.trim();
-            return (
-                cleaned === '' ||
-                cleaned === '#' ||
-                cleaned.startsWith('javascript:void(0)') ||
-                cleaned.startsWith('javascript:;')
-            );
-        }
-
-        // 全局點擊監聽：當點擊無效連結時自動跳出提示 Toast
-        document.addEventListener('click', function(e) {
-            const link = e.target.closest('a');
-            if (link) {
-                const href = link.getAttribute('href');
-                if (isEmptyLink(href)) {
-                    e.preventDefault();
-                    showNotice('該頁面尚在建置中，敬請期待！');
-                }
-            }
-        });
-    </script>
+    });
+</script>
 </body>
 </html>
