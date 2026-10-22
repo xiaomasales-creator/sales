@@ -121,33 +121,6 @@
             border-bottom: 0px solid rgba(134, 0, 255, 0.1);
         }
 
-        /* 語言切換按鈕樣式 */
-        .lang-btn {
-            padding: 2px 8px;
-            font-size: 12px;
-            font-family: 'Orbitron', sans-serif;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background: rgba(255, 255, 255, 0.05);
-            color: rgba(255, 255, 255, 0.5);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border-radius: 2px;
-        }
-
-        .lang-btn:hover {
-            border-color: var(--secondary-neon);
-            color: var(--secondary-neon);
-            box-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
-        }
-
-        .lang-btn.active {
-            background: var(--secondary-neon);
-            color: var(--bg-dark);
-            border-color: var(--secondary-neon);
-            font-weight: 900;
-            box-shadow: 0 0 15px var(--secondary-neon);
-        }
-
         /* 控制面板設計 */
         .control-panel {
             position: fixed;
@@ -971,29 +944,6 @@
                 }
             }
         });
-
-        // 語系切換功能
-        const langData = {
-            ch: {
-                titleMain: "商案總覽",
-                titleSub: "CASES_OVERVIEW"
-            },
-            en: {
-                titleMain: "Cases Overview",
-                titleSub: "CASES_OVERVIEW"
-            }
-        };
-
-        function switchLang(lang) {
-            document.getElementById('btn-ch').classList.toggle('active', lang === 'ch');
-            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
-            
-            const data = langData[lang];
-            if(data) {
-                document.getElementById('page-title-main').innerText = data.titleMain;
-                document.getElementById('page-title-sub').innerText = data.titleSub;
-            }
-        }
     </script>
 </body>
 </html>
