@@ -99,6 +99,221 @@
             border-bottom: 0px solid rgba(134, 0, 255, 0.1);
         }
 
+        /* 相片畫廊卡片樣式 */
+        .gallery-card {
+            position: relative;
+            background: rgba(15, 15, 25, 0.6);
+            border: 1px solid rgba(134, 0, 255, 0.3);
+            border-radius: 6px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            cursor: pointer;
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
+        }
+
+        .gallery-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: var(--secondary-neon);
+            box-shadow: 0 10px 30px -5px rgba(0, 243, 255, 0.3), 0 0 15px rgba(134, 0, 255, 0.4);
+        }
+
+        .gallery-card:hover .card-img {
+            transform: scale(1.08);
+            filter: brightness(1.1) contrast(1.05);
+        }
+
+        .gallery-card:hover .card-overlay {
+            opacity: 1;
+        }
+
+        .card-img-container {
+            position: relative;
+            width: 100%;
+            padding-top: 62.5%; /* 16:10 比例 */
+            overflow: hidden;
+            background: #0d0d15;
+        }
+
+        .card-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1), filter 0.3s ease;
+        }
+
+        .card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(5, 5, 8, 0.95) 0%, rgba(5, 5, 8, 0.2) 60%, transparent 100%);
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: flex-end;
+            padding: 20px;
+        }
+
+        .tech-tag {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 11px;
+            padding: 3px 8px;
+            background: rgba(134, 0, 255, 0.3);
+            border: 1px solid var(--neon-purple);
+            color: var(--secondary-neon);
+            border-radius: 2px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* 賽博龐克 Lightbox 彈窗樣式 */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 5, 10, 0.92);
+            backdrop-filter: blur(15px);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            padding: 20px;
+        }
+
+        .modal-backdrop.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-container {
+            position: relative;
+            max-width: 1100px;
+            width: 100%;
+            background: rgba(12, 12, 20, 0.95);
+            border: 1px solid var(--secondary-neon);
+            box-shadow: 0 0 40px rgba(0, 243, 255, 0.25), inset 0 0 20px rgba(134, 0, 255, 0.3);
+            padding: 25px;
+            border-radius: 4px;
+            transform: scale(0.95);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .modal-backdrop.active .modal-container {
+            transform: scale(1);
+        }
+
+        .modal-img-wrapper {
+            position: relative;
+            width: 100%;
+            max-height: 65vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+
+        .modal-img-wrapper img {
+            max-width: 100%;
+            max-height: 65vh;
+            object-fit: contain;
+        }
+
+        /* HUD 牆邊裝飾條 */
+        .hud-corner {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            border-color: var(--secondary-neon);
+            z-index: 10;
+            pointer-events: none;
+        }
+        .hud-tl { top: -2px; left: -2px; border-top: 2px solid; border-left: 2px solid; }
+        .hud-tr { top: -2px; right: -2px; border-top: 2px solid; border-right: 2px solid; }
+        .hud-bl { bottom: -2px; left: -2px; border-bottom: 2px solid; border-left: 2px solid; }
+        .hud-br { bottom: -2px; right: -2px; border-bottom: 2px solid; border-right: 2px solid; }
+
+        /* 箭頭按鈕與控制按鈕 */
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(10, 10, 20, 0.7);
+            border: 1px solid var(--secondary-neon);
+            color: var(--secondary-neon);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 30;
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+        }
+
+        .nav-arrow:hover {
+            background: var(--secondary-neon);
+            color: var(--bg-dark);
+            box-shadow: 0 0 25px var(--secondary-neon);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .nav-prev { left: -25px; }
+        .nav-next { right: -25px; }
+
+        @media (max-width: 768px) {
+            .nav-prev { left: 5px; }
+            .nav-next { right: 5px; }
+        }
+
+        .close-modal-btn {
+            position: absolute;
+            top: -18px;
+            right: -18px;
+            width: 40px;
+            height: 40px;
+            background: var(--bg-dark);
+            border: 2px solid var(--neon-red);
+            color: var(--neon-red);
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 40;
+            box-shadow: 0 0 15px rgba(255, 0, 60, 0.4);
+        }
+
+        .close-modal-btn:hover {
+            background: var(--neon-red);
+            color: #fff;
+            box-shadow: 0 0 25px var(--neon-red);
+            transform: rotate(90deg);
+        }
+
         /* 控制面板設計 */
         .control-panel {
             position: fixed;
@@ -300,7 +515,54 @@
             <div class="w-[60px] h-[4px] bg-gradient-to-r from-[#bc13fe] to-[#00d2ff]"></div>
         </div>
     </header>
-    
+
+    <!-- 主要內容區域：照片牆卡片畫廊 -->
+    <main class="max-w-[1400px] mx-auto px-6 md:px-10 py-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="gallery-grid">
+            <!-- 照片卡片將動態經由 JavaScript 渲染 -->
+        </div>
+        <!-- Lightbox 原尺寸相片彈窗 Modal -->
+    <div id="photo-modal" class="modal-backdrop" onclick="closeModalOnBackdrop(event)">
+        <div class="modal-container">
+            <!-- 關閉按鈕 -->
+            <button class="close-modal-btn" onclick="closeModal()" title="Close (Esc)">✕</button>
+            
+            <!-- HUD 裝飾角落 -->
+            <div class="hud-corner hud-tl"></div>
+            <div class="hud-corner hud-tr"></div>
+            <div class="hud-corner hud-bl"></div>
+            <div class="hud-corner hud-br"></div>
+
+            <!-- 切換箭頭 -->
+            <button class="nav-arrow nav-prev" onclick="changePhoto(-1)" title="Previous Image">‹</button>
+            <button class="nav-arrow nav-next" onclick="changePhoto(1)" title="Next Image">›</button>
+
+            <!-- 頂部資訊條 -->
+            <div class="flex justify-between items-center border-b border-white/10 pb-3">
+                <div class="flex items-center gap-3">
+                    <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+                    <span id="modal-tag" class="tech-tag">EVENT NODE</span>
+                    <span id="modal-date" class="mono text-xs text-gray-400">2026.10</span>
+                </div>
+                <div class="cyber-font text-xs text-cyan-400 tracking-widest">
+                    <span id="modal-index">01</span> / <span id="modal-total">06</span>
+                </div>
+            </div>
+
+            <!-- 大圖展示區 -->
+            <div class="modal-img-wrapper">
+                <img id="modal-img" src="#" alt="Event Full Photo">
+            </div>
+
+            <!-- 底部標題與說明 -->
+            <div class="pt-2">
+                <h3 id="modal-title" class="text-xl md:text-2xl font-bold text-white mb-2 tracking-wide"></h3>
+                <p id="modal-desc" class="text-gray-300 text-sm md:text-base leading-relaxed font-light"></p>
+            </div>
+        </div>
+    </div>
+    </main>
+
     <!-- 控制面板 -->
     <nav class="control-panel">
         <div class="panel-container cyber-font">
@@ -355,6 +617,175 @@
     </nav>
     
     <script>
+        // 照片數據庫（圖片連結可替換為實體網址，預設使用極具科技感之佔位圖）
+        const galleryData = [
+            {
+                id: 1,
+                img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=80",
+                date: "2026.09.15",
+                tag: "GAMING EXPO",
+                ch: {
+                    title: "2026 電競星戰新品體驗會",
+                    desc: "小馬娛樂旗下熱門實況主親臨現場，進行 3C 旗艦電競周邊深度開箱與現場水友對決，現場熱絡盛況空前。"
+                },
+                en: {
+                    title: "2026 Gaming Gear Expo & Live Showcase",
+                    desc: "Xiaoma Ent. streamers hosted the flagship gaming peripherals launch, engaging fans with real-time gameplay showdowns."
+                }
+            },
+            {
+                id: 2,
+                img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=80",
+                date: "2026.08.20",
+                tag: "FAN MEETING",
+                ch: {
+                    title: "未來科技 3C 新品粉絲見面會",
+                    desc: "邀請 10+ 位頂級遊戲 KOL 與品牌方深度交流，零距離體驗最新一代 VR 裝備與顯示科技。"
+                },
+                en: {
+                    title: "CyberTech 3C Fan Meetup & Showcase",
+                    desc: "Over 10 top creators connected with fans and test-drove next-gen VR gear and display technologies."
+                }
+            },
+            {
+                id: 3,
+                img: "https://images.unsplash.com/photo-1511882150382-421056c89033?auto=format&fit=crop&w=1200&q=80",
+                date: "2026.07.12",
+                tag: "TOURNAMENT",
+                ch: {
+                    title: "賽博聯賽：創作者巔峰對決",
+                    desc: "線下千人體育館舉辦之年度手遊電競盛事，線上線下突破百萬瀏覽人次，展現極致品牌宣傳力。"
+                },
+                en: {
+                    title: "Cyber Championship: Creators Peak Match",
+                    desc: "Annual mobile esports tournament held live in arena, reaching over 1M combined online/offline views."
+                }
+            },
+            {
+                id: 4,
+                img: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=1200&q=80",
+                date: "2026.06.05",
+                tag: "BRAND PARTY",
+                ch: {
+                    title: "AAA 級魔幻手遊上市沉浸式 VIP 派對",
+                    desc: "專屬主題實景佈置與主播扮演角色互動，精準觸及核心遊戲玩家群體。"
+                },
+                en: {
+                    title: "AAA Fantasy RPG Immersive Launch VIP Party",
+                    desc: "Custom themed environment featuring live cosplay interaction with top gaming influencers."
+                }
+            },
+            {
+                id: 5,
+                img: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1200&q=80",
+                date: "2026.05.18",
+                tag: "COMMUNITY",
+                ch: {
+                    title: "小馬創作者社群交流 Night",
+                    desc: "串聯業界遊戲廠商與頂級直播主，共同探討 2026 最新商案行銷趨勢與創作靈感。"
+                },
+                en: {
+                    title: "Xiaoma Creator Network Night",
+                    desc: "Bridging game publishers and top-tier streamers to explore marketing trends and campaign strategies."
+                }
+            },
+            {
+                id: 6,
+                img: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=80",
+                date: "2026.04.10",
+                tag: "3C RELEASE",
+                ch: {
+                    title: "次世代電競筆電全台線下首發會",
+                    desc: "知名實況主組隊現場進行實機極限測試與評測，吸引大量線下硬體玩家圍觀。"
+                },
+                en: {
+                    title: "Next-Gen Gaming Laptop Launch Event",
+                    desc: "Pro-streamers conducted stress-tests live on stage, attracting hardware enthusiasts and media coverage."
+                }
+            }
+        ];
+
+        // 渲染照片牆卡片
+        function renderGallery() {
+            const container = document.getElementById('gallery-grid');
+            container.innerHTML = '';
+
+            galleryData.forEach((item, index) => {
+                const langContent = item[currentLang];
+                const card = document.createElement('div');
+                card.className = 'gallery-card';
+                card.onclick = () => openModal(index);
+
+                card.innerHTML = `
+                    <div class="card-img-container">
+                        <img src="${item.img}" alt="${langContent.title}" class="card-img" onerror="this.src='https://placehold.co/800x500/0d0d15/00f3ff?text=XIAOMA+EVENT'">
+                        <div class="card-overlay">
+                            <div>
+                                <div class="flex items-center gap-2 mb-2">
+                                    <span class="tech-tag">${item.tag}</span>
+                                    <span class="mono text-xs text-cyan-300/80">${item.date}</span>
+                                </div>
+                                <h3 class="font-bold text-lg text-white leading-snug line-clamp-1">${langContent.title}</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4 bg-gradient-to-b from-[#0c0c16] to-[#050508]">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="cyber-font text-xs text-purple-400">NODE // 0${item.id}</span>
+                            <span class="mono text-xs text-gray-400">VIEW FULL PHOTO ›</span>
+                        </div>
+                        <p class="text-sm text-gray-300 font-medium line-clamp-2">${langContent.desc}</p>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // 開啟圖片彈窗
+        function openModal(index) {
+            currentPhotoIndex = index;
+            updateModalContent();
+            document.getElementById('photo-modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // 關閉圖片彈窗
+        function closeModal() {
+            document.getElementById('photo-modal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function closeModalOnBackdrop(e) {
+            if (e.target.id === 'photo-modal') {
+                closeModal();
+            }
+        }
+
+        // 切換前後照片
+        function changePhoto(step) {
+            currentPhotoIndex = (currentPhotoIndex + step + galleryData.length) % galleryData.length;
+            updateModalContent();
+        }
+
+        // 更新 Modal 內容
+        function updateModalContent() {
+            const data = galleryData[currentPhotoIndex];
+            const langContent = data[currentLang];
+
+            document.getElementById('modal-img').src = data.img;
+            document.getElementById('modal-title').innerText = langContent.title;
+            document.getElementById('modal-desc').innerText = langContent.desc;
+            document.getElementById('modal-tag').innerText = data.tag;
+            document.getElementById('modal-date').innerText = data.date;
+            document.getElementById('modal-index').innerText = String(currentPhotoIndex + 1).padStart(2, '0');
+            document.getElementById('modal-total').innerText = String(galleryData.length).padStart(2, '0');
+        }
+
+        // 初始化
+        window.onload = function() {
+            renderGallery();
+        };
+        
         let toastTimer = null;
 
         // 觸發建置中彈窗 Toast
