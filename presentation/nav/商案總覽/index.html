@@ -67,8 +67,8 @@
         /* 掃描線樣式 */
         .scanline {
             width: 100%;
-            height: 4px; /* 增加高度使其可見 */
-            z-index: 999; /* 提高層級 */
+            height: 4px;
+            z-index: 999;
             background: linear-gradient(to bottom, 
                 transparent, 
                 rgba(0, 243, 255, 0.15) 50%, 
@@ -78,7 +78,7 @@
             box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
             position: fixed;
             pointer-events: none;
-            animation: scanline 6s linear infinite; /* 稍微加快速度 */
+            animation: scanline 6s linear infinite;
         }
 
         @keyframes scanline {
@@ -119,6 +119,33 @@
             position: relative;
             z-index: 50; 
             border-bottom: 0px solid rgba(134, 0, 255, 0.1);
+        }
+
+        /* 語言切換按鈕樣式 */
+        .lang-btn {
+            padding: 2px 8px;
+            font-size: 12px;
+            font-family: 'Orbitron', sans-serif;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-radius: 2px;
+        }
+
+        .lang-btn:hover {
+            border-color: var(--secondary-neon);
+            color: var(--secondary-neon);
+            box-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
+        }
+
+        .lang-btn.active {
+            background: var(--secondary-neon);
+            color: var(--bg-dark);
+            border-color: var(--secondary-neon);
+            font-weight: 900;
+            box-shadow: 0 0 15px var(--secondary-neon);
         }
 
         /* 控制面板設計 */
@@ -257,59 +284,71 @@
             padding-left: 18px;
         }
 
-        /* 手機版排版調整（重點修正區） */
-        @media (max-width: 768px) {
-            .s-path-container { padding: 20px 20px 120px 20px; }
-            
-            .step-row, .step-row.reverse { 
-                flex-direction: column !important; 
-                text-align: center !important; 
-                gap: 20px;
-            } 
-            
-            .step-content { 
-                padding: 0 !important; 
-                width: 100%; 
-                max-width: 500px; /* 限制卡片在手機版不要太寬 */
-            }
-            
-            .tech-node { 
-                flex: 0 0 180px; 
-                width: 180px; 
-                height: 180px; 
-                margin: 0 auto;
-            }
-            
-            .content-card { 
-                clip-path: none !important; 
-                border-radius: 12px; 
-                border: 2px solid rgba(255,255,255,0.1) !important; 
-                border-top: 6px solid currentColor !important; 
-                border-left: 2px solid rgba(255,255,255,0.1) !important;
-                border-right: 2px solid rgba(255,255,255,0.1) !important;
-                padding: 24px 20px;
-            }
+        /* Toast 提示 */
+        .cyber-toast {
+            position: fixed;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(10, 10, 18, 0.95);
+            border: 1px solid var(--secondary-neon);
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
+            padding: 12px 24px;
+            border-radius: 4px;
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
 
-            .step-row.reverse .content-card {
-                border-right: 2px solid rgba(255,255,255,0.1) !important;
-                border-top: 6px solid currentColor !important;
-            }
+        .cyber-toast.show {
+            top: 30px;
+        }
 
-            .card-title { font-size: 1.5rem; text-align: center; }
-            .card-text { text-align: center; }
-            
-            .floating-deco { display: none; }
-            .step-label { font-size: 1.1rem; }
-            
-            .arrow-connector-centered { height: 80px; }
-            .multi-arrow { width: 40px; height: 40px; }
+        .cyber-toast-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--secondary-neon);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--secondary-neon);
+        }
 
-            .content-card::before {
-                left: 50% !important;
-                transform: translateX(-50%);
-                width: 100%;
-                text-align: center;
-            }
+        /* 商案卡片與標籤專用樣式 */
+        .case-card {
+            background: rgba(15, 15, 25, 0.6);
+            border: 1px solid rgba(134, 0, 255, 0.25);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+
+        .case-card:hover {
+            border-color: var(--secondary-neon);
+            box-shadow: 0 0 25px rgba(0, 243, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .streamer-badge {
+            background: linear-gradient(135deg, rgba(188, 19, 254, 0.2), rgba(0, 243, 255, 0.2));
+            border-left: 4px solid var(--neon-purple);
+        }
+
+        .case-tag {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #d1d5db;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+            padding: 4px 10px;
+            border-radius: 2px;
+            display: inline-block;
+        }
+
+        .case-tag:hover {
+            border-color: var(--secondary-neon);
+            color: var(--secondary-neon);
+            background: rgba(0, 243, 255, 0.1);
         }
     </style>
 </head>
@@ -340,14 +379,14 @@
             
             <div class="flex flex-col mb-4">
                 <div class="flex items-end gap-6 mb-2">
-                    <h1 class="text-5xl md:text-7xl font-black italic tracking-tighter leading-none">商案總覽</h1>
+                    <h1 id="page-title-main" class="text-5xl md:text-7xl font-black italic tracking-tighter leading-none">商案總覽</h1>
                     <!-- 語言切換按鈕 -->
                     <div class="flex gap-2 mb-1">
                         <button onclick="switchLang('ch')" id="btn-ch" class="lang-btn active">CH</button>
                         <button onclick="switchLang('en')" id="btn-en" class="lang-btn">EN</button>
                     </div>
                 </div>
-                <span class="cyber-font text-xl md:text-3xl font-black text-white/10 uppercase italic tracking-widest leading-none">CASES_OVERVIEW</span>
+                <span id="page-title-sub" class="cyber-font text-xl md:text-3xl font-black text-white/10 uppercase italic tracking-widest leading-none">CASES_OVERVIEW</span>
             </div>
             
             <div class="w-[60px] h-[4px] bg-gradient-to-r from-[#bc13fe] to-[#00d2ff]"></div>
@@ -656,6 +695,181 @@
                 <span class="case-tag">《Migo Live》</span>
             </div>
         </div>
+
+        <!-- 主播卡片 5：萌萌吃吃 -->
+        <div class="case-card p-6 rounded-md">
+            <div class="streamer-badge px-4 py-2 rounded mb-4 inline-flex items-center gap-3">
+                <span class="w-2 h-2 bg-cyan-400 rounded-full animate-ping"></span>
+                <h2 class="cyber-font text-xl font-bold tracking-wider text-white">萌萌吃吃</h2>
+            </div>
+            <div class="flex flex-wrap gap-2 pt-2">
+                <span class="case-tag">《全面疾控》</span>
+                <span class="case-tag">《全面疾控》</span>
+                <span class="case-tag">《魔靈召喚：克羅尼柯戰記》</span>
+                <span class="case-tag">《Hero Wars》</span>
+                <span class="case-tag">《守護德比》</span>
+                <span class="case-tag">《英雄聯盟亞洲盃》</span>
+                <span class="case-tag">《根據地酒吧一日店員》</span>
+                <span class="case-tag">《鬼線：東京》</span>
+                <span class="case-tag">《聖靈之光2》</span>
+                <span class="case-tag">《雷蛇》</span>
+                <span class="case-tag">《劍俠世界：起源》</span>
+                <span class="case-tag">《審判之眼》</span>
+            </div>
+        </div>
+
+        <!-- 主播卡片 6：純純Abby -->
+        <div class="case-card p-6 rounded-md">
+            <div class="streamer-badge px-4 py-2 rounded mb-4 inline-flex items-center gap-3">
+                <span class="w-2 h-2 bg-cyan-400 rounded-full animate-ping"></span>
+                <h2 class="cyber-font text-xl font-bold tracking-wider text-white">純純Abby</h2>
+            </div>
+            <div class="flex flex-wrap gap-2 pt-2">
+                <span class="case-tag">《山海有妖獸》x《封神異世錄》聯動</span>
+                <span class="case-tag">《絕地求生M》地圖改版</span>
+                <span class="case-tag">《天上碑M》</span>
+                <span class="case-tag">《征服之海》</span>
+                <span class="case-tag">《新楓之谷》</span>
+                <span class="case-tag">《風之國度5周年》</span>
+                <span class="case-tag">《我要當掌門》</span>
+                <span class="case-tag">《Hero Wars》November Campaign</span>
+                <span class="case-tag">《Wefun》</span>
+                <span class="case-tag">《全面疾控》x《惡靈古堡》聯動 ft. 冠賢、冪冪、妖乖</span>
+                <span class="case-tag">《MUKO木可好店》</span>
+                <span class="case-tag">《異界戰姬：魔法狩獵》</span>
+                <span class="case-tag">《神魔傳說：靈山遺跡》</span>
+                <span class="case-tag">《暗影復甦》</span>
+                <span class="case-tag">《巔峰極速手遊》</span>
+                <span class="case-tag">《伊蘇X》</span>
+                <span class="case-tag">《絕地求生M》萬聖節活動</span>
+                <span class="case-tag">《Piko APP》</span>
+                <span class="case-tag">《龍息：神寂》</span>
+                <span class="case-tag">《守護德比》</span>
+                <span class="case-tag">《吊人村2 Town of Salem 2》小馬之夜</span>
+                <span class="case-tag">《原神機電展 打卡活動》</span>
+                <span class="case-tag">《絕地求生M》空投節</span>
+                <span class="case-tag">《RAZER COBRA PRO》</span>
+                <span class="case-tag">《Razer Edge》新品發布活動</span>
+                <span class="case-tag">《Razer Iskur 電競椅》</span>
+                <span class="case-tag">《慶餘年》</span>
+                <span class="case-tag">《Playone》</span>
+                <span class="case-tag">《王牌競速》</span>
+                <span class="case-tag">《Litmatch APP》</span>
+                <span class="case-tag">《龍之谷2：進化》</span>
+                <span class="case-tag">《微軟Game Pass》x《暗黑破壞神IV》</span>
+                <span class="case-tag">《絕地求生M》</span>
+                <span class="case-tag">《暗影謎題》口號影片拍攝</span>
+                <span class="case-tag">《茶之姬》</span>
+                <span class="case-tag">《黎明再現》</span>
+                <span class="case-tag">《跑跑卡丁車：飄移》</span>
+                <span class="case-tag">《阿爾比恩》</span>
+                <span class="case-tag">《小林眼鏡 x 航海王聯名開箱》</span>
+                <span class="case-tag">《RO仙境傳說：魔物遠征》</span>
+                <span class="case-tag">《War and Order》</span>
+                <span class="case-tag">《Razer Viper V2 pro 無線滑鼠》</span>
+                <span class="case-tag">《雲山之約》</span>
+                <span class="case-tag">《Garena 極速領域》</span>
+                <span class="case-tag">《Surfshark VPN》</span>
+                <span class="case-tag">《AMD Ryzen 5 5600X 處理器開箱》</span>
+                <span class="case-tag">《Apex英雄》台港澳冬季邀請賽</span>
+                <span class="case-tag">《PUBG X Logitech G G512 聯名鍵盤開箱》</span>
+                <span class="case-tag">《吸血鬼獵人》</span>
+                <span class="case-tag">《2021六都電競特戰英豪線下明星賽》</span>
+                <span class="case-tag">《Anker Soundcore Life P3無線抗噪耳機》</span>
+            </div>
+        </div>
+
+        <!-- 主播卡片 7：小舞 -->
+        <div class="case-card p-6 rounded-md">
+            <div class="streamer-badge px-4 py-2 rounded mb-4 inline-flex items-center gap-3">
+                <span class="w-2 h-2 bg-cyan-400 rounded-full animate-ping"></span>
+                <h2 class="cyber-font text-xl font-bold tracking-wider text-white">小舞</h2>
+            </div>
+            <div class="flex flex-wrap gap-2 pt-2">
+                <span class="case-tag">《The Cub》</span>
+                <span class="case-tag">《星界神話 Astral Tale》</span>
+                <span class="case-tag">《女神異聞錄：夜幕魅影》</span>
+                <span class="case-tag">《原神4.3版本》</span>
+                <span class="case-tag">《地心歸途》</span>
+                <span class="case-tag">《勝利女神：妮姬》12月改版</span>
+                <span class="case-tag">《勇者鬥惡龍》</span>
+                <span class="case-tag">《Wefun》</span>
+                <span class="case-tag">《伊蘇X》</span>
+                <span class="case-tag">《Vaudeville》</span>
+                <span class="case-tag">《Marvel 瞬戰超能》</span>
+                <span class="case-tag">《吊人村2 Town of Salem 2》小馬之夜</span>
+                <span class="case-tag">《Hero Wars》July Campaign</span>
+                <span class="case-tag">《Hero Wars》</span>
+            </div>
+        </div>
+
+        <!-- 主播卡片 8：妖乖 -->
+        <div class="case-card p-6 rounded-md">
+            <div class="streamer-badge px-4 py-2 rounded mb-4 inline-flex items-center gap-3">
+                <span class="w-2 h-2 bg-cyan-400 rounded-full animate-ping"></span>
+                <h2 class="cyber-font text-xl font-bold tracking-wider text-white">妖乖</h2>
+            </div>
+            <div class="flex flex-wrap gap-2 pt-2">
+                <span class="case-tag">《山海有妖獸》x《封神異世錄》聯動</span>
+                <span class="case-tag">《天上碑M》</span>
+                <span class="case-tag">《征服之海》</span>
+                <span class="case-tag">《新楓之谷》</span>
+                <span class="case-tag">《我要當掌門》</span>
+                <span class="case-tag">《玩就贏娛樂城》</span>
+                <span class="case-tag">《Wefun》</span>
+                <span class="case-tag">《全面疾控》x《惡靈古堡》聯動 ft. 冠賢、冪冪、純純</span>
+                <span class="case-tag">《萬龍覺醒》經營合作</span>
+                <span class="case-tag">《維京之王》</span>
+                <span class="case-tag">《吊人村2 Town of Salem 2》小馬之夜</span>
+                <span class="case-tag">《Hero Wars》</span>
+                <span class="case-tag">《維京崛起》</span>
+                <span class="case-tag">《台北大空襲》</span>
+                <span class="case-tag">《勝利女神：妮姬》</span>
+                <span class="case-tag">《風之國度》</span>
+                <span class="case-tag">《忍者必須死》</span>
+                <span class="case-tag">《英特衛數位網》</span>
+                <span class="case-tag">《晴天咖啡館》</span>
+                <span class="case-tag">《審判之日》</span>
+                <span class="case-tag">《終焉少女》</span>
+                <span class="case-tag">《軒轅劍柒》</span>
+                <span class="case-tag">《魔力寶貝M》</span>
+                <span class="case-tag">《花落冬陽》</span>
+                <span class="case-tag">《Foodpanda x VISA》</span>
+                <span class="case-tag">《華為應用程式商店》</span>
+                <span class="case-tag">《SelGreat寫真書》</span>
+                <span class="case-tag">《POWZAN》</span>
+                <span class="case-tag">《BenQ》</span>
+                <span class="case-tag">《精靈樂章》</span>
+                <span class="case-tag">《全面疾控》</span>
+                <span class="case-tag">《火炬之光：無限》</span>
+                <span class="case-tag">《Lita陪玩》</span>
+                <span class="case-tag">《Peko APP》</span>
+                <span class="case-tag">《Partying APP》</span>
+                <span class="case-tag">《播TV》</span>
+                <span class="case-tag">《Surfshark VPN》</span>
+            </div>
+        </div>
+
+        <!-- 主播卡片 9：丫布丁丁 -->
+        <div class="case-card p-6 rounded-md">
+            <div class="streamer-badge px-4 py-2 rounded mb-4 inline-flex items-center gap-3">
+                <span class="w-2 h-2 bg-cyan-400 rounded-full animate-ping"></span>
+                <h2 class="cyber-font text-xl font-bold tracking-wider text-white">丫布丁丁</h2>
+            </div>
+            <div class="flex flex-wrap gap-2 pt-2">
+                <span class="case-tag">《山海有妖獸》x《封神異世錄》聯動</span>
+                <span class="case-tag">《我要當掌門》</span>
+                <span class="case-tag">《異界戰姬：魔法狩獵》</span>
+                <span class="case-tag">《維京之王》</span>
+                <span class="case-tag">《暗影復甦》</span>
+                <span class="case-tag">《吊人村2 Town of Salem 2》小馬之夜</span>
+                <span class="case-tag">《Hero Wars》August Campaign</span>
+                <span class="case-tag">《原神機電展 打卡活動》</span>
+                <span class="case-tag">《Litmatch APP》</span>
+                <span class="case-tag">《台北大空襲》</span>
+            </div>
+        </div>
+
     </main>
     
     <!-- 控制面板 -->
@@ -757,6 +971,29 @@
                 }
             }
         });
+
+        // 語系切換功能
+        const langData = {
+            ch: {
+                titleMain: "商案總覽",
+                titleSub: "CASES_OVERVIEW"
+            },
+            en: {
+                titleMain: "Cases Overview",
+                titleSub: "CASES_OVERVIEW"
+            }
+        };
+
+        function switchLang(lang) {
+            document.getElementById('btn-ch').classList.toggle('active', lang === 'ch');
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+            
+            const data = langData[lang];
+            if(data) {
+                document.getElementById('page-title-main').innerText = data.titleMain;
+                document.getElementById('page-title-sub').innerText = data.titleSub;
+            }
+        }
     </script>
 </body>
 </html>
